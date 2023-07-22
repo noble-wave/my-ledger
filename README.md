@@ -1,4 +1,4 @@
-# MyLedger
+# MyLedger (Local Storage)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.9.
 
