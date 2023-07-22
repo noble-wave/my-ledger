@@ -2,7 +2,30 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
+    "paths": {
+      "@env/environment": [
+        "environments/environment"
+      ],
+      "@app/shared": [
+        "app/shared/index"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@shared-services": [
+        "app/shared-services/index"
+      ],
+      "@services": [
+        "app/services/index"
+      ],
+      "@pro-services": [
+        "app/protected/services/index"
+      ],
+      "@pro-models": [
+        "app/protected/models/index"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

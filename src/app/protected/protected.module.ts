@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedServicesModule } from '@app/shared-services';
+import { SharedModule } from '@app/shared';
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    SharedServicesModule,
+    SharedModule,
   ]
 })
 export class ProtectedModule { }
