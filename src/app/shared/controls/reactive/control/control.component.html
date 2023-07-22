@@ -1,0 +1,63 @@
+<ng-container *ngIf="control && !meta.hide" [ngSwitch]="meta.controlType">
+
+    <mat-form-field *ngSwitchDefault [hintLabel]="meta.desc" [hideRequiredMarker]="hideRequiredMarker" appearance="standard">
+
+        <mat-icon *ngIf="meta.icon" matPrefix class="irs-input-icon">{{meta.icon}}</mat-icon>
+
+        <mat-label>{{meta.label}}</mat-label>
+
+        <ng-container [ngSwitch]="meta.controlType">
+
+            <input *ngSwitchDefault [id]="meta.key" type="text" matInput [formControl]="control" [attr.disabled]="control.disabled ? 'true': 'false'" />
+
+            <input *ngSwitchCase="'number'" [id]="meta.key" type="number" matInput [formControl]="control" [attr.disabled]="control.disabled ? 'true': 'false'" />
+
+            <mat-select *ngSwitchCase="'dropdown'" [formControl]="control" (selectionChange)="valueChange($event.value)">
+                <mat-option *ngFor="let option of meta.options" [value]="option.key">
+                    {{option.value}}
+                </mat-option>
+            </mat-select>
+
+        </ng-container>
+
+        <mat-error *ngIf="control.hasError('email')">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="control.hasError('required')">
+            Please enter a <strong>value</strong>
+        </mat-error>
+        <mat-error *ngIf="control && control.hasError('minlength')">
+            Minimum length is {{control.getError('minlength').requiredLength}}
+        </mat-error>
+        <mat-error *ngIf="control.hasError('maxlength')">
+            Maximum length is {{control.getError('maxlength').requiredLength}}
+        </mat-error>
+        <mat-error *ngIf="control.hasError('matchOther')">
+            Not Matching
+        </mat-error>
+
+    </mat-form-field>
+
+    <!-- DatePicker -->
+    <mat-form-field *ngSwitchCase="'date'" appearance="standard">
+        <mat-label>{{meta.label}}</mat-label>
+        <input type="text" matInput [matDatepicker]="myDatepicker" [formControl]="control" [disabled]="control.disabled" />
+        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #myDatepicker [disabled]="control.disabled"></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Radio -->
+    <div *ngSwitchCase="'radio'" class="mat-form-field" [formGroup]="form">
+        <mat-icon *ngIf="meta.icon" matPrefix class="radio-icon">{{meta.icon}} </mat-icon>
+        <mat-label class="radio-label"> {{meta.label}} </mat-label>
+
+        <mat-radio-group [id]="meta.key" [formControl]="control">
+            <mat-radio-button *ngFor="let option of meta.options" [value]="option.key">{{option.value}}</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-error class="mat-form-field-subscript-wrapper adjust-position" *ngIf="control.hasError('required') && control.touched">
+            Please select a <strong>value</strong>
+        </mat-error>
+    </div>
+
+</ng-container>

@@ -1,0 +1,6 @@
+.option-list{
+    cursor: grab;
+    &:hover{
+        background-color: var(--grey-300);
+    }
+}

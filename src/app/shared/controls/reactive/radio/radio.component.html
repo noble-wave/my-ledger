@@ -1,0 +1,10 @@
+<div class="mat-form-field" [formGroup]="form">
+  <mat-icon *ngIf="icon" matPrefix class="radio-icon">{{icon}}</mat-icon>
+  <mat-label class="radio-label">{{label}}</mat-label>
+  <mat-radio-group [formControlName]="name">
+    <mat-radio-button *ngFor="let option of options" [value]="option[optionValueField]">{{option[optionTextField]}}</mat-radio-button>
+  </mat-radio-group>
+  <mat-error class="mat-form-field-subscript-wrapper adjust-position" *ngIf="control.hasError('required') && control.touched">
+    Please select a <strong>value</strong>
+  </mat-error>
+</div>
