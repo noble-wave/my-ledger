@@ -56,7 +56,7 @@ import { AskLeavePageGuard } from './guards/ask-leave-page.guard';
 import { IrsRadioComponent } from './controls/reactive/radio/radio.component';
 import { IrsViewTemplateComponent } from './controls/template/view-template/view-template.component';
 import { IrsIndexComponent } from './controls/template/index-template/index-template.component';
-import { SharedServicesModule } from 'app/shared-services/shared-services.module';
+import { SharedServicesModule } from '../shared-services/shared-services.module';
 import { IrsErrorComponent } from './controls/reactive/error/error.component';
 import { IrsLocalTableComponent } from './controls/template/local-search-table/local-table.component';
 import { ColumnOptionsDailogComponent } from './controls/template/local-search-table/column-options-dailog/column-options-dailog.component';

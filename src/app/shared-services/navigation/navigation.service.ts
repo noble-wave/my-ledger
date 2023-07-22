@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterEvent, NavigationEnd, Route } from '@angu
 import { INavigationItem } from './navigation-item.model';
 import { navigationMenu } from './navigation';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class IrsNavigationService extends IrsBaseService<Array<INavigationItem>> implements OnInit {
 
   constructor(private router: Router) {
@@ -36,14 +36,14 @@ export class IrsNavigationService extends IrsBaseService<Array<INavigationItem>>
 
   // not in use
   private buildNavigationFromRoute(route: Route, routePrefix: string): INavigationItem | null {
-    if (!route.data || !route.data.title) {
+    if (!route.data || !route.data['title']) {
       return null;
     }
 
     const navItem: INavigationItem = {
       path: routePrefix + route.path,
-      title: route.data.title,
-      icon: route.data.icon,
+      title: route.data['title'],
+      icon: route.data['icon'],
       children: []
     };
 

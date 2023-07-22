@@ -1,0 +1,126 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Sigmar One", cursive;
+  // font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.h-100-vh {
+  height: 100vh;
+}
+
+.h-100-per {
+  height: 100%;
+}
+
+.w-100-per {
+  width: 100%;
+}
+
+.float-right {
+  float: right;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  align-items: center;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.flex-grow-0 {
+  flex-shrink: 0;
+}
+
+.flex-grow-2 {
+  flex-grow: 2;
+}
+
+mat-form-field,
+.mat-form-field {
+  width: 100%;
+}
+
+.app-toolbar-row {
+  height: 80px !important;
+}
+
+.mat-list-item.active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.app-sidenav-opened .sticky-footer {
+  left: 260px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.style-success,
+.style-success .mat-simple-snackbar-action {
+  color: var(--primary-color);
+}
+
+.style-error,
+.style-error .mat-simple-snackbar-action {
+  color: var(--warn-color);
+}
+
+.style-info,
+.style-info .mat-simple-snackbar-action {
+  color: var(--accent-color);
+}
+
+.app-sidenav-content>canvas {
+  position: absolute;
+  top: 0px;
+  z-index: -1;
+}
+
+.mat-radio-button~.mat-radio-button {
+  margin-left: 16px;
+}
+
+.activity-container .reading-block {
+  display: none;
+}
+
+.mat-drawer-side {
+  &>.mat-drawer-inner-container::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+
+  &>.mat-drawer-inner-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .26);
+  }
+}
+
+.dib {
+  display: inline-block;
+}
+
+.mat-dialog-content {
+  min-height: 64px;
+}
+
+.slider__middle.mat-slider-horizontal .mat-slider-wrapper {
+  top: 10px;
+}

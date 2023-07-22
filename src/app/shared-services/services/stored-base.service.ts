@@ -8,7 +8,7 @@ export abstract class IrsStoredBaseService<T> extends IrsBaseService<T> {
     super(t);
     if (localStorage.getItem(this.name)) {
       try {
-        let data = JSON.parse(localStorage.getItem(this.name));
+        let data = JSON.parse(localStorage.getItem(this.name)!);
         this.set(data);
       } catch (err) {
         console.error(err);
