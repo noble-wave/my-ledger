@@ -20,7 +20,9 @@ export class IrsPageTitleBarService extends IrsBaseService<IPageTitleBar> {
   }
 
   public overrideTitleOfRoute(title: string) {
-    this.source.getValue().title = title;
+    let value = this.source.getValue()
+    if (value)
+      value.title = title;
   }
 
   public setFromRoute(route: ActivatedRoute): void {
@@ -30,9 +32,13 @@ export class IrsPageTitleBarService extends IrsBaseService<IPageTitleBar> {
 
   public addAction(action: IPageAction): void {
     if (action && this.source) {
-      const pageTitleBar: IPageTitleBar = this.source.value;
-      if (!pageTitleBar.actions) { pageTitleBar.actions = []; }
-      pageTitleBar.actions.push(action);
+      const pageTitleBar = this.source.value;
+      if (pageTitleBar) {
+
+        if (!pageTitleBar.actions) { pageTitleBar.actions = []; }
+
+        pageTitleBar.actions.push(action);
+      }
     }
   }
 
@@ -46,14 +52,15 @@ export class IrsPageTitleBarService extends IrsBaseService<IPageTitleBar> {
 
   private disableEnableAction(actionName: string, isDisabled: boolean): void {
     if (actionName && this.source) {
-      const pageTitleBar: IPageTitleBar = this.source.value;
-      if (!pageTitleBar.actions) { return; }
+      const pageTitleBar = this.source.value;
+      if (pageTitleBar?.actions) {
 
-      pageTitleBar.actions.filter(x => {
-        if (x.actionName === actionName) {
-          x.disabled = isDisabled;
-        }
-      });
+        pageTitleBar.actions.filter(x => {
+          if (x.actionName === actionName) {
+            x.disabled = isDisabled;
+          }
+        });
+      }
     }
   }
 

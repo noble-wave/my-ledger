@@ -12,8 +12,8 @@ export class FormHelper {
   }
 
   public static submit(form: FormGroup, formMeta: FormMeta, submitFunc: Function, doNotCheckPristine = false) {
-    formMeta.serverErrorMessage = null;
-    formMeta.successMessage = null;
+    formMeta.serverErrorMessage = undefined;
+    formMeta.successMessage = undefined;
     formMeta.isFireValidation = true;
     formMeta.submitProcessing = true;
 

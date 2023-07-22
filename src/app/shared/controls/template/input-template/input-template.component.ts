@@ -15,7 +15,7 @@ export class IrsInputTemplateComponent implements OnInit {
   @Input() viewOnly = false;
 
   // icon and its position
-  @Input() icon: string = null;
+  @Input() icon?: string = undefined;
   @Input() iconAtStart = true;
   // is input required validation
   @Input() isRequired = false;

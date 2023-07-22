@@ -21,7 +21,7 @@ export class TableSettings {
 }
 
 export class SearchTableSettings extends TableSettings {
-  searchQuery?: string;
+  override searchQuery?: string;
   searchWord?: string;
 
   constructor(init?: Partial<SearchTableSettings>) {
@@ -47,18 +47,18 @@ export class RowAction {
 export class LocalTableSettings {
   columns: Array<Column>;
   displayColumns: Array<Column>;
-  idColumnName?= 'id';
-  defaultSortDirection?: 'asc' | 'desc' | '' = 'desc';
-  defaultSortColumnName?: string = 'id';
+  idColumnName = 'id';
+  defaultSortDirection: 'asc' | 'desc' | '' = 'desc';
+  defaultSortColumnName: string = 'id';
   defaultPageSize?= 10;
 
   // inbuilt actions with inbuild routes provide rowActions for custom actions
   canGoToView?= false;
-  canGoToViewCommands: Array<string | number> = undefined;
+  canGoToViewCommands?: Array<string | number> = undefined;
   canGoToEdit?= false;
-  canGoToEditCommands: Array<string | number> = undefined;
+  canGoToEditCommands?: Array<string | number> = undefined;
   canGoToRemove?= false;
-  canGoToRemoveCommands: Array<string | number> = undefined;
+  canGoToRemoveCommands?: Array<string | number> = undefined;
   rowActions?: Array<RowAction>;
 
   constructor(init?: Partial<LocalTableSettings>) {

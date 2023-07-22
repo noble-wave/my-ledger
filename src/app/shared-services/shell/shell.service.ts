@@ -9,8 +9,8 @@ export class IrsShellService extends IrsBaseService<IShell> {
     super({
       appName: 'Test',
       isLoggedIn: false,
-      loginAction: () => {},
-      logoutAction: () => {},
+      loginAction: () => { },
+      logoutAction: () => { },
       profileImg: null
     });
   }
@@ -23,8 +23,10 @@ export class IrsShellService extends IrsBaseService<IShell> {
 
   public update(isLoggedIn: boolean, profileImg: string): void {
     const shell = this.source.value;
-    shell.isLoggedIn = isLoggedIn;
-    shell.profileImg = profileImg;
+    if (shell) {
+      shell.isLoggedIn = isLoggedIn;
+      shell.profileImg = profileImg;
+    }
     this.set(shell);
   }
 

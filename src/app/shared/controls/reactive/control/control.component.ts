@@ -30,7 +30,7 @@ export class IrsControlComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.form) {
+    if (changes['form']) {
       this.control = this.form.get(this.meta.key) as IrsControl;
     }
   }

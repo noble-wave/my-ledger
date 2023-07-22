@@ -3,13 +3,13 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 export abstract class IrsBaseService<T> {
 
-  protected source: BehaviorSubject<T>;
-  public current$: Observable<T>;
+  protected source: BehaviorSubject<T | undefined>;
+  public current$: Observable<T | undefined>;
   protected subscriptions: Array<Subscription>;
 
   constructor(t: T) {
     this.subscriptions = [];
-    this.source = new BehaviorSubject<T>(t);
+    this.source = new BehaviorSubject<T | undefined>(t);
     this.current$ = this.source.asObservable();
   }
 
@@ -23,7 +23,7 @@ export abstract class IrsBaseService<T> {
   //   }
   // }
 
-  public set(data: T) {
+  public set(data?: T) {
     if (data) {
       this.source.next(data);
     } else {

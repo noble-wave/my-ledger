@@ -6,7 +6,7 @@
 
       </div>
       <div>
-        <mat-form-field appearance="standard" fxFlex="50%">
+        <mat-form-field fxFlex="50%">
           <mat-label>Filter</mat-label>
           <input matInput (keyup)="applyFilter($event)" #input>
         </mat-form-field>
@@ -36,7 +36,7 @@
 
           <ng-container *ngIf="settings.rowActions">
             <ng-container *ngFor="let action of settings.rowActions">
-              <mat-icon *ngIf="!action.isHide" (click)="action.callback(element[settings.idColumnName])">{{action.icon}}</mat-icon>
+              <mat-icon *ngIf="!action.isHide" (click)="action?.callback(element[settings.idColumnName])">{{action.icon}}</mat-icon>
             </ng-container>
           </ng-container>
 

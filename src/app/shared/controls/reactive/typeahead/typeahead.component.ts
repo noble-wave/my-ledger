@@ -35,7 +35,7 @@ export class IrsTypeaheadComponent implements OnInit {
     this.control = this.form.get(this.name) as AbstractControl;
     if (this.control && this.control.validator) {
       const validator = this.control.validator(new FormControl());
-      this.isRequired = (validator && validator.required) ? true : false;
+      this.isRequired = (validator && validator['required']) ? true : false;
     }
 
     // Default float type Auto

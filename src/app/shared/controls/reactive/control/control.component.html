@@ -1,6 +1,6 @@
 <ng-container *ngIf="control && !meta.hide" [ngSwitch]="meta.controlType">
 
-    <mat-form-field *ngSwitchDefault [hintLabel]="meta.desc" [hideRequiredMarker]="hideRequiredMarker" appearance="standard">
+    <mat-form-field *ngSwitchDefault [hintLabel]="meta.desc!" [hideRequiredMarker]="hideRequiredMarker">
 
         <mat-icon *ngIf="meta.icon" matPrefix class="irs-input-icon">{{meta.icon}}</mat-icon>
 
@@ -39,7 +39,7 @@
     </mat-form-field>
 
     <!-- DatePicker -->
-    <mat-form-field *ngSwitchCase="'date'" appearance="standard">
+    <mat-form-field *ngSwitchCase="'date'">
         <mat-label>{{meta.label}}</mat-label>
         <input type="text" matInput [matDatepicker]="myDatepicker" [formControl]="control" [disabled]="control.disabled" />
         <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>

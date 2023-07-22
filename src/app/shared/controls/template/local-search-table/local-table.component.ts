@@ -1,6 +1,5 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
@@ -10,14 +9,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderBy, Query } from 'ngx-odata-v4';
-import { merge, Observable, of } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { Utility } from '../../../../shared-services/helpers/utility';
-import { IrsAlertService } from '../../../services/alert.service';
-import { Column, IConfirm, LocalTableSettings, RowAction, SearchTableSettings } from '../../../../shared-services/models';
-import { IrsHttpService, IrsNotificationService } from '@shared-services';
-import { ODataResult } from '../../../../shared-services/models/odata-query-result';
+import { Observable } from 'rxjs';
+import { Column, IConfirm, LocalTableSettings } from '../../../../shared-services/models';
 import { MatDialog } from '@angular/material/dialog';
 import { ColumnOptionsDailogComponent } from './column-options-dailog/column-options-dailog.component';
 

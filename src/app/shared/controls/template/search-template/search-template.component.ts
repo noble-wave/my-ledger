@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class IrsSearchTemplateComponent implements OnInit {
 
-  @Input() searchWord: string;
+  @Input() searchWord?: string;
 
   @Output() searched = new EventEmitter<string>();
 

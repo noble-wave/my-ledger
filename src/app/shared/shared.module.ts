@@ -46,7 +46,6 @@ import { IrsDateComponent } from './controls/reactive/date/date.component';
 
 
 import { IrsSearchTemplateComponent } from './controls/template/search-template/search-template.component';
-import { IrsSearchTableComponent } from './controls/template/search-table/search-table.component';
 import { IrsInputTemplateComponent } from './controls/template/input-template/input-template.component';
 import { IrsDialogService } from './services/dialog.service';
 import { IrsAlertService } from './services/alert.service';
@@ -99,7 +98,7 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
     IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
     IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent, IrsControlComponent,
 
-    IrsSearchTemplateComponent, IrsSearchTableComponent, IrsInputTemplateComponent,
+    IrsSearchTemplateComponent, IrsInputTemplateComponent,
 
     IrsViewTemplateComponent, IrsIndexComponent, DragDropModule,
   ],
@@ -109,7 +108,7 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
     IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
     IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent,
 
-    IrsSearchTemplateComponent, IrsSearchTableComponent, IrsInputTemplateComponent, IrsAlertComponent, IrsConfirmComponent,
+    IrsSearchTemplateComponent, IrsInputTemplateComponent, IrsAlertComponent, IrsConfirmComponent,
 
     IrsViewTemplateComponent, IrsIndexComponent, IrsErrorComponent, ColumnOptionsDailogComponent, IrsControlComponent,]
 })

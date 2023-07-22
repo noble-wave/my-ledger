@@ -6,7 +6,7 @@ export class Utility {
     return str.replace(new RegExp(find, 'g'), replace);
   }
 
-  public static markFormGroupTouched(formGroup: FormGroup) {
+  public static markFormGroupTouched(formGroup?: FormGroup) {
     if (formGroup) {
       (<any>Object).values(formGroup.controls).forEach(control => {
         control.markAsTouched();

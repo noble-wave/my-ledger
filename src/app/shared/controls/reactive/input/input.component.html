@@ -1,4 +1,4 @@
-<mat-form-field *ngIf="control" [hintLabel]="hint" [hideRequiredMarker]="hideRequiredMarker" appearance="standard">
+<mat-form-field *ngIf="control" [hintLabel]="hint" [hideRequiredMarker]="hideRequiredMarker">
   <mat-icon *ngIf="icon" matPrefix class="irs-input-icon">{{icon}}</mat-icon>
   <mat-label>{{label || control.label}}</mat-label>
   <input [type]="type" matInput [formControl]="control" [attr.disabled]="control.disabled ? 'true': 'false'">

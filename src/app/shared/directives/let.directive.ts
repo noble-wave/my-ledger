@@ -1,14 +1,14 @@
-import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 interface LetContext<T> {
-    ngLet: T;
+    ngLet?: T;
 }
 
 @Directive({
     selector: '[irsLet]'
 })
 export class LetDirective<T> {
-    private _context: LetContext<T> = {ngLet: null};
+    private _context: LetContext<T> = { ngLet: undefined };
 
     constructor(_viewContainer: ViewContainerRef, _templateRef: TemplateRef<LetContext<T>>) {
         _viewContainer.createEmbeddedView(_templateRef, this._context);
