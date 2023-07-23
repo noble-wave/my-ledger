@@ -1,0 +1,31 @@
+// .sidenav-container {
+//   height: 100%;
+// }
+
+.app-container{
+  height: calc(100vh - 64px);
+}
+
+@media (max-width: 599px){
+  .app-container {
+    height: calc(100vh - 56px);
+  }
+}
+
+.app-sidenav {
+  width: 260px;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 11;
+}
+
+.mat-list-item.active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.erp-nav-list  {
+  padding-top: 0px;
+}

@@ -15,8 +15,7 @@ $app-primary: mat.define-palette(mat.$teal-palette, A700);
 $app-accent: mat.define-palette(mat.$green-palette, A400);
 $app-grey: mat.define-palette(mat.$gray-palette);
 // Specify "Comic Sans" or "'Sigmar One', cursive" as the default font family for all levels.
-$app-typography: mat.define-typography-config($font-family: "Comic Sans"
-    );
+$app-typography: mat.define-typography-config($font-family: "app-cursive");
 
 // The warn palette is optional (defaults to red).
 $app-warn: mat.define-palette(mat.$red-palette);
