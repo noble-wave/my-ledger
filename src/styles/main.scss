@@ -1,6 +1,6 @@
+@use "sass:map";
 @use "material";
 @use "spaces";
-@use "sass:map";
 /* You can add global styles to this file, and also import other style files */
 
 @use "responsive";
@@ -9,7 +9,6 @@
 @use "colors";
 @use "widgets";
 @use "animations";
-@use "letters";
 @use "normalize.css/normalize";
 
-@import 'animate.css';
+// @import 'animate.css';

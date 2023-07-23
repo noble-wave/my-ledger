@@ -14,8 +14,8 @@
 $app-primary: mat.define-palette(mat.$teal-palette, A700);
 $app-accent: mat.define-palette(mat.$green-palette, A400);
 $app-grey: mat.define-palette(mat.$gray-palette);
-$app-typography: mat.define-typography-config( // Specify "Comic Sans" or "'Sigmar One', cursive" as the default font family for all levels.
-        $font-family: "app-cursive"
+// Specify "Comic Sans" or "'Sigmar One', cursive" as the default font family for all levels.
+$app-typography: mat.define-typography-config($font-family: "Comic Sans"
     );
 
 // The warn palette is optional (defaults to red).
@@ -23,11 +23,9 @@ $app-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$app-theme: mat.define-light-theme((color: (primary: $app-primary,
-                accent: $app-accent,
-                warn: $app-warn,
-            ),
+$app-theme: mat.define-dark-theme((color: (primary: $app-primary, accent: $app-accent, warn: $app-warn, ),
             typography: $app-typography,
+            density: 0,
         ));
 
 // Include theme styles for core and each component used in your app.
@@ -100,10 +98,10 @@ $app-theme: mat.define-light-theme((color: (primary: $app-primary,
     --border-letter-radius: 8px;
 
     // fonts
-    --font-family: #{mat.font-family($app-typography)};
-    --font-size: #{mat.font-size($app-typography, "body-1")};
-    --font-size-title: #{mat.font-size($app-typography, "title")};
-    --font-size-display-1: #{mat.font-size($app-typography, "display-1")};
-    --font-size-display-2: #{mat.font-size($app-typography, "display-2")};
-    --font-size-caption: #{mat.font-size($app-typography, "caption")};
+    // --font-family: #{mat.font-family($app-typography)};
+    // --font-size: #{mat.font-size($app-typography, "body-1")};
+    // --font-size-title: #{mat.font-size($app-typography, "title")};
+    // --font-size-display-1: #{mat.font-size($app-typography, "display-1")};
+    // --font-size-display-2: #{mat.font-size($app-typography, "display-2")};
+    // --font-size-caption: #{mat.font-size($app-typography, "caption")};
 }
