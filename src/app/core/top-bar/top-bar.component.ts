@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CoreService } from '../core.service';
+import { CoreService } from '../../services/core.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -16,7 +16,7 @@ export class TopBarComponent implements OnInit {
   constructor(private service: CoreService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.institutes$ = this.service.current$.pipe(tap(institutes => {
+    this.institutes$ = this.service.appData$.pipe(tap(institutes => {
       console.log('Institute list updated');
       // select the first one
       if (institutes && institutes.length > 0) {

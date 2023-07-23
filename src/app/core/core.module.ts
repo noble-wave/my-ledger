@@ -4,8 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { PageTitleBarComponent } from './page-title-bar/page-title-bar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
-import { SharedModule } from '@app/shared';
-import { CoreService } from './core.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 const routes: Routes = [
 ];
@@ -18,14 +21,17 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    SharedModule,
     RouterModule,
+    FlexLayoutModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   exports: [
     AppNavComponent
   ],
   providers: [
-    CoreService
   ]
 })
 export class CoreModule { }

@@ -4,19 +4,38 @@ import { SharedModule } from '@app/shared';
 import { ProtectedComponent } from './protected.component';
 import { CoreModule } from '@app/core/core.module';
 import { RouterModule } from '@angular/router';
+import { CustomerComponent } from './customer/customer.component';
+import { ProductComponent } from './product/product.component';
+import { OrderComponent } from './order/order.component';
+import { ProductPriceComponent } from './product-price/product-price.component';
+import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
 
 
 
 @NgModule({
   declarations: [
-    ProtectedComponent
+    ProtectedComponent,
+    CustomerComponent,
+    ProductComponent,
+    OrderComponent,
+    ProductPriceComponent,
+    ProductInventoryComponent
   ],
   imports: [
     CoreModule,
     SharedServicesModule,
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: ProtectedComponent }
+      {
+        path: '', component: ProtectedComponent,
+        children: [
+          { path: 'customer', component: CustomerComponent },
+          { path: 'product', component: ProductComponent },
+          { path: 'product-price', component: ProductPriceComponent },
+          { path: 'product-inventory', component: ProductInventoryComponent },
+          { path: 'order', component: OrderComponent },
+        ]
+      }
     ])
   ]
 })
