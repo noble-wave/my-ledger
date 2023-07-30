@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Product } from '@app/models/product.model';
 import { of } from 'rxjs';
 
 @Injectable({
@@ -11,4 +12,9 @@ export class ProductService {
   get(id: string) {
     return of({});
   }
+
+  save(value: Product) {
+    return of({});
+  }
+
 }

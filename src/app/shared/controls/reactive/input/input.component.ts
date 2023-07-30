@@ -8,7 +8,7 @@ import { IrsControl } from '@shared-services';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class AppInputComponent implements OnInit, OnChanges {
+export class IrsInputComponent implements OnInit, OnChanges {
 
   @Input() form: AbstractControl; // FormGroup;
   @Input() name: string;

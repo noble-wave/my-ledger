@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { IDropdownOption } from '@shared-services';
 
 @Component({
-  selector: 'irs-radio',
+  selector: 'app-radio',
   templateUrl: './radio.component.html',
   styleUrls: ['./radio.component.scss']
 })

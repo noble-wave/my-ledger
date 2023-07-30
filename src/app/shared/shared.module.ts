@@ -36,7 +36,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTreeModule } from '@angular/material/tree';
 
 
-import { AppInputComponent } from './controls/reactive/input/input.component';
+import { IrsInputComponent } from './controls/reactive/input/input.component';
 import { IrsSelectComponent } from './controls/reactive/select/select.component';
 import { IrsTableComponent } from './controls/reactive/table/table.component';
 import { IrsToggleComponent } from './controls/reactive/toggle/toggle.component';
@@ -47,11 +47,8 @@ import { IrsDateComponent } from './controls/reactive/date/date.component';
 
 import { IrsSearchTemplateComponent } from './controls/template/search-template/search-template.component';
 import { IrsInputTemplateComponent } from './controls/template/input-template/input-template.component';
-import { IrsDialogService } from './services/dialog.service';
-import { IrsAlertService } from './services/alert.service';
 import { IrsAlertComponent } from './widgets/alert/alert.component';
 import { IrsConfirmComponent } from './widgets/confirm/confirm.component';
-import { AskLeavePageGuard } from './guards/ask-leave-page.guard';
 import { IrsRadioComponent } from './controls/reactive/radio/radio.component';
 import { IrsViewTemplateComponent } from './controls/template/view-template/view-template.component';
 import { IrsIndexComponent } from './controls/template/index-template/index-template.component';
@@ -91,21 +88,21 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
     MatProgressBarModule, MatSliderModule, MatSlideToggleModule, MatMenuModule, MatDialogModule,
     MatSelectModule, MatInputModule, MatSidenavModule, MatCardModule, MatIconModule, MatRadioModule, MatProgressSpinnerModule,
     MatTabsModule, MatListModule, MatTableModule, MatPaginatorModule, MatSortModule, MatAutocompleteModule, MatDatepickerModule,
-    MatTooltipModule, MatStepperModule, MatTreeModule,
+    MatTooltipModule, MatStepperModule, MatTreeModule, DragDropModule,
 
     LetDirective,
 
-    AppInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
+    IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
     IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent, IrsControlComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent,
 
-    IrsViewTemplateComponent, IrsIndexComponent, DragDropModule,
+    IrsViewTemplateComponent, IrsIndexComponent,
   ],
   declarations: [
     LetDirective,
 
-    AppInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
+    IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
     IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent, IrsAlertComponent, IrsConfirmComponent,
