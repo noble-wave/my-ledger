@@ -9,6 +9,7 @@ import { ProductComponent } from './product/product.component';
 import { OrderComponent } from './order/order.component';
 import { ProductPriceComponent } from './product-price/product-price.component';
 import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
+import { ProductListComponent } from './product/product-list.component';
 
 
 
@@ -19,7 +20,8 @@ import { ProductInventoryComponent } from './product-inventory/product-inventory
     ProductComponent,
     OrderComponent,
     ProductPriceComponent,
-    ProductInventoryComponent
+    ProductInventoryComponent,
+    ProductListComponent
   ],
   imports: [
     CoreModule,
@@ -31,7 +33,7 @@ import { ProductInventoryComponent } from './product-inventory/product-inventory
         children: [
           { path: 'customer', component: CustomerComponent },
 
-          { path: 'product', redirectTo: 'product/new' },
+          { path: 'product', component: ProductListComponent },
           { path: 'product/new', component: ProductComponent },
           { path: 'product/:id', component: ProductComponent },
 

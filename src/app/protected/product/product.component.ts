@@ -34,7 +34,7 @@ export class ProductComponent implements OnInit {
 
   saveProduct() {
     FormHelper.submit(this.form, this.formMeta, () => {
-      this.service.save(this.form.value).subscribe(x => {
+      this.service.add(this.form.value).subscribe(x => {
         console.log(x);
       });
     });

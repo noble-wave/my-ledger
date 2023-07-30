@@ -50,6 +50,10 @@ mat-form-field,
   width: 100%;
 }
 
+.mat-toolbar.lighter-toolbar {
+  background-color: var(--grey-700)
+}
+
 .app-toolbar-row {
   height: 80px !important;
 }
