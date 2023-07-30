@@ -30,7 +30,11 @@ import { ProductInventoryComponent } from './product-inventory/product-inventory
         path: '', component: ProtectedComponent,
         children: [
           { path: 'customer', component: CustomerComponent },
-          { path: 'product', component: ProductComponent },
+
+          { path: 'product', redirectTo: 'product/new' },
+          { path: 'product/new', component: ProductComponent },
+          { path: 'product/:id', component: ProductComponent },
+
           { path: 'product-price', component: ProductPriceComponent },
           { path: 'product-inventory', component: ProductInventoryComponent },
           { path: 'order', component: OrderComponent },

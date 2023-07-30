@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { IrsBaseService } from './base.service';
+import { AppBaseService } from './base.service';
 
-export abstract class IrsStoredBaseService<T> extends IrsBaseService<T> {
+export abstract class AppStoredBaseService<T> extends AppBaseService<T> {
 
   constructor(t: T, public name: string) {
     super(t);

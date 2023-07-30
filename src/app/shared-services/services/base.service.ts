@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
-export abstract class IrsBaseService<T> {
+export abstract class AppBaseService<T> {
 
   protected source: BehaviorSubject<T | undefined>;
   public current$: Observable<T | undefined>;

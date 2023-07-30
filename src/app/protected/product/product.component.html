@@ -1,1 +1,13 @@
 <p>product works!</p>
+
+<mat-card>
+    <mat-card-content>
+        <form *ngIf="form" id="productForm" [formGroup]="form">
+
+            <app-input [form]="form" name="productName"></app-input>
+
+
+            {{form.value | json}}
+        </form>
+    </mat-card-content>
+</mat-card>

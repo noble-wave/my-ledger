@@ -4,11 +4,11 @@ import { FloatLabelType } from '@angular/material/form-field';
 import { IrsControl } from '@shared-services';
 
 @Component({
-  selector: 'irs-input',
+  selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class IrsInputComponent implements OnInit, OnChanges {
+export class AppInputComponent implements OnInit, OnChanges {
 
   @Input() form: AbstractControl; // FormGroup;
   @Input() name: string;

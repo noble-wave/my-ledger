@@ -17,10 +17,10 @@ export class AppNavComponent {
     );
 
   public paths = [
-    { path: 'institute', label: 'Institute' },
-    { path: 'course', label: 'Course' },
-    { path: 'academic-year', label: 'Academic Year' },
-    { path: 'student/list', label: 'Student' },
+    { path: 'product', label: 'Product' },
+    { path: 'customer', label: 'Customer' },
+    { path: 'product-price', label: 'Product Price' },
+    { path: 'product-inventory', label: 'Product Inventory' },
   ]
 
   constructor(private breakpointObserver: BreakpointObserver) { }

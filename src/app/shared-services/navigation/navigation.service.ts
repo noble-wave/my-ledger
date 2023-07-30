@@ -1,12 +1,12 @@
 import { Injectable, EventEmitter, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { IrsBaseService } from '../services/base.service';
+import { AppBaseService } from '../services/base.service';
 import { ActivatedRoute, Router, RouterEvent, NavigationEnd, Route } from '@angular/router';
 import { INavigationItem } from './navigation-item.model';
 import { navigationMenu } from './navigation';
 
 @Injectable({ providedIn: 'root' })
-export class IrsNavigationService extends IrsBaseService<Array<INavigationItem>> implements OnInit {
+export class IrsNavigationService extends AppBaseService<Array<INavigationItem>> implements OnInit {
 
   constructor(private router: Router) {
     super([]);

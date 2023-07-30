@@ -3,7 +3,7 @@ import { Utility } from '../helpers';
 import { FormGroup } from '@angular/forms';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IrsNotificationService } from '@shared-services';
+import { AppNotificationService } from '@shared-services';
 
 @Injectable()
 export abstract class FormBaseComponent extends BaseComponent implements OnDestroy {
@@ -12,7 +12,7 @@ export abstract class FormBaseComponent extends BaseComponent implements OnDestr
   private _submitProcessing: boolean;
   private _disableSubmitButton: boolean;
 
-  constructor(private notificationService?: IrsNotificationService) {
+  constructor(private notificationService?: AppNotificationService) {
     super();
     this.subscriptions = [];
   }

@@ -1,12 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { IPageTitleBar } from './page-title.model';
-import { IrsBaseService } from '../services/base.service';
+import { AppBaseService } from '../services/base.service';
 import { ActivatedRoute, Router, Event, NavigationEnd } from '@angular/router';
 import { IPageAction } from './page-action.model';
 
 @Injectable({ providedIn: 'root' })
-export class IrsPageTitleBarService extends IrsBaseService<IPageTitleBar> {
+export class IrsPageTitleBarService extends AppBaseService<IPageTitleBar> {
 
   constructor(private router: Router) {
     super({ title: '' });

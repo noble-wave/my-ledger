@@ -1,13 +1,13 @@
 import { FormGroup } from "@angular/forms";
 import { FormMeta } from "../models";
-import { IrsNotificationService } from "../services";
+import { AppNotificationService } from "../services";
 
 export class FormHelper {
 
-  private static alertService: IrsNotificationService; // init this when app init
+  private static alertService: AppNotificationService; // init this when app init
 
   // call this method to initialize notification alerts
-  public static notyInit(alertServie: IrsNotificationService) {
+  public static notyInit(alertServie: AppNotificationService) {
     FormHelper.alertService = alertServie;
   }
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IrsBaseService } from '../services/base.service';
+import { AppBaseService } from '../services/base.service';
 import { IShell } from './shell.model';
 
 @Injectable()
-export class IrsShellService extends IrsBaseService<IShell> {
+export class IrsShellService extends AppBaseService<IShell> {
 
   constructor() {
     super({
