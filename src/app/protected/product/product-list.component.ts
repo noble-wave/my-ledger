@@ -18,7 +18,8 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     let columns = [
       { name: 'productId', text: 'Product Id', order: 1 },
-      { name: 'productName', text: 'Product Name', order: 1 },
+      { name: 'productName', text: 'Product Name', order: 2 },
+      { name: 'description', text: 'Description', order: 3 },
     ];
     let excludeColumns = ['productId'];
     let displayColumns = columns.filter(x => excludeColumns.indexOf(x.name) === -1);

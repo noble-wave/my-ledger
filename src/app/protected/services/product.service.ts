@@ -12,7 +12,7 @@ export class ProductService {
   constructor(private storage: StorageService) { }
 
   get(id: string) {
-    return of({});
+    return this.storage.getByKey<Product>(tableNames.product, id);
   }
 
   getAll() {
