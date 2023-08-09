@@ -1,0 +1,11 @@
+<mat-form-field *ngIf="control" [hideRequiredMarker]="hide">
+  <mat-icon *ngIf="icon" matPrefix class="irs-input-icon">{{icon}}</mat-icon>
+  <mat-label>{{label || control.label}}</mat-label>
+
+  <mat-select [formControl]="control" (selectionChange)="selectionChange($event)">
+    <mat-option *ngFor="let item of options" [value]="item[optValueLabel]">
+      {{item[optTextLabel]}}
+    </mat-option>
+  </mat-select>
+  <irs-error [control]="control"></irs-error>
+</mat-form-field>

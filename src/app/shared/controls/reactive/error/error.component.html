@@ -1,0 +1,17 @@
+<ng-container *ngIf="control">
+  <mat-error *ngIf="control.hasError('email')">
+    Please enter a valid email address
+  </mat-error>
+  <mat-error *ngIf="control.hasError('required')">
+    Please enter a <strong>value</strong>
+  </mat-error>
+  <mat-error *ngIf="control && control.hasError('minlength')">
+    Minimum length is {{control.getError('minlength').requiredLength}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('maxlength')">
+    Maximum length is {{control.getError('maxlength').requiredLength}}
+  </mat-error>
+  <mat-error *ngIf="control.hasError('matchOther')">
+    Not Matching
+  </mat-error>
+</ng-container>

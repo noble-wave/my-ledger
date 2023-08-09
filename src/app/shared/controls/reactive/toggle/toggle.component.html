@@ -1,0 +1,8 @@
+<div>
+  <mat-icon matPrefix class="radio-icon">{{icon}}</mat-icon>
+  <mat-label class="radio-label">{{label}}</mat-label>
+  <mat-radio-group [formControl]="control">
+    <mat-radio-button *ngFor="let option of options" [value]="option[optionValueField]">{{option[optionTextField]}}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>

@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>{{model.title}}</h2>
+<mat-dialog-content>{{model.message}}</mat-dialog-content>
+<br />
+<mat-dialog-actions>
+  <button [attr.disabled]="actionDisabled" mat-raised-button color="primary" (click)="okAction()">Ok</button>
+</mat-dialog-actions>

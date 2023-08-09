@@ -1,0 +1,37 @@
+<div *ngIf="form && control">
+  <input type="hidden" [formControlName]="name">
+
+  <mat-form-field [hideRequiredMarker]="!isRequired" [floatLabel]="floatLabel" class="width100per">
+    <mat-icon matPrefix class="irs-input-icon">{{icon}}</mat-icon>
+
+    <input matInput type="text" [value]="viewValue" [placeholder]="label" (keyup)="onKeyup($event)" [matAutocomplete]="auto">
+
+    <mat-icon *ngIf="control.value" matSuffix class="irs-input-icon">check</mat-icon>
+    <mat-icon *ngIf="!control.value" matSuffix class="irs-input-icon">cancel</mat-icon>
+
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option.text" (onSelectionChange)="onSelection(option)">
+        {{option.text}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <mat-error *ngIf="control.hasError('email')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="control.hasError('required')">
+      <strong>Required</strong>
+    </mat-error>
+    <mat-error *ngIf="control.hasError('minlength')">
+      Minimum length is {{control.getError('minlength').requiredLength}}
+    </mat-error>
+    <mat-error *ngIf="control.hasError('maxlength')">
+      Maximum length is {{control.getError('maxlength').requiredLength}}
+    </mat-error>
+    <mat-error *ngIf="control.hasError('matchOther')">
+      Not Matching
+    </mat-error>
+  </mat-form-field>
+</div>
+
+
+

@@ -1,0 +1,107 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, greyer, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$app-primary: mat.define-palette(mat.$teal-palette, A700);
+$app-accent: mat.define-palette(mat.$green-palette, A400);
+$app-grey: mat.define-palette(mat.$gray-palette);
+// $app-black: mat.define-palette(mat.$black-palette);
+// Specify "Comic Sans" or "'Sigmar One', cursive" as the default font family for all levels.
+$app-typography: mat.define-typography-config($font-family: "app-cursive");
+
+// The warn palette is optional (defaults to red).
+$app-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$app-theme: mat.define-dark-theme((color: (primary: $app-primary, accent: $app-accent, warn: $app-warn, ),
+            typography: $app-typography,
+            density: 0,
+        ));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($app-theme);
+
+.mat-typography,
+.mat-display-4,
+.mat-typography .mat-display-4,
+.mat-display-3,
+.mat-typography .mat-display-3,
+.mat-display-2,
+.mat-typography .mat-display-2,
+.mat-display-1,
+.mat-typography .mat-display-1,
+.mat-h1,
+.mat-h2,
+.mat-h3,
+.mat-h4,
+.mat-h5,
+.mat-h6,
+.mat-body,
+.mat-body-1,
+.mat-body-strong,
+.mat-title,
+.mat-small,
+.mat-caption {
+    font-family: mat.font-family($app-typography);
+    font-weight: normal;
+    line-height: normal;
+    font-size: initial;
+    font-weight: normal;
+}
+
+// Define root color from angular
+:root {
+    --primary-color: #{mat.get-color-from-palette($app-primary)};
+    --accent-color: #{mat.get-color-from-palette($app-accent)};
+    --warn-color: #{mat.get-color-from-palette($app-warn)};
+
+    //"default", "lighter", "darker", and "text"
+
+    --primary-color-darker: #{mat.get-color-from-palette($app-primary, "darker")};
+    --primary-color-lighter: #{mat.get-color-from-palette($app-primary, "lighter")};
+    --primary-color-text: #{mat.get-color-from-palette($app-primary, "text")};
+
+    --accent-color-darker: #{mat.get-color-from-palette($app-accent, "darker")};
+    --accent-color-lighter: #{mat.get-color-from-palette($app-accent, "lighter")};
+    --accent-color-text: #{mat.get-color-from-palette($app-accent, "text")};
+
+    --grey: #{mat.get-color-from-palette($app-grey)};
+    --grey-50: #{mat.get-color-from-palette($app-grey, 50)};
+    --grey-100: #{mat.get-color-from-palette($app-grey, 100)};
+    --grey-200: #{mat.get-color-from-palette($app-grey, 200)};
+    --grey-300: #{mat.get-color-from-palette($app-grey, 300)};
+    --grey-400: #{mat.get-color-from-palette($app-grey, 400)};
+    --grey-500: #{mat.get-color-from-palette($app-grey, 500)};
+    --grey-600: #{mat.get-color-from-palette($app-grey, 600)};
+    --grey-700: #{mat.get-color-from-palette($app-grey, 700)};
+
+    --green-h: 34, 52, 36;
+    --green: #223424;
+    --silver: #d5d5d5;
+
+    --border-radius: 8px;
+    --border-radius-sm: 2px;
+    --border-radius-md: 4px;
+    --border-radius-lg: 10px;
+    --border-letter-radius: 8px;
+
+    // fonts
+    // --font-family: #{mat.font-family($app-typography)};
+    // --font-size: #{mat.font-size($app-typography, "body-1")};
+    // --font-size-title: #{mat.font-size($app-typography, "title")};
+    // --font-size-display-1: #{mat.font-size($app-typography, "display-1")};
+    // --font-size-display-2: #{mat.font-size($app-typography, "display-2")};
+    // --font-size-caption: #{mat.font-size($app-typography, "caption")};
+}

@@ -1,0 +1,22 @@
+<!-- <mat-toolbar class="titlebar" *ngIf="pageTitleBar && pageTitleBar.title">
+    <span>{{ pageTitleBar?.title }}</span>
+    <span class="fill-remaining-space"></span>
+
+    <span *ngFor="let action of pageTitleBar?.actions" [ngClass]="action.disabled ? 'disabled': ''" (click)="actionTaken(action.actionName)" [matTooltip]="action.actionName" class="action-style">
+        <i *ngIf="isFaOrGlyphiIcon(action.icon)" [ngClass]="action.icon" aria-hidden="true"></i>
+        <mat-icon *ngIf="isMaterialIcon(action.icon); else noicon" class="title-icon">{{action.icon}}
+        </mat-icon>
+        <ng-template #noicon>
+            <span> {{action.actionName}} </span>
+        </ng-template>
+    </span>
+</mat-toolbar> -->
+
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" *ngIf="pageTitleBar && pageTitleBar.title">
+    <span>{{ pageTitleBar.title }}</span>
+    <div>
+        <ng-container *ngFor="let action of pageTitleBar?.actions">
+            <button (click)="actionTaken(action.actionName)" mat-button mat-raised-button color="primary">{{action.displayName}}</button>
+        </ng-container>
+    </div>
+</mat-toolbar>

@@ -1,0 +1,23 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div>Add Product</div>
+    <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
+</mat-toolbar>
+
+<mat-card>
+    <mat-card-content>
+        <div *ngIf="form">
+            <form id="productForm" [formGroup]="form" (submit)="saveProduct()">
+
+                <app-input [form]="form" name="productName"></app-input>
+                <app-input [form]="form" name="description"></app-input>
+                <app-input [form]="form" name="Image Url"></app-input>
+                <app-input [form]="form" name="Category"></app-input>
+                <app-radio [form]="form" name="isActive" [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+                <button mat-button mat-raised-button color="primary">Save</button>
+
+                {{form.value | json}}
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>
