@@ -35,6 +35,7 @@ import { CustomerListComponent } from './customer/customer-list.component';
         children: [
           { path: 'customer', component:CustomerListComponent},
           { path: 'customer/new', component: CustomerComponent },
+          { path: 'customer/:id', component: CustomerComponent },
 
           { path: 'product', component: ProductListComponent },
           { path: 'product/new', component: ProductComponent },

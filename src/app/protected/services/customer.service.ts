@@ -18,11 +18,13 @@ export class CustomerService {
     return this.storage.getAll<Customer>(tableNames.customer);
   }
   add(customer: Customer) {
+    customer.createdAt = new Date();
     customer.customerId = `pr_${cryptoRandomString({ length: 10 })}`;
     return this.storage.addRecord(tableNames.customer, customer);
   }
 
   update(value: Customer) {
+    value.updatedAt = new Date();
     return this.storage.addRecord(tableNames.customer, value);
   }
 

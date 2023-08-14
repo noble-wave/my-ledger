@@ -36,6 +36,7 @@ export class ProductComponent implements OnInit {
     FormHelper.submit(this.form, this.formMeta, () => {
       this.service.add(this.form.value).subscribe(x => {
         console.log(x);
+        this.form.reset();
       });
     });
   }

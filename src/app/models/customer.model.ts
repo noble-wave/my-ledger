@@ -10,6 +10,8 @@ export interface Customer {
     pinCode?: string;
     state?: string;
     country?: string;
+    createdAt: Date;
+    updatedAt?: Date;
 }
 export function getCustomerMeta() {
     return [
@@ -19,10 +21,12 @@ export function getCustomerMeta() {
         { key: 'email', label: 'Email', required: false },
         { key: 'addressLine1', label: 'Address Line1', required: false },
         { key: 'addressLine2', label: 'Address Line2', required: false },
-        { key: 'isActive', label: 'Is Active', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
         { key: 'pinCode', label: 'Pincode ', required: false },
         { key: 'state', label: 'State', required: false },
         { key: 'country', label: 'Country', required: false },
+        { key: 'isActive', label: 'Is Active', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
+        { key: 'createdAt', label: 'Created at', required: false },
+        { key: 'updatedAt', label: 'Updated at', required: false },
     ] as Array<ModelMeta>;
 
 }
