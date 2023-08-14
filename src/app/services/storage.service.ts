@@ -5,6 +5,7 @@ import { catchError } from "rxjs";
 export const tableNames = {
     misc: 'misc',
     product: 'product',
+    customer:'customer'
 }
 
 export const dbConfig: DBConfig
@@ -26,7 +27,16 @@ export const dbConfig: DBConfig
                 { name: 'productName', keypath: 'productName', options: { unique: false } },
                 { name: 'createdAt', keypath: 'createdAt', options: { unique: false } },
             ]
+        },
+        {
+            store: tableNames.customer,
+            storeConfig: { keyPath: 'customerId', autoIncrement: false },
+            storeSchema: [
+                { name: 'customerName', keypath: 'customerName', options: { unique: false } },
+                { name: 'createdAt', keypath: 'createdAt', options: { unique: false } },
+            ]
         }
+
     ]
 };
 

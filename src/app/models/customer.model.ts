@@ -1,3 +1,5 @@
+import { ModelMeta } from "@app/shared-services";
+
 export interface Customer {
     customerId?: string;
     customerName: string;
@@ -8,4 +10,19 @@ export interface Customer {
     pinCode?: string;
     state?: string;
     country?: string;
+}
+export function getCustomerMeta() {
+    return [
+        { key: 'customerId', label: 'CustomerId', hide: true },
+        { key: 'customerName', label: 'Customer Name', required: true },
+        { key: 'phoneNumber', label: 'Phone Number', required: true },
+        { key: 'email', label: 'Email', required: false },
+        { key: 'addressLine1', label: 'Address Line1', required: false },
+        { key: 'addressLine2', label: 'Address Line2', required: false },
+        { key: 'isActive', label: 'Is Active', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
+        { key: 'pinCode', label: 'Pincode ', required: false },
+        { key: 'state', label: 'State', required: false },
+        { key: 'country', label: 'Country', required: false },
+    ] as Array<ModelMeta>;
+
 }

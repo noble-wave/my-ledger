@@ -1,1 +1,23 @@
-<p>customer works!</p>
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div>Add customer</div>
+    <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
+</mat-toolbar>
+
+<mat-card>
+    <mat-card-content>
+        <div *ngIf="form">
+            <form id="customerForm" [formGroup]="form" (submit)="saveProduct()">
+
+                <app-input [form]="form" name="customerName"></app-input>
+                <app-input [form]="form" name="phoneNumber"></app-input>
+                <app-input [form]="form" name="Image Url"></app-input>
+                <app-input [form]="form" name="Category"></app-input>
+                <app-radio [form]="form" name="isActive" [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+                <button mat-button mat-raised-button color="primary">Save</button>
+
+                {{form.value | json}}
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>
