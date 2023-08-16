@@ -34,31 +34,38 @@ export class CustomerComponent {
           this.form = this.app.meta.toFormGroup(y, this.modelMeta);
         });
       } else {
-        this.form = this.app.meta.toFormGroup({ isActive: true }, this.modelMeta);
+        this.form = this.app.meta.toFormGroup(
+          { isActive: true },
+          this.modelMeta
+        );
       }
     });
   }
 
-  saveProduct() {
+  saveProduct(addMore?: boolean) {
     FormHelper.submit(this.form, this.formMeta, () => {
       if (this.form.value['customerId']) {
         this.service.update(this.form.value).subscribe((x) => {
           console.log(x);
-          this.app.noty.notifyUpdated('Detail has been updated.');
+          this.app.noty.notifyUpdated('Customer has been');
           this.router.navigate(['../'], { relativeTo: this.route });
         });
       } else {
         this.service.add(this.form.value).subscribe((x) => {
           console.log(x);
-          this.app.noty.notifyAdded('Detail has been saved.');
-          this.form.reset();
-          this.router.navigate(['../', x.customerId], { relativeTo: this.route });
-          // this.form = this.app.meta.toFormGroup({ isActive: true }, this.modelMeta);
-          // this.form.markAsPristine();
-          // this.form.markAsUntouched();
-          // this.form.updateValueAndValidity();
-          // this.cdr.markForCheck();
-          // this.form.reset();
+          this.app.noty.notifyAdded('Customer has been');
+          if (addMore) {
+            this.form = this.app.meta.toFormGroup({ isActive: true }, this.modelMeta);
+            this.form.markAsPristine();
+            this.form.markAsUntouched();
+            this.form.updateValueAndValidity();
+            this.cdr.markForCheck();
+          } else {
+            this.form.reset();
+            this.router.navigate(['../', x.customerId], {
+              relativeTo: this.route,
+            });
+          }
         });
       }
     });

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppNotificationService, IrsPageTitleBarService, ModelMetaService } from '@app/shared-services';
+import { AppNotificationService, FormHelper, IrsPageTitleBarService, ModelMetaService } from '@app/shared-services';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -7,5 +7,7 @@ import { StorageService } from './storage.service';
 })
 export class AppService {
 
-  constructor(public meta: ModelMetaService, public noty: AppNotificationService, public title: IrsPageTitleBarService, public storage: StorageService) { }
+  constructor(public meta: ModelMetaService, public noty: AppNotificationService, public title: IrsPageTitleBarService, public storage: StorageService) {
+    FormHelper.notyInit(noty);
+   }
 }

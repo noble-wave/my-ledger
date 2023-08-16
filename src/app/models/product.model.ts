@@ -22,10 +22,10 @@ export function getProductMeta() {
         { key: 'productName', label: 'Product Name', required: true },
         { key: 'description', label: 'Description', required: true },
         { key: 'price', label: 'Price', required: true },
-        { key: 'quantity', label: 'Quantity', required: true },
         { key: 'imageUrl', label: 'Image Url', required: false },
         { key: 'category', label: 'Category', required: false },
         { key: 'isActive', label: 'Is Active', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
+        { key: 'isInventory', label: 'Is Inventory', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
         { key: 'createdAt', label: 'Created at', required: false },
         { key: 'updatedAt', label: 'Updated at', required: false },
     ] as Array<ModelMeta>;

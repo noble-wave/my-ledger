@@ -21,7 +21,6 @@ export class ProductListComponent implements OnInit {
       { name: 'productName', text: 'Product Name', order: 2 },
       { name: 'description', text: 'Description', order: 3 },
       { name: 'price', text: 'Price', order: 4 },
-      { name: 'quantity', text: 'Quantity', order: 5 },
     ];
     let excludeColumns = ['productId'];
     let displayColumns = columns.filter(x => excludeColumns.indexOf(x.name) === -1);

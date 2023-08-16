@@ -10,6 +10,7 @@ import { Customer } from '@app/models/customer.model';
 export class CustomerService {
 
   constructor(private storage: StorageService) { }
+  
   get(id: string) {
     return this.storage.getByKey<Customer>(tableNames.customer, id);
   }
@@ -17,15 +18,16 @@ export class CustomerService {
   getAll() {
     return this.storage.getAll<Customer>(tableNames.customer);
   }
+
   add(customer: Customer) {
     customer.createdAt = new Date();
-    customer.customerId = `pr_${cryptoRandomString({ length: 10 })}`;
+    customer.customerId = `cs_${cryptoRandomString({ length: 10 })}`;
     return this.storage.addRecord(tableNames.customer, customer);
   }
 
-  update(value: Customer) {
-    value.updatedAt = new Date();
-    return this.storage.updateRecord(tableNames.customer, value);
+  update(customer: Customer) {
+    customer.updatedAt = new Date();
+    return this.storage.updateRecord(tableNames.customer, customer);
   }
 
 }
