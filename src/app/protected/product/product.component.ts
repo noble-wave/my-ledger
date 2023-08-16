@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { getProductMeta } from '@app/models/product.model';
 import { AppService } from '@app/services/app.service';
 import { ProductService } from '../services/product.service';
@@ -14,16 +14,20 @@ export class ProductComponent implements OnInit {
   isEdit: boolean;
   formMeta = new FormMeta();
 
-  constructor(private app: AppService, private route: ActivatedRoute, private service: ProductService, private cdr: ChangeDetectorRef) {
-  }
+  constructor(
+    private app: AppService,
+    private route: ActivatedRoute,
+    private service: ProductService,
+    private cdr: ChangeDetectorRef,
+    private router:Router
+  ) {}
 
   ngOnInit(): void {
-
     let modelMeta = getProductMeta();
-    this.route.params.subscribe(x => {
+    this.route.params.subscribe((x) => {
       if (x['id']) {
         this.isEdit = true;
-        this.service.get(x['id']).subscribe(y => {
+        this.service.get(x['id']).subscribe((y) => {
           this.form = this.app.meta.toFormGroup(y, modelMeta);
         });
       } else {
@@ -34,11 +38,24 @@ export class ProductComponent implements OnInit {
 
   saveProduct() {
     FormHelper.submit(this.form, this.formMeta, () => {
-      this.service.add(this.form.value).subscribe(x => {
-        console.log(x);
-        this.form.reset();
-      });
+      if (this.form.value['productId']) {
+        this.service.update(this.form.value).subscribe((x) => {
+          console.log(x);
+          this.app.noty.notifyUpdated('Product has been');
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
+      } else {
+        this.service.add(this.form.value).subscribe((x) => {
+          console.log(x);
+          this.app.noty.notifyAdded('Product has been')
+          this.form.reset();
+          Object.keys(this.form.controls).forEach(key => {
+            this.form.get(key)?.markAsPristine();
+            this.form.get(key)?.markAsUntouched();
+          });
+          this.cdr.detectChanges();
+        });
+      }
     });
   }
-
 }

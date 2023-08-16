@@ -28,7 +28,7 @@ export class ProductService {
 
   update(value: Product) {
     value.updatedAt = new Date();
-    return this.storage.addRecord(tableNames.product, value);
+    return this.storage.updateRecord(tableNames.product, value);
   }
 
 }

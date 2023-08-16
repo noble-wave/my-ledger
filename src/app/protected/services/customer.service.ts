@@ -25,7 +25,7 @@ export class CustomerService {
 
   update(value: Customer) {
     value.updatedAt = new Date();
-    return this.storage.addRecord(tableNames.customer, value);
+    return this.storage.updateRecord(tableNames.customer, value);
   }
 
 }
