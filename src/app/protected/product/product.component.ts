@@ -71,6 +71,7 @@ export class ProductComponent implements OnInit {
             switchMap((x) => {
               let productInventory = this.inventoryForm.value;
               productInventory.productId = x.productId;
+              // productInventory.productName = x.productName;
               return this.service.saveInventory(productInventory);
             })
           )

@@ -2,3 +2,5 @@
     <div>Product-inventory</div>
     <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a>
 </mat-toolbar>
+
+<irs-local-table [data]="products$" [settings]="tableSettings"></irs-local-table>

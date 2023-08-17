@@ -6,11 +6,10 @@ import cryptoRandomString from 'crypto-random-string';
 import { ProductInventory } from '@app/models/product-inventory.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-
-  constructor(private storage: StorageService) { }
+  constructor(private storage: StorageService) {}
 
   get(productId: string) {
     return this.storage.getByKey<Product>(tableNames.product, productId);
@@ -31,13 +30,22 @@ export class ProductService {
     return this.storage.updateRecord(tableNames.product, value);
   }
 
-  getProductInventory(productId: string){
-    return this.storage.getByKey<ProductInventory>(tableNames.inventory, productId);
+  getProductInventory(productId: string) {
+    return this.storage.getByKey<ProductInventory>(
+      tableNames.inventory,
+      productId
+    );
   }
 
-  saveInventory(productInventory: ProductInventory){
+  saveInventory(productInventory: ProductInventory) {
     productInventory.updatedAt = new Date();
-    return this.storage.saveRecord<ProductInventory>(tableNames.inventory, productInventory);
+    return this.storage.saveRecord<ProductInventory>(
+      tableNames.inventory,
+      productInventory
+    );
   }
 
+  getAllInventory() {
+    return this.storage.getAll<ProductInventory>(tableNames.inventory);
+  }
 }
