@@ -7,6 +7,8 @@ export const tableNames = {
   product: 'product',
   customer: 'customer',
   inventory: 'inventory',
+  order: 'order',
+  orderData: 'order-data'
 };
 
 export const dbConfig: DBConfig = {
@@ -48,6 +50,27 @@ export const dbConfig: DBConfig = {
       store: tableNames.inventory,
       storeConfig: { keyPath: 'productId', autoIncrement: false },
       storeSchema: [],
+    },
+    {
+      store: tableNames.order,
+      storeConfig: { keyPath: 'orderId', autoIncrement: false },
+      storeSchema: [
+        {
+          name: 'orderNumber',
+          keypath: 'orderNumber',
+          options: { unique: false },
+        },
+        { name: 'createdAt', keypath: 'createdAt', options: { unique: false } },
+      ],
+    },
+    {
+      store: tableNames.orderData,
+      storeConfig: { keyPath: 'id', autoIncrement: true },
+      storeSchema: [
+        { name: 'orders', keypath: 'orders', options: { unique: false } },
+        { name: 'orderItems', keypath: 'orderItems', options: { unique: false } },
+        { name: 'orderStatuses', keypath: 'orderStatuses', options: { unique: false } },
+      ],
     },
   ],
 };

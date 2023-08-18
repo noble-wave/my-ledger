@@ -37,7 +37,7 @@ import { MatTreeModule } from '@angular/material/tree';
 
 
 import { IrsInputComponent } from './controls/reactive/input/input.component';
-import { IrsSelectComponent } from './controls/reactive/select/select.component';
+import { AppSelectComponent } from './controls/reactive/select/select.component';
 import { IrsTableComponent } from './controls/reactive/table/table.component';
 import { IrsToggleComponent } from './controls/reactive/toggle/toggle.component';
 import { IrsCheckboxComponent } from './controls/reactive/checkbox/checkbox.component';
@@ -92,7 +92,7 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
 
     LetDirective,
 
-    IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
+    IrsInputComponent, AppSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
     IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent, IrsControlComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent,
@@ -102,7 +102,7 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
   declarations: [
     LetDirective,
 
-    IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
+    IrsInputComponent, AppSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
     IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent, IrsAlertComponent, IrsConfirmComponent,

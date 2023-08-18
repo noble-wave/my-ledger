@@ -11,6 +11,7 @@ import { ProductPriceComponent } from './product-price/product-price.component';
 import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
 import { ProductListComponent } from './product/product-list.component';
 import { CustomerListComponent } from './customer/customer-list.component';
+import { OrderListComponent } from './order/order-list.component';
 
 
 
@@ -23,7 +24,8 @@ import { CustomerListComponent } from './customer/customer-list.component';
     ProductPriceComponent,
     ProductInventoryComponent,
     ProductListComponent,
-    CustomerListComponent
+    CustomerListComponent,
+    OrderListComponent
   ],
   imports: [
     CoreModule,
@@ -44,6 +46,7 @@ import { CustomerListComponent } from './customer/customer-list.component';
           { path: 'product-price', component: ProductPriceComponent },
           { path: 'product-inventory', component: ProductInventoryComponent },
           { path: 'order', component: OrderComponent },
+          { path: 'order/new', component: OrderListComponent},
         ]
       }
     ])
