@@ -4,8 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/services/app.service';
 import { FormHelper, FormMeta, ModelMeta } from '@app/shared-services';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { switchMap } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs';
 import { OrderService } from '../services/order.service';
+import { CustomerService } from '../services/customer.service';
+import { ProductService } from '../services/product.service';
+import { Product } from '@app/models/product.model';
+import { Customer } from '@app/models/customer.model';
 
 @Component({
   selector: 'app-order',
@@ -16,27 +20,34 @@ export class OrderComponent implements OnInit {
   form: FormGroup;
   customers: any[];
   products: any[];
+  modelMeta: ModelMeta[];
 
-  constructor(private orderService: OrderService, private fb: FormBuilder) {}
+  constructor(private orderService: OrderService, private customerService: CustomerService, private productService: ProductService, private fb: FormBuilder, private app: AppService) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      productId: [''],
-      customerId: [''], 
-    });
-    this.orderService.getAllCustomer().subscribe((customers) => {
+
+    this.modelMeta = getOrderMeta();
+    this.form = this.app.meta.toFormGroup({}, this.modelMeta);
+
+    this.customerService.getAll().subscribe((customers) => {
       this.customers = customers;
     });
-    this.orderService.getAllProduct().subscribe((products) => {
+
+    this.productService.getAll().subscribe((products) => {
       this.products = products;
     });
   }
 
-  handleProductSelection(selectedProduct: any) {
-    console.log('Selected Product:', selectedProduct);
+  handleProductSelection(product: Product) {
+    console.log('Selected Product:', product);
   }
 
-   saveProduct() {
+  handleCustomerSelection(customer: Customer) {
+    console.log('Selected customer:', customer);
+    this.form.get('customerName')?.setValue(customer.customerName);
+  }
+
+  saveProduct() {
     const selectedCustomerId = this.form.get('customerId')?.value;
     const selectedProductId = this.form.get('productId')?.value;
 

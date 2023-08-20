@@ -1,7 +1,5 @@
 import { ModelMeta } from '@app/shared-services';
 
-
-
 export interface Order {
   orderId?: string;
   orderNumber: string;
@@ -15,14 +13,14 @@ export interface Order {
 
 export function getOrderMeta() {
   return [
-    { key: 'orderId', label: 'OrderId', hide: true},
-    { key: 'orderNumber', label: 'Order Number'},
-    { key: 'customerId', label: 'Customer Id'},
-    { key: 'customerName', label: 'Customer Name'},
-    { key: 'items', label: 'Items'},
-    { key: 'totalAmount', label: 'Total Amount'},
-    { key: 'orderDate', label: 'Order Date'},
-    { key: 'status', label: 'Status'},
+    { key: 'orderId', label: 'OrderId', hide: true },
+    { key: 'orderNumber', label: 'Order Number' },
+    { key: 'customerId', label: 'Customer Id' },
+    { key: 'customerName', label: 'Customer Name' },
+    { key: 'items', label: 'Items' },
+    { key: 'totalAmount', label: 'Total Amount' },
+    { key: 'orderDate', label: 'Order Date' },
+    { key: 'status', label: 'Status' },
   ] as Array<ModelMeta>;
 }
 
@@ -39,8 +37,8 @@ export function getOrderItemMeta() {
     { key: 'productId', label: 'ProductId', hide: true },
     { key: 'productName', label: 'Product Name', required: true },
     { key: 'quantity', label: 'Quantity', required: true },
-    { key: 'unitPrice', label: 'Unit Price'},
-    { key: 'subtotal', label: 'Subtotal'},
+    { key: 'unitPrice', label: 'Unit Price' },
+    { key: 'subtotal', label: 'Subtotal' },
 
   ] as Array<ModelMeta>;
 }
