@@ -4,16 +4,52 @@
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="saveProduct()">
+        <div>
+            <irs-date [form]="form" name="orderDate" label="Order Date"></irs-date>
 
-            <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers" optTextLabel="customerName" optValueLabel="customerId" [hide]="false" (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+            <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers"
+                optTextLabel="customerName" optValueLabel="customerId" [hide]="false"
+                (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+
+            <div>
+
+                <div *ngFor="let orderItemForm of orderItemForms;  let i = index" fxLayout="row"
+                    fxLayoutAlign="space-between center">
+                    <app-select [form]="orderItemForm" name="productId" label="Select a Product" [options]="products"
+                        optTextLabel="productName" optValueLabel="productId" [hide]="false"
+                        (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
+                    <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
+
+                    <app-input [form]="orderItemForm" label="UnitPrice" name="unitPrice"></app-input>
+
+                    <irs-input-template [model]="orderItemForm.value" [bindingPropertyName]="'subtotal'"
+                        [label]="'Subtotal'" [viewOnly]="true">
+                    </irs-input-template>
+
+                    <button mat-fab color="basic" aria-label="Example icon button with a delete icon"
+                        (click)="deleteItem(i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <a type="button" (click)="addItem()" mat-button mat-raised-button>+ Add item</a>
+
+            <div fxLayoutAlign="center center">
+                <irs-input-template [model]="form.value" [bindingPropertyName]="'totalAmount'" [label]="'TotalAmount'"
+                    [viewOnly]="true">
+                </irs-input-template>
+            </div>
+            <p>Total Amount: {{ calculateTotalAmount() }}</p>
+            <div matBadge="1" matBadgeSize="large" class="demo-section">Total Amount: {{ calculateTotalAmount() }}</div>
 
 
-            <app-select [form]="form" name="productId" label="Select a Product" [options]="products" optTextLabel="productName" optValueLabel="productId" [hide]="false" (onSelectionChange)="handleProductSelection($event)"></app-select>
+            <a type="button" (click)="saveProduct()" mat-button mat-raised-button>Submit</a>
 
-            <button type="submit">Save</button>
 
             {{form.value | json}}
-        </form>
+            <div *ngFor="let orderItemForm of orderItemForms">
+                {{orderItemForm.value | json}}
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>

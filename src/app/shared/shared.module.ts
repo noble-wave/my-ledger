@@ -42,7 +42,7 @@ import { IrsTableComponent } from './controls/reactive/table/table.component';
 import { IrsToggleComponent } from './controls/reactive/toggle/toggle.component';
 import { IrsCheckboxComponent } from './controls/reactive/checkbox/checkbox.component';
 import { IrsTypeaheadComponent } from './controls/reactive/typeahead/typeahead.component';
-import { IrsDateComponent } from './controls/reactive/date/date.component';
+import { AppDateComponent } from './controls/reactive/date/date.component';
 
 
 import { IrsSearchTemplateComponent } from './controls/template/search-template/search-template.component';
@@ -93,7 +93,7 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
     LetDirective,
 
     IrsInputComponent, AppSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
-    IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent, IrsControlComponent,
+    AppDateComponent, IrsRadioComponent, IrsLocalTableComponent, IrsControlComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent,
 
@@ -103,7 +103,7 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
     LetDirective,
 
     IrsInputComponent, AppSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
-    IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent,
+    AppDateComponent, IrsRadioComponent, IrsLocalTableComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent, IrsAlertComponent, IrsConfirmComponent,
 

@@ -37,7 +37,7 @@ export function getOrderItemMeta() {
     { key: 'productId', label: 'ProductId', hide: true },
     { key: 'productName', label: 'Product Name', required: true },
     { key: 'quantity', label: 'Quantity', required: true },
-    { key: 'unitPrice', label: 'Unit Price' },
+    { key: 'unitPrice', label: 'Unit Price', },
     { key: 'subtotal', label: 'Subtotal' },
 
   ] as Array<ModelMeta>;

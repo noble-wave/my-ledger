@@ -7,7 +7,7 @@ import { FloatLabelType } from '@angular/material/form-field';
   templateUrl: './date.component.html',
   styleUrls: ['./date.component.scss']
 })
-export class IrsDateComponent implements OnInit {
+export class AppDateComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() name: string;

@@ -12,8 +12,7 @@ import { ProductInventoryComponent } from './product-inventory/product-inventory
 import { ProductListComponent } from './product/product-list.component';
 import { CustomerListComponent } from './customer/customer-list.component';
 import { OrderListComponent } from './order/order-list.component';
-
-
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -25,17 +24,19 @@ import { OrderListComponent } from './order/order-list.component';
     ProductInventoryComponent,
     ProductListComponent,
     CustomerListComponent,
-    OrderListComponent
+    OrderListComponent,
   ],
   imports: [
     CoreModule,
+    MatBadgeModule,
     SharedServicesModule,
     SharedModule,
     RouterModule.forChild([
       {
-        path: '', component: ProtectedComponent,
+        path: '',
+        component: ProtectedComponent,
         children: [
-          { path: 'customer', component:CustomerListComponent},
+          { path: 'customer', component: CustomerListComponent },
           { path: 'customer/new', component: CustomerComponent },
           { path: 'customer/:id', component: CustomerComponent },
 
@@ -46,10 +47,10 @@ import { OrderListComponent } from './order/order-list.component';
           { path: 'product-price', component: ProductPriceComponent },
           { path: 'product-inventory', component: ProductInventoryComponent },
           { path: 'order', component: OrderComponent },
-          { path: 'order/new', component: OrderListComponent},
-        ]
-      }
-    ])
-  ]
+          { path: 'order/new', component: OrderListComponent },
+        ],
+      },
+    ]),
+  ],
 })
-export class ProtectedModule { }
+export class ProtectedModule {}
