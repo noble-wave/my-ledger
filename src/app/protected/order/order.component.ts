@@ -23,6 +23,7 @@ export class OrderComponent implements OnDestroy {
   orderItemMeta: ModelMeta[];
   customers: Customer[];
   products: Product[];
+  statusOption: any;
 
   constructor(
     private orderService: OrderService,
@@ -33,9 +34,9 @@ export class OrderComponent implements OnDestroy {
   ) {}
 
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-    this.destroy$.next();
-    this.destroy$.complete();
+    // throw new Error('Method not implemented.');
+    // this.destroy$.next();
+    // this.destroy$.complete();
   }
 
   ngOnInit(): void {
@@ -56,47 +57,53 @@ export class OrderComponent implements OnDestroy {
     this.productService.getAll().subscribe((products) => {
       this.products = products;
     });
+
+    this.statusOption = this.orderService.getStatusOptions();
+    console.log('Order Status:', this.statusOption);
   }
 
   handleProductSelection(product: Product, orderItemForm: FormGroup) {
     orderItemForm.get('productName')?.setValue(product.productName);
     orderItemForm.get('unitPrice')?.setValue(product.price);
-    console.log('Product:', product);
-
-    orderItemForm.get('quantity')?.setValue(1);
-    this.updateSubtotal(orderItemForm, 1);
-
-    orderItemForm
-      .get('quantity')
-      ?.valueChanges.pipe(
+  
+    // Set the initial quantity to 1 and calculate the initial subtotal
+    const quantityControl = orderItemForm.get('quantity');
+    if (quantityControl) {
+      quantityControl.setValue(1);
+      this.updateSubtotal(orderItemForm, product.price); // Calculate initial subtotal
+  
+      quantityControl.valueChanges.pipe(
         takeUntil(this.destroy$) // Unsubscribe when component is destroyed
-      )
-      .subscribe((quantity) => {
-        console.log('Quantity:', quantity);
-        this.updateSubtotal(orderItemForm, quantity);
+      ).subscribe((quantity) => {
+        const unitPriceControl = orderItemForm.get('unitPrice');
+        if (unitPriceControl) {
+          this.updateSubtotal(orderItemForm, unitPriceControl.value);
+        }
       });
-
-    orderItemForm
-      .get('unitPrice')
-      ?.valueChanges.pipe(
+    }
+  
+    const unitPriceControl = orderItemForm.get('unitPrice');
+    if (unitPriceControl) {
+      unitPriceControl.valueChanges.pipe(
         takeUntil(this.destroy$) // Unsubscribe when component is destroyed
-      )
-      .subscribe((unitPrice) => {
-        console.log('Unit Price:', unitPrice);
+      ).subscribe((unitPrice) => {
         this.updateSubtotal(orderItemForm, unitPrice);
       });
+    }
   }
-
-  updateSubtotal(orderItemForm: FormGroup, value: number) {
+  
+  
+  updateSubtotal(orderItemForm, value) {
     const quantity = orderItemForm.get('quantity')?.value;
-    const defaultPrice = this.getProductDefaultPrice(orderItemForm);
-
-    if (quantity !== undefined && defaultPrice !== undefined) {
-      const subtotal = defaultPrice * quantity;
+    const newUnitPrice = parseFloat(value); // Convert value to a floating-point number
+  
+    if (!isNaN(newUnitPrice) && quantity !== undefined) {
+      const subtotal = newUnitPrice * quantity; // Calculate the new subtotal
       orderItemForm.get('subtotal')?.setValue(subtotal);
       this.calculateTotalAmount(); // Recalculate total amount
     }
   }
+  
 
   handleCustomerSelection(customer: Customer) {
     console.log('Selected customer:', customer);
@@ -145,17 +152,29 @@ export class OrderComponent implements OnDestroy {
     this.calculateTotalAmount(); // Recalculate total amount
   }
 
-  saveProduct() {
-    const selectedCustomerId = this.form.get('customerId')?.value;
-    const selectedProductId = this.form.get('productId')?.value;
-
-    if (!selectedCustomerId || !selectedProductId) {
-      return;
-    }
-
-    const order = {
-      customerId: selectedCustomerId,
-      productId: selectedProductId,
-    };
+  saveOrder() {
+    let order = this.form.value;
+    let orderItems = this.orderItemForms.map((x) => x.value);
+    order.items = orderItems;
+    this.orderService.addOrder(order).subscribe((x) => {
+      console.log(x);
+    });
   }
 }
+//   saveOrder() {
+//     const order: Order = {
+//       orderNumber: generateOrderNumber(), // Replace with your logic
+//       customerId: this.form.get('customerId')?.value,
+//       customerName: this.form.get('customerName')?.value, // Assuming you have a customerName form control
+//       items: this.orderItemForms.map(itemForm => itemForm.value),
+//       totalAmount: this.calculateTotalAmount(),
+//       orderDate: this.form.get('orderDate')?.value,
+//       status: OrderStatus.Pending // Replace with the appropriate status
+//     };
+
+//     this.orderService.addOrder(order).subscribe(savedOrder => {
+//       console.log('Order saved:', savedOrder);
+//       // You can choose to do further actions after saving
+//     });
+//   }
+// }

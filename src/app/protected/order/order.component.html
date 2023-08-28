@@ -7,14 +7,18 @@
         <div>
             <irs-date [form]="form" name="orderDate" label="Order Date"></irs-date>
 
-            <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers"
-                optTextLabel="customerName" optValueLabel="customerId" [hide]="false"
-                (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+            <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers"
+                    optTextLabel="customerName" optValueLabel="customerId" [hide]="false"
+                    (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+
+                <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
+                    optTextLabel="label" optValueLabel="value"></app-select>
+            </div>
 
             <div>
 
-                <div *ngFor="let orderItemForm of orderItemForms;  let i = index" fxLayout="row"
-                    fxLayoutAlign="space-between center">
+                <div *ngFor="let orderItemForm of orderItemForms;  let i = index" fxLayoutAlign="space-between center">
                     <app-select [form]="orderItemForm" name="productId" label="Select a Product" [options]="products"
                         optTextLabel="productName" optValueLabel="productId" [hide]="false"
                         (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
@@ -34,22 +38,20 @@
             </div>
             <a type="button" (click)="addItem()" mat-button mat-raised-button>+ Add item</a>
 
-            <div fxLayoutAlign="center center">
-                <irs-input-template [model]="form.value" [bindingPropertyName]="'totalAmount'" [label]="'TotalAmount'"
-                    [viewOnly]="true">
-                </irs-input-template>
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="bottom-row">
+                <div>
+                    <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Submit</a>
+                </div>
+                <div class="total-amount-square">
+                    Total Amount<br>
+                    {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}
+                </div>
             </div>
-            <p>Total Amount: {{ calculateTotalAmount() }}</p>
-            <div matBadge="1" matBadgeSize="large" class="demo-section">Total Amount: {{ calculateTotalAmount() }}</div>
 
-
-            <a type="button" (click)="saveProduct()" mat-button mat-raised-button>Submit</a>
-
-
-            {{form.value | json}}
+            <!-- {{form.value | json}}
             <div *ngFor="let orderItemForm of orderItemForms">
                 {{orderItemForm.value | json}}
-            </div>
+            </div> -->
         </div>
     </mat-card-content>
 </mat-card>
