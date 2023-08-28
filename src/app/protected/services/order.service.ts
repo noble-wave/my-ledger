@@ -7,23 +7,17 @@ import cryptoRandomString from 'crypto-random-string';
   providedIn: 'root',
 })
 export class OrderService {
-  private lastOrderNumber: number = 0;
 
   constructor(private storage: StorageService) {}
 
   addOrder(orderData: Order) {
     orderData.orderId = `oi_${cryptoRandomString({ length: 10 })}`;
-    orderData.orderNumber = this.generateOrderNumber();
-    return this.storage.addRecord<Order>(tableNames.orderData, orderData);
-  }
-
-  private generateOrderNumber(): string {
-    this.lastOrderNumber++;
-    return `on_${this.lastOrderNumber}`;
+    orderData.orderNumber = `${cryptoRandomString({ length: 6 })}`;
+    return this.storage.addRecord<Order>(tableNames.order, orderData);
   }
 
   getAll() {
-    return this.storage.getAll<Order>(tableNames.orderData);
+    return this.storage.getAll<Order>(tableNames.order);
   }
 
   getStatusOptions() {

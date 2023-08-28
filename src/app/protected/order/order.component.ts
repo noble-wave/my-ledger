@@ -156,6 +156,7 @@ export class OrderComponent implements OnDestroy {
     let order = this.form.value;
     let orderItems = this.orderItemForms.map((x) => x.value);
     order.items = orderItems;
+    this.productService.updateProductInventory(orderItems); // Update product inventory
     this.orderService.addOrder(order).subscribe((x) => {
       console.log(x);
     });
