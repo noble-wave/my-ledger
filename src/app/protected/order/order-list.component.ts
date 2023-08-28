@@ -18,10 +18,11 @@ export class OrderListComponent {
     let columns = [
       { name: 'orderId', text: 'Order Id', order: 1 },
       { name: 'orderNumber', text: 'Order Number', order: 2 },
-      { name: 'customerName', text: 'Customer Name', order: 3 },
-      { name: 'status', text: 'Status', order: 4 },
-      { name: 'qty', text: 'Quantity', order: 5 },
-      { name: 'totalAmount', text: 'Total Amount', order: 5 },
+      { name: 'orderDate', text: 'Order Date', order: 3 },
+      { name: 'customerName', text: 'Customer Name', order: 4 },
+      { name: 'status', text: 'Status', order: 5 },
+      { name: 'qty', text: 'Quantity', order: 6 },
+      { name: 'totalAmount', text: 'Total Amount', order: 7 },
       
     ];
     let excludeColumns = ['customerId'];
