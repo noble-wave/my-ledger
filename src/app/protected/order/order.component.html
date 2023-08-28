@@ -1,24 +1,57 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
     <div>Take Order</div>
-    <a type="button" routerLink="./new" mat-button mat-raised-button>List</a>
+    <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
         <div>
             <irs-date [form]="form" name="orderDate" label="Order Date"></irs-date>
 
-            <div fxLayout="row" fxLayoutAlign="space-evenly center">
-                <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers"
-                    optTextLabel="customerName" optValueLabel="customerId" [hide]="false"
-                    (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+            <div class="form-container">
+                <div class="form-row">
+                    <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers"
+                        optTextLabel="customerName" optValueLabel="customerId" [hide]="false"
+                        (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+            
+                    <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
+                        optTextLabel="label" optValueLabel="value"></app-select>
+                </div>
+            </div>
+            
+            
+            <div class="container" *ngFor="let orderItemForm of orderItemForms;  let i = index">
+                <div class="row product-section"> <!-- Add the "product-section" class here -->
+                    <div class="item">
+                        <app-select [form]="orderItemForm" name="productId" label="Select a Product"
+                            [options]="products" optTextLabel="productName" optValueLabel="productId" [hide]="false"
+                            (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
+                    </div>
+                    <div class="item">
+                        <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
+                    </div>
+                    <div class="item">
+                        <app-input [form]="orderItemForm" label="UnitPrice" name="unitPrice"></app-input>
+                    </div>
+                </div>
+                <div class="row">
 
-                <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
-                    optTextLabel="label" optValueLabel="value"></app-select>
+                    <div class="item">
+                        <irs-input-template [model]="orderItemForm.value" [bindingPropertyName]="'subtotal'"
+                            [label]="'Subtotal'" [viewOnly]="true">
+                        </irs-input-template>
+                    </div>
+                    <div class="item">
+                        <button mat-fab color="basic" aria-label="Example icon button with a delete icon"
+                            (click)="deleteItem(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <div>
+            <!-- <div>
 
-                <div *ngFor="let orderItemForm of orderItemForms;  let i = index" fxLayoutAlign="space-between center">
+                <div *ngFor="let orderItemForm of orderItemForms;  let i = index" class="form-row">
                     <app-select [form]="orderItemForm" name="productId" label="Select a Product" [options]="products"
                         optTextLabel="productName" optValueLabel="productId" [hide]="false"
                         (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
@@ -35,7 +68,7 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
-            </div>
+            </div> -->
             <a type="button" (click)="addItem()" mat-button mat-raised-button>+ Add item</a>
 
             <div fxLayout="row" fxLayoutAlign="space-between center" class="bottom-row">

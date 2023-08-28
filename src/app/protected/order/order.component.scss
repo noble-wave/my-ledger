@@ -1,54 +1,118 @@
 .bottom-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px; /* Add margin to separate from the content above */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  /* Add margin to separate from the content above */
 }
 
 .total-amount-square {
-    width: 150px;
-    height: 60px;
-    background-color: var(--primary);
-    color: white;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.5;
-    border-radius: 8px;
-    overflow: hidden;
+  width: 150px;
+  height: 60px;
+  background-color: var(--primary);
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.5;
+  border-radius: 8px;
+  overflow: hidden;
 }
-  .product-section {
+
+.form-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  /* Adjust as needed */
+  margin-bottom: 10px;
+}
+
+.app-select {
+  flex: 0 0 calc(50% - 10px);
+  margin-bottom: 10px;
+}
+
+/* Media query for screens with width up to 700px */
+@media (max-width: 700px) {
+  .form-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .app-select {
+    flex: 1 0 auto;
+    width: 100%;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* Adjust the gap as needed */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  /* Adjust the gap as needed */
+}
+
+.item {
+  flex: 1;
+  min-width: 0;
+  /* Ensure flex items can shrink properly */
+}
+
+@media (min-width: 1263px) {
+  .container {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 16px;
+    /* Adjust the gap as needed */
   }
-  
-  .product-item {
-    flex: 1;
-    min-width: calc(50% - 8px);
-    margin: 4px;
-    display: flex;
+
+  .row {
+    width: calc(50% - 8px);
+    /* Subtract the gap to fit two items in a row */
+  }
+
+  .item {
+    width: 100%;
+    /* Each item takes up the full width in a row */
+  }
+}
+
+/* Media query for screens with width up to 700px */
+@media (max-width: 700px) {
+  /* ... Other existing styles ... */
+
+  .item {
+    width: 100%;
+    /* Each item takes up the full width on smaller screens */
+  }
+
+  /* New styles for the section containing product selection, quantity, and unit price */
+  .product-section {
     flex-direction: column;
-    align-items: stretch;
+    /* Change to a column layout */
+    gap: 16px;
+    /* Add some space between the items */
   }
-  
-  /* Adjust delete button position */
-  .product-item button {
-    align-self: flex-end;
-    margin-top: auto;
+
+  .form-row {
+    flex-direction: column;
+    gap: 2px;
   }
-  
-  /* Layout for screen width less than 1200px: Two items per row */
-  @media (max-width: 1200px) {
-    .product-item {
-      min-width: calc(50% - 8px);
-    }
+
+  .app-select {
+    flex: 1 0 auto;
+    width: 100%;
   }
-  
-  /* Layout for screen width less than 600px: Single column layout */
-  @media (max-width: 600px) {
-    .product-item {
-      flex-basis: 100%;
-      min-width: 100%;
-    }
-  }
-    
+}

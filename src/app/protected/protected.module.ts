@@ -13,6 +13,7 @@ import { ProductListComponent } from './product/product-list.component';
 import { CustomerListComponent } from './customer/customer-list.component';
 import { OrderListComponent } from './order/order-list.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { ViewOrderComponent } from './order/view-order.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     ProductListComponent,
     CustomerListComponent,
     OrderListComponent,
+    ViewOrderComponent,
   ],
   imports: [
     CoreModule,
@@ -46,8 +48,10 @@ import { MatBadgeModule } from '@angular/material/badge';
 
           { path: 'product-price', component: ProductPriceComponent },
           { path: 'product-inventory', component: ProductInventoryComponent },
-          { path: 'order', component: OrderComponent },
-          { path: 'order/new', component: OrderListComponent },
+          
+          { path: 'order/new', component: OrderComponent },
+          { path: 'order', component: OrderListComponent },
+          { path: 'order/view/:orderId', component: ViewOrderComponent },
         ],
       },
     ]),

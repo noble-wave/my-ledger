@@ -159,6 +159,7 @@ export class OrderComponent implements OnDestroy {
     this.productService.updateProductInventory(orderItems); // Update product inventory
     this.orderService.addOrder(order).subscribe((x) => {
       console.log(x);
+      this.app.noty.notifyClose('Order has been taken');
     });
   }
 }
