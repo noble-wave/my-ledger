@@ -1,1 +1,59 @@
-<p>view-order works!</p>
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div>View Order</div>
+    <a type="button" routerLink="/order" mat-button mat-raised-button>List</a>
+</mat-toolbar>
+
+
+<!-- view-order.component.html -->
+<div class="order-details">
+    <div class="order-header">
+        <h2>Order Details</h2>
+        <p class="order-id"><strong>OrderId:</strong> {{ order?.orderId }}</p>
+    </div>
+    <div class="order-summary">
+        <div class="customer-info">
+            <p><strong>Customer:</strong> {{ order?.customerName }}</p>
+            <p><strong>Order Date:</strong> {{ order?.orderDate | date: 'longDate' }}</p>
+        </div>
+        <div class="status">
+            <p><strong>Status:</strong> {{ order?.status }}</p>
+        </div>
+    </div>
+    <div class="product-list">
+        <h3>Products</h3>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of order?.items">
+                    <td>{{ item?.productName }}</td>
+                    <td>{{ item?.quantity }}</td>
+                    <td>{{ item?.unitPrice | currency: 'INR' }}</td>
+                    <td>{{ item?.subtotal | currency: 'INR' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="total">
+        <p><strong>Total Amount:</strong> {{ order?.totalAmount | currency: 'INR' }}</p>
+    </div>
+</div>
+
+<div fxLayoutAlign="center center">
+    <a type="button" (click)="printPage()" mat-button mat-raised-button>Print</a>
+</div>
+
+
+
+
+
+
+
+<!-- 
+{{order | json}} -->

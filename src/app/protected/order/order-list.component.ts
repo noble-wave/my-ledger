@@ -23,7 +23,6 @@ export class OrderListComponent {
       { name: 'status', text: 'Status', order: 5 },
       { name: 'qty', text: 'Quantity', order: 6 },
       { name: 'totalAmount', text: 'Total Amount', order: 7 },
-      
     ];
     let excludeColumns = ['customerId'];
     let displayColumns = columns.filter(
@@ -35,13 +34,12 @@ export class OrderListComponent {
       displayColumns: displayColumns,
       idColumnName: 'orderId',
       canGoToEdit: false,
-      canGoToView: true
+      canGoToView: true,
     });
 
     this.orders$ = this.service.getAll().pipe(
       map((orders) => {
-        orders.forEach(
-          (order) =>
+        orders.forEach((order) =>
             (order['qty'] = order.items.reduce((qty, orderItem) => {
               qty += orderItem.quantity;
               return qty;

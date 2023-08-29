@@ -20,7 +20,7 @@
             
             
             <div class="container" *ngFor="let orderItemForm of orderItemForms;  let i = index">
-                <div class="row product-section"> <!-- Add the "product-section" class here -->
+                <div class="row product-section"> 
                     <div class="item">
                         <app-select [form]="orderItemForm" name="productId" label="Select a Product"
                             [options]="products" optTextLabel="productName" optValueLabel="productId" [hide]="false"
@@ -49,32 +49,16 @@
                 </div>
             </div>
 
-            <!-- <div>
-
-                <div *ngFor="let orderItemForm of orderItemForms;  let i = index" class="form-row">
-                    <app-select [form]="orderItemForm" name="productId" label="Select a Product" [options]="products"
-                        optTextLabel="productName" optValueLabel="productId" [hide]="false"
-                        (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
-                    <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
-
-                    <app-input [form]="orderItemForm" label="UnitPrice" name="unitPrice"></app-input>
-
-                    <irs-input-template [model]="orderItemForm.value" [bindingPropertyName]="'subtotal'"
-                        [label]="'Subtotal'" [viewOnly]="true">
-                    </irs-input-template>
-
-                    <button mat-fab color="basic" aria-label="Example icon button with a delete icon"
-                        (click)="deleteItem(i)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </div>
-            </div> -->
             <a type="button" (click)="addItem()" mat-button mat-raised-button>+ Add item</a>
 
-            <div fxLayout="row" fxLayoutAlign="space-between center" class="bottom-row">
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="bottom-row" fxLayoutGap="20px">
                 <div>
-                    <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Submit</a>
+                    <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Save</a>
                 </div>
+                <div>
+                    <a type="button" (click)="saveOrderPrint()" mat-button mat-raised-button>Save and print</a>
+                </div>
+                <span class="example-spacer"></span>
                 <div class="total-amount-square">
                     Total Amount<br>
                     {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}

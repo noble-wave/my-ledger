@@ -7,7 +7,6 @@ import cryptoRandomString from 'crypto-random-string';
   providedIn: 'root',
 })
 export class OrderService {
-
   constructor(private storage: StorageService) {}
 
   addOrder(orderData: Order) {
@@ -18,6 +17,10 @@ export class OrderService {
 
   getAll() {
     return this.storage.getAll<Order>(tableNames.order);
+  }
+
+  get(orderId: string) {
+    return this.storage.getByKey<Order>(tableNames.order, orderId);
   }
 
   getStatusOptions() {
