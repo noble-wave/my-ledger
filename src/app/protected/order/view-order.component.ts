@@ -22,6 +22,13 @@ export class ViewOrderComponent {
         // this.isEdit = true;
         this.orderService.get(x.orderId).subscribe((y: any) => {
           this.order = y;
+          this.route.queryParamMap.subscribe((z) => {
+            if (z.has('print')) {
+              if (z.get('print') === 'true') {
+                setTimeout(() => this.printPage(), 1000);
+              }
+            }
+          });
         });
       }
     });

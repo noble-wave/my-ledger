@@ -12,15 +12,15 @@
                     <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers"
                         optTextLabel="customerName" optValueLabel="customerId" [hide]="false"
                         (onSelectionChange)="handleCustomerSelection($event)"></app-select>
-            
+
                     <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
                         optTextLabel="label" optValueLabel="value"></app-select>
                 </div>
             </div>
-            
-            
+
+
             <div class="container" *ngFor="let orderItemForm of orderItemForms;  let i = index">
-                <div class="row product-section"> 
+                <div class="row product-section">
                     <div class="item">
                         <app-select [form]="orderItemForm" name="productId" label="Select a Product"
                             [options]="products" optTextLabel="productName" optValueLabel="productId" [hide]="false"
@@ -30,8 +30,12 @@
                         <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
                     </div>
                     <div class="item">
+                        <app-input [form]="orderItemForm" label="Discount" name="discount"></app-input>
+                    </div>
+                    <div class="item">
                         <app-input [form]="orderItemForm" label="UnitPrice" name="unitPrice"></app-input>
                     </div>
+
                 </div>
                 <div class="row">
 
@@ -59,6 +63,14 @@
                     <a type="button" (click)="saveOrderPrint()" mat-button mat-raised-button>Save and print</a>
                 </div>
                 <span class="example-spacer"></span>
+                <div class="total-amount-square">
+                    Net Amount<br>
+                    {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+                <div class="total-amount-square">
+                    Total Discount<br>
+                    {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}
+                </div>
                 <div class="total-amount-square">
                     Total Amount<br>
                     {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}

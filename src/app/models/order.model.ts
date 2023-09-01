@@ -6,6 +6,8 @@ export interface Order {
   customerId: string;
   customerName: string;
   items: OrderItem[];
+  totalDiscount: Number;
+  netAmount: Number;
   totalAmount: number;
   orderDate: Date;
   status: OrderStatus;
@@ -18,6 +20,8 @@ export function getOrderMeta() {
     { key: 'customerId', label: 'Customer Id' },
     { key: 'customerName', label: 'Customer Name' },
     { key: 'items', label: 'Items' },
+    { key: 'totalDiscount', label: 'Total Discount' },
+    { key: 'netAmount', label: 'Net Amount' },
     { key: 'totalAmount', label: 'Total Amount' },
     { key: 'orderDate', label: 'Order Date' },
     { key: 'status', label: 'Status' },
@@ -28,6 +32,7 @@ export interface OrderItem {
   productId: number;
   productName: string;
   quantity: number;
+  discount: Number;
   unitPrice: number;
   subtotal: number;
 }
@@ -37,6 +42,7 @@ export function getOrderItemMeta() {
     { key: 'productId', label: 'ProductId', hide: true },
     { key: 'productName', label: 'Product Name', required: true },
     { key: 'quantity', label: 'Quantity', required: true },
+    { key: 'discount', label: 'Discount', },
     { key: 'unitPrice', label: 'Unit Price', },
     { key: 'subtotal', label: 'Subtotal' },
 

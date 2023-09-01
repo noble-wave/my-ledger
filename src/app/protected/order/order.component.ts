@@ -9,6 +9,7 @@ import { CustomerService } from '../services/customer.service';
 import { ProductService } from '../services/product.service';
 import { Product } from '@app/models/product.model';
 import { Customer } from '@app/models/customer.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -29,14 +30,13 @@ export class OrderComponent implements OnDestroy {
     private orderService: OrderService,
     private customerService: CustomerService,
     private productService: ProductService,
-    private fb: FormBuilder,
-    private app: AppService
+    private app: AppService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnDestroy(): void {
-    // throw new Error('Method not implemented.');
-    // this.destroy$.next();
-    // this.destroy$.complete();
+   
   }
 
   ngOnInit(): void {
@@ -59,7 +59,12 @@ export class OrderComponent implements OnDestroy {
     });
 
     this.statusOption = this.orderService.getStatusOptions();
-    console.log('Order Status:', this.statusOption);
+
+    const deliveredOption = this.statusOption.find(option => option.value === 'Delivered');
+    if (deliveredOption) {
+      this.form.get('status')?.setValue(deliveredOption.value);
+    }
+
   }
 
   handleProductSelection(product: Product, orderItemForm: FormGroup) {
@@ -170,6 +175,7 @@ export class OrderComponent implements OnDestroy {
       this.form.updateValueAndValidity();
     });
   }
+
   resetOrderItemForms() {
     for (const orderItemForm of this.orderItemForms) {
       orderItemForm.reset();
@@ -183,8 +189,11 @@ export class OrderComponent implements OnDestroy {
     this.productService.updateProductInventory(orderItems); // Update product inventory
     this.orderService.addOrder(order).subscribe((x) => {
       console.log(x);
-      this.app.noty.notifyClose('Order has been taken');
+      this.app.noty.notifyClose('Order has been taken and go to print');
+      this.router.navigate(['/order/view', x.orderId], {
+        relativeTo: this.route,
+        queryParams: { print: true },
+      });
     });
   }
 }
-

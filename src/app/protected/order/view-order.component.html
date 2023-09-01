@@ -26,6 +26,7 @@
                 <tr>
                     <th>Product</th>
                     <th>Quantity</th>
+                    <th>Discount</th>
                     <th>Unit Price</th>
                     <th>Subtotal</th>
                 </tr>
@@ -34,6 +35,7 @@
                 <tr *ngFor="let item of order?.items">
                     <td>{{ item?.productName }}</td>
                     <td>{{ item?.quantity }}</td>
+                    <td>{{ item?.discount | currency: 'INR' }}</td>
                     <td>{{ item?.unitPrice | currency: 'INR' }}</td>
                     <td>{{ item?.subtotal | currency: 'INR' }}</td>
                 </tr>
@@ -41,6 +43,7 @@
         </table>
     </div>
     <div class="total">
+        <p><strong>Total Discount:</strong> {{ order?.totalDiscount | currency: 'INR' }}</p>
         <p><strong>Total Amount:</strong> {{ order?.totalAmount | currency: 'INR' }}</p>
     </div>
 </div>

@@ -76,19 +76,16 @@
   .container {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     gap: 16px;
-    /* Adjust the gap as needed */
   }
 
   .row {
-    width: calc(50% - 8px);
-    /* Subtract the gap to fit two items in a row */
+    width: 70%; /* Each row takes up the full width */
   }
 
   .item {
-    width: 100%;
-    /* Each item takes up the full width in a row */
+    flex: 1; /* Each item takes equal space within the row */
+    min-width: 0; /* Allow items to shrink if needed */
   }
 }
 

@@ -21,7 +21,8 @@ export class AppNavComponent {
     { path: 'customer', label: 'Customer' },
     // { path: 'product-price', label: 'Product Price' },
     // { path: 'product-inventory', label: 'Product Inventory' },
-    { path: 'order/new', label:'Order'}
+    { path: 'order/new', label:'Order'},
+    { path: 'setting', label:'Setting'}
   ]
 
   constructor(private breakpointObserver: BreakpointObserver) { }

@@ -14,6 +14,7 @@ import { CustomerListComponent } from './customer/customer-list.component';
 import { OrderListComponent } from './order/order-list.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ViewOrderComponent } from './order/view-order.component';
+import { SettingComponent } from './setting/setting.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ViewOrderComponent } from './order/view-order.component';
     CustomerListComponent,
     OrderListComponent,
     ViewOrderComponent,
+    SettingComponent,
   ],
   imports: [
     CoreModule,
@@ -52,6 +54,8 @@ import { ViewOrderComponent } from './order/view-order.component';
           { path: 'order/new', component: OrderComponent },
           { path: 'order', component: OrderListComponent },
           { path: 'order/view/:orderId', component: ViewOrderComponent },
+
+          { path: 'setting', component: SettingComponent},
         ],
       },
     ]),
