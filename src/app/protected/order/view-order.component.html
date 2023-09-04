@@ -43,6 +43,7 @@
         </table>
     </div>
     <div class="total">
+        <p><strong>Gross Amount:</strong> {{ order?.netAmount | currency: 'INR' }}</p>
         <p><strong>Total Discount:</strong> {{ order?.totalDiscount | currency: 'INR' }}</p>
         <p><strong>Total Amount:</strong> {{ order?.totalAmount | currency: 'INR' }}</p>
     </div>

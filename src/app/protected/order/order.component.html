@@ -26,16 +26,17 @@
                             [options]="products" optTextLabel="productName" optValueLabel="productId" [hide]="false"
                             (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="item">
+                        <app-input [form]="orderItemForm" label="UnitPrice" name="unitPrice"></app-input>
+                    </div>
                     <div class="item">
                         <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
                     </div>
                     <div class="item">
                         <app-input [form]="orderItemForm" label="Discount" name="discount"></app-input>
                     </div>
-                    <div class="item">
-                        <app-input [form]="orderItemForm" label="UnitPrice" name="unitPrice"></app-input>
-                    </div>
-
                 </div>
                 <div class="row">
 
@@ -54,28 +55,26 @@
             </div>
 
             <a type="button" (click)="addItem()" mat-button mat-raised-button>+ Add item</a>
-
-            <div fxLayout="row" fxLayoutAlign="space-between center" class="bottom-row" fxLayoutGap="20px">
-                <div>
-                    <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Save</a>
-                </div>
-                <div>
-                    <a type="button" (click)="saveOrderPrint()" mat-button mat-raised-button>Save and print</a>
-                </div>
-                <span class="example-spacer"></span>
+            
+            <div class="totals-row">
                 <div class="total-amount-square">
-                    Net Amount<br>
-                    {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}
+                    Gross Amount<br>
+                    {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
                 <div class="total-amount-square">
                     Total Discount<br>
-                    {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}
+                    {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
                 <div class="total-amount-square">
                     Total Amount<br>
                     {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
             </div>
+            <div class="button-row">
+                <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Save</a>
+                <a type="button" (click)="saveOrderPrint()" mat-button mat-raised-button>Save and print</a>
+            </div>
+            
 
             <!-- {{form.value | json}}
             <div *ngFor="let orderItemForm of orderItemForms">

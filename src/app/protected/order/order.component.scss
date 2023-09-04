@@ -1,6 +1,7 @@
-.example-spacer{
+.example-spacer {
   flex: 1 1 auto;
 }
+
 .bottom-row {
   display: flex;
   justify-content: space-between;
@@ -39,19 +40,6 @@
   margin-bottom: 10px;
 }
 
-/* Media query for screens with width up to 700px */
-@media (max-width: 700px) {
-  .form-row {
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .app-select {
-    flex: 1 0 auto;
-    width: 100%;
-  }
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -72,40 +60,8 @@
   /* Ensure flex items can shrink properly */
 }
 
-@media (min-width: 1263px) {
-  .container {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-  }
-
-  .row {
-    width: 70%; /* Each row takes up the full width */
-  }
-
-  .item {
-    flex: 1; /* Each item takes equal space within the row */
-    min-width: 0; /* Allow items to shrink if needed */
-  }
-}
-
 /* Media query for screens with width up to 700px */
 @media (max-width: 700px) {
-  /* ... Other existing styles ... */
-
-  .item {
-    width: 100%;
-    /* Each item takes up the full width on smaller screens */
-  }
-
-  /* New styles for the section containing product selection, quantity, and unit price */
-  .product-section {
-    flex-direction: column;
-    /* Change to a column layout */
-    gap: 16px;
-    /* Add some space between the items */
-  }
-
   .form-row {
     flex-direction: column;
     gap: 2px;
@@ -114,5 +70,89 @@
   .app-select {
     flex: 1 0 auto;
     width: 100%;
+  }
+}
+
+/* Media query for screens with width up to 700px */
+@media (max-width: 700px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .item {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .product-section {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .app-select,
+  .app-input {
+    flex: 1;
+    width: auto;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .button-row,
+  .totals-row {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-amount-square {
+    width: 33%;
+    height: 80px;
+  }
+
+}
+
+@media (min-width: 701px) {
+  .button-row {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .totals-row {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1263px) {
+  .container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .row {
+    width: 50%;
+    /* Each row takes up the full width */
+  }
+
+  .item {
+    flex: 1;
+    /* Each item takes equal space within the row */
+    min-width: 0;
+    /* Allow items to shrink if needed */
   }
 }

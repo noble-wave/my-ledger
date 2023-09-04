@@ -45,6 +45,7 @@ export class RowAction {
 }
 
 export class LocalTableSettings {
+  tableIdentifier?: string; // should be unique for all tables, would be used for exclude columns list and etc
   columns: Array<Column>;
   displayColumns: Array<Column>;
   idColumnName = 'id';

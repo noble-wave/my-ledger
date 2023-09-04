@@ -6,12 +6,12 @@
 
 <mat-list cdkDropListGroup>
     <div mat-subheader>Include</div>
-    <div cdkDropList [cdkDropListData]="includes" (cdkDropListDropped)="drop($event)">
+    <div class="option-fields" cdkDropList [cdkDropListData]="includes" (cdkDropListDropped)="drop($event)">
         <mat-list-item class="option-list" mat-line *ngFor="let item of includes" cdkDrag>{{item.text}}</mat-list-item>
     </div>
     <mat-divider></mat-divider>
     <div mat-subheader>Exclude</div>
-    <div cdkDropList [cdkDropListData]="excludes" (cdkDropListDropped)="drop($event)">
+    <div class="option-fields" cdkDropList [cdkDropListData]="excludes" (cdkDropListDropped)="drop($event)">
         <mat-list-item class="option-list" mat-line *ngFor="let item of excludes" cdkDrag>{{item.text}}</mat-list-item>
     </div>
 </mat-list>

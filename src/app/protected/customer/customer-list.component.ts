@@ -25,6 +25,7 @@ export class CustomerListComponent {
     let displayColumns = columns.filter(x => excludeColumns.indexOf(x.name) === -1);
 
     this.tableSettings = new LocalTableSettings({
+      tableIdentifier: 'customer-table',
       columns: columns,
       displayColumns: displayColumns,
       idColumnName: 'customerId',

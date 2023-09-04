@@ -66,64 +66,44 @@
   box-sizing: border-box;
 }
 
- /* view-order.component.css */
-// .order-details {
-//     max-width: 800px;
-//     margin: 0 auto;
-//     padding: 20px;
-//     border: 1px solid var(--grey-700);
-//     background-color: var(--primary);
-//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-//   }
-  
-//   .order-header {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//   }
-  
-//   .order-id {
-//     font-size: 16px;
-//     color: #666;
-//   }
-  
-//   .order-summary {
-//     display: flex;
-//     justify-content: space-between;
-//     margin-top: 20px;
-//   }
-  
-//   .customer-info {
-//     flex: 2;
-//   }
-  
-//   .status {
-//     flex: 1;
-//     text-align: right;
-//   }
-  
-//   .product-list {
-//     margin-top: 30px;
-//   }
-  
-//   .product-table {
-//     width: 100%;
-//     border-collapse: collapse;
-//     margin-top: 10px;
-//   }
-  
-//   .product-table th, .product-table td {
-//     padding: 10px;
-//     text-align: left;
-//     border-bottom: 1px solid var(--grey-700);
-//   }
-  
-//   .total {
-//     margin-top: 20px;
-//     text-align: right;
-//     font-size: 18px;
-//     font-weight: bold;
-//     color: var(--grey-50);
-//   }
- 
-  
+/* view-order.component.css */
+
+/* Adjust the .order-details container for screens below 768px */
+@media (max-width: 768px) {
+  /* Mobile-friendly styling */
+.order-details {
+  padding: 10px;
+}
+
+.order-summary {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.customer-info, .status {
+  flex: none;
+  width: 100%;
+  text-align: center;
+}
+
+.product-list {
+  margin-top: 15px;
+}
+
+.total {
+  font-size: 16px;
+}
+
+/* Adjust margins and paddings for better spacing on mobile */
+.order-summary p, .product-table th, .product-table td, .total p {
+  margin: 5px 0;
+  padding: 5px;
+}
+
+}
+
+
+
+

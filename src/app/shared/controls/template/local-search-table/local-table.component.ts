@@ -1,16 +1,14 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Column, IConfirm, LocalTableSettings } from '../../../../shared-services/models';
+import {
+  Column,
+  IConfirm,
+  LocalTableSettings,
+} from '../../../../shared-services/models';
 import { MatDialog } from '@angular/material/dialog';
 import { ColumnOptionsDailogComponent } from './column-options-dailog/column-options-dailog.component';
 
@@ -18,10 +16,9 @@ import { ColumnOptionsDailogComponent } from './column-options-dailog/column-opt
 @Component({
   selector: 'irs-local-table',
   templateUrl: './local-table.component.html',
-  styleUrls: ['./local-table.component.scss']
+  styleUrls: ['./local-table.component.scss'],
 })
 export class IrsLocalTableComponent implements OnInit, OnDestroy {
-
   @Input() settings: LocalTableSettings;
   @Input() data: Observable<any>;
 
@@ -39,7 +36,7 @@ export class IrsLocalTableComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
     // Add action column if required
@@ -59,18 +56,16 @@ export class IrsLocalTableComponent implements OnInit, OnDestroy {
 
     this.data.subscribe((x: Array<any>) => {
       this.dataSource.data = x;
-    })
+    });
 
     this.paginator.pageSize = this.settings.defaultPageSize;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
     this.displayColumns = this.getDisplayColumnOptions();
-
   }
 
   ngAfterViewInit() {
-
     // this.paginator.pageSize = this.settings.defaultPageSize;
     // if (this.settings.defaultSortColumnName) {
     //   this.sort.active = this.settings.defaultSortColumnName;
@@ -105,20 +100,18 @@ export class IrsLocalTableComponent implements OnInit, OnDestroy {
     const model: IConfirm = {
       title: 'Delete',
       message: 'Are you sure to delete this record?',
-      okAction: () => {
-
-      }
+      okAction: () => {},
     };
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   getText(row: any, propertyName: string) {
     const propertyNames = propertyName.split('.');
 
     let value = row;
 
-    propertyNames.forEach(item => {
+    propertyNames.forEach((item) => {
       value = value[item];
     });
 
@@ -126,29 +119,34 @@ export class IrsLocalTableComponent implements OnInit, OnDestroy {
   }
 
   getColumnNames() {
-    return this.displayColumns.map(x => x.name);
+    return this.displayColumns.map((x) => x.name);
   }
 
   getDisplayColumnOptions() {
-    return this.settings.displayColumns.map((x, idx) => { return { name: x.name, text: x.text, order: x.order } as Column });
+    return this.settings.displayColumns.map((x, idx) => {
+      return { name: x.name, text: x.text, order: x.order } as Column;
+    });
   }
 
-  getColumnOptions() {
-    return this.settings.columns.map((x, idx) => { return { name: x.name, text: x.text, order: x.order } as Column });
+  buildAllColumnOptions() {
+    return this.settings.columns.map((x, idx) => {
+      return { name: x.name, text: x.text, order: x.order } as Column;
+    });
   }
-
 
   openOptions() {
+    let all = this.buildAllColumnOptions();
+    let includes = this.displayColumns;
     const dialogRef = this.dialog.open(ColumnOptionsDailogComponent, {
       data: {
-        all: this.getColumnOptions(),
-        includes: this.displayColumns,
+        all: all,
+        includes: includes,
       },
       position: { right: 'right' },
-      height: 'calc( 100% - 128px)'
+      height: 'calc( 100% - 128px)',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }

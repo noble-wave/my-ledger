@@ -52,12 +52,28 @@ export class ViewOrderComponent {
       iframeDocument!.write(`
             <html>
             <head>
-                <title>Print tab</title>
+                <title>Invoice Generated</title>
                 <style>
+                // FOR DESABLE THE PRINT FOOTER
+
+                @page {
+                    size: auto;
+                    margin: 0;
+                }
+                @print {
+                  @page :footer {
+                      display: none;
+                  }
+                
+                  @page :header {
+                      display: none;
+                  }
+                }
+
                 .order-details {
                   display: flex;
                   flex-direction: column;
-                  align-items: center;
+                  align-items: center;  
                   padding: 20px;
                   background-color: var(--primary);
                   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
