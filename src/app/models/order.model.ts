@@ -5,6 +5,7 @@ export interface Order {
   orderNumber: string;
   customerId: string;
   customerName: string;
+  customerPhoneNumber: string;
   items: OrderItem[];
   totalDiscount: Number;
   netAmount: Number;
@@ -19,6 +20,7 @@ export function getOrderMeta() {
     { key: 'orderNumber', label: 'Order Number' },
     { key: 'customerId', label: 'Customer Id' },
     { key: 'customerName', label: 'Customer Name' },
+    { key: 'customerPhoneNumber', label: 'Customer Phone Number' },
     { key: 'items', label: 'Items' },
     { key: 'totalDiscount', label: 'Total Discount' },
     { key: 'netAmount', label: 'Net Amount' },

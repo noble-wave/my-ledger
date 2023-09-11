@@ -21,7 +21,9 @@ export class AppNavComponent {
     { path: 'customer', label: 'Customer' },
     // { path: 'product-price', label: 'Product Price' },
     // { path: 'product-inventory', label: 'Product Inventory' },
+    { path: 'order', label:'Order List'},
     { path: 'order/new', label:'Order'},
+    { path: 'simple-order', label:'Simple Order'},
     { path: 'setting', label:'Setting'}
   ]
 

@@ -27,11 +27,10 @@ export class OrderService {
     return this.toArray(OrderStatus);
   }
 
-  toArray(enumme) {
+  private toArray(enumme) {
     let obj = Object.keys(enumme).map((key) => {
       return { label: key, value: enumme[key] };
     });
-    console.log(obj);
     return obj;
   }
 }

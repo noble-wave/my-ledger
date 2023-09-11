@@ -8,16 +8,18 @@ export const tableNames = {
   customer: 'customer',
   inventory: 'inventory',
   order: 'order',
+  orderSetting: 'orderSetting'
 };
 
 export const dbConfig: DBConfig = {
   name: 'etrivia-ledger',
-  version: 1.1,
+  version: 1,
   objectStoresMeta: [
     {
       store: tableNames.misc,
       storeConfig: { keyPath: 'id', autoIncrement: true },
       storeSchema: [
+        { name: 'name', keypath: 'name', options: { unique: true } },
         { name: 'tag', keypath: 'tag', options: { unique: false } },
       ],
     },
@@ -55,6 +57,13 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: 'orderId', autoIncrement: true },
       storeSchema: [
         { name: 'items', keypath: 'items', options: { unique: false } },
+      ],
+    },
+    {
+      store: tableNames.orderSetting,
+      storeConfig: { keyPath: 'orderSetting', autoIncrement: true },
+      storeSchema: [
+        { name: 'defaultOrderStatus', keypath: 'defaultOrderStatus', options: { unique: false } },
       ],
     },
   ],

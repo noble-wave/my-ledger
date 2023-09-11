@@ -1,5 +1,5 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Take Order</div>
+    <div>Simple Order</div>
     <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
 </mat-toolbar>
 <mat-card>
@@ -9,11 +9,12 @@
 
             <div class="form-container">
                 <div class="form-row">
-                    <div *ngIf="setting.customer">
-                        <app-select [form]=" form" name="customerId" label="Select a customer" [options]="customers"
-                            optTextLabel="customerName" optValueLabel="customerId"
-                            (onSelectionChange)="handleCustomerSelection($event)"></app-select>
-                    </div>
+                    <!-- <app-select [form]="form" name="customerId" label="Select a customer" [options]="customers"
+                        optTextLabel="customerName" optValueLabel="customerId" [hide]="false"
+                        (onSelectionChange)="handleCustomerSelection($event)"></app-select> -->
+
+                        <app-input [form]="form" label="Customer Name" name="customerName"></app-input>
+                        <app-input [form]="form" label="Customer Phone Number" name="customerPhoneNumber"></app-input>
 
                     <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
                         optTextLabel="label" optValueLabel="value"></app-select>
@@ -22,11 +23,9 @@
 
 
             <div class="container" *ngFor="let orderItemForm of orderItemForms;  let i = index">
-                <div class="row product-section" *ngIf="setting.product">
+                <div class="row product-section">
                     <div class="item">
-                        <app-select [form]="orderItemForm" name="productId" label="Select a Product"
-                            [options]="products" optTextLabel="productName" optValueLabel="productId"
-                            (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
+                        <app-input [form]="orderItemForm" label="Product Name" name="productName"></app-input>
                     </div>
                 </div>
                 <div class="row">
@@ -36,7 +35,7 @@
                     <div class="item">
                         <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
                     </div>
-                    <div class="item" *ngIf="setting.discount">
+                    <div class="item">
                         <app-input [form]="orderItemForm" label="Discount" name="discount"></app-input>
                     </div>
                 </div>
@@ -57,13 +56,13 @@
             </div>
 
             <a type="button" (click)="addItem()" mat-button mat-raised-button>+ Add item</a>
-
+            
             <div class="totals-row">
                 <div class="total-amount-square">
                     Gross Amount<br>
                     {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
-                <div class="total-amount-square" *ngIf="setting.discount">
+                <div class="total-amount-square">
                     Total Discount<br>
                     {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
@@ -76,7 +75,12 @@
                 <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Save</a>
                 <a type="button" (click)="saveOrderPrint()" mat-button mat-raised-button>Save and print</a>
             </div>
-           
+            
+
+            <!-- {{form.value | json}}
+            <div *ngFor="let orderItemForm of orderItemForms">
+                {{orderItemForm.value | json}}
+            </div> -->
         </div>
     </mat-card-content>
 </mat-card>

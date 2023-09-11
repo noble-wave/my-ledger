@@ -46,13 +46,11 @@ export class CustomerComponent {
     FormHelper.submit(this.form, this.formMeta, () => {
       if (this.form.value['customerId']) {
         this.service.update(this.form.value).subscribe((x) => {
-          console.log(x);
           this.app.noty.notifyUpdated('Customer has been');
           this.router.navigate(['../'], { relativeTo: this.route });
         });
       } else {
         this.service.add(this.form.value).subscribe((x) => {
-          console.log(x);
           this.app.noty.notifyAdded('Customer has been');
           if (addMore) {
             this.form = this.app.meta.toFormGroup({ isActive: true }, this.modelMeta);

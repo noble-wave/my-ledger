@@ -1,1 +1,20 @@
-<p>setting works!</p>
+<div class="settings-container">
+    <h3>Select Default Setting for Order Status</h3>
+    <div class="status">
+        <app-select [form]="form" name="defaultOrderStatus" label="Select Status" [options]="statusOption"
+            optTextLabel="label" optValueLabel="value"></app-select>
+    </div>
+    <div class="section-label">Customer Section</div>
+    <app-radio [form]="form" name="customer" label="Want Your Customer Section?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+    <div class="section-label">Product Section</div>
+    <app-radio [form]="form" name="product" label="Want Your Product Section?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+    <div class="section-label">Discount Section</div>
+    <app-radio [form]="form" name="discount" label="Want Your Discount Section?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+    <button type="button" (click)="saveSettings()" mat-button mat-raised-button class="apply-button">Apply</button>
+</div>

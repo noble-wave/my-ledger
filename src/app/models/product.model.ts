@@ -19,7 +19,7 @@ export function getProductMeta() {
     return [
         { key: 'productId', label: 'ProductId', hide: true },
         { key: 'productName', label: 'Product Name', required: true },
-        { key: 'description', label: 'Description', required: true },
+        { key: 'description', label: 'Description', required: false },
         { key: 'price', label: 'Price', required: true },
         { key: 'imageUrl', label: 'Image Url', required: false },
         { key: 'category', label: 'Category', required: false },

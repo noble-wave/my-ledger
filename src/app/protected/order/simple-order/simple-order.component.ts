@@ -4,20 +4,19 @@ import { AppService } from '@app/services/app.service';
 import { ModelMeta } from '@app/shared-services';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { OrderService } from '../services/order.service';
-import { CustomerService } from '../services/customer.service';
-import { ProductService } from '../services/product.service';
 import { Product } from '@app/models/product.model';
 import { Customer } from '@app/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SettingService } from '../services/setting.service';
+import { OrderService } from '@app/protected/services/order.service';
+import { CustomerService } from '@app/protected/services/customer.service';
+import { ProductService } from '@app/protected/services/product.service';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss'],
+  selector: 'app-simple-order',
+  templateUrl: './simple-order.component.html',
+  styleUrls: ['./simple-order.component.scss']
 })
-export class OrderComponent implements OnDestroy {
+export class SimpleOrderComponent implements OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   form: FormGroup;
   orderItemForms: FormGroup[];
@@ -26,7 +25,6 @@ export class OrderComponent implements OnDestroy {
   customers: Customer[];
   products: Product[];
   statusOption: any;
-  setting: any;
 
   constructor(
     private orderService: OrderService,
@@ -34,8 +32,7 @@ export class OrderComponent implements OnDestroy {
     private productService: ProductService,
     private app: AppService,
     private router: Router,
-    private route: ActivatedRoute,
-    private orderSetting: SettingService
+    private route: ActivatedRoute
   ) {}
 
   ngOnDestroy(): void {}
@@ -61,28 +58,12 @@ export class OrderComponent implements OnDestroy {
 
     this.statusOption = this.orderService.getStatusOptions();
 
-    // this.orderSetting.getOrderSetting().subscribe((x) => {
-    //   this.setting = x;
-    //   let deliveredOption = this.setting.defaultOrderStatus;
-    //   if (deliveredOption) {
-    //     this.form.get('status')?.setValue(deliveredOption.value);
-    //   }
-    // });
-    this.orderSetting.getOrderSetting().subscribe((orderSettings) => {
-      this.setting = Object.assign({}, ...orderSettings);
-      if (orderSettings && orderSettings.length > 0) {
-        let defaultOrderStatus = orderSettings[0].defaultOrderStatus;
-        if (typeof defaultOrderStatus === 'string') {
-          this.form.get('status')?.setValue(defaultOrderStatus);
-        }
-      }
-    });
-
-    // ... remaining code ...
-
-    // const deliveredOption = this.statusOption.find(
-    //   (option) => option.value === 'Delivered'
-    // );
+    const deliveredOption = this.statusOption.find(
+      (option) => option.value === 'Delivered'
+    );
+    if (deliveredOption) {
+      this.form.get('status')?.setValue(deliveredOption.value);
+    }
   }
 
   handleProductSelection(product: Product, orderItemForm: FormGroup) {
@@ -196,7 +177,7 @@ export class OrderComponent implements OnDestroy {
     const netAmount = this.calculateNetAmount();
     const totalAmount = this.calculateTotalAmount();
     const totalDiscount = netAmount - totalAmount;
-
+  
     this.form.get('totalDiscount')?.setValue(totalDiscount);
     return totalDiscount;
   }
