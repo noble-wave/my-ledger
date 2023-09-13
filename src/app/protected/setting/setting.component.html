@@ -1,19 +1,22 @@
 <div class="settings-container">
     <h1>Order Settings</h1>
-    <div class="section-label">1. Select Default Setting for Order Status</div>
+    <div class="section-label">1. Manage Order Status</div>
+    <app-radio [form]="form" name="manageOrderStatus" label="Do you manage Order Status when taking order?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+    <div class="section-label">2. Select Default Setting for Order Status</div>
     <div class="status">
         <app-select [form]="form" name="defaultOrderStatus" label="Select Status" [options]="statusOptions"
             optTextLabel="label" optValueLabel="value"></app-select>
     </div>
-    <div class="section-label">2. Manage Customer</div>
+    <div class="section-label">3. Manage Customer</div>
     <app-radio [form]="form" name="manageCustomer" label="Do you manage Customer when taking order?"
         [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-    <div class="section-label">3. Manage Product</div>
+    <div class="section-label">4. Manage Product</div>
     <app-radio [form]="form" name="manageProduct" label="Do you manage Product when taking order?"
         [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-    <div class="section-label">4. Manage Discount</div>
+    <div class="section-label">5. Manage Discount</div>
     <app-radio [form]="form" name="manageDiscount" label="Do you manage Discount when taking order?"
         [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 

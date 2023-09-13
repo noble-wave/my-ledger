@@ -57,6 +57,5 @@ export enum OrderStatus {
   Shipped = 'Shipped',
   Delivered = 'Delivered',
   Cancelled = 'Cancelled',
-  NoStatus = 'No Status'
 }
 

@@ -90,39 +90,41 @@ export class OrderComponent implements OnDestroy {
       const subtotal = (unitPrice - discount) * quantity;
       orderItemForm.get('subtotal')?.setValue(subtotal);
 
-      // Subscribe to changes in quantity, unitPrice, and discount
-      quantityControl.valueChanges
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((quantity) => {
-          const unitPrice = unitPriceControl.value || 0;
-          const discount = discountControl?.value || 0;
-          this.updateSubtotal(orderItemForm, unitPrice, discount);
-        });
+      // // Subscribe to changes in quantity, unitPrice, and discount
+      // quantityControl.valueChanges
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe((quantity) => {
+      //     const unitPrice = unitPriceControl.value || 0;
+      //     const discount = discountControl?.value || 0;
+      //     this.updateSubtotal(orderItemForm, unitPrice, discount);
+      //   });
 
-      unitPriceControl.valueChanges
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((unitPrice) => {
-          const quantity = quantityControl.value || 0;
-          const discount = discountControl?.value || 0;
-          this.updateSubtotal(orderItemForm, unitPrice, discount);
-        });
+      // unitPriceControl.valueChanges
+      //   .pipe(takeUntil(this.destroy$))
+      //   .subscribe((unitPrice) => {
+      //     const quantity = quantityControl.value || 0;
+      //     const discount = discountControl?.value || 0;
+      //     this.updateSubtotal(orderItemForm, unitPrice, discount);
+      //   });
 
-      if (discountControl) {
-        discountControl.valueChanges
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((discount) => {
-            const unitPrice = unitPriceControl.value || 0;
-            const quantity = quantityControl.value || 0;
-            this.updateSubtotal(orderItemForm, unitPrice, discount);
-          });
-      }
+      // if (discountControl) {
+      //   discountControl.valueChanges
+      //     .pipe(takeUntil(this.destroy$))
+      //     .subscribe((discount) => {
+      //       const unitPrice = unitPriceControl.value || 0;
+      //       const quantity = quantityControl.value || 0;
+      //       this.updateSubtotal(orderItemForm, unitPrice, discount);
+      //     });
+      // }
     }
   }
 
-  updateSubtotal(orderItemForm, unitPrice, discount) {
+  updateSubtotal(orderItemForm: FormGroup) {
     const quantity = orderItemForm.get('quantity')?.value;
-    const newUnitPrice = parseFloat(unitPrice); // Convert value to a floating-point number
-    const newDiscount = parseFloat(discount); // Convert value to a floating-point number
+    const unitPrice = orderItemForm.get('unitPrice')?.value;
+    const discount = orderItemForm.get('discount')?.value;
+    const newUnitPrice = parseFloat(unitPrice) ; // Convert value to a floating-point number
+    const newDiscount = parseFloat(discount) || 0; // Convert value to a floating-point number
 
     if (!isNaN(newUnitPrice) && quantity !== undefined) {
       const subtotal = (newUnitPrice - newDiscount) * quantity; // Calculate the new subtotal

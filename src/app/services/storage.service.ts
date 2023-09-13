@@ -157,7 +157,7 @@ export class StorageService {
   }
 
   bulkAdd(tableName: string, obj: Array<any>) {
-    return this.db.bulkAdd(tableName, obj);
+    return this.db.bulkPut(tableName, obj);
   }
 
   bulkDelete(tableName: string, obj: Array<any>) {

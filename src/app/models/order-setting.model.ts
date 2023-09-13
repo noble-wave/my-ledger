@@ -9,6 +9,7 @@ export class AppSettings {
 export class OrderSettings extends AppSettings {
   // Used to set default order status of new Order
   defaultOrderStatus?: string; 
+  manageOrderStatus: boolean;
   manageCustomer: boolean;
   manageProduct: boolean;
   manageDiscount: boolean;
@@ -16,7 +17,8 @@ export class OrderSettings extends AppSettings {
   constructor() {
     super();
     this.name = 'orderSettings';
-    this.defaultOrderStatus = 'No Status';
+    this.defaultOrderStatus = '';
+    this.manageOrderStatus = true;
     this.manageCustomer = true;
     this.manageProduct = true;
     this.manageDiscount = true;
@@ -25,7 +27,8 @@ export class OrderSettings extends AppSettings {
 
 export function getOrderSettingMeta() {
   return [
-    { key: 'defaultOrderStatus', label: 'Order Status Name', required: true },
+    { key: 'defaultOrderStatus', label: 'Order Status Name', required: false },
+    { key: 'manageOrderStatus', label: 'Manage Order Status', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
     { key: 'manageCustomer', label: 'Manage Customer', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
     { key: 'manageProduct', label: 'Manage Product', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
     { key: 'manageDiscount', label: 'Manage Discount', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
@@ -33,6 +36,5 @@ export function getOrderSettingMeta() {
     { key: 'name', label: 'Order Settings', required: false },
     { key: 'id', label: 'Order Settings Id', required: false },
 
-    // { key: 'isActive', label: 'Is Active', controlType: 'radio', options: [{ key: true, value: 'Yes' }, { key: false, value: 'No' }] },
   ] as Array<ModelMeta>;
 }

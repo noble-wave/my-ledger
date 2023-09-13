@@ -16,8 +16,10 @@
                             (onSelectionChange)="handleCustomerSelection($event)"></app-select>
                     </div>
 
-                    <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
-                        optTextLabel="label" optValueLabel="value"></app-select>
+                    <div *ngIf="setting?.manageOrderStatus">
+                        <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
+                            optTextLabel="label" optValueLabel="value"></app-select>
+                    </div>
                 </div>
             </div>
 
@@ -32,13 +34,16 @@
                 </div>
                 <div class="row">
                     <div class="item">
-                        <app-input [form]="orderItemForm" label="UnitPrice" name="unitPrice"></app-input>
+                        <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"
+                            label="UnitPrice" name="unitPrice"></app-input>
                     </div>
                     <div class="item">
-                        <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
+                        <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"
+                            label="Quantity" name="quantity"></app-input>
                     </div>
                     <div class="item" *ngIf="setting?.manageDiscount">
-                        <app-input [form]="orderItemForm" label="Discount" name="discount"></app-input>
+                        <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"
+                            label="Discount" name="discount"></app-input>
                     </div>
                 </div>
                 <div class="row">
@@ -77,7 +82,7 @@
                 <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Save</a>
                 <a type="button" (click)="saveOrderPrint()" mat-button mat-raised-button>Save and print</a>
             </div>
-           
+
         </div>
     </mat-card-content>
 </mat-card>

@@ -24,7 +24,7 @@ export class AppNavComponent {
     { path: 'order', label:'Order List'},
     { path: 'order/new', label:'Order'},
     { path: 'setting', label:'Settings'},
-    { path: 'import-export', label:'Import/ Export'}
+    { path: 'import-export', label:'Import/Export'}
   ]
 
   constructor(private breakpointObserver: BreakpointObserver) { }

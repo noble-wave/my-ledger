@@ -34,10 +34,6 @@ export class ViewOrderComponent {
     });
   }
 
-  // printPage(): void {
-  //   window.print();
-  // }
-
   printPage(): void {
     const printContents = document.querySelector('.order-details')?.innerHTML;
 
@@ -151,29 +147,4 @@ export class ViewOrderComponent {
       document.body.removeChild(iframe);
     }
   }
-
-  // printPageDemo(): void {
-  //   const printContents = document.querySelector('.order-details')?.innerHTML;
-  //   const originalContents = document.body.innerHTML;
-
-  //   if (printContents) {
-  //     document.body.innerHTML = printContents;
-  //     window.print();
-  //     document.body.innerHTML = originalContents;
-  //   }
-  // }
-
-  // printPageOnly(): void {
-  //   const printContents = document.querySelector('.order-details')?.innerHTML;
-  //   let toPrintWin = window.open(
-  //     '',
-  //     '',
-  //     'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0'
-  //   );
-  //   toPrintWin?.document.write(printContents!);
-  //   toPrintWin?.document.close();
-  //   toPrintWin?.focus();
-  //   toPrintWin?.print();
-  //   toPrintWin?.close();
-  // }
 }
