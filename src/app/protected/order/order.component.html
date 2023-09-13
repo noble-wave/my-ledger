@@ -4,12 +4,13 @@
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
+        <h3>you can change order Section according your need. By changing in settings page..</h3>
         <div>
             <irs-date [form]="form" name="orderDate" label="Order Date"></irs-date>
 
             <div class="form-container">
                 <div class="form-row">
-                    <div *ngIf="setting.customer">
+                    <div *ngIf="setting?.manageCustomer">
                         <app-select [form]=" form" name="customerId" label="Select a customer" [options]="customers"
                             optTextLabel="customerName" optValueLabel="customerId"
                             (onSelectionChange)="handleCustomerSelection($event)"></app-select>
@@ -22,7 +23,7 @@
 
 
             <div class="container" *ngFor="let orderItemForm of orderItemForms;  let i = index">
-                <div class="row product-section" *ngIf="setting.product">
+                <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
                         <app-select [form]="orderItemForm" name="productId" label="Select a Product"
                             [options]="products" optTextLabel="productName" optValueLabel="productId"
@@ -36,7 +37,7 @@
                     <div class="item">
                         <app-input [form]="orderItemForm" label="Quantity" name="quantity"></app-input>
                     </div>
-                    <div class="item" *ngIf="setting.discount">
+                    <div class="item" *ngIf="setting?.manageDiscount">
                         <app-input [form]="orderItemForm" label="Discount" name="discount"></app-input>
                     </div>
                 </div>
@@ -63,7 +64,7 @@
                     Gross Amount<br>
                     {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
-                <div class="total-amount-square" *ngIf="setting.discount">
+                <div class="total-amount-square" *ngIf="setting?.manageDiscount">
                     Total Discount<br>
                     {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>

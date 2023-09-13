@@ -70,4 +70,8 @@ export class ProductService {
       });
     }
   }
+
+  uploadProductData(productData: any[]) {
+    return this.storage.bulkAdd(tableNames.product, productData);
+  }
 }

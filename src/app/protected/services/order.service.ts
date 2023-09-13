@@ -33,4 +33,10 @@ export class OrderService {
     });
     return obj;
   }
+
+  uploadOrderData(orderData: any[]) {
+    return this.storage.bulkAdd(tableNames.order, orderData);
+  }
+  
+
 }

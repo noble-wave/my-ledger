@@ -30,4 +30,9 @@ export class CustomerService {
     return this.storage.updateRecord(tableNames.customer, customer);
   }
 
+  uploadCustomerData(customerData: any[]) {
+    return this.storage.bulkAdd(tableNames.customer, customerData);
+  }
+  
+
 }

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { OrderSettings } from '@app/models/order-setting.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingService {
   constructor(private storage: StorageService) {}
-
 
   addOrderSetting(settings: OrderSettings) {
     settings.name = 'orderSettings';
@@ -21,6 +21,20 @@ export class SettingService {
   }
 
   getOrderSetting() {
-    return this.storage.getAllByIndex<OrderSettings>(tableNames.misc, 'name', IDBKeyRange.only('orderSettings'));
+    return this.storage
+      .getByIndex<OrderSettings>(
+        tableNames.misc,
+        'name',
+        'orderSettings'
+      )
+      .pipe(
+        map((x) => {
+          if (x) {
+            return x;
+          } else {
+            return new OrderSettings();
+          }
+        })
+      );
   }
 }

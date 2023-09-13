@@ -1,0 +1,27 @@
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  
+  .download-section {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container {
+      max-width: 100%;
+      padding: 10px;
+    }
+  }
+  

@@ -35,7 +35,7 @@ export class OrderComponent implements OnDestroy {
     private app: AppService,
     private router: Router,
     private route: ActivatedRoute,
-    private orderSetting: SettingService
+    private settingService: SettingService
   ) {}
 
   ngOnDestroy(): void {}
@@ -61,28 +61,12 @@ export class OrderComponent implements OnDestroy {
 
     this.statusOption = this.orderService.getStatusOptions();
 
-    // this.orderSetting.getOrderSetting().subscribe((x) => {
-    //   this.setting = x;
-    //   let deliveredOption = this.setting.defaultOrderStatus;
-    //   if (deliveredOption) {
-    //     this.form.get('status')?.setValue(deliveredOption.value);
-    //   }
-    // });
-    this.orderSetting.getOrderSetting().subscribe((orderSettings) => {
-      this.setting = Object.assign({}, ...orderSettings);
-      if (orderSettings && orderSettings.length > 0) {
-        let defaultOrderStatus = orderSettings[0].defaultOrderStatus;
-        if (typeof defaultOrderStatus === 'string') {
-          this.form.get('status')?.setValue(defaultOrderStatus);
-        }
-      }
+    this.settingService.getOrderSetting().subscribe((orderSettings) => {
+      this.setting = { ...orderSettings };
+      console.log('Setting data:', this.setting);
+      let defaultOrderStatus = orderSettings.defaultOrderStatus;
+      this.form.get('status')?.setValue(defaultOrderStatus);
     });
-
-    // ... remaining code ...
-
-    // const deliveredOption = this.statusOption.find(
-    //   (option) => option.value === 'Delivered'
-    // );
   }
 
   handleProductSelection(product: Product, orderItemForm: FormGroup) {

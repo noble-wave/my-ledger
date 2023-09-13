@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="download-section">
+      <h2>Export product data</h2>
+      <button mat-raised-button (click)="productData()">Export</button>
+    </div>
+    <div class="download-section">
+      <h2>Export customer data</h2>
+      <button mat-raised-button (click)="customerData()">Export</button>
+    </div>
+    <div class="download-section">
+      <h2>Export order data</h2>
+      <button mat-raised-button (click)="orderData()">Export</button>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="download-section">
+        <h2>Import JSON Data</h2>
+        <input type="file" (change)="onFileChange($event)" accept=".json" multiple />
+        <button mat-raised-button (click)="uploadFiles()">Import</button>
+    </div>
+</div>
+
+
+
+
+ 

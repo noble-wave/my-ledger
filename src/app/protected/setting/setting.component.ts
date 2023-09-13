@@ -12,64 +12,55 @@ import { SettingService } from '../services/setting.service';
   styleUrls: ['./setting.component.scss'],
 })
 export class SettingComponent {
-  statusOption: { label: string; value: any }[];
+  statusOptions: { label: string; value: any }[];
   form: FormGroup;
   modelMeta: ModelMeta[];
 
   constructor(
     private orderService: OrderService,
     private app: AppService,
-    private setting: SettingService
+    private settingService: SettingService
   ) {}
 
   ngOnInit(): void {
     this.modelMeta = getOrderSettingMeta();
-    this.statusOption = this.orderService.getStatusOptions();
+    this.statusOptions = this.orderService.getStatusOptions();
     // Retrieve order settings and populate the form
-    this.setting.getOrderSetting().subscribe((data) => {
-      if (data && data.length > 0) {
-        const orderSettings = data[0]; // Extract the settings from the array
-        this.form.patchValue(orderSettings);
-      }
-    });
     this.form = this.app.meta.toFormGroup({}, this.modelMeta);
+    this.settingService.getOrderSetting().subscribe((orderSettings) => {
+      this.form.patchValue(orderSettings);
+    });
   }
 
+  // Deprecated
   saveSetting() {
     let formValue = this.form.value;
     console.log(formValue);
-    this.setting.addOrderSetting(formValue).subscribe();
+    this.settingService.addOrderSetting(formValue).subscribe();
   }
 
-  
   saveSettings() {
     const formValue = this.form.value;
     console.log(formValue);
-  
+
     // Check if data exists in the storage
-    this.setting.getOrderSetting().subscribe((settings) => {
-      if (settings && settings.length > 0) {
+    this.settingService.getOrderSetting().subscribe((settings) => {
+      if (settings && settings.id) {
         // Data exists, update it
-        const existingSetting = { ...settings[0], ...formValue };
-        this.setting.update(existingSetting).subscribe(() => {
-          this.form.patchValue({
-            defaultOrderStatus: existingSetting.defaultOrderStatus,
-          });
+        let existingSetting = { ...settings, ...formValue };
+        this.settingService.update(existingSetting).subscribe(() => {
+          this.form.patchValue(existingSetting);
         });
+        this.app.noty.notifyUpdated('Setting has been');
       } else {
         // No data exists, add it
-        this.setting.addOrderSetting(formValue).subscribe(() => {
-          this.setting.getOrderSetting().subscribe((newSettings) => {
-            if (newSettings && newSettings.length > 0) {
-              const newSetting = newSettings[0];
-              this.form.patchValue({
-                defaultOrderStatus: newSetting.defaultOrderStatus,
-              });
-            }
-          });
+        this.settingService.addOrderSetting(formValue).subscribe((newSettings) => {
+          if (newSettings) {
+            this.form.patchValue(newSettings);
+            this.app.noty.notifyAdded('Setting has been');
+          }
         });
       }
     });
   }
-  
 }

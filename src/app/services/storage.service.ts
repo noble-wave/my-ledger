@@ -59,13 +59,6 @@ export const dbConfig: DBConfig = {
         { name: 'items', keypath: 'items', options: { unique: false } },
       ],
     },
-    {
-      store: tableNames.orderSetting,
-      storeConfig: { keyPath: 'orderSetting', autoIncrement: true },
-      storeSchema: [
-        { name: 'defaultOrderStatus', keypath: 'defaultOrderStatus', options: { unique: false } },
-      ],
-    },
   ],
 };
 
