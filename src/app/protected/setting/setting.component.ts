@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OrderService } from '../services/order.service';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {
   OrderSettings,
   QuickOrderSettings,
@@ -28,7 +28,8 @@ export class SettingComponent {
   constructor(
     private orderService: OrderService,
     private app: AppService,
-    private settingService: SettingService
+    private settingService: SettingService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -91,11 +92,37 @@ export class SettingComponent {
   //   unitPricesFormArray.push(this.createUnitPriceFormGroup()); // Add a new unit price control
   //   this.unitPrices.push(0); // Add a new element with an initial value of null to your unitPrices array
   // }
-  
+  // createUnitPriceFormGroup(): FormGroup {
+  //   return this.fb.group({
+  //     unitPrice: [0], // You can set an initial value here if needed
+  //   });
+  // }
 
   saveQuickOrderSetting() {
-    let orderItems = this.quickOrderForm.value;
-    orderItems.unitPrices = this.unitPrices;
-    console.log(orderItems);
+    let quickOrderSetting = this.quickOrderForm.value;
+    quickOrderSetting.unitPrices = this.unitPrices;
+    console.log(quickOrderSetting);
+
+    // Check if data exists in the storage
+    this.settingService.getQuickOrderSetting().subscribe((x) => {
+      if (x && x.id) {
+        // Data exists, update it
+        let existingSetting = { ...x, ...quickOrderSetting };
+        this.settingService.quickOrderUpdate(existingSetting).subscribe(() => {
+          this.form.patchValue(existingSetting);
+        });
+        this.app.noty.notifyUpdated('Setting has been');
+      } else {
+        // No data exists, add it
+        this.settingService
+          .addQuickOrderSetting(quickOrderSetting)
+          .subscribe((newSettings) => {
+            if (newSettings) {
+              this.form.patchValue(newSettings);
+              this.app.noty.notifyAdded('Setting has been');
+            }
+          });
+      }
+    });
   }
 }

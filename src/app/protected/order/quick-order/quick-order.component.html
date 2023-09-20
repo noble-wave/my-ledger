@@ -1,19 +1,24 @@
 <mat-card>
     <mat-card-content>
-    <h1>One-Click Ordering</h1>
-    <p>Welcome to our Quick Order page! We've made ordering your favorite products faster and more convenient than ever.
-    </p>
-    <div class="res">
-        <a type="button" class="box" mat-button mat-raised-button>15</a>
-        <a type="button" class="box" mat-button mat-raised-button>15</a>
-        <a type="button" class="box" mat-button mat-raised-button>15</a>
-        <a type="button" class="box" mat-button mat-raised-button>15</a>
+        <h1>Experience the ultimate convenience of One-Click Ordering</h1>
+        <p>Welcome to our Quick Order page! We've made ordering your favorite products faster and more convenient than
+            ever.
+        </p>
 
-    </div>
-</mat-card-content>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div *ngFor="let value of setting?.unitPrices">
+                <a type="button" class="box" (click)="saveOrder()" mat-button mat-raised-button>{{ value }}</a>
+            </div>
+        </div>
+
+        <h3>If you prefer a custom order, simply enter
+            your desired quantity and hit 'order' – it's that easy!</h3>
+        <input type="number">
+        <a type="button" (click)="saveOrder()" mat-button mat-raised-button>order</a>
+    </mat-card-content>
 </mat-card>
 
-<!-- <div class="res" *ngFor="let value of values">
-    <a type="button" class="box" (click)="saveOrder()" mat-button mat-raised-button>{{ value }}</a>
 
-</div> -->
+
+
+{{setting | json}}

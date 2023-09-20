@@ -2,42 +2,7 @@
 .box {
     width: 150px;
     height: 150px;
-    font-size: 100px;
+    font-size: 70px;
 }
 
-@media (max-width: 672px){
-    .box {
-        width: 130px;
-        height: 130px;
-        font-size: 80px;
-    }
-}
-@media (max-width: 594px){
-    .box {
-        width: 100px;
-        height: 100px;
-        font-size: 60px;
-    }
-}
-@media (max-width: 472px){
-    .box {
-        width: 80px;
-        height: 80px;
-        font-size: 50px;
-    }
-}
-@media (max-width: 392px){
-    .box {
-        width: 70px;
-        height: 70px;
-        font-size: 40px;
-    }
-}
 
-.res {
-    flex-flow: wrap;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
