@@ -10,6 +10,8 @@ import { Customer } from '@app/models/customer.model';
 export class CustomerService {
 
   constructor(private storage: StorageService) { }
+  private apiUrl = 'your_api_url_here';
+
   
   get(id: string) {
     return this.storage.getByKey<Customer>(tableNames.customer, id);
@@ -34,5 +36,8 @@ export class CustomerService {
     return this.storage.bulkAdd(tableNames.customer, customerData);
   }
   
+  getDataByDate(startDate: string, endDate: string) {
+    return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
+  }
 
 }

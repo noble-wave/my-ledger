@@ -16,6 +16,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { ViewOrderComponent } from './order/view-order.component';
 import { SettingComponent } from './setting/setting.component';
 import { ImportExportComponent } from './import-export/import-export.component';
+import { QuickOrderComponent } from './order/quick-order/quick-order.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ImportExportComponent } from './import-export/import-export.component';
     ViewOrderComponent,
     SettingComponent,
     ImportExportComponent,
+    QuickOrderComponent,
   ],
   imports: [
     CoreModule,
@@ -56,6 +58,7 @@ import { ImportExportComponent } from './import-export/import-export.component';
           { path: 'order/new', component: OrderComponent },
           { path: 'order', component: OrderListComponent },
           { path: 'order/view/:orderId', component: ViewOrderComponent },
+          { path: 'quickOrder', component: QuickOrderComponent},
 
           { path: 'setting', component: SettingComponent},
           { path: 'import-export', component: ImportExportComponent},

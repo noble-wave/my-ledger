@@ -22,7 +22,8 @@ export class AppNavComponent {
     // { path: 'product-price', label: 'Product Price' },
     // { path: 'product-inventory', label: 'Product Inventory' },
     { path: 'order', label:'Order List'},
-    { path: 'order/new', label:'Order'},
+    { path: 'order/new', label:'Take Order'},
+    { path: 'quickOrder', label:'Quick Order'},
     { path: 'setting', label:'Settings'},
     { path: 'import-export', label:'Import/Export'}
   ]

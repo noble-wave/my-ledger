@@ -8,6 +8,8 @@ import cryptoRandomString from 'crypto-random-string';
 })
 export class OrderService {
   constructor(private storage: StorageService) {}
+  private apiUrl = 'your_api_url_here';
+
 
   addOrder(orderData: Order) {
     orderData.orderId = `oi_${cryptoRandomString({ length: 10 })}`;
@@ -36,6 +38,10 @@ export class OrderService {
 
   uploadOrderData(orderData: any[]) {
     return this.storage.bulkAdd(tableNames.order, orderData);
+  }
+
+  getDataByDate(startDate: string, endDate: string) {
+    return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
   }
   
 

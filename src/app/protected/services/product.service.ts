@@ -10,6 +10,7 @@ import { ProductInventory } from '@app/models/product-inventory.model';
 })
 export class ProductService {
   constructor(private storage: StorageService) {}
+  private apiUrl = 'your_api_url_here';
 
   get(productId: string) {
     return this.storage.getByKey<Product>(tableNames.product, productId);
@@ -73,5 +74,9 @@ export class ProductService {
 
   uploadProductData(productData: any[]) {
     return this.storage.bulkAdd(tableNames.product, productData);
+  }
+
+  getDataByDate(startDate: string, endDate: string) {
+    return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
   }
 }

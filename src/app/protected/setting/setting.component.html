@@ -1,4 +1,4 @@
-<div class="settings-container">
+<!-- <div class="settings-container">
     <h1>Order Settings</h1>
     <div class="section-label">1. Manage Order Status</div>
     <app-radio [form]="form" name="manageOrderStatus" label="Do you manage Order Status when taking order?"
@@ -19,6 +19,79 @@
     <div class="section-label">5. Manage Discount</div>
     <app-radio [form]="form" name="manageDiscount" label="Do you manage Discount when taking order?"
         [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+    
+    <h1>Quick/Order Settings</h1>
+    <div class="section-label">1. Manage Quick/Order Settings </div>
+    <app-radio [form]="form" name="manageDiscount" label="Would you like to manage Quick/Order settings for orders?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+    
+    <div class="section-label">5. Manage Discount</div>
+    <app-radio [form]="form" name="manageDiscount" label="Would you like to manage Quick/Order settings for orders?"
+            [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
 
     <button type="button" (click)="saveSettings()" mat-button mat-raised-button class="apply-button">Apply</button>
-</div>
+</div> -->
+<mat-card>
+    <mat-card-content>
+        <div class="settings-container">
+            <h1>Order Settings</h1>
+            <div class="section-label">1. Manage Order Status</div>
+            <app-radio [form]="form" name="manageOrderStatus"
+                label="Would you like to manage Order Status when taking orders?"
+                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+            <div class="section-label">2. Select Default Setting for Order Status</div>
+            <div class="status">
+                <app-select [form]="form" name="defaultOrderStatus" label="Select Order Status"
+                    [options]="statusOptions" optTextLabel="label" optValueLabel="value"></app-select>
+            </div>
+            <div class="section-label">3. Manage Customer</div>
+            <app-radio [form]="form" name="manageCustomer"
+                label="Would you like to manage Customer information when taking orders?"
+                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+            <div class="section-label">4. Manage Product</div>
+            <app-radio [form]="form" name="manageProduct"
+                label="Would you like to manage Product details when taking orders?"
+                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+            <div class="section-label">5. Manage Discount</div>
+            <app-radio [form]="form" name="manageDiscount"
+                label="Would you like to manage Discounts when taking orders?"
+                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+            <button type="button" (click)="saveOrderSetting()" mat-button mat-raised-button
+                class="apply-button">Apply</button>
+
+        </div>
+    </mat-card-content>
+</mat-card>
+
+
+
+<mat-card>
+    <mat-card-content>
+        <div class="settings-container">
+            <h1>Quick/Order Settings</h1>
+            <div class="section-label">1. Manage Quick/Order Settings</div>
+            <app-radio [form]="quickOrderForm" name="manageQuickOrder"
+                label="Would you like to have Quick/Order page for take orders?"
+                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+            <div class="section-label">2. Add Quick Order Amounts</div>
+            
+            <div class="quick-order-amount">
+                    <div *ngFor="let unitPrice of quickOrderForm.value.unitPrices; let i = index;">
+                        <input type="number" [(ngModel)]="unitPrices[i]" />
+                    </div>
+
+                    {{unitPrices | json }}
+                <!-- <a type="button" (click)="addMore()" mat-button mat-raised-button>+ Add More</a> -->
+            </div>
+
+            <button type="button" (click)="saveQuickOrderSetting()" mat-button mat-raised-button
+                class="apply-button">Apply</button>
+
+        </div>
+    </mat-card-content>
+</mat-card>

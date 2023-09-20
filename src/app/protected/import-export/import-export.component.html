@@ -1,4 +1,32 @@
 <div class="container">
+  <div class="download-section">
+    <h2>Export product data</h2>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" [(ngModel)]="startDate">
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" [(ngModel)]="endDate">
+    <button mat-raised-button (click)="exportDataByDate('product')">Export</button>
+  </div>
+  <div class="download-section">
+    <h2>Export customer data</h2>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" [(ngModel)]="startDate">
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" [(ngModel)]="endDate">
+    <button mat-raised-button (click)="exportDataByDate('customer')">Export</button>
+  </div>
+  <div class="download-section">
+    <h2>Export order data</h2>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" [(ngModel)]="startDate">
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" [(ngModel)]="endDate">
+    <button mat-raised-button (click)="exportDataByDate('order')">Export</button>
+  </div>
+  <!-- Repeat similar sections for customer and order data -->
+</div>
+
+<div class="container">
     <div class="download-section">
       <h2>Export product data</h2>
       <button mat-raised-button (click)="productData()">Export</button>

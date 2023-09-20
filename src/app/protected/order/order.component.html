@@ -4,14 +4,14 @@
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
-        <h3>you can change order Section according your need. By changing in settings page..</h3>
+        <h3>Customize Your Order Section to Suit Your Preferences via Settings.</h3>
         <div>
             <irs-date [form]="form" name="orderDate" label="Order Date"></irs-date>
 
             <div class="form-container">
                 <div class="form-row">
                     <div *ngIf="setting?.manageCustomer">
-                        <app-select [form]=" form" name="customerId" label="Select a customer" [options]="customers"
+                        <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                             optTextLabel="customerName" optValueLabel="customerId"
                             (onSelectionChange)="handleCustomerSelection($event)"></app-select>
                     </div>
@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="item">
                         <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"
-                            label="UnitPrice" name="unitPrice"></app-input>
+                            label="Unit Price" name="unitPrice"></app-input>
                     </div>
                     <div class="item">
                         <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"

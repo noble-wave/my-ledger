@@ -8,7 +8,8 @@ export const tableNames = {
   customer: 'customer',
   inventory: 'inventory',
   order: 'order',
-  orderSetting: 'orderSetting'
+  orderSetting: 'orderSetting',
+  quickOrderSetting:'quickOrderSetting'
 };
 
 export const dbConfig: DBConfig = {

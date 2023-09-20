@@ -17,6 +17,8 @@ export class ImportExportComponent {
   products: any;
   orders: any;
   downloadJsonHref: any;
+  startDate: string = '';
+  endDate: string = '';
 
   constructor(
     private customerService: CustomerService,
@@ -135,5 +137,29 @@ export class ImportExportComponent {
       console.log('Order data uploaded successfully.');
       this.app.noty.notifyClose('Order data uploaded successfully.');
     });
+  }
+
+  exportDataByDate(dataType: string) {
+    if (!this.startDate || !this.endDate) {
+      console.error('Please select both start and end dates.');
+      return;
+    }
+
+    if (dataType === 'product') {
+      this.productService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
+        // Handle the exported product data
+        // Similar to your existing exportData() method
+      });
+    } else if (dataType === 'customer') {
+      this.customerService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
+        // Handle the exported customer data
+        // Similar to your existing customerData() method
+      });
+    } else if (dataType === 'order') {
+      this.orderService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
+        // Handle the exported order data
+        // Similar to your existing orderData() method
+      });
+    }
   }
 }
