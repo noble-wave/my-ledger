@@ -7,18 +7,22 @@
 
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <div *ngFor="let value of setting?.unitPrices">
-                <a type="button" class="box" (click)="saveOrder()" mat-button mat-raised-button>{{ value }}</a>
+                <a type="button" class="box-button" (click)="saveOrder(value)" mat-button mat-raised-button>{{ value }}</a>
             </div>
         </div>
 
         <h3>If you prefer a custom order, simply enter
             your desired quantity and hit 'order' – it's that easy!</h3>
-        <input type="number">
-        <a type="button" (click)="saveOrder()" mat-button mat-raised-button>order</a>
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+                <div fxFlex="50%" fxFlex.xs="70%" *ngFor="let orderItemForm of orderItemForms">
+                    <app-input [form]="orderItemForm" 
+                        label="Unit Price" name="unitPrice"></app-input>
+                </div >
+                <div >
+                    <a type="button" (click)="saveOrderd()" mat-button mat-raised-button>order</a>
+                </div>
+            
+            </div>
     </mat-card-content>
 </mat-card>
 
-
-
-
-{{setting | json}}

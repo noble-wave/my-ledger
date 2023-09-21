@@ -8,8 +8,9 @@ export interface Order {
   customerPhoneNumber: string;
   items: OrderItem[];
   totalDiscount: Number;
-  netAmount: Number;
-  totalAmount: number;
+  totalQuantity: Number;
+  grossAmount: Number;
+  netAmount: number;
   orderDate: Date;
   status: OrderStatus;
 }
@@ -23,8 +24,9 @@ export function getOrderMeta() {
     { key: 'customerPhoneNumber', label: 'Customer Phone Number' },
     { key: 'items', label: 'Items' },
     { key: 'totalDiscount', label: 'Total Discount' },
+    { key: 'totalQuantity', label: 'Total Quantity' },
+    { key: 'grossAmount', label: 'Gross Amount' },
     { key: 'netAmount', label: 'Net Amount' },
-    { key: 'totalAmount', label: 'Total Amount' },
     { key: 'orderDate', label: 'Order Date' },
     { key: 'status', label: 'Status' },
   ] as Array<ModelMeta>;

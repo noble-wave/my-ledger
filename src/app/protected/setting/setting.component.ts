@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {
@@ -10,13 +10,15 @@ import {
 import { ModelMeta } from '@app/shared-services';
 import { AppService } from '@app/services/app.service';
 import { SettingService } from '../services/setting.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.scss'],
 })
-export class SettingComponent {
+export class SettingComponent implements OnDestroy {
+  private destroy$: Subject<void> = new Subject<void>();
   statusOptions: { label: string; value: any }[];
   form: FormGroup;
   modelMeta: ModelMeta[];
@@ -37,9 +39,12 @@ export class SettingComponent {
     this.statusOptions = this.orderService.getStatusOptions();
     // Retrieve order settings and populate the form
     this.form = this.app.meta.toFormGroup(new OrderSettings(), this.modelMeta);
-    this.settingService.getOrderSetting().subscribe((orderSettings) => {
-      this.form.patchValue(orderSettings);
-    });
+    this.settingService
+      .getOrderSetting()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((orderSettings) => {
+        this.form.patchValue(orderSettings);
+      });
 
     //save unit price for Quick order Page
     this.quickOrderMeta = getQuickOrderSettingMeta();
@@ -47,10 +52,19 @@ export class SettingComponent {
       new QuickOrderSettings(),
       this.quickOrderMeta
     );
-    this.settingService.getQuickOrderSetting().subscribe((model) => {
-      this.quickOrderForm.patchValue(model);
-      this.unitPrices = [...this.quickOrderForm.value.unitPrices];
-    });
+    
+    this.settingService
+      .getQuickOrderSetting()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((model) => {
+        this.quickOrderForm.patchValue(model);
+        this.unitPrices = [...this.quickOrderForm.value.unitPrices];
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(undefined);
+    this.destroy$.complete();
   }
 
   // Deprecated

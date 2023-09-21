@@ -23,10 +23,10 @@
         <h3>Products</h3>
         <table class="product-table">
             <thead>
-                <tr *ngFor="let item of order?.items">
-                    <th *ngIf="item?.productName">Product</th>
+                <tr>
+                    <th *ngIf="order?.items && order.items.length > 0 && order.items[0]?.productName">Product</th>
                     <th>Quantity</th>
-                    <th *ngIf="item?.discount">Discount</th>
+                    <th *ngIf="order?.items && order.items.length > 0 && order.items[0]?.discount">Discount</th>
                     <th>Unit Price</th>
                     <th>Subtotal</th>
                 </tr>
@@ -43,9 +43,9 @@
         </table>
     </div>
     <div class="total">
-        <p><strong>Gross Amount:</strong> {{ order?.netAmount | currency: 'INR' }}</p>
+        <p><strong>Gross Amount:</strong> {{ order?.grossAmount | currency: 'INR' }}</p>
         <p><strong>Total Discount:</strong> {{ order?.totalDiscount | currency: 'INR' }}</p>
-        <p><strong>Total Amount:</strong> {{ order?.totalAmount | currency: 'INR' }}</p>
+        <p><strong>Net Amount:</strong> {{ order?.netAmount | currency: 'INR' }}</p>
     </div>
 </div>
 

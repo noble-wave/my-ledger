@@ -38,7 +38,10 @@ export class OrderComponent implements OnDestroy {
     private settingService: SettingService
   ) {}
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.destroy$.next(undefined);
+    this.destroy$.complete();
+  }
 
   ngOnInit(): void {
     this.modelMeta = getOrderMeta();
@@ -89,7 +92,6 @@ export class OrderComponent implements OnDestroy {
       const discount = discountControl.value || 0;
       const subtotal = (unitPrice - discount) * quantity;
       orderItemForm.get('subtotal')?.setValue(subtotal);
-
     }
   }
 
@@ -97,15 +99,16 @@ export class OrderComponent implements OnDestroy {
     const quantity = orderItemForm.get('quantity')?.value;
     const unitPrice = orderItemForm.get('unitPrice')?.value;
     const discount = orderItemForm.get('discount')?.value;
-    const newUnitPrice = parseFloat(unitPrice) ; // Convert value to a floating-point number
+    const newUnitPrice = parseFloat(unitPrice); // Convert value to a floating-point number
     const newDiscount = parseFloat(discount) || 0; // Convert value to a floating-point number
 
     if (!isNaN(newUnitPrice) && quantity !== undefined) {
       const subtotal = (newUnitPrice - newDiscount) * quantity; // Calculate the new subtotal
       orderItemForm.get('subtotal')?.setValue(subtotal);
-      this.calculateTotalAmount(); // Recalculate total amount
+      this.calculateGrossAmount(); // Recalculate total amount
       this.calculateTotalDiscount();
       this.calculateNetAmount();
+      this.calculateTotalQuantity();
     }
   }
 
@@ -127,35 +130,47 @@ export class OrderComponent implements OnDestroy {
     return 0;
   }
 
-  calculateNetAmount(): number {
-    let netAmount = 0;
+  calculateGrossAmount(): number {
+    let grossAmount = 0;
     for (const orderItemForm of this.orderItemForms) {
       if (orderItemForm instanceof FormGroup) {
         const quantity = orderItemForm.get('quantity')?.value || 0;
         const unitPrice = orderItemForm.get('unitPrice')?.value || 0;
-        netAmount += quantity * unitPrice;
+        grossAmount += quantity * unitPrice;
+      }
+    }
+    this.form.get('grossAmount')?.setValue(grossAmount);
+    return grossAmount;
+  }
+
+  calculateNetAmount(): number {
+    let netAmount = 0;
+    for (const orderItemForm of this.orderItemForms) {
+      if (orderItemForm && orderItemForm.get('subtotal')) {
+        const subtotal = orderItemForm.get('subtotal')?.value || 0;
+        netAmount += subtotal;
       }
     }
     this.form.get('netAmount')?.setValue(netAmount);
     return netAmount;
   }
 
-  calculateTotalAmount(): number {
-    let totalAmount = 0;
+  calculateTotalQuantity(): number {
+    let totalQuantity = 0;
     for (const orderItemForm of this.orderItemForms) {
-      if (orderItemForm && orderItemForm.get('subtotal')) {
-        const subtotal = orderItemForm.get('subtotal')?.value || 0;
-        totalAmount += subtotal;
+      if (orderItemForm && orderItemForm.get('quantity')) {
+        const quantity = orderItemForm.get('quantity')?.value || 0;
+        totalQuantity += Number(quantity);
       }
     }
-    this.form.get('totalAmount')?.setValue(totalAmount);
-    return totalAmount;
+    this.form.get('totalQuantity')?.setValue(totalQuantity); 
+    return totalQuantity;
   }
-
+  
   calculateTotalDiscount(): number {
+    const grossAmount = this.calculateGrossAmount();
     const netAmount = this.calculateNetAmount();
-    const totalAmount = this.calculateTotalAmount();
-    const totalDiscount = netAmount - totalAmount;
+    const totalDiscount = grossAmount - netAmount;
 
     this.form.get('totalDiscount')?.setValue(totalDiscount);
     return totalDiscount;
@@ -172,14 +187,15 @@ export class OrderComponent implements OnDestroy {
     });
 
     this.orderItemForms.push(newOrderItemForm);
-    this.calculateTotalAmount();
+    this.calculateGrossAmount();
     this.calculateTotalDiscount();
     this.calculateNetAmount();
+    this.calculateTotalQuantity();
   }
 
   deleteItem(index: number) {
     this.orderItemForms.splice(index, 1);
-    this.calculateTotalAmount(); // Recalculate total amount
+    this.calculateNetAmount(); // Recalculate total amount
   }
 
   saveOrder() {

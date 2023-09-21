@@ -17,12 +17,12 @@ export class OrderListComponent {
   ngOnInit(): void {
     let columns = [
       { name: 'orderId', text: 'Order Id', order: 1 },
-      { name: 'orderNumber', text: 'Order Number', order: 2 },
+      // { name: 'orderNumber', text: 'Order Number', order: 2 },
       { name: 'orderDate', text: 'Order Date', order: 3 },
       { name: 'customerName', text: 'Customer Name', order: 4 },
       { name: 'status', text: 'Status', order: 5 },
-      { name: 'qty', text: 'Quantity', order: 6 },
-      { name: 'totalAmount', text: 'Total Amount', order: 7 },
+      { name: 'totalQuantity', text: 'Total Quantity', order: 6 },
+      { name: 'netAmount', text: 'Net Amount', order: 7 },
     ];
     let excludeColumns = ['customerId'];
     let displayColumns = columns.filter(
@@ -40,10 +40,10 @@ export class OrderListComponent {
     this.orders$ = this.service.getAll().pipe(
       map((orders) => {
         orders.forEach((order) =>
-            (order['qty'] = order.items.reduce((qty, orderItem) => {
+            (order['qty'] = order.items?.reduce((qty, orderItem) => {
               qty += orderItem.quantity;
               return qty;
-            }, 0))
+            }, 0) || 1)
         );
         return orders;
       })

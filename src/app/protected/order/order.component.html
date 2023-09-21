@@ -67,15 +67,15 @@
             <div class="totals-row">
                 <div class="total-amount-square">
                     Gross Amount<br>
-                    {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
+                    {{ calculateGrossAmount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
                 <div class="total-amount-square" *ngIf="setting?.manageDiscount">
                     Total Discount<br>
                     {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
                 <div class="total-amount-square">
-                    Total Amount<br>
-                    {{ calculateTotalAmount() | currency:'INR':'symbol':'1.2-2' }}
+                    Net Amount<br>
+                    {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
             </div>
             <div class="button-row">

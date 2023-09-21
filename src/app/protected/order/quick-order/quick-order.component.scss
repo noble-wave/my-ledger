@@ -1,8 +1,21 @@
 
-.box {
-    width: 150px;
-    height: 150px;
+.box-button {
+    padding: 70px 40px 70px 40px;
     font-size: 70px;
+    box-shadow:  10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
+    transition: 0.4s;
 }
 
+.box-button:hover {
+    color: #ff0101;
+    font-weight: 700;
+    transform: translateY(-5px);
+    background: linear-gradient(to right bottom, #202123, #1a1818);
+}
+
+.box-button:active {
+    text-decoration: none;
+    outline: none;
+    color: rgb(50, 4, 218);
+}
 
