@@ -11,12 +11,12 @@
         <p class="order-id"><strong>OrderId:</strong> {{ order?.orderId }}</p>
     </div>
     <div class="order-summary">
-        <div class="customer-info" *ngIf="order?.customerName">
-            <p><strong>Customer:</strong> {{ order?.customerName }}</p>
+        <div class="customer-info">
+            <p *ngIf="order?.customerName"><strong>Customer:</strong> {{ order?.customerName }}</p>
             <p><strong>Order Date:</strong> {{ order?.orderDate | date: 'longDate' }}</p>
         </div>
         <div class="status">
-            <p><strong>Status:</strong> {{ order?.status }}</p>
+            <p *ngIf="order?.status"><strong>Status:</strong> {{ order?.status }}</p>
         </div>
     </div>
     <div class="product-list">

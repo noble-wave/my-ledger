@@ -18,7 +18,7 @@ export class OrderListComponent {
     let columns = [
       { name: 'orderId', text: 'Order Id', order: 1 },
       // { name: 'orderNumber', text: 'Order Number', order: 2 },
-      { name: 'orderDate', text: 'Order Date', order: 3 },
+      { name: 'orderDisplayDate', text: 'Order Date', order: 3 },
       { name: 'customerName', text: 'Customer Name', order: 4 },
       { name: 'status', text: 'Status', order: 5 },
       { name: 'totalQuantity', text: 'Total Quantity', order: 6 },
@@ -39,12 +39,17 @@ export class OrderListComponent {
 
     this.orders$ = this.service.getAll().pipe(
       map((orders) => {
-        orders.forEach((order) =>
-            (order['qty'] = order.items?.reduce((qty, orderItem) => {
+        orders.forEach((order) => {
+          order['qty'] =
+            order.items?.reduce((qty, orderItem) => {
               qty += orderItem.quantity;
               return qty;
-            }, 0) || 1)
-        );
+            }, 0) || 1;
+
+          order['orderDisplayDate'] = new Date(order.orderDate)
+            ?.toISOString()
+            .split('T')[0];
+        });
         return orders;
       })
     );
