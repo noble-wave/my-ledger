@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '@app/models/product.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
-import { of } from 'rxjs';
+import { map, of } from 'rxjs';
 import cryptoRandomString from 'crypto-random-string';
 import { ProductInventory } from '@app/models/product-inventory.model';
 
@@ -77,6 +77,14 @@ export class ProductService {
   }
 
   getDataByDate(startDate: string, endDate: string) {
-    return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
+    return this.storage.getAll<Product>(tableNames.product).pipe(
+      map((products) =>
+        products.filter((product) => {
+          let productDate = new Date(product.createdAt).toISOString().split('T')[0];
+          return productDate >= startDate && productDate <= endDate;
+        })
+      )
+    );
   }
+  
 }

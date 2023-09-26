@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Order, OrderStatus } from '@app/models/order.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import cryptoRandomString from 'crypto-random-string';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,16 @@ export class OrderService {
   getDataByDate(startDate: string, endDate: string) {
     return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
   }
-  
+
+  getDataByDate1(startDate: string, endDate: string) {
+    return this.storage.getAll<Order>(tableNames.order).pipe(
+      map((orders) =>
+      orders.filter((order) => {
+          let orderDate = new Date(order.orderDate).toISOString().split('T')[0];
+          return orderDate >= startDate && orderDate <= endDate;
+        })
+      )
+    );
+  }
 
 }

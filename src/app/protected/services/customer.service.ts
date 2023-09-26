@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import cryptoRandomString from 'crypto-random-string';
 import { Customer } from '@app/models/customer.model';
+import { map } from 'rxjs';
 
 
 @Injectable({
@@ -37,7 +38,14 @@ export class CustomerService {
   }
   
   getDataByDate(startDate: string, endDate: string) {
-    return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
+    return this.storage.getAll<Customer>(tableNames.customer).pipe(
+      map((products) =>
+        products.filter((product) => {
+          let customerDate = new Date(product.createdAt).toISOString().split('T')[0];
+          return customerDate >= startDate && customerDate <= endDate;
+        })
+      )
+    );
   }
 
 }

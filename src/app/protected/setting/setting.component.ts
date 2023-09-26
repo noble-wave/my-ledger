@@ -24,6 +24,8 @@ export class SettingComponent implements OnDestroy {
   modelMeta: ModelMeta[];
   quickOrderForm: FormGroup;
   quickOrderMeta: ModelMeta[];
+  orderSetting: any = { manageOrderStatus: true };
+  quickorderSetting: any = { manageQuickOrder: false };
 
   unitPrices: Array<number> = [];
 
@@ -39,11 +41,17 @@ export class SettingComponent implements OnDestroy {
     this.statusOptions = this.orderService.getStatusOptions();
     // Retrieve order settings and populate the form
     this.form = this.app.meta.toFormGroup(new OrderSettings(), this.modelMeta);
+
+    this.form.get('manageOrderStatus')?.valueChanges.subscribe((x) => {
+      this.orderSetting.manageOrderStatus = x;
+    });
+
     this.settingService
       .getOrderSetting()
       .pipe(takeUntil(this.destroy$))
       .subscribe((orderSettings) => {
         this.form.patchValue(orderSettings);
+        this.orderSetting = orderSettings;
       });
 
     //save unit price for Quick order Page
@@ -52,13 +60,18 @@ export class SettingComponent implements OnDestroy {
       new QuickOrderSettings(),
       this.quickOrderMeta
     );
-    
+    this.quickOrderForm.get('manageQuickOrder')?.valueChanges.subscribe((x) => {
+      this.quickorderSetting.manageQuickOrder = x;
+    });
+
+
     this.settingService
       .getQuickOrderSetting()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((model) => {
-        this.quickOrderForm.patchValue(model);
+      .subscribe((x) => {
+        this.quickOrderForm.patchValue(x);
         this.unitPrices = [...this.quickOrderForm.value.unitPrices];
+        this.quickorderSetting = x;
       });
   }
 
@@ -77,6 +90,9 @@ export class SettingComponent implements OnDestroy {
   saveOrderSetting() {
     const formValue = this.form.value;
     console.log(formValue);
+
+    // Update the orderSetting variable immediately
+    this.orderSetting = { ...this.orderSetting, ...formValue };
 
     // Check if data exists in the storage
     this.settingService.getOrderSetting().subscribe((settings) => {
@@ -138,5 +154,10 @@ export class SettingComponent implements OnDestroy {
           });
       }
     });
+  }
+
+  onRadioChange(manageOrderStatus: any) {
+    console.log('Selected order Status:', manageOrderStatus);
+    this.form.get('manageOrderStatus')?.setValue(manageOrderStatus.value);
   }
 }

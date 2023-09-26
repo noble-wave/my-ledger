@@ -17,7 +17,7 @@ export class OrderSettings extends AppSettings {
   constructor() {
     super();
     this.name = 'orderSettings';
-    this.defaultOrderStatus = '';
+    this.defaultOrderStatus = 'Delivered';
     this.manageOrderStatus = true;
     this.manageCustomer = true;
     this.manageProduct = true;

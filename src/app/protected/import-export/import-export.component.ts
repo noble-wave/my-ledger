@@ -139,27 +139,46 @@ export class ImportExportComponent {
     });
   }
 
-  exportDataByDate(dataType: string) {
+  exportProductDataByDate(dataType: string) {
     if (!this.startDate || !this.endDate) {
-      console.error('Please select both start and end dates.');
+      // console.error('Please select both start and end dates.');
+      this.app.noty.notifyError('Please select both start and end dates.');
       return;
     }
-
-    if (dataType === 'product') {
-      this.productService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
-        // Handle the exported product data
-        // Similar to your existing exportData() method
-      });
-    } else if (dataType === 'customer') {
-      this.customerService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
-        // Handle the exported customer data
-        // Similar to your existing customerData() method
-      });
-    } else if (dataType === 'order') {
-      this.orderService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
-        // Handle the exported order data
-        // Similar to your existing orderData() method
-      });
-    }
+    this.productService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
+      this.exportData(x, 'product.json');
+    });
+    
   }
+  exportCustomerDataByDate(dataType: string) {
+    if (!this.startDate || !this.endDate) {
+      // console.error('Please select both start and end dates.');
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+    this.customerService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
+      this.exportData(x, 'customer.json');
+    });
+    
+  }
+  
+  exportOrderDataByDate(dataType: string) {
+    if (!this.startDate || !this.endDate) {
+      // console.error('Please select both start and end dates.');
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+    this.orderService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
+      this.exportData(x, 'order.json');
+    });
+    
+  }
+
+  exportData(data: any, fileName: string) {
+    return saveAs(
+      new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' }),
+      fileName
+    );
+  }
+  
 }
