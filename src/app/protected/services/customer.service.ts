@@ -24,6 +24,7 @@ export class CustomerService {
 
   add(customer: Customer) {
     customer.createdAt = new Date();
+    customer.updatedAt = customer.createdAt;
     customer.customerId = `cs_${cryptoRandomString({ length: 10 })}`;
     return this.storage.addRecord(tableNames.customer, customer);
   }
@@ -37,12 +38,12 @@ export class CustomerService {
     return this.storage.bulkAdd(tableNames.customer, customerData);
   }
   
-  getDataByDate(startDate: string, endDate: string) {
+  getCustomerByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
     return this.storage.getAll<Customer>(tableNames.customer).pipe(
-      map((products) =>
-        products.filter((product) => {
-          let customerDate = new Date(product.createdAt).toISOString().split('T')[0];
-          return customerDate >= startDate && customerDate <= endDate;
+      map((customers) =>
+      customers.filter((customer) => {
+          return customer.updatedAt >= startDate && customer.updatedAt <= endDate;
         })
       )
     );

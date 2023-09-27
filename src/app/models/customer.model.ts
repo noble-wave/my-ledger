@@ -11,7 +11,7 @@ export interface Customer {
     state?: string;
     country?: string;
     createdAt: Date;
-    updatedAt?: Date;
+    updatedAt: Date;
 }
 export function getCustomerMeta() {
     return [

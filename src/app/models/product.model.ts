@@ -11,7 +11,7 @@ export interface Product {
     category?: string;
     isActive: boolean;
     createdAt: Date;
-    updatedAt?: Date;
+    updatedAt: Date;
 }
 
 

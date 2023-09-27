@@ -45,12 +45,12 @@ export class OrderService {
     return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
   }
 
-  getDataByDate1(startDate: string, endDate: string) {
+  getOrderByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
     return this.storage.getAll<Order>(tableNames.order).pipe(
       map((orders) =>
       orders.filter((order) => {
-          let orderDate = new Date(order.orderDate).toISOString().split('T')[0];
-          return orderDate >= startDate && orderDate <= endDate;
+          return order.orderDate >= startDate && order.orderDate <= endDate;
         })
       )
     );

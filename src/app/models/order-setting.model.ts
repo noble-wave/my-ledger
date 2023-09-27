@@ -78,7 +78,7 @@ export class QuickOrderSettings extends AppSettings {
     super();
     this.name = 'quickOrderSettings';
     this.manageQuickOrder = false;
-    this.unitPrices = [12, 20, 50, 60];
+    this.unitPrices = [10, 20, 50, 60];
   }
 }
 

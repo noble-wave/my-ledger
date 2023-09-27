@@ -1,55 +1,85 @@
 <div class="container">
-  <div class="download-section">
-    <h2>Export product data</h2>
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" [(ngModel)]="startDate">
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" [(ngModel)]="endDate">
-    <button mat-raised-button (click)="exportProductDataByDate('product')">Export</button>
+  <h2>Export Product, Customer, and Order Data</h2>
+
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="hide-on-small">Export All Data</span>
+            <span class="show-on-small">Export All Data</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="downloadProductData()">Export All Product Data</button>
+          </div>
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="downloadCustomerData()">Export All Customer Data</button>
+          </div>
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="downloadOrderData()">Export All Order Data</button>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
-  <div class="download-section">
-    <h2>Export customer data</h2>
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" [(ngModel)]="startDate">
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" [(ngModel)]="endDate">
-    <button mat-raised-button (click)="exportCustomerDataByDate('customer')">Export</button>
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="hide-on-small">Export Data by Date Range</span>
+            <span class="show-on-small">Export Data by Date Range</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="download-section">
+          <mat-form-field class="example-form-field">
+            <mat-label>Select the Date Range</mat-label>
+            <mat-date-range-input [formGroup]="datePicker" [rangePicker]="campaignOnePicker"
+              [comparisonStart]="datePicker.value.start" [comparisonEnd]="datePicker.value.end">
+              <input matStartDate placeholder="Start date" formControlName="start">
+              <input matEndDate placeholder="End date" formControlName="end">
+            </mat-date-range-input>
+            <mat-hint>Start Date MM/DD/YYYY – End Date MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+          </mat-form-field>
+          <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="exportProductDataByDate('product')">Export Product</button>
+            </div>
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="exportCustomerDataByDate('customer')">Export Customer</button>
+            </div>
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="exportOrderDataByDate('order')">Export Order</button>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
-  <div class="download-section">
-    <h2>Export order data</h2>
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" [(ngModel)]="startDate">
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" [(ngModel)]="endDate">
-    <button mat-raised-button (click)="exportOrderDataByDate('order')">Export</button>
-  </div>
-  Repeat similar sections for customer and order data
 </div>
 
 <div class="container">
-    <div class="download-section">
-      <h2>Export All product data</h2>
-      <button mat-raised-button (click)="productData()">Export</button>
-    </div>
-    <div class="download-section">
-      <h2>Export All customer data</h2>
-      <button mat-raised-button (click)="customerData()">Export</button>
-    </div>
-    <div class="download-section">
-      <h2>Export All order data</h2>
-      <button mat-raised-button (click)="orderData()">Export</button>
+  <div class="download-section">
+    <h2>Import JSON Data</h2>
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign=" center"> 
+      <div>
+        <input type="file" class="upload-box" (change)="onFileChange($event)" accept=".json" multiple />
+      </div>
+      <div>
+        <button mat-raised-button (click)="uploadFiles()">Import</button>
+      </div>
     </div>
   </div>
-  
-  <div class="container">
-    <div class="download-section">
-        <h2>Import JSON Data</h2>
-        <input type="file" (change)="onFileChange($event)" accept=".json" multiple />
-        <button mat-raised-button (click)="uploadFiles()">Import</button>
-    </div>
 </div>
-
-
-
-
- 

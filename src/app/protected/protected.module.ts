@@ -13,6 +13,8 @@ import { ProductListComponent } from './product/product-list.component';
 import { CustomerListComponent } from './customer/customer-list.component';
 import { OrderListComponent } from './order/order-list.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ViewOrderComponent } from './order/view-order.component';
 import { SettingComponent } from './setting/setting.component';
 import { ImportExportComponent } from './import-export/import-export.component';
@@ -37,6 +39,8 @@ import { QuickOrderComponent } from './order/quick-order/quick-order.component';
   imports: [
     CoreModule,
     MatBadgeModule,
+    MatExpansionModule,
+    MatDatepickerModule,
     SharedServicesModule,
     SharedModule,
     RouterModule.forChild([
@@ -54,14 +58,14 @@ import { QuickOrderComponent } from './order/quick-order/quick-order.component';
 
           { path: 'product-price', component: ProductPriceComponent },
           { path: 'product-inventory', component: ProductInventoryComponent },
-          
+
           { path: 'order/new', component: OrderComponent },
           { path: 'order', component: OrderListComponent },
           { path: 'order/view/:orderId', component: ViewOrderComponent },
-          { path: 'quickOrder', component: QuickOrderComponent},
+          { path: 'quickOrder', component: QuickOrderComponent },
 
-          { path: 'setting', component: SettingComponent},
-          { path: 'import-export', component: ImportExportComponent},
+          { path: 'setting', component: SettingComponent },
+          { path: 'import-export', component: ImportExportComponent },
         ],
       },
     ]),

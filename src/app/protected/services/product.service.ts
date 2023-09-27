@@ -22,6 +22,7 @@ export class ProductService {
 
   add(product: Product) {
     product.createdAt = new Date();
+    product.updatedAt = product.createdAt;
     product.productId = `pr_${cryptoRandomString({ length: 10 })}`;
     return this.storage.addRecord(tableNames.product, product);
   }
@@ -76,15 +77,14 @@ export class ProductService {
     return this.storage.bulkAdd(tableNames.product, productData);
   }
 
-  getDataByDate(startDate: string, endDate: string) {
+  getProductByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
     return this.storage.getAll<Product>(tableNames.product).pipe(
       map((products) =>
         products.filter((product) => {
-          let productDate = new Date(product.createdAt).toISOString().split('T')[0];
-          return productDate >= startDate && productDate <= endDate;
+          return product.updatedAt >= startDate && product.updatedAt <= endDate;
         })
       )
     );
   }
-  
 }

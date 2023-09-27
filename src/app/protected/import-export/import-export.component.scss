@@ -1,27 +1,61 @@
 .container {
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.margin{
+  margin-top: 30px !important;
+}
+
+.download-section {
+  margin-bottom: 20px;
+}
+
+.upload-box {
+  font-size: 15px;
+  background: #252525;
+  border-radius: 10px;
+  width: 300px;
+  outline: none;
+}
+
+::-webkit-file-upload-button {
+  color: #ffffff;
+  background: #424242;
+  padding: 15px;
+  border: none;
+  border-radius:10px;
+  box-shadow: 1px 0 1px #4e4b4d;
+  outline: none;
+}
+
+
+@media screen and (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding: 10px;
   }
-  
-  .download-section {
-    margin-bottom: 20px;
+}
+
+/* Default styling for larger screens */
+.hide-on-small {
+  display: inline;
+}
+
+.show-on-small {
+  display: none;
+}
+
+/* Media query for small screens (adjust the max-width as needed) */
+@media (max-width: 768px) {
+  .hide-on-small {
+    display: none;
   }
-  
-  button {
-    background-color: #007bff;
-    color: #ffffff;
+
+  .show-on-small {
+    width: 150px;
+    display: inline;
   }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .container {
-      max-width: 100%;
-      padding: 10px;
-    }
-  }
-  
+}

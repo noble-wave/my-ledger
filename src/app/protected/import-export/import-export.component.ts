@@ -4,6 +4,11 @@ import { ProductService } from '../services/product.service';
 import { OrderService } from '../services/order.service';
 import { saveAs } from 'file-saver';
 import { AppService } from '@app/services/app.service';
+import { FormControl, FormGroup } from '@angular/forms';
+
+const today = new Date();
+const month = today.getMonth();
+const year = today.getFullYear();
 
 @Component({
   selector: 'app-import-export',
@@ -11,14 +16,19 @@ import { AppService } from '@app/services/app.service';
   styleUrls: ['./import-export.component.scss'],
 })
 export class ImportExportComponent {
+  panelOpenState = false;
+
   selectedFiles: FileList | null = null;
   settings: any;
   customers: any;
   products: any;
   orders: any;
   downloadJsonHref: any;
-  startDate: string = '';
-  endDate: string = '';
+
+  datePicker = new FormGroup({
+    start: new FormControl(new Date(year, month, 13)),
+    end: new FormControl(new Date(year, month, 16)),
+  });
 
   constructor(
     private customerService: CustomerService,
@@ -32,7 +42,7 @@ export class ImportExportComponent {
   ngOnInit(): void {}
 
   // exportData is your array which you want to dowanload as json and sample.json is your file name, customize the below lines as per your need.
-  productData() {
+  downloadProductData() {
     this.productService.getAll().subscribe((x) => {
       this.products = x;
       let exportData = this.products;
@@ -43,7 +53,7 @@ export class ImportExportComponent {
     });
   }
 
-  customerData() {
+  downloadCustomerData() {
     this.customerService.getAll().subscribe((x) => {
       this.customers = x;
       let exportData = this.customers;
@@ -54,7 +64,7 @@ export class ImportExportComponent {
     });
   }
 
-  orderData() {
+  downloadOrderData() {
     this.orderService.getAll().subscribe((x) => {
       this.orders = x;
       let exportData = this.orders;
@@ -138,47 +148,70 @@ export class ImportExportComponent {
       this.app.noty.notifyClose('Order data uploaded successfully.');
     });
   }
+// Upload Function is end here
+
+
+// Data Download by Date Range
 
   exportProductDataByDate(dataType: string) {
-    if (!this.startDate || !this.endDate) {
-      // console.error('Please select both start and end dates.');
+    // Retrieve the selected start and end dates from the form control
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+
+    if (!startDate || !endDate) {
       this.app.noty.notifyError('Please select both start and end dates.');
       return;
     }
-    this.productService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
-      this.exportData(x, 'product.json');
-    });
-    
-  }
-  exportCustomerDataByDate(dataType: string) {
-    if (!this.startDate || !this.endDate) {
-      // console.error('Please select both start and end dates.');
-      this.app.noty.notifyError('Please select both start and end dates.');
-      return;
-    }
-    this.customerService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
-      this.exportData(x, 'customer.json');
-    });
-    
-  }
-  
-  exportOrderDataByDate(dataType: string) {
-    if (!this.startDate || !this.endDate) {
-      // console.error('Please select both start and end dates.');
-      this.app.noty.notifyError('Please select both start and end dates.');
-      return;
-    }
-    this.orderService.getDataByDate(this.startDate, this.endDate).subscribe((x) => {
-      this.exportData(x, 'order.json');
-    });
-    
+
+    // Call your ProductService to get the product data based on the selected date range
+    this.productService
+      .getProductByDate(startDate, endDate)
+      .subscribe((data) => {
+        this.exportData(data, 'product.json');
+      });
   }
 
+  exportCustomerDataByDate(dataType: string) {
+    // Retrieve the selected start and end dates from the form control
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+
+    if (!startDate || !endDate) {
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+
+    // Call your ProductService to get the product data based on the selected date range
+    this.customerService
+      .getCustomerByDate(startDate, endDate)
+      .subscribe((x) => {
+        this.exportData(x, 'customer.json');
+      });
+  }
+
+  exportOrderDataByDate(dataType: string) {
+    // Retrieve the selected start and end dates from the form control
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+
+    if (!startDate || !endDate) {
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+
+    // Call your ProductService to get the product data based on the selected date range
+    this.orderService
+      .getOrderByDate(startDate, endDate)
+      .subscribe((x) => {
+        this.exportData(x, 'order.json');
+      });
+  }
+
+  // 
   exportData(data: any, fileName: string) {
     return saveAs(
       new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' }),
       fileName
     );
   }
-  
 }

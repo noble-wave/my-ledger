@@ -73,6 +73,11 @@ export class SettingComponent implements OnDestroy {
         this.unitPrices = [...this.quickOrderForm.value.unitPrices];
         this.quickorderSetting = x;
       });
+
+      // this.quickOrderForm = this.fb.group({
+      //   manageQuickOrder: [true], // Your other controls here
+      //   unitPrices: this.fb.array([]), // Initialize unitPrices as an empty FormArray
+      // });
   }
 
   ngOnDestroy(): void {
@@ -117,16 +122,11 @@ export class SettingComponent implements OnDestroy {
     });
   }
 
-  // addMore() {
-  //   const unitPricesFormArray = this.quickOrderForm.get('unitPrices') as FormArray;
-  //   unitPricesFormArray.push(this.createUnitPriceFormGroup()); // Add a new unit price control
-  //   this.unitPrices.push(0); // Add a new element with an initial value of null to your unitPrices array
-  // }
-  // createUnitPriceFormGroup(): FormGroup {
-  //   return this.fb.group({
-  //     unitPrice: [0], // You can set an initial value here if needed
-  //   });
-  // }
+  addMore() {
+    const unitPricesFormArray = this.quickOrderForm.get('unitPrices') as FormArray;
+    unitPricesFormArray.push(this.fb.control(''));
+  }
+  
 
   saveQuickOrderSetting() {
     let quickOrderSetting = this.quickOrderForm.value;
