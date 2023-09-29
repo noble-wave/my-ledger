@@ -215,5 +215,27 @@ export class ImportExportComponent {
     );
   }
 
-  
+  deleteProductData(){
+    this.downloadProductData();
+  }
+
+  deleteCustomerData(){
+    this.downloadCustomerData();
+  }
+
+  deleteSellData(){
+    this.downloadSellData();
+  }
+
+  // deleteProductDataByDate(){
+  //   this.exportProductDataByDate();
+  // }
+
+  // deleteCustomerDataByDate(){
+  //   this.exportCustomerDataByDate();
+  // }
+
+  // deleteSellDataByDate(){
+  //   this.exportSellDataByDate();
+  // }
 }

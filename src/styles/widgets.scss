@@ -1,12 +1,12 @@
 /* Table */
 .mat-row .mat-cell {
-    bsell-bottom: 1px solid transparent;
-    bsell-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
     cursor: pointer;
 }
 
 .mat-row:hover .mat-cell {
-    bsell-color: currentColor;
+    border-color: currentColor;
 }
 
 .demo-row-is-clicked {

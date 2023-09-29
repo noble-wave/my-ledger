@@ -91,11 +91,11 @@ $app-theme: mat.define-dark-theme((color: (primary: $app-primary, accent: $app-a
     --green: #223424;
     --silver: #d5d5d5;
 
-    --bsell-radius: 8px;
-    --bsell-radius-sm: 2px;
-    --bsell-radius-md: 4px;
-    --bsell-radius-lg: 10px;
-    --bsell-letter-radius: 8px;
+    --border-radius: 8px;
+    --border-radius-sm: 2px;
+    --border-radius-md: 4px;
+    --border-radius-lg: 10px;
+    --border-letter-radius: 8px;
 
     // fonts
     // --font-family: #{mat.font-family($app-typography)};

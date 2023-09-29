@@ -29,6 +29,7 @@ export class AppNavComponent {
     // { path: 'quickSell', label: 'Quick Sell' },
     { path: 'import-export', label: 'Import/Export' },
     { path: 'setting', label: 'Settings' },
+    { path: 'setting', label: 'Reports' },
   ];
 
   constructor(

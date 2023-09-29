@@ -42,7 +42,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="download-section">
-          <mat-form-field class="example-form-field">
+         <mat-form-field class="example-form-field">
             <mat-label>Select the Date Range</mat-label>
             <mat-date-range-input [formGroup]="datePicker" [rangePicker]="campaignOnePicker"
               [comparisonStart]="datePicker.value.start" [comparisonEnd]="datePicker.value.end">
@@ -109,20 +109,20 @@
 
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadProductData()">Delete All Product Data</button>
+            <button mat-raised-button (click)="deleteProductData()">Delete All Product Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadCustomerData()">Delete All Customer Data</button>
+            <button mat-raised-button (click)="deleteCustomerData()">Delete All Customer Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadSellData()">Delete All Sell Data</button>
+            <button mat-raised-button (click)="deleteSellData()">Delete All Sell Data</button>
           </div>
         </div>
 
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-  <div class="container">
+  <!-- <div class="container">
     <mat-accordion>
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
@@ -135,30 +135,32 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="download-section">
-          <mat-form-field class="example-form-field">
-            <mat-label>Select the Date Range</mat-label>
-            <mat-date-range-input [formGroup]="datePicker" [rangePicker]="campaignOnePicker"
-              [comparisonStart]="datePicker.value.start" [comparisonEnd]="datePicker.value.end">
-              <input matStartDate placeholder="Start date" formControlName="start">
-              <input matEndDate placeholder="End date" formControlName="end">
+          <mat-form-field>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="datePicker" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
             </mat-date-range-input>
-            <mat-hint>Start Date MM/DD/YYYY – End Date MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          
+            <mat-error *ngIf="datePicker.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="datePicker.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
           </mat-form-field>
           <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportProductDataByDate('product')">Delete Product</button>
+              <button mat-raised-button (click)="deleteProductDataByDate()">Delete Product</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportCustomerDataByDate('customer')">Delete Customer</button>
+              <button mat-raised-button (click)="deleteCustomerDataByDate()">Delete Customer</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportSellDataByDate('sell')">Delete Sell</button>
+              <button mat-raised-button (click)="deleteSellDataByDate()">Delete Sell</button>
             </div>
           </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-  </div>
+  </div> -->
 </div>

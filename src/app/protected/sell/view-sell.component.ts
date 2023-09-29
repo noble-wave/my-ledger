@@ -93,7 +93,7 @@ export class ViewSellComponent {
                   justify-content: space-between;
                   margin-top: 20px;
                   padding: 0 20px;
-                  box-sizing: bsell-box;
+                  box-sizing: border-box;
                 }
                 
                 .customer-info {
@@ -112,14 +112,14 @@ export class ViewSellComponent {
                 
                 .product-table {
                   width: 100%;
-                  bsell-collapse: collapse;
+                  border-collapse: collapse;
                   margin-top: 10px;
                 }
                 
                 .product-table th, .product-table td {
                   padding: 10px;
                   text-align: left;
-                  bsell-bottom: 1px solid #616161;
+                  border-bottom: 1px solid #616161;
                 }
                 
                 .total {
@@ -130,7 +130,7 @@ export class ViewSellComponent {
                   font-weight: bold;
                   color: var(--grey-50);
                   padding: 0 20px;
-                  box-sizing: bsell-box;
+                  box-sizing: border-box;
                 }
                 
                 </style>
@@ -208,7 +208,7 @@ export class ViewSellComponent {
                     justify-content: space-between;
                     margin-top: 20px;
                     padding: 0 20px;
-                    box-sizing: bsell-box;
+                    box-sizing: border-box;
                   }
                   
                   .customer-info {
@@ -227,14 +227,14 @@ export class ViewSellComponent {
                   
                   .product-table {
                     width: 100%;
-                    bsell-collapse: collapse;
+                    border-collapse: collapse;
                     margin-top: 10px;
                   }
                   
                   .product-table th, .product-table td {
                     padding: 10px;
                     text-align: left;
-                    bsell-bottom: 1px solid #616161;
+                    border-bottom: 1px solid #616161;
                   }
                   
                   .total {
@@ -245,7 +245,7 @@ export class ViewSellComponent {
                     font-weight: bold;
                     color: var(--grey-50);
                     padding: 0 20px;
-                    box-sizing: bsell-box;
+                    box-sizing: border-box;
                   }
                 }
               </style>
