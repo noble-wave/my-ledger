@@ -16,7 +16,7 @@ export class ModelMeta {
   icon?: string;
   hide?: boolean;
   disabled: boolean;
-  order?: number;
+  sell?: number;
 
   // validation
   required: boolean;
@@ -46,7 +46,7 @@ export class ModelMeta {
     hint?: string,
     icon?: string,
     hide?: boolean,
-    order?: number,
+    sell?: number,
     options?: { key: any, value: any }[];
 
   }) {
@@ -80,7 +80,7 @@ export class ModelMeta {
 
     this.label = options.label;
     this.desc = options.desc;
-    this.order = options.order;
+    this.sell = options.sell;
   }
 
 }

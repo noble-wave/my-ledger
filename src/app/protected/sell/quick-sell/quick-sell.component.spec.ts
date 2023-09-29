@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuickOrderComponent } from './quick-order.component';
+import { QuickSellComponent } from './quick-sell.component';
 
-describe('QuickOrderComponent', () => {
-  let component: QuickOrderComponent;
-  let fixture: ComponentFixture<QuickOrderComponent>;
+describe('QuickSellComponent', () => {
+  let component: QuickSellComponent;
+  let fixture: ComponentFixture<QuickSellComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QuickOrderComponent ]
+      declarations: [ QuickSellComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(QuickOrderComponent);
+    fixture = TestBed.createComponent(QuickSellComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

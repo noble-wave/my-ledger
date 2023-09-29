@@ -16,11 +16,11 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     let columns = [
-      { name: 'productId', text: 'Product Id', order: 1 },
-      { name: 'productName', text: 'Product Name', order: 2 },
-      { name: 'description', text: 'Description', order: 3 },
-      { name: 'price', text: 'Price', order: 4 },
-      { name: 'count', text: 'Count', order: 5 },
+      { name: 'productId', text: 'Product Id', sell: 1 },
+      { name: 'productName', text: 'Product Name', sell: 2 },
+      { name: 'description', text: 'Description', sell: 3 },
+      { name: 'price', text: 'Price', sell: 4 },
+      { name: 'count', text: 'Count', sell: 5 },
     ];
     let excludeColumns = ['productId'];
     let displayColumns = columns.filter(

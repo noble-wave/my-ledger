@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OrderSettings, QuickOrderSettings } from '@app/models/order-setting.model';
+import { SellSettings, QuickSellSettings } from '@app/models/sell-setting.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import { map } from 'rxjs';
 
@@ -9,51 +9,51 @@ import { map } from 'rxjs';
 export class SettingService {
   constructor(private storage: StorageService) {}
 
-  addOrderSetting(settings: OrderSettings) {
-    settings.name = 'orderSettings';
+  addSellSetting(settings: SellSettings) {
+    settings.name = 'sellSettings';
     delete settings.id;
-    return this.storage.addRecord<OrderSettings>(tableNames.misc, settings);
+    return this.storage.addRecord<SellSettings>(tableNames.misc, settings);
   }
 
-  addQuickOrderSetting(quickOrderSettings: QuickOrderSettings) {
-    quickOrderSettings.name = 'quickOrderSettings';
-    delete quickOrderSettings.id;
-    return this.storage.addRecord<QuickOrderSettings>(tableNames.misc, quickOrderSettings);
+  addQuickSellSetting(quickSellSettings: QuickSellSettings) {
+    quickSellSettings.name = 'quickSellSettings';
+    delete quickSellSettings.id;
+    return this.storage.addRecord<QuickSellSettings>(tableNames.misc, quickSellSettings);
   }
 
-  update(settings: OrderSettings) {
-    settings.name = 'orderSettings';
+  update(settings: SellSettings) {
+    settings.name = 'sellSettings';
     return this.storage.updateRecord(tableNames.misc, settings);
   }
   
-  quickOrderUpdate(quickOrderSettings: QuickOrderSettings) {
-    quickOrderSettings.name = 'quickOrderSettings';
-    return this.storage.updateRecord(tableNames.misc, quickOrderSettings);
+  quickSellUpdate(quickSellSettings: QuickSellSettings) {
+    quickSellSettings.name = 'quickSellSettings';
+    return this.storage.updateRecord(tableNames.misc, quickSellSettings);
   }
 
-  getOrderSetting() {
+  getSellSetting() {
     return this.storage
-      .getByIndex<OrderSettings>(tableNames.misc, 'name', 'orderSettings')
+      .getByIndex<SellSettings>(tableNames.misc, 'name', 'sellSettings')
       .pipe(
         map((x) => {
           if (x) {
             return x;
           } else {
-            return new OrderSettings();
+            return new SellSettings();
           }
         })
       );
   }
 
-  getQuickOrderSetting() {
+  getQuickSellSetting() {
     return this.storage
-      .getByIndex<QuickOrderSettings>(tableNames.misc, 'name', 'quickOrderSettings')
+      .getByIndex<QuickSellSettings>(tableNames.misc, 'name', 'quickSellSettings')
       .pipe(
         map((x) => {
           if (x) {
             return x;
           } else {
-            return new QuickOrderSettings();
+            return new QuickSellSettings();
           }
         })
       );

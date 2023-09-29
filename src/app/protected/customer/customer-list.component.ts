@@ -15,11 +15,11 @@ export class CustomerListComponent {
 
   ngOnInit(): void {
     let columns = [
-      { name: 'customerId', text: 'Customer Id', order: 1 },
-      { name: 'customerName', text: 'Customer Name', order: 2 },
-      { name: 'phoneNumber', text: 'Phone Number', order: 3 },
-      { name: 'email', text: 'Email', order: 4 },
-      { name: 'addressLine1', text: 'Address Line1', order: 5 },
+      { name: 'customerId', text: 'Customer Id', sell: 1 },
+      { name: 'customerName', text: 'Customer Name', sell: 2 },
+      { name: 'phoneNumber', text: 'Phone Number', sell: 3 },
+      { name: 'email', text: 'Email', sell: 4 },
+      { name: 'addressLine1', text: 'Address Line1', sell: 5 },
     ];
     let excludeColumns = ['customerId'];
     let displayColumns = columns.filter(x => excludeColumns.indexOf(x.name) === -1);

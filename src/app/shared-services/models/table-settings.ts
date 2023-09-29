@@ -33,7 +33,7 @@ export class SearchTableSettings extends TableSettings {
 export class Column {
   name: string;
   text?: string;
-  order?: number;
+  sell?: number;
 }
 
 export class RowAction {

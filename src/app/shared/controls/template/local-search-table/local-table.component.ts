@@ -51,7 +51,7 @@ export class IrsLocalTableComponent implements OnInit, OnDestroy {
       this.isActionsVisible = true;
     }
 
-    // // If the user changes the sort order, reset back to the first page.
+    // // If the user changes the sort sell, reset back to the first page.
     // this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
     this.data.subscribe((x: Array<any>) => {
@@ -124,13 +124,13 @@ export class IrsLocalTableComponent implements OnInit, OnDestroy {
 
   getDisplayColumnOptions() {
     return this.settings.displayColumns.map((x, idx) => {
-      return { name: x.name, text: x.text, order: x.order } as Column;
+      return { name: x.name, text: x.text, sell: x.sell } as Column;
     });
   }
 
   buildAllColumnOptions() {
     return this.settings.columns.map((x, idx) => {
-      return { name: x.name, text: x.text, order: x.order } as Column;
+      return { name: x.name, text: x.text, sell: x.sell } as Column;
     });
   }
 

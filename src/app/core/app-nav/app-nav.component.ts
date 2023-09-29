@@ -24,9 +24,9 @@ export class AppNavComponent {
     { path: 'customer', label: 'Customer' },
     // { path: 'product-price', label: 'Product Price' },
     // { path: 'product-inventory', label: 'Product Inventory' },
-    { path: 'order', label: 'Order List' },
-    { path: 'order/new', label: 'Take Order' },
-    // { path: 'quickOrder', label: 'Quick Order' },
+    { path: 'sell', label: 'Sell List' },
+    { path: 'sell/new', label: 'Take Sell' },
+    // { path: 'quickSell', label: 'Quick Sell' },
     { path: 'setting', label: 'Settings' },
     { path: 'import-export', label: 'Import/Export' },
   ];
@@ -37,13 +37,13 @@ export class AppNavComponent {
   ) {}
 
   ngOnInit(): void {
-    this.settingService.getQuickOrderSetting().subscribe((x) => {
+    this.settingService.getQuickSellSetting().subscribe((x) => {
       this.setting = { ...x };
       console.log('Setting data:', this.setting);
-        if (this.setting.manageQuickOrder) {
-          this.paths.splice(4, 0, { path: 'quickOrder', label: 'Quick Order' });
+        if (this.setting.manageQuickSell) {
+          this.paths.splice(4, 0, { path: 'quickSell', label: 'Quick Sell' });
         } else {
-          this.paths = this.paths.filter((item) => item.path !== 'quickOrder');
+          this.paths = this.paths.filter((item) => item.path !== 'quickSell');
         }
     });
   }

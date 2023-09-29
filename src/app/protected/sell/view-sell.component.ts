@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderService } from '../services/order.service';
+import { SellService } from '../services/sell.service';
 
 @Component({
-  selector: 'app-view-order',
-  templateUrl: './view-order.component.html',
-  styleUrls: ['./view-order.component.scss'],
+  selector: 'app-view-sell',
+  templateUrl: './view-sell.component.html',
+  styleUrls: ['./view-sell.component.scss'],
 })
-export class ViewOrderComponent {
-  orderId: any;
-  order: any;
+export class ViewSellComponent {
+  sellId: any;
+  sell: any;
 
   constructor(
     private route: ActivatedRoute,
-    private orderService: OrderService
+    private sellService: SellService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((x: any) => {
       if (x) {
         // this.isEdit = true;
-        this.orderService.get(x.orderId).subscribe((y: any) => {
-          this.order = y;
+        this.sellService.get(x.sellId).subscribe((y: any) => {
+          this.sell = y;
           this.route.queryParamMap.subscribe((z) => {
             if (z.has('print')) {
               if (z.get('print') === 'true') {
@@ -35,7 +35,7 @@ export class ViewOrderComponent {
   }
 
   printPage(): void {
-    const printContents = document.querySelector('.order-details')?.innerHTML;
+    const printContents = document.querySelector('.sell-details')?.innerHTML;
 
     if (printContents) {
       const iframe = document.createElement('iframe');
@@ -66,7 +66,7 @@ export class ViewOrderComponent {
                   }
                 }
 
-                .order-details {
+                .sell-details {
                   display: flex;
                   flex-direction: column;
                   align-items: center;  
@@ -75,25 +75,25 @@ export class ViewOrderComponent {
                   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 }
                 
-                .order-header {
+                .sell-header {
                   width: 100%;
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
                 }
                 
-                .order-id {
+                .sell-id {
                   font-size: 16px;
                   color: #666;
                 }
                 
-                .order-summary {
+                .sell-summary {
                   width: 100%;
                   display: flex;
                   justify-content: space-between;
                   margin-top: 20px;
                   padding: 0 20px;
-                  box-sizing: border-box;
+                  box-sizing: bsell-box;
                 }
                 
                 .customer-info {
@@ -112,14 +112,14 @@ export class ViewOrderComponent {
                 
                 .product-table {
                   width: 100%;
-                  border-collapse: collapse;
+                  bsell-collapse: collapse;
                   margin-top: 10px;
                 }
                 
                 .product-table th, .product-table td {
                   padding: 10px;
                   text-align: left;
-                  border-bottom: 1px solid #616161;
+                  bsell-bottom: 1px solid #616161;
                 }
                 
                 .total {
@@ -130,7 +130,7 @@ export class ViewOrderComponent {
                   font-weight: bold;
                   color: var(--grey-50);
                   padding: 0 20px;
-                  box-sizing: border-box;
+                  box-sizing: bsell-box;
                 }
                 
                 </style>
@@ -149,7 +149,7 @@ export class ViewOrderComponent {
   }
 
   printPages(): void {
-    const printContents = document.querySelector('.order-details')?.innerHTML;
+    const printContents = document.querySelector('.sell-details')?.innerHTML;
 
     if (printContents) {
       const printWindow = window.open('', '_blank');
@@ -181,7 +181,7 @@ export class ViewOrderComponent {
                     height: 20px; /* Adjust the height as needed */
                     page-break-after: always;
                   }
-                  .order-details {
+                  .sell-details {
                     display: flex;
                     flex-direction: column;
                     align-items: center;  
@@ -190,25 +190,25 @@ export class ViewOrderComponent {
                     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                   }
                   
-                  .order-header {
+                  .sell-header {
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                   }
                   
-                  .order-id {
+                  .sell-id {
                     font-size: 16px;
                     color: #666;
                   }
                   
-                  .order-summary {
+                  .sell-summary {
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
                     margin-top: 20px;
                     padding: 0 20px;
-                    box-sizing: border-box;
+                    box-sizing: bsell-box;
                   }
                   
                   .customer-info {
@@ -227,14 +227,14 @@ export class ViewOrderComponent {
                   
                   .product-table {
                     width: 100%;
-                    border-collapse: collapse;
+                    bsell-collapse: collapse;
                     margin-top: 10px;
                   }
                   
                   .product-table th, .product-table td {
                     padding: 10px;
                     text-align: left;
-                    border-bottom: 1px solid #616161;
+                    bsell-bottom: 1px solid #616161;
                   }
                   
                   .total {
@@ -245,7 +245,7 @@ export class ViewOrderComponent {
                     font-weight: bold;
                     color: var(--grey-50);
                     padding: 0 20px;
-                    box-sizing: border-box;
+                    box-sizing: bsell-box;
                   }
                 }
               </style>

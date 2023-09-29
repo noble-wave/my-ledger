@@ -51,17 +51,17 @@ export class ProductService {
     return this.storage.getAll<ProductInventory>(tableNames.inventory);
   }
 
-  updateProductInventory(orderItems: any[]) {
-    for (const orderItem of orderItems) {
-      // Get the product ID and quantity from the order item
-      const productId = orderItem.productId;
-      const quantity = orderItem.quantity;
+  updateProductInventory(sellItems: any[]) {
+    for (const sellItem of sellItems) {
+      // Get the product ID and quantity from the sell item
+      const productId = sellItem.productId;
+      const quantity = sellItem.quantity;
 
       // Use the getProductInventory method to get the current product inventory
       this.getProductInventory(productId).subscribe((productInventory) => {
         // Check if productInventory exists
         if (productInventory) {
-          // Subtract the order item's quantity from the product inventory count
+          // Subtract the sell item's quantity from the product inventory count
           productInventory.count -= quantity;
 
           // Save the updated product inventory using the saveInventory method

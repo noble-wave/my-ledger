@@ -1,24 +1,24 @@
 import { ModelMeta } from '@app/shared-services';
 
-export interface Order {
-  orderId?: string;
-  orderNumber: string;
+export interface Sell {
+  sellId?: string;
+  sellNumber: string;
   customerId: string;
   customerName: string;
   customerPhoneNumber: string;
-  items: OrderItem[];
+  items: SellItem[];
   totalDiscount: Number;
   totalQuantity: Number;
   grossAmount: Number;
   netAmount: number;
-  orderDate: Date;
-  status: OrderStatus;
+  sellDate: Date;
+  status: SellStatus;
 }
 
-export function getOrderMeta() {
+export function getSellMeta() {
   return [
-    { key: 'orderId', label: 'OrderId', hide: true },
-    { key: 'orderNumber', label: 'Order Number' },
+    { key: 'sellId', label: 'SellId', hide: true },
+    { key: 'sellNumber', label: 'Sell Number' },
     { key: 'customerId', label: 'Customer Id' },
     { key: 'customerName', label: 'Customer Name' },
     { key: 'customerPhoneNumber', label: 'Customer Phone Number' },
@@ -27,12 +27,12 @@ export function getOrderMeta() {
     { key: 'totalQuantity', label: 'Total Quantity' },
     { key: 'grossAmount', label: 'Gross Amount' },
     { key: 'netAmount', label: 'Net Amount' },
-    { key: 'orderDate', label: 'Order Date' },
+    { key: 'sellDate', label: 'Sell Date' },
     { key: 'status', label: 'Status' },
   ] as Array<ModelMeta>;
 }
 
-export interface OrderItem {
+export interface SellItem {
   productId: number;
   productName: string;
   quantity: number;
@@ -41,7 +41,7 @@ export interface OrderItem {
   subtotal: number;
 }
 
-export function getOrderItemMeta() {
+export function getSellItemMeta() {
   return [
     { key: 'productId', label: 'ProductId', hide: true },
     { key: 'productName', label: 'Product Name', required: true },
@@ -53,7 +53,7 @@ export function getOrderItemMeta() {
   ] as Array<ModelMeta>;
 }
 
-export enum OrderStatus {
+export enum SellStatus {
   Pending = 'Pending',
   Processing = 'Processing',
   Shipped = 'Shipped',

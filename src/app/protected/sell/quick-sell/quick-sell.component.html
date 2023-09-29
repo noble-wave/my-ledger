@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-content>
+        <h1>Experience the ultimate convenience of One-Click Selling</h1>
+        <p>Welcome to our Quick Sell page! We've made selling your favorite products faster and more convenient than
+            ever.
+        </p>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div *ngFor="let value of setting?.unitPrices">
+                <a type="button" class="box-button" (click)="saveSell(value)" mat-button mat-raised-button>{{ value }}</a>
+            </div>
+        </div>
+
+        <h3>If you prefer a custom sell, simply enter
+            your desired quantity and hit 'sell' – it's that easy!</h3>
+            <div fxLayout="row wrap" fxLayoutGap="10px grid" >
+                <div fxFlex="50%" fxFlex.xs="70%" *ngFor="let sellItemForm of sellItemForms">
+                    <app-input [form]="sellItemForm" 
+                        label="Unit Price" name="unitPrice"></app-input>
+                </div >
+                <div >
+                    <a type="button" (click)="saveSelld()" mat-button mat-raised-button>sell</a>
+                </div>
+            
+            </div>
+    </mat-card-content>
+</mat-card>
+

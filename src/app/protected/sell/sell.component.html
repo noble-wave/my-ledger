@@ -1,12 +1,12 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Take Order</div>
+    <div>Take Sell</div>
     <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
-        <h3>Customize Your Order Section to Suit Your Preferences via Settings.</h3>
+        <h3>Customize Your Sell Section to Suit Your Preferences via Settings.</h3>
         <div>
-            <irs-date [form]="form" name="orderDate" label="Order Date"></irs-date>
+            <irs-date [form]="form" name="sellDate" label="Sell Date"></irs-date>
 
             <div class="form-container">
                 <div class="form-row">
@@ -16,7 +16,7 @@
                             (onSelectionChange)="handleCustomerSelection($event)"></app-select>
                     </div>
 
-                    <div *ngIf="setting?.manageOrderStatus">
+                    <div *ngIf="setting?.manageSellStatus">
                         <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
                             optTextLabel="label" optValueLabel="value"></app-select>
                     </div>
@@ -24,32 +24,32 @@
             </div>
 
 
-            <div class="container" *ngFor="let orderItemForm of orderItemForms;  let i = index">
+            <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
-                        <app-select [form]="orderItemForm" name="productId" label="Select a Product"
+                        <app-select [form]="sellItemForm" name="productId" label="Select a Product"
                             [options]="products" optTextLabel="productName" optValueLabel="productId"
-                            (onSelectionChange)="handleProductSelection($event, orderItemForm)"></app-select>
+                            (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="item">
-                        <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"
+                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)"
                             label="Unit Price" name="unitPrice"></app-input>
                     </div>
                     <div class="item">
-                        <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"
+                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)"
                             label="Quantity" name="quantity"></app-input>
                     </div>
                     <div class="item" *ngIf="setting?.manageDiscount">
-                        <app-input [form]="orderItemForm" (onValueChange)="updateSubtotal(orderItemForm)"
+                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)"
                             label="Discount" name="discount"></app-input>
                     </div>
                 </div>
                 <div class="row">
 
                     <div class="item">
-                        <irs-input-template [model]="orderItemForm.value" [bindingPropertyName]="'subtotal'"
+                        <irs-input-template [model]="sellItemForm.value" [bindingPropertyName]="'subtotal'"
                             [label]="'Subtotal'" [viewOnly]="true">
                         </irs-input-template>
                     </div>
@@ -79,8 +79,8 @@
                 </div>
             </div>
             <div class="button-row">
-                <a type="button" (click)="saveOrder()" mat-button mat-raised-button>Save</a>
-                <a type="button" (click)="saveOrderPrint()" mat-button mat-raised-button>Save and print</a>
+                <a type="button" (click)="saveSell()" mat-button mat-raised-button>Save</a>
+                <a type="button" (click)="saveSellPrint()" mat-button mat-raised-button>Save and print</a>
             </div>
 
         </div>

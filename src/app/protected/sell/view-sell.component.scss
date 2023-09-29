@@ -1,5 +1,5 @@
-/* view-order.component.css */
-.order-details {
+/* view-sell.component.css */
+.sell-details {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,25 +8,25 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.order-header {
+.sell-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.order-id {
+.sell-id {
   font-size: 16px;
   color: #666;
 }
 
-.order-summary {
+.sell-summary {
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
   padding: 0 20px;
-  box-sizing: border-box;
+  box-sizing: bsell-box;
 }
 
 .customer-info {
@@ -45,14 +45,14 @@
 
 .product-table {
   width: 100%;
-  border-collapse: collapse;
+  bsell-collapse: collapse;
   margin-top: 10px;
 }
 
 .product-table th, .product-table td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid var(--grey-700);
+  bsell-bottom: 1px solid var(--grey-700);
 }
 
 .total {
@@ -63,17 +63,17 @@
   font-weight: bold;
   color: var(--grey-50);
   padding: 0 20px;
-  box-sizing: border-box;
+  box-sizing: bsell-box;
 }
 
-/* Adjust the .order-details container for screens below 768px */
+/* Adjust the .sell-details container for screens below 768px */
 @media (max-width: 768px) {
   /* Mobile-friendly styling */
-.order-details {
+.sell-details {
   padding: 10px;
 }
 
-.order-summary {
+.sell-summary {
   flex-direction: column;
   align-items: flex-start;
   margin-top: 10px;
@@ -95,7 +95,7 @@
 }
 
 /* Adjust margins and paddings for better spacing on mobile */
-.order-summary p, .product-table th, .product-table td, .total p {
+.sell-summary p, .product-table th, .product-table td, .total p {
   margin: 5px 0;
   padding: 5px;
 }

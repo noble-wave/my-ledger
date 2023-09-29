@@ -1,12 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { OrderService } from '../services/order.service';
+import { SellService } from '../services/sell.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {
-  OrderSettings,
-  QuickOrderSettings,
-  getOrderSettingMeta,
-  getQuickOrderSettingMeta,
-} from '@app/models/order-setting.model';
+  SellSettings,
+  QuickSellSettings,
+  getSellSettingMeta,
+  getQuickSellSettingMeta,
+} from '@app/models/sell-setting.model';
 import { ModelMeta } from '@app/shared-services';
 import { AppService } from '@app/services/app.service';
 import { SettingService } from '../services/setting.service';
@@ -22,60 +22,60 @@ export class SettingComponent implements OnDestroy {
   statusOptions: { label: string; value: any }[];
   form: FormGroup;
   modelMeta: ModelMeta[];
-  quickOrderForm: FormGroup;
-  quickOrderMeta: ModelMeta[];
-  orderSetting: any = { manageOrderStatus: true };
-  quickorderSetting: any = { manageQuickOrder: false };
+  quickSellForm: FormGroup;
+  quickSellMeta: ModelMeta[];
+  sellSetting: any = { manageSellStatus: true };
+  quicksellSetting: any = { manageQuickSell: false };
 
   unitPrices: Array<number> = [];
 
   constructor(
-    private orderService: OrderService,
+    private sellService: SellService,
     private app: AppService,
     private settingService: SettingService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.modelMeta = getOrderSettingMeta();
-    this.statusOptions = this.orderService.getStatusOptions();
-    // Retrieve order settings and populate the form
-    this.form = this.app.meta.toFormGroup(new OrderSettings(), this.modelMeta);
+    this.modelMeta = getSellSettingMeta();
+    this.statusOptions = this.sellService.getStatusOptions();
+    // Retrieve sell settings and populate the form
+    this.form = this.app.meta.toFormGroup(new SellSettings(), this.modelMeta);
 
-    this.form.get('manageOrderStatus')?.valueChanges.subscribe((x) => {
-      this.orderSetting.manageOrderStatus = x;
+    this.form.get('manageSellStatus')?.valueChanges.subscribe((x) => {
+      this.sellSetting.manageSellStatus = x;
     });
 
     this.settingService
-      .getOrderSetting()
+      .getSellSetting()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((orderSettings) => {
-        this.form.patchValue(orderSettings);
-        this.orderSetting = orderSettings;
+      .subscribe((sellSettings) => {
+        this.form.patchValue(sellSettings);
+        this.sellSetting = sellSettings;
       });
 
-    //save unit price for Quick order Page
-    this.quickOrderMeta = getQuickOrderSettingMeta();
-    this.quickOrderForm = this.app.meta.toFormGroup(
-      new QuickOrderSettings(),
-      this.quickOrderMeta
+    //save unit price for Quick sell Page
+    this.quickSellMeta = getQuickSellSettingMeta();
+    this.quickSellForm = this.app.meta.toFormGroup(
+      new QuickSellSettings(),
+      this.quickSellMeta
     );
-    this.quickOrderForm.get('manageQuickOrder')?.valueChanges.subscribe((x) => {
-      this.quickorderSetting.manageQuickOrder = x;
+    this.quickSellForm.get('manageQuickSell')?.valueChanges.subscribe((x) => {
+      this.quicksellSetting.manageQuickSell = x;
     });
 
 
     this.settingService
-      .getQuickOrderSetting()
+      .getQuickSellSetting()
       .pipe(takeUntil(this.destroy$))
       .subscribe((x) => {
-        this.quickOrderForm.patchValue(x);
-        this.unitPrices = [...this.quickOrderForm.value.unitPrices];
-        this.quickorderSetting = x;
+        this.quickSellForm.patchValue(x);
+        this.unitPrices = [...this.quickSellForm.value.unitPrices];
+        this.quicksellSetting = x;
       });
 
-      // this.quickOrderForm = this.fb.group({
-      //   manageQuickOrder: [true], // Your other controls here
+      // this.quickSellForm = this.fb.group({
+      //   manageQuickSell: [true], // Your other controls here
       //   unitPrices: this.fb.array([]), // Initialize unitPrices as an empty FormArray
       // });
   }
@@ -89,18 +89,18 @@ export class SettingComponent implements OnDestroy {
   saveSetting() {
     let formValue = this.form.value;
     console.log(formValue);
-    this.settingService.addOrderSetting(formValue).subscribe();
+    this.settingService.addSellSetting(formValue).subscribe();
   }
 
-  saveOrderSetting() {
+  saveSellSetting() {
     const formValue = this.form.value;
     console.log(formValue);
 
-    // Update the orderSetting variable immediately
-    this.orderSetting = { ...this.orderSetting, ...formValue };
+    // Update the sellSetting variable immediately
+    this.sellSetting = { ...this.sellSetting, ...formValue };
 
     // Check if data exists in the storage
-    this.settingService.getOrderSetting().subscribe((settings) => {
+    this.settingService.getSellSetting().subscribe((settings) => {
       if (settings && settings.id) {
         // Data exists, update it
         let existingSetting = { ...settings, ...formValue };
@@ -111,7 +111,7 @@ export class SettingComponent implements OnDestroy {
       } else {
         // No data exists, add it
         this.settingService
-          .addOrderSetting(formValue)
+          .addSellSetting(formValue)
           .subscribe((newSettings) => {
             if (newSettings) {
               this.form.patchValue(newSettings);
@@ -123,29 +123,29 @@ export class SettingComponent implements OnDestroy {
   }
 
   addMore() {
-    const unitPricesFormArray = this.quickOrderForm.get('unitPrices') as FormArray;
+    const unitPricesFormArray = this.quickSellForm.get('unitPrices') as FormArray;
     unitPricesFormArray.push(this.fb.control(''));
   }
   
 
-  saveQuickOrderSetting() {
-    let quickOrderSetting = this.quickOrderForm.value;
-    quickOrderSetting.unitPrices = this.unitPrices;
-    console.log(quickOrderSetting);
+  saveQuickSellSetting() {
+    let quickSellSetting = this.quickSellForm.value;
+    quickSellSetting.unitPrices = this.unitPrices;
+    console.log(quickSellSetting);
 
     // Check if data exists in the storage
-    this.settingService.getQuickOrderSetting().subscribe((x) => {
+    this.settingService.getQuickSellSetting().subscribe((x) => {
       if (x && x.id) {
         // Data exists, update it
-        let existingSetting = { ...x, ...quickOrderSetting };
-        this.settingService.quickOrderUpdate(existingSetting).subscribe(() => {
+        let existingSetting = { ...x, ...quickSellSetting };
+        this.settingService.quickSellUpdate(existingSetting).subscribe(() => {
           this.form.patchValue(existingSetting);
         });
         this.app.noty.notifyUpdated('Setting has been');
       } else {
         // No data exists, add it
         this.settingService
-          .addQuickOrderSetting(quickOrderSetting)
+          .addQuickSellSetting(quickSellSetting)
           .subscribe((newSettings) => {
             if (newSettings) {
               this.form.patchValue(newSettings);
@@ -156,8 +156,8 @@ export class SettingComponent implements OnDestroy {
     });
   }
 
-  onRadioChange(manageOrderStatus: any) {
-    console.log('Selected order Status:', manageOrderStatus);
-    this.form.get('manageOrderStatus')?.setValue(manageOrderStatus.value);
+  onRadioChange(manageSellStatus: any) {
+    console.log('Selected sell Status:', manageSellStatus);
+    this.form.get('manageSellStatus')?.setValue(manageSellStatus.value);
   }
 }

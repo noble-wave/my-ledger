@@ -7,9 +7,9 @@ export const tableNames = {
   product: 'product',
   customer: 'customer',
   inventory: 'inventory',
-  order: 'order',
-  orderSetting: 'orderSetting',
-  quickOrderSetting:'quickOrderSetting'
+  sell: 'sell',
+  sellSetting: 'sellSetting',
+  quickSellSetting:'quickSellSetting'
 };
 
 export const dbConfig: DBConfig = {
@@ -54,8 +54,8 @@ export const dbConfig: DBConfig = {
       storeSchema: [],
     },
     {
-      store: tableNames.order,
-      storeConfig: { keyPath: 'orderId', autoIncrement: true },
+      store: tableNames.sell,
+      storeConfig: { keyPath: 'sellId', autoIncrement: true },
       storeSchema: [
         { name: 'items', keypath: 'items', options: { unique: false } },
       ],

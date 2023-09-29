@@ -23,13 +23,13 @@ export class ColumnOptionsDailogComponent implements OnInit {
   drop(event: any) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      event.container.data.order = event.currentIndex;
+      event.container.data.sell = event.currentIndex;
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      event.container.data.order = event.currentIndex;
+      event.container.data.sell = event.currentIndex;
     }
   }
 

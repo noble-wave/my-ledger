@@ -6,35 +6,35 @@ import { CoreModule } from '@app/core/core.module';
 import { RouterModule } from '@angular/router';
 import { CustomerComponent } from './customer/customer.component';
 import { ProductComponent } from './product/product.component';
-import { OrderComponent } from './order/order.component';
+import { SellComponent } from './sell/sell.component';
 import { ProductPriceComponent } from './product-price/product-price.component';
 import { ProductInventoryComponent } from './product-inventory/product-inventory.component';
 import { ProductListComponent } from './product/product-list.component';
 import { CustomerListComponent } from './customer/customer-list.component';
-import { OrderListComponent } from './order/order-list.component';
+import { SellListComponent } from './sell/sell-list.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ViewOrderComponent } from './order/view-order.component';
+import { ViewSellComponent } from './sell/view-sell.component';
 import { SettingComponent } from './setting/setting.component';
 import { ImportExportComponent } from './import-export/import-export.component';
-import { QuickOrderComponent } from './order/quick-order/quick-order.component';
+import { QuickSellComponent } from './sell/quick-sell/quick-sell.component';
 
 @NgModule({
   declarations: [
     ProtectedComponent,
     CustomerComponent,
     ProductComponent,
-    OrderComponent,
+    SellComponent,
     ProductPriceComponent,
     ProductInventoryComponent,
     ProductListComponent,
     CustomerListComponent,
-    OrderListComponent,
-    ViewOrderComponent,
+    SellListComponent,
+    ViewSellComponent,
     SettingComponent,
     ImportExportComponent,
-    QuickOrderComponent,
+    QuickSellComponent,
   ],
   imports: [
     CoreModule,
@@ -59,10 +59,10 @@ import { QuickOrderComponent } from './order/quick-order/quick-order.component';
           { path: 'product-price', component: ProductPriceComponent },
           { path: 'product-inventory', component: ProductInventoryComponent },
 
-          { path: 'order/new', component: OrderComponent },
-          { path: 'order', component: OrderListComponent },
-          { path: 'order/view/:orderId', component: ViewOrderComponent },
-          { path: 'quickOrder', component: QuickOrderComponent },
+          { path: 'sell/new', component: SellComponent },
+          { path: 'sell', component: SellListComponent },
+          { path: 'sell/view/:sellId', component: ViewSellComponent },
+          { path: 'quickSell', component: QuickSellComponent },
 
           { path: 'setting', component: SettingComponent },
           { path: 'import-export', component: ImportExportComponent },

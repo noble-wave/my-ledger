@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { ProductService } from '../services/product.service';
-import { OrderService } from '../services/order.service';
+import { SellService } from '../services/sell.service';
 import { saveAs } from 'file-saver';
 import { AppService } from '@app/services/app.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -22,7 +22,7 @@ export class ImportExportComponent {
   settings: any;
   customers: any;
   products: any;
-  orders: any;
+  sells: any;
   downloadJsonHref: any;
 
   datePicker = new FormGroup({
@@ -33,7 +33,7 @@ export class ImportExportComponent {
   constructor(
     private customerService: CustomerService,
     private productService: ProductService,
-    private orderService: OrderService,
+    private sellService: SellService,
     private app: AppService
   ) {
     // this.generateDownloadJsonUri();
@@ -64,13 +64,13 @@ export class ImportExportComponent {
     });
   }
 
-  downloadOrderData() {
-    this.orderService.getAll().subscribe((x) => {
-      this.orders = x;
-      let exportData = this.orders;
+  downloadSellData() {
+    this.sellService.getAll().subscribe((x) => {
+      this.sells = x;
+      let exportData = this.sells;
       return saveAs(
         new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
-        'order.json'
+        'sell.json'
       );
     });
   }
@@ -98,8 +98,8 @@ export class ImportExportComponent {
           this.handleProductUpload(jsonData);
         } else if (this.isCustomerData(jsonData)) {
           this.handleCustomerUpload(jsonData);
-        } else if (this.isOrderData(jsonData)) {
-          this.handleOrderUpload(jsonData);
+        } else if (this.isSellData(jsonData)) {
+          this.handleSellUpload(jsonData);
         } else {
           console.error('Unrecognized JSON data:', jsonData);
         }
@@ -121,13 +121,13 @@ export class ImportExportComponent {
     return data && data.length > 0 && 'customerName' in data[0];
   }
 
-  private isOrderData(data: any): boolean {
-    // Implement logic to identify order data based on its structure
-    // Example: Check if data contains order-related fields
+  private isSellData(data: any): boolean {
+    // Implement logic to identify sell data based on its structure
+    // Example: Check if data contains sell-related fields
     return data && data.length > 0 && 'items' in data[0];
   }
 
-  // Handle product, customer, and order data as needed
+  // Handle product, customer, and sell data as needed
   private handleProductUpload(productData: any): void {
     this.productService.uploadProductData(productData).subscribe(() => {
       console.log('Product data uploaded successfully.');
@@ -142,10 +142,10 @@ export class ImportExportComponent {
     });
   }
 
-  private handleOrderUpload(orderData: any): void {
-    this.orderService.uploadOrderData(orderData).subscribe(() => {
-      console.log('Order data uploaded successfully.');
-      this.app.noty.notifyClose('Order data uploaded successfully.');
+  private handleSellUpload(sellData: any): void {
+    this.sellService.uploadSellData(sellData).subscribe(() => {
+      console.log('Sell data uploaded successfully.');
+      this.app.noty.notifyClose('Sell data uploaded successfully.');
     });
   }
 // Upload Function is end here
@@ -189,7 +189,7 @@ export class ImportExportComponent {
       });
   }
 
-  exportOrderDataByDate(dataType: string) {
+  exportSellDataByDate(dataType: string) {
     // Retrieve the selected start and end dates from the form control
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
@@ -200,10 +200,10 @@ export class ImportExportComponent {
     }
 
     // Call your ProductService to get the product data based on the selected date range
-    this.orderService
-      .getOrderByDate(startDate, endDate)
+    this.sellService
+      .getSellByDate(startDate, endDate)
       .subscribe((x) => {
-        this.exportData(x, 'order.json');
+        this.exportData(x, 'sell.json');
       });
   }
 

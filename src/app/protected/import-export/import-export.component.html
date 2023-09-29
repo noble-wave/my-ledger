@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Export Product, Customer, and Order Data</h2>
+  <h2>Export Product, Customer, and Sell Data</h2>
 
   <div class="container">
     <mat-accordion>
@@ -22,7 +22,7 @@
             <button mat-raised-button (click)="downloadCustomerData()">Export All Customer Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadOrderData()">Export All Order Data</button>
+            <button mat-raised-button (click)="downloadSellData()">Export All Sell Data</button>
           </div>
         </div>
 
@@ -61,7 +61,7 @@
               <button mat-raised-button (click)="exportCustomerDataByDate('customer')">Export Customer</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportOrderDataByDate('order')">Export Order</button>
+              <button mat-raised-button (click)="exportSellDataByDate('sell')">Export Sell</button>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@
     <mat-icon>warning</mat-icon>
     &nbsp;
     &nbsp;
-    <h2 class="delete"> Delete! Product, Customer, and Order Data </h2>
+    <h2 class="delete"> Delete! Product, Customer, and Sell Data </h2>
     &nbsp;
     &nbsp;
     <mat-icon>warning</mat-icon>
@@ -115,7 +115,7 @@
             <button mat-raised-button (click)="downloadCustomerData()">Delete All Customer Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadOrderData()">Delete All Order Data</button>
+            <button mat-raised-button (click)="downloadSellData()">Delete All Sell Data</button>
           </div>
         </div>
 
@@ -154,7 +154,7 @@
               <button mat-raised-button (click)="exportCustomerDataByDate('customer')">Delete Customer</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportOrderDataByDate('order')">Delete Order</button>
+              <button mat-raised-button (click)="exportSellDataByDate('sell')">Delete Sell</button>
             </div>
           </div>
         </div>

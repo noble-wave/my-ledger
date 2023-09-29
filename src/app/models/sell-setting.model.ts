@@ -6,31 +6,31 @@ export class AppSettings {
   name: string;
 }
 
-export class OrderSettings extends AppSettings {
-  // Used to set default order status of new Order
-  defaultOrderStatus?: string;
-  manageOrderStatus: boolean;
+export class SellSettings extends AppSettings {
+  // Used to set default sell status of new Sell
+  defaultSellStatus?: string;
+  manageSellStatus: boolean;
   manageCustomer: boolean;
   manageProduct: boolean;
   manageDiscount: boolean;
 
   constructor() {
     super();
-    this.name = 'orderSettings';
-    this.defaultOrderStatus = 'Delivered';
-    this.manageOrderStatus = true;
+    this.name = 'sellSettings';
+    this.defaultSellStatus = 'Delivered';
+    this.manageSellStatus = true;
     this.manageCustomer = true;
     this.manageProduct = true;
     this.manageDiscount = true;
   }
 }
 
-export function getOrderSettingMeta() {
+export function getSellSettingMeta() {
   return [
-    { key: 'defaultOrderStatus', label: 'Order Status Name', required: false },
+    { key: 'defaultSellStatus', label: 'Sell Status Name', required: false },
     {
-      key: 'manageOrderStatus',
-      label: 'Manage Order Status',
+      key: 'manageSellStatus',
+      label: 'Manage Sell Status',
       controlType: 'radio',
       options: [
         { key: true, value: 'Yes' },
@@ -64,30 +64,30 @@ export function getOrderSettingMeta() {
         { key: false, value: 'No' },
       ],
     },
-    { key: 'tag', label: 'Order Settings tag', required: false },
-    { key: 'name', label: 'Order Settings', required: false },
-    { key: 'id', label: 'Order Settings Id', required: false },
+    { key: 'tag', label: 'Sell Settings tag', required: false },
+    { key: 'name', label: 'Sell Settings', required: false },
+    { key: 'id', label: 'Sell Settings Id', required: false },
   ] as Array<ModelMeta>;
 }
 
-export class QuickOrderSettings extends AppSettings {
+export class QuickSellSettings extends AppSettings {
   unitPrices: number[];
-  manageQuickOrder: boolean;
+  manageQuickSell: boolean;
 
   constructor() {
     super();
-    this.name = 'quickOrderSettings';
-    this.manageQuickOrder = false;
+    this.name = 'quickSellSettings';
+    this.manageQuickSell = false;
     this.unitPrices = [10, 20, 50, 60];
   }
 }
 
-export function getQuickOrderSettingMeta() {
+export function getQuickSellSettingMeta() {
   return [
     { key: 'unitPrices', label: 'Unit Prices' },
     {
-      key: 'manageQuickOrder',
-      label: 'Manage Quick Order',
+      key: 'manageQuickSell',
+      label: 'Manage Quick Sell',
       controlType: 'radio',
       options: [
         { key: true, value: 'Yes' },
