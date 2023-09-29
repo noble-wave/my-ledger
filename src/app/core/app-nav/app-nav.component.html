@@ -9,8 +9,16 @@
 <mat-drawer-container class="app-container">
   <mat-drawer #drawer class="app-sidenav" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-nav-list class="erp-nav-list">
-      <a mat-list-item [routerLink]="item.path" *ngFor="let item of paths" [routerLinkActive]="['active']">{{item.label}}</a>
+      <ng-container *ngFor="let item of paths; let i = index">
+        <a mat-list-item [routerLink]="item.path" [routerLinkActive]="['active']">
+          {{ item.label }}
+        </a>
+        <!-- Add a divider after the "Customers" link -->
+        <mat-divider *ngIf="item.path === 'customer' && i !== paths.length - 1"></mat-divider>
+        <mat-divider *ngIf="item.path === 'sell/new' && i !== paths.length - 1"></mat-divider>
+      </ng-container>
     </mat-nav-list>
+    
   </mat-drawer>
 
   <div class="app-sidenav-content">

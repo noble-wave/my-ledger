@@ -20,15 +20,15 @@ export class AppNavComponent {
   setting: any;
 
   public paths = [
-    { path: 'product', label: 'Product' },
-    { path: 'customer', label: 'Customer' },
+    { path: 'product', label: 'Products' },
+    { path: 'customer', label: 'Customers' },
     // { path: 'product-price', label: 'Product Price' },
     // { path: 'product-inventory', label: 'Product Inventory' },
-    { path: 'sell', label: 'Sell List' },
-    { path: 'sell/new', label: 'Take Sell' },
+    { path: 'sell', label: 'Sells List' },
+    { path: 'sell/new', label: 'Sell' },
     // { path: 'quickSell', label: 'Quick Sell' },
-    { path: 'setting', label: 'Settings' },
     { path: 'import-export', label: 'Import/Export' },
+    { path: 'setting', label: 'Settings' },
   ];
 
   constructor(
@@ -41,7 +41,7 @@ export class AppNavComponent {
       this.setting = { ...x };
       console.log('Setting data:', this.setting);
         if (this.setting.manageQuickSell) {
-          this.paths.splice(4, 0, { path: 'quickSell', label: 'Quick Sell' });
+          this.paths.splice(3, 0, { path: 'quickSell', label: 'Quick Sell' });
         } else {
           this.paths = this.paths.filter((item) => item.path !== 'quickSell');
         }
