@@ -11,6 +11,9 @@ import { Product } from '@app/models/product.model';
 import { Customer } from '@app/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SettingService } from '../services/setting.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomerComponent } from '../customer/customer.component';
+import { ProductComponent } from '../product/product.component';
 
 @Component({
   selector: 'app-sell',
@@ -35,7 +38,8 @@ export class SellComponent implements OnDestroy {
     private app: AppService,
     private router: Router,
     private route: ActivatedRoute,
-    private settingService: SettingService
+    private settingService: SettingService,
+    private dialog: MatDialog
   ) {}
 
   ngOnDestroy(): void {
@@ -163,10 +167,10 @@ export class SellComponent implements OnDestroy {
         totalQuantity += Number(quantity);
       }
     }
-    this.form.get('totalQuantity')?.setValue(totalQuantity); 
+    this.form.get('totalQuantity')?.setValue(totalQuantity);
     return totalQuantity;
   }
-  
+
   calculateTotalDiscount(): number {
     const grossAmount = this.calculateGrossAmount();
     const netAmount = this.calculateNetAmount();
@@ -232,6 +236,40 @@ export class SellComponent implements OnDestroy {
         relativeTo: this.route,
         queryParams: { print: true },
       });
+    });
+  }
+
+  openAddCustomerDialog(): void {
+    const dialogRef = this.dialog.open(CustomerComponent, {
+      width: '400px', // Adjust the width as needed
+      height: '800px',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // Handle the result (e.g., customer data) returned from the pop-up
+      if (result) {
+        // Handle the data here (e.g., add it to your customers array)
+        console.log('Customer data:', result);
+      }
+    });
+  }
+
+  openAddProductDialog(): void {
+    const dialogRef = this.dialog.open(ProductComponent, {
+      width: '400px', // Adjust the width as needed
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.productService.getAll().subscribe((products) => {
+        this.products = products;
+      });
+      // Handle the result (e.g., product data) returned from the pop-up
+      if (result) {
+        // Handle the data here (e.g., add it to your products array)
+        console.log('Product data:', result);
+      }
     });
   }
 }

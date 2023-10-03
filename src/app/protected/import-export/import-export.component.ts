@@ -5,10 +5,8 @@ import { SellService } from '../services/sell.service';
 import { saveAs } from 'file-saver';
 import { AppService } from '@app/services/app.service';
 import { FormControl, FormGroup } from '@angular/forms';
-
-const today = new Date();
-const month = today.getMonth();
-const year = today.getFullYear();
+import { firstValueFrom } from 'rxjs';
+import { tableNames } from '@app/services/storage.service';
 
 @Component({
   selector: 'app-import-export',
@@ -25,10 +23,7 @@ export class ImportExportComponent {
   sells: any;
   downloadJsonHref: any;
 
-  datePicker = new FormGroup({
-    start: new FormControl(new Date(year, month, 13)),
-    end: new FormControl(new Date(year, month, 16)),
-  });
+  datePicker: FormGroup;
 
   constructor(
     private customerService: CustomerService,
@@ -39,40 +34,59 @@ export class ImportExportComponent {
     // this.generateDownloadJsonUri();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let currentDate: Date = new Date();
+    currentDate.setDate(currentDate.getDate() - 7);
+    this.datePicker = new FormGroup({
+      start: new FormControl(currentDate),
+      end: new FormControl(new Date()),
+    });
+  }
 
   // exportData is your array which you want to dowanload as json and sample.json is your file name, customize the below lines as per your need.
-  downloadProductData() {
-    this.productService.getAll().subscribe((x) => {
+  async downloadProductData() {
+    try {
+      const x = await firstValueFrom(this.productService.getAll());
       this.products = x;
       let exportData = this.products;
-      return saveAs(
+      saveAs(
         new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
         'product.json'
       );
-    });
+    } catch (error) {
+      console.error('Error while downloading product data:', error);
+      // You can handle errors here
+    }
   }
 
-  downloadCustomerData() {
-    this.customerService.getAll().subscribe((x) => {
+  async downloadCustomerData() {
+    try {
+      const x = await firstValueFrom(this.customerService.getAll());
       this.customers = x;
       let exportData = this.customers;
-      return saveAs(
+      saveAs(
         new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
         'customer.json'
       );
-    });
+    } catch (error) {
+      console.error('Error while downloading customer data:', error);
+      // You can handle errors here
+    }
   }
 
-  downloadSellData() {
-    this.sellService.getAll().subscribe((x) => {
+  async downloadSellData() {
+    try {
+      const x = await firstValueFrom(this.sellService.getAll());
       this.sells = x;
       let exportData = this.sells;
-      return saveAs(
+      saveAs(
         new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
         'sell.json'
       );
-    });
+    } catch (error) {
+      console.error('Error while downloading sell data:', error);
+      // You can handle errors here
+    }
   }
 
   onFileChange(event: any): void {
@@ -148,12 +162,11 @@ export class ImportExportComponent {
       this.app.noty.notifyClose('Sell data uploaded successfully.');
     });
   }
-// Upload Function is end here
+  // Upload Function is end here
 
+  // Data Download by Date Range
 
-// Data Download by Date Range
-
-  exportProductDataByDate(dataType: string) {
+  exportProductDataByDate() {
     // Retrieve the selected start and end dates from the form control
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
@@ -171,7 +184,7 @@ export class ImportExportComponent {
       });
   }
 
-  exportCustomerDataByDate(dataType: string) {
+  exportCustomerDataByDate() {
     // Retrieve the selected start and end dates from the form control
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
@@ -189,7 +202,7 @@ export class ImportExportComponent {
       });
   }
 
-  exportSellDataByDate(dataType: string) {
+  exportSellDataByDate() {
     // Retrieve the selected start and end dates from the form control
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
@@ -200,14 +213,12 @@ export class ImportExportComponent {
     }
 
     // Call your ProductService to get the product data based on the selected date range
-    this.sellService
-      .getSellByDate(startDate, endDate)
-      .subscribe((x) => {
-        this.exportData(x, 'sell.json');
-      });
+    this.sellService.getSellByDate(startDate, endDate).subscribe((x) => {
+      this.exportData(x, 'sell.json');
+    });
   }
 
-  // 
+  //
   exportData(data: any, fileName: string) {
     return saveAs(
       new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' }),
@@ -215,27 +226,132 @@ export class ImportExportComponent {
     );
   }
 
-  deleteProductData(){
-    this.downloadProductData();
-  }
-
-  deleteCustomerData(){
-    this.downloadCustomerData();
-  }
-
-  deleteSellData(){
-    this.downloadSellData();
-  }
-
-  // deleteProductDataByDate(){
-  //   this.exportProductDataByDate();
+  // deleteProductData(){
+  //   this.downloadProductData();
+  //   this.productService.deleteAllProduct().subscribe(()=>{
+  //     this.app.noty.notifyClose('Data download and.');
+  //   })
   // }
 
-  // deleteCustomerDataByDate(){
-  //   this.exportCustomerDataByDate();
-  // }
+  async deleteProductData() {
+    await this.downloadProductData();
 
-  // deleteSellDataByDate(){
-  //   this.exportSellDataByDate();
-  // }
+    try {
+      await firstValueFrom(this.productService.deleteAllProduct());
+      this.app.noty.notifyClose('Data download and delete.');
+    } catch (error) {}
+  }
+
+  async deleteCustomerData() {
+    await this.downloadCustomerData();
+
+    try {
+      await firstValueFrom(this.customerService.deleteAllCustomer());
+      this.app.noty.notifyClose('Data download and delete.');
+    } catch (error) {}
+  }
+
+  async deleteSellData() {
+    await this.downloadSellData();
+
+    try {
+      await firstValueFrom(this.sellService.deleteAllSell());
+      this.app.noty.notifyClose('Data download and delete.');
+    } catch (error) {}
+  }
+
+  async deleteProductDataByDate() {
+    // Retrieve the selected start and end dates from the form control
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+  
+    if (!startDate || !endDate) {
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+  
+    try {
+      // Call your ProductService to get the product data based on the selected date range
+      const productData = await firstValueFrom(this.productService.getProductByDate(startDate, endDate));
+  
+      // Export the product data to a file
+      this.exportDataFile(productData, 'product.json');
+  
+      // After exporting, delete the product data by date range
+      const deleteResult = await firstValueFrom(this.productService.deleteProductByDate(startDate, endDate));
+  
+      // Check the deleteResult if necessary
+  
+      this.app.noty.notifyClose('Product data deleted successfully.');
+    } catch (error) {
+      console.error('Error while exporting and deleting product data:', error);
+      // Handle errors here
+    }
+  }
+
+  async deleteCustomerDataByDate() {
+    // Retrieve the selected start and end dates from the form control
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+  
+    if (!startDate || !endDate) {
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+  
+    try {
+      // Call your ProductService to get the product data based on the selected date range
+      const customerData = await firstValueFrom(this.customerService.getCustomerByDate(startDate, endDate));
+  
+      // Export the product data to a file
+      this.exportDataFile(customerData, 'customer.json');
+  
+      // After exporting, delete the product data by date range
+      const deleteResult = await firstValueFrom(this.customerService.deleteCustomerByDate(startDate, endDate));
+  
+      // Check the deleteResult if necessary
+  
+      this.app.noty.notifyClose('Customer data deleted successfully.');
+    } catch (error) {
+      console.error('Error while exporting and deleting Customer data:', error);
+      // Handle errors here
+    }
+  }
+
+  async deleteSellDataByDate() {
+    // Retrieve the selected start and end dates from the form control
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+  
+    if (!startDate || !endDate) {
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+  
+    try {
+      // Call your ProductService to get the product data based on the selected date range
+      const sellData = await firstValueFrom(this.sellService.getSellByDate(startDate, endDate));
+  
+      // Export the product data to a file
+      this.exportDataFile(sellData, 'sell.json');
+  
+      // After exporting, delete the product data by date range
+      const deleteResult = await firstValueFrom(this.sellService.deleteSellByDate(startDate, endDate));
+  
+      // Check the deleteResult if necessary
+  
+      this.app.noty.notifyClose('Sell data deleted successfully.');
+    } catch (error) {
+      console.error('Error while exporting and deleting sell data:', error);
+      // Handle errors here
+    }
+  }
+  
+// Export Data
+async exportDataFile(data: any, fileName: string) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' });
+  saveAs(blob, fileName);
+}
+
+
 }

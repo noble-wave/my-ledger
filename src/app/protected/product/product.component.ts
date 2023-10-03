@@ -7,6 +7,7 @@ import { FormHelper, FormMeta, ModelMeta } from '@app/shared-services';
 import { FormGroup } from '@angular/forms';
 import { getProductInventoryMeta } from '@app/models/product-inventory.model';
 import { switchMap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +26,8 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private service: ProductService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -53,50 +55,51 @@ export class ProductComponent implements OnInit {
 
   saveProduct(addMore?: boolean) {
     FormHelper.submit(this.form, this.formMeta, () => {
-      if (this.form.value['productId']) {
-        // edit
-        this.service.saveInventory(this.inventoryForm.value).subscribe((x) => {
-          console.log(x);
-        });
-        this.service.update(this.form.value).subscribe((x) => {
-          console.log(x);
-          this.app.noty.notifyUpdated('Product has been');
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
-      } else {
-        // add
-        this.service
-          .add(this.form.value)
-          .pipe(
-            switchMap((x) => {
-              let productInventory = this.inventoryForm.value;
-              productInventory.productId = x.productId;
-              // productInventory.productName = x.productName;
-              return this.service.saveInventory(productInventory);
-            })
-          )
-          .subscribe((x) => {
+        if (this.form.value['productId']) {
+          // edit
+          this.service.saveInventory(this.inventoryForm.value).subscribe((x) => {
+              console.log(x);
+            });
+          this.service.update(this.form.value).subscribe((x) => {
             console.log(x);
-            this.app.noty.notifyClose('Product has been added');
-            if (addMore) {
-              this.form = this.app.meta.toFormGroup(
-                { isActive: true },
-                this.modelMeta
-              );
-              this.inventoryForm.reset();
-              this.form.markAsPristine();
-              this.form.markAsUntouched();
-              this.form.updateValueAndValidity();
-              this.cdr.markForCheck();
-            } else {
-              this.form.reset();
-              this.inventoryForm.reset();
-              this.router.navigate(['../', x.productId], {
-                relativeTo: this.route,
-              });
-            }
+            this.app.noty.notifyUpdated('Product has been');
+            this.router.navigate(['../'], { relativeTo: this.route });
           });
-      }
-    }, true);
+        } else {
+          // add
+          this.service
+            .add(this.form.value)
+            .pipe(
+              switchMap((x) => {
+                let productInventory = this.inventoryForm.value;
+                productInventory.productId = x.productId;
+                // productInventory.productName = x.productName;
+                return this.service.saveInventory(productInventory);
+              })
+            )
+            .subscribe((x) => {
+              console.log(x);
+              this.app.noty.notifyClose('Product has been added');
+              if (addMore) {
+                this.form = this.app.meta.toFormGroup(
+                  { isActive: true },
+                  this.modelMeta
+                );
+                this.inventoryForm.reset();
+                this.form.markAsPristine();
+                this.form.markAsUntouched();
+                this.form.updateValueAndValidity();
+                this.cdr.markForCheck();
+              } else {
+                this.form.reset();
+                this.inventoryForm.reset();
+                this.dialog.closeAll();
+                this.router.navigate(['../', x.productId], {
+                  relativeTo: this.route,
+                });
+              }
+            });
+        }
+      }, true);
   }
 }

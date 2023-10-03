@@ -19,6 +19,7 @@ import { ViewSellComponent } from './sell/view-sell.component';
 import { SettingComponent } from './setting/setting.component';
 import { ImportExportComponent } from './import-export/import-export.component';
 import { QuickSellComponent } from './sell/quick-sell/quick-sell.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { QuickSellComponent } from './sell/quick-sell/quick-sell.component';
     MatExpansionModule,
     MatDatepickerModule,
     SharedServicesModule,
+    MatAutocompleteModule,
     SharedModule,
     RouterModule.forChild([
       {

@@ -49,4 +49,19 @@ export class CustomerService {
     );
   }
 
+  deleteAllCustomer() {
+    return this.storage.clear(tableNames.customer);
+  }
+
+  deleteCustomerByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage
+      .deleteByIndex<Customer>(
+        tableNames.customer,
+        'updatedAt',
+        IDBKeyRange.bound(startDate, endDate, false, true),
+        'productId'
+      );
+  }
+
 }

@@ -66,6 +66,6 @@ export class CustomerComponent {
           }
         });
       }
-    });
+    }, true);
   }
 }

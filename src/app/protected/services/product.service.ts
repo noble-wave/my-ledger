@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '@app/models/product.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
-import { map, of } from 'rxjs';
+import { map, of, switchMap } from 'rxjs';
 import cryptoRandomString from 'crypto-random-string';
 import { ProductInventory } from '@app/models/product-inventory.model';
 
@@ -86,5 +86,20 @@ export class ProductService {
         })
       )
     );
+  }
+
+  deleteAllProduct() {
+    return this.storage.clear(tableNames.product);
+  }
+
+  deleteProductByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage
+      .deleteByIndex<Product>(
+        tableNames.product,
+        'updatedAt',
+        IDBKeyRange.bound(startDate, endDate, false, true),
+        'productId'
+      );
   }
 }

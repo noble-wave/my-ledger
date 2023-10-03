@@ -56,4 +56,19 @@ export class SellService {
     );
   }
 
+  deleteAllSell() {
+    return this.storage.clear(tableNames.sell);
+  }
+
+  deleteSellByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage
+      .deleteByIndex<Sell>(
+        tableNames.sell,
+        'sellDate',
+        IDBKeyRange.bound(startDate, endDate, false, true),
+        'sellDate'
+      );
+  }
+
 }

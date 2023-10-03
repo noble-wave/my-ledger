@@ -45,6 +45,7 @@
   flex-direction: column;
   gap: 16px;
   /* Adjust the gap as needed */
+  
 }
 
 .row {
@@ -118,6 +119,12 @@
     width: 33%;
     height: 80px;
   }
+  .container{
+    border-bottom: 1px solid #ccc; /* Adjust the border style as needed */
+    margin-bottom: 10px; /* Adjust the margin as needed to control the spacing between items */
+    padding-bottom: 10px; 
+   
+  }
 
 }
 
@@ -135,6 +142,7 @@
     justify-content: flex-end;
     align-items: center;
   }
+ 
 }
 
 @media (min-width: 1263px) {

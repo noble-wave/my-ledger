@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { DBConfig, NgxIndexedDBService, ObjectStoreMeta } from 'ngx-indexed-db';
-import { catchError } from 'rxjs';
+import {
+  DBConfig,
+  Key,
+  NgxIndexedDBService,
+  ObjectStoreMeta,
+} from 'ngx-indexed-db';
+import { catchError, concatMap, switchMap } from 'rxjs';
 
 export const tableNames = {
   misc: 'misc',
@@ -9,7 +14,7 @@ export const tableNames = {
   inventory: 'inventory',
   sell: 'sell',
   sellSetting: 'sellSetting',
-  quickSellSetting:'quickSellSetting'
+  quickSellSetting: 'quickSellSetting',
 };
 
 export const dbConfig: DBConfig = {
@@ -33,7 +38,7 @@ export const dbConfig: DBConfig = {
           keypath: 'productName',
           options: { unique: false },
         },
-        { name: 'createdAt', keypath: 'createdAt', options: { unique: false } },
+        { name: 'updatedAt', keypath: 'updatedAt', options: { unique: false } },
       ],
     },
     {
@@ -45,7 +50,7 @@ export const dbConfig: DBConfig = {
           keypath: 'customerName',
           options: { unique: false },
         },
-        { name: 'createdAt', keypath: 'createdAt', options: { unique: false } },
+        { name: 'updatedAt', keypath: 'updatedAt', options: { unique: false } },
       ],
     },
     {
@@ -58,6 +63,7 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: 'sellId', autoIncrement: true },
       storeSchema: [
         { name: 'items', keypath: 'items', options: { unique: false } },
+        { name: 'sellDate', keypath: 'sellDate', options: { unique: false } },
       ],
     },
   ],
@@ -86,8 +92,24 @@ export class StorageService {
     return this.db.deleteDatabase();
   }
 
-  delete(tableName: string) {
+  clear(tableName: string) {
     return this.db.clear(tableName);
+  }
+
+  deleteByIndex<T>(
+    tableName: string,
+    index: string,
+    key: IDBKeyRange,
+    keyColunm: string
+  ) {
+    return this.db.getAllByIndex<T>(tableName, index, key).pipe(
+      concatMap((x) =>
+        this.db.bulkDelete(
+          tableName,
+          x.map((y) => y[keyColunm])
+        )
+      )
+    );
   }
 
   createObjectStore(storeSchema: ObjectStoreMeta) {

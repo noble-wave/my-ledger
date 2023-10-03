@@ -10,10 +10,17 @@
 
             <div class="form-container">
                 <div class="form-row">
-                    <div *ngIf="setting?.manageCustomer">
-                        <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
-                            optTextLabel="customerName" optValueLabel="customerId"
-                            (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+                    <div *ngIf="setting?.manageCustomer" fxLayout="row">
+                        <div>
+                            <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
+                                optTextLabel="customerName" optValueLabel="customerId"
+                                (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+                        </div>
+                        <div>
+                            <button mat-icon-button (click)="openAddCustomerDialog()">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
                     </div>
 
                     <div *ngIf="setting?.manageSellStatus">
@@ -26,10 +33,17 @@
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
                 <div class="row product-section" *ngIf="setting?.manageProduct">
-                    <div class="item">
-                        <app-select [form]="sellItemForm" name="productId" label="Select a Product"
-                            [options]="products" optTextLabel="productName" optValueLabel="productId"
-                            (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select>
+                    <div class="item" fxLayout="row">
+                        <div>
+                            <app-select [form]="sellItemForm" name="productId" label="Select a Product"
+                                [options]="products" optTextLabel="productName" optValueLabel="productId"
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select>
+                        </div>
+                        <div>
+                            <button mat-icon-button (click)="openAddProductDialog()">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -38,12 +52,12 @@
                             label="Unit Price" name="unitPrice"></app-input>
                     </div>
                     <div class="item">
-                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Quantity" name="quantity"></app-input>
+                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)" label="Quantity"
+                            name="quantity"></app-input>
                     </div>
                     <div class="item" *ngIf="setting?.manageDiscount">
-                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Discount" name="discount"></app-input>
+                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)" label="Discount"
+                            name="discount"></app-input>
                     </div>
                 </div>
                 <div class="row">
