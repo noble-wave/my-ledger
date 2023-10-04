@@ -76,4 +76,8 @@ export class DialogComponent {
   onCancel(): void {
     this.dialogRef.close(false);
   }
+
+  onDelete(): void {
+    this.dialogRef.close('Delete'); 
+  }
 }

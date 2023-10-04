@@ -111,15 +111,15 @@
 
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="deleteProductData()"
+            <button mat-raised-button (click)="deleteProductData('500ms', '200ms')"
               color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Product Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="deleteCustomerData()"
+            <button mat-raised-button (click)="deleteCustomerData('500ms', '200ms')"
               color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Customer Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="deleteSellData()"
+            <button mat-raised-button (click)="deleteSellData('500ms', '200ms')"
               color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Sell Data</button>
           </div>
         </div>
@@ -152,15 +152,15 @@
           </mat-form-field>
           <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="deleteProductDataByDate()"
+              <button mat-raised-button (click)="deleteProductDataByDate('500ms', '200ms')"
                 color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Product</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="deleteCustomerDataByDate()"
+              <button mat-raised-button (click)="deleteCustomerDataByDate( '500ms', '200ms')"
                 color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Customer</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="deleteSellDataByDate()"
+              <button mat-raised-button (click)="deleteSellDataByDate('500ms', '200ms')"
                 color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Sell</button>
             </div>
           </div>
@@ -169,6 +169,3 @@
     </mat-accordion>
   </div>
 </div>
-
-
-<button mat-raised-button (click)="openDialog('500ms', '200ms')" color="warn">Primary Dialog</button>

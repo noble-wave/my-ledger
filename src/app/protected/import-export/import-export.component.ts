@@ -17,14 +17,12 @@ import { DialogComponent } from '@app/shared/controls/template/dialog/dialog.com
 })
 export class ImportExportComponent {
   panelOpenState = false;
-
   selectedFiles: FileList | null = null;
   settings: any;
   customers: any;
   products: any;
   sells: any;
   downloadJsonHref: any;
-
   datePicker: FormGroup;
 
   constructor(
@@ -33,11 +31,10 @@ export class ImportExportComponent {
     private sellService: SellService,
     private app: AppService,
     public dialog: MatDialog
-  ) {
-    // this.generateDownloadJsonUri();
-  }
+  ) {}
 
   ngOnInit(): void {
+    // Initialize the date picker with a default date range
     let currentDate: Date = new Date();
     currentDate.setDate(currentDate.getDate() - 7);
     this.datePicker = new FormGroup({
@@ -92,10 +89,12 @@ export class ImportExportComponent {
     }
   }
 
+  // Handle file selection for upload
   onFileChange(event: any): void {
     this.selectedFiles = event.target.files;
   }
 
+  // Upload selected JSON files
   uploadFiles(): void {
     if (!this.selectedFiles || this.selectedFiles.length === 0) {
       console.error('No files selected for upload.');
@@ -126,25 +125,24 @@ export class ImportExportComponent {
     }
   }
 
+  // Check if JSON data represents product data
   private isProductData(data: any): boolean {
     // Implement logic to identify product data based on its structure
     // Example: Check if data contains product-related fields
     return data && data.length > 0 && 'productName' in data[0];
   }
 
+  // Check if JSON data represents customer data
   private isCustomerData(data: any): boolean {
-    // Implement logic to identify customer data based on its structure
-    // Example: Check if data contains customer-related fields
     return data && data.length > 0 && 'customerName' in data[0];
   }
 
+  // Check if JSON data represents sell data
   private isSellData(data: any): boolean {
-    // Implement logic to identify sell data based on its structure
-    // Example: Check if data contains sell-related fields
     return data && data.length > 0 && 'items' in data[0];
   }
 
-  // Handle product, customer, and sell data as needed
+  // Handle uploading product data
   private handleProductUpload(productData: any): void {
     this.productService.uploadProductData(productData).subscribe(() => {
       console.log('Product data uploaded successfully.');
@@ -152,6 +150,7 @@ export class ImportExportComponent {
     });
   }
 
+  // Handle uploading customer data
   private handleCustomerUpload(customerData: any): void {
     this.customerService.uploadCustomerData(customerData).subscribe(() => {
       console.log('Customer data uploaded successfully.');
@@ -159,16 +158,15 @@ export class ImportExportComponent {
     });
   }
 
+  // Handle uploading sell data
   private handleSellUpload(sellData: any): void {
     this.sellService.uploadSellData(sellData).subscribe(() => {
       console.log('Sell data uploaded successfully.');
       this.app.noty.notifyClose('Sell data uploaded successfully.');
     });
   }
-  // Upload Function is end here
 
-  // Data Download by Date Range
-
+  // Export product data based on date range
   exportProductDataByDate() {
     // Retrieve the selected start and end dates from the form control
     const startDate = this.datePicker.get('start')?.value;
@@ -187,8 +185,8 @@ export class ImportExportComponent {
       });
   }
 
+  // Export customer data based on date range
   exportCustomerDataByDate() {
-    // Retrieve the selected start and end dates from the form control
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
 
@@ -197,7 +195,6 @@ export class ImportExportComponent {
       return;
     }
 
-    // Call your ProductService to get the product data based on the selected date range
     this.customerService
       .getCustomerByDate(startDate, endDate)
       .subscribe((x) => {
@@ -205,8 +202,8 @@ export class ImportExportComponent {
       });
   }
 
+  // Export sell data based on date range
   exportSellDataByDate() {
-    // Retrieve the selected start and end dates from the form control
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
 
@@ -215,13 +212,12 @@ export class ImportExportComponent {
       return;
     }
 
-    // Call your ProductService to get the product data based on the selected date range
     this.sellService.getSellByDate(startDate, endDate).subscribe((x) => {
       this.exportData(x, 'sell.json');
     });
   }
 
-  //download file here ..
+  // Generic method to export data as a JSON file
   exportData(data: any, fileName: string) {
     return saveAs(
       new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' }),
@@ -229,35 +225,103 @@ export class ImportExportComponent {
     );
   }
 
-  async deleteProductData() {
-    await this.downloadProductData();
+  // Delete all product data
+  async deleteProductData(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        dialogTitle: 'Delete Product Data',
+        dialogContent:
+          'Are you sure you want to delete the all product data?<br> <br>This action will also download the file.',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+        color: 'warn',
+      },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === 'Delete') {
+        await this.downloadProductData();
 
-    try {
-      await firstValueFrom(this.productService.deleteAllProduct());
-      this.app.noty.notifyClose('Data download and delete.');
-    } catch (error) {}
+        try {
+          await firstValueFrom(this.productService.deleteAllProduct());
+          this.app.noty.notifyClose('Data download and delete.');
+        } catch (error) {
+          // Handle the error, you might want to add error handling code here
+        }
+      }
+    });
   }
 
-  async deleteCustomerData() {
-    await this.downloadCustomerData();
+  // Delete all customer data
+  async deleteCustomerData(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        dialogTitle: 'Delete Customer Data',
+        dialogContent:
+          'Are you sure you want to delete the all customer data?<br> <br>This action will also download the file.',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+        color: 'warn',
+      },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === 'Delete') {
+        await this.downloadCustomerData();
 
-    try {
-      await firstValueFrom(this.customerService.deleteAllCustomer());
-      this.app.noty.notifyClose('Data download and delete.');
-    } catch (error) {}
+        try {
+          await firstValueFrom(this.customerService.deleteAllCustomer());
+          this.app.noty.notifyClose('Data download and delete.');
+        } catch (error) {}
+      }
+    });
   }
 
-  async deleteSellData() {
-    await this.downloadSellData();
+  // Delete all sell data
+  async deleteSellData(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        dialogTitle: 'Delete sell Data',
+        dialogContent:
+          'Are you sure you want to delete the all sell data?<br> <br>This action will also download the file.',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+        color: 'warn',
+      },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === 'Delete') {
+        await this.downloadSellData();
 
-    try {
-      await firstValueFrom(this.sellService.deleteAllSell());
-      this.app.noty.notifyClose('Data download and delete.');
-    } catch (error) {}
+        try {
+          await firstValueFrom(this.sellService.deleteAllSell());
+          this.app.noty.notifyClose('Data download and delete.');
+        } catch (error) {}
+      }
+    });
   }
 
-  async deleteProductDataByDate() {
-    // Retrieve the selected start and end dates from the form control
+  //  Delete product data based on date range and also Download
+  async deleteProductDataByDate(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
 
@@ -266,31 +330,52 @@ export class ImportExportComponent {
       return;
     }
 
-    try {
-      // Call your ProductService to get the product data based on the selected date range
-      const productData = await firstValueFrom(
-        this.productService.getProductByDate(startDate, endDate)
-      );
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        dialogTitle: 'Delete Product Data',
+        dialogContent:
+          'Are you sure you want to delete the product data by date range?<br> <br>This action will also download the file.',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+        color: 'warn',
+      },
+    });
 
-      // Export the product data to a file
-      this.exportDataFile(productData, 'product.json');
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === 'Delete') {
+        try {
+          const productData = await firstValueFrom(
+            this.productService.getProductByDate(startDate, endDate)
+          );
 
-      // After exporting, delete the product data by date range
-      const deleteResult = await firstValueFrom(
-        this.productService.deleteProductByDate(startDate, endDate)
-      );
+          this.exportDataFile(productData, 'product.json');
 
-      // Check the deleteResult if necessary
+          const deleteResult = await firstValueFrom(
+            this.productService.deleteProductByDate(startDate, endDate)
+          );
 
-      this.app.noty.notifyClose('Product data deleted successfully.');
-    } catch (error) {
-      console.error('Error while exporting and deleting product data:', error);
-      // Handle errors here
-    }
+          // Check the deleteResult if necessary
+
+          this.app.noty.notifyClose('Product data deleted successfully.');
+        } catch (error) {
+          console.error(
+            'Error while exporting and deleting product data:',
+            error
+          );
+          // Handle errors here
+        }
+      }
+    });
   }
 
-  async deleteCustomerDataByDate() {
-    // Retrieve the selected start and end dates from the form control
+  //  Delete customer data based on date range and also Download
+  async deleteCustomerDataByDate(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
 
@@ -299,81 +384,106 @@ export class ImportExportComponent {
       return;
     }
 
-    try {
-      // Call your ProductService to get the product data based on the selected date range
-      const customerData = await firstValueFrom(
-        this.customerService.getCustomerByDate(startDate, endDate)
-      );
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        dialogTitle: 'Delete Customer Data',
+        dialogContent:
+          'Are you sure you want to delete the customer data by date range?<br> <br> This action will also download the file.',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+        color: 'warn',
+      },
+    });
 
-      // Export the product data to a file
-      this.exportDataFile(customerData, 'customer.json');
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === 'Delete') {
+        try {
+          const customerData = await firstValueFrom(
+            this.customerService.getCustomerByDate(startDate, endDate)
+          );
 
-      // After exporting, delete the product data by date range
-      const deleteResult = await firstValueFrom(
-        this.customerService.deleteCustomerByDate(startDate, endDate)
-      );
+          this.exportDataFile(customerData, 'customer.json');
 
-      // Check the deleteResult if necessary
+          const deleteResult = await firstValueFrom(
+            this.customerService.deleteCustomerByDate(startDate, endDate)
+          );
 
-      this.app.noty.notifyClose('Customer data deleted successfully.');
-    } catch (error) {
-      console.error('Error while exporting and deleting Customer data:', error);
-      // Handle errors here
-    }
+          // Check the deleteResult if necessary
+
+          this.app.noty.notifyClose('Customer data deleted successfully.');
+        } catch (error) {
+          console.error(
+            'Error while exporting and deleting customer data:',
+            error
+          );
+          // Handle errors here
+        }
+      }
+    });
   }
 
-  async deleteSellDataByDate() {
-    // Retrieve the selected start and end dates from the form control
+  //  Delete sell data based on date range and also Download
+  async deleteSellDataByDate(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
+    // Ensure you have startDate and endDate as Date objects here
 
+    // Check if the provided dates are valid
     if (!startDate || !endDate) {
       this.app.noty.notifyError('Please select both start and end dates.');
       return;
     }
 
-    try {
-      // Call your ProductService to get the product data based on the selected date range
-      const sellData = await firstValueFrom(
-        this.sellService.getSellByDate(startDate, endDate)
-      );
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        dialogTitle: 'Delete Sell Data',
+        dialogContent:
+          'Are you sure you want to delete the sell data by date range? <br> <br>This action will also download the file.',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+        color: 'warn',
+      },
+    });
 
-      // Export the product data to a file
-      this.exportDataFile(sellData, 'sell.json');
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === 'Delete') {
+        try {
+          // Call your SellService to get the sell data based on the provided date range
+          const sellData = await firstValueFrom(
+            this.sellService.getSellByDate(startDate, endDate)
+          );
 
-      // After exporting, delete the product data by date range
-      const deleteResult = await firstValueFrom(
-        this.sellService.deleteSellByDate(startDate, endDate)
-      );
+          // Export the sell data to a file
+          this.exportDataFile(sellData, 'sell.json');
 
-      // Check the deleteResult if necessary
+          // After exporting, delete the sell data by date range
+          const deleteResult = await firstValueFrom(
+            this.sellService.deleteSellByDate(startDate, endDate)
+          );
 
-      this.app.noty.notifyClose('Sell data deleted successfully.');
-    } catch (error) {
-      console.error('Error while exporting and deleting sell data:', error);
-      // Handle errors here
-    }
+          // Check the deleteResult if necessary
+
+          this.app.noty.notifyClose('Sell data deleted successfully.');
+        } catch (error) {
+          console.error('Error while exporting and deleting sell data:', error);
+          // Handle errors here
+        }
+      }
+    });
   }
 
-  // Export Data
+  // Generic method to export data as a JSON file
   async exportDataFile(data: any, fileName: string) {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' });
     saveAs(blob, fileName);
   }
-
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(DialogComponent, {
-      width: '400px', // Adjust the width as needed
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: {
-        dialogTitle: 'Delete file',
-        dialogContent: 'Would you like to delete cat.jpeg?',
-        cancelButtonText: 'No',
-        confirmButtonText: 'Yes',
-        color: 'warn', // Change color as needed
-      },
-    });
-  }
-  
 }
