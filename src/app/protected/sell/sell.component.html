@@ -10,17 +10,17 @@
 
             <div class="form-container">
                 <div class="form-row">
-                    <div *ngIf="setting?.manageCustomer">
+                    <div *ngIf="setting?.manageCustomer" fxLayout="row">
                         <div>
                             <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
                                 (onSelectionChange)="handleCustomerSelection($event)"></app-select>
                         </div>
-                    </div>
-                    <div>
-                        <button mat-icon-button color="primary" (click)="openAddCustomerDialog('500ms', '200ms')">
-                            <mat-icon>add_circle_outline</mat-icon>
-                        </button>
+                        <div>
+                            <button mat-icon-button color="primary" (click)="openAddCustomerDialog('500ms', '200ms')">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
                     </div>
 
                     <div *ngIf="setting?.manageSellStatus">
