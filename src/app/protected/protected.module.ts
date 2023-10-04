@@ -20,6 +20,7 @@ import { SettingComponent } from './setting/setting.component';
 import { ImportExportComponent } from './import-export/import-export.component';
 import { QuickSellComponent } from './sell/quick-sell/quick-sell.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatDatepickerModule,
     SharedServicesModule,
     MatAutocompleteModule,
+    MatDialogModule,
     SharedModule,
     RouterModule.forChild([
       {

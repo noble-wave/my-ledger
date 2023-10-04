@@ -17,7 +17,7 @@
                                 (onSelectionChange)="handleCustomerSelection($event)"></app-select>
                         </div>
                         <div>
-                            <button mat-icon-button (click)="openAddCustomerDialog()">
+                            <button mat-icon-button (click)="openAddCustomerDialog('500ms', '200ms')">
                                 <mat-icon>add_circle_outline</mat-icon>
                             </button>
                         </div>
@@ -35,12 +35,17 @@
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item" fxLayout="row">
                         <div>
-                            <app-select [form]="sellItemForm" name="productId" label="Select a Product"
+                            <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
                                 [options]="products" optTextLabel="productName" optValueLabel="productId"
-                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select>
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select> -->
+
+                            <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product"
+                            optTextLabel="productName"  [options]="products" icon="icon-name" >
+                            </app-typeahead>
+                            <!-- (debounceKeyup)="handleTypeaheadKeyup($event)" -->
                         </div>
                         <div>
-                            <button mat-icon-button (click)="openAddProductDialog()">
+                            <button mat-icon-button (click)="openAddProductDialog('500ms', '200ms')">
                                 <mat-icon>add_circle_outline</mat-icon>
                             </button>
                         </div>

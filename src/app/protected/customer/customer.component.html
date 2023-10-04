@@ -1,6 +1,6 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
     <div>{{ isEdit ? 'Update ': 'Add '}} customer</div>
-    <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
+    <a type="button" routerLink="../" mat-button mat-raised-button *ngIf="!(data?.isDialog === true)">List</a>
 </mat-toolbar>
 
 <mat-card>

@@ -4,7 +4,7 @@ import { FloatLabelType } from '@angular/material/form-field';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'irs-typeahead',
+  selector: 'app-typeahead',
   templateUrl: './typeahead.component.html',
   styleUrls: ['./typeahead.component.scss']
 })
@@ -20,7 +20,9 @@ export class IrsTypeaheadComponent implements OnInit {
   @Input() floatLabel: FloatLabelType;
   @Input() options: any;
   @Input() viewValue: string;
-  control: AbstractControl;
+  @Input() optTextLabel: string = "value";
+  @Input() optValueLabel: string = "key";
+  control: FormControl;
   isRequired: boolean;
   private searchUpdated = new Subject();
   @Output() public debounceKeyup = new EventEmitter<string>();
@@ -32,7 +34,7 @@ export class IrsTypeaheadComponent implements OnInit {
       this.viewValue = '';
     }
 
-    this.control = this.form.get(this.name) as AbstractControl;
+    this.control = this.form.get(this.name) as FormControl;
     if (this.control && this.control.validator) {
       const validator = this.control.validator(new FormControl());
       this.isRequired = (validator && validator['required']) ? true : false;

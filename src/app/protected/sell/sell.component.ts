@@ -239,14 +239,22 @@ export class SellComponent implements OnDestroy {
     });
   }
 
-  openAddCustomerDialog(): void {
+  openAddCustomerDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
     const dialogRef = this.dialog.open(CustomerComponent, {
       width: '400px', // Adjust the width as needed
       height: '800px',
-      data: {},
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: { isDialog: true },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.customerService.getAll().subscribe((customers) => {
+        this.customers = customers;
+      });
       // Handle the result (e.g., customer data) returned from the pop-up
       if (result) {
         // Handle the data here (e.g., add it to your customers array)
@@ -255,10 +263,15 @@ export class SellComponent implements OnDestroy {
     });
   }
 
-  openAddProductDialog(): void {
+  openAddProductDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
     const dialogRef = this.dialog.open(ProductComponent, {
       width: '400px', // Adjust the width as needed
-      data: {},
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: { isDialog: true },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

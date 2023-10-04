@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Inject,
+  Optional,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getProductMeta } from '@app/models/product.model';
 import { AppService } from '@app/services/app.service';
@@ -8,6 +14,7 @@ import { FormGroup } from '@angular/forms';
 import { getProductInventoryMeta } from '@app/models/product-inventory.model';
 import { switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product',
@@ -27,7 +34,8 @@ export class ProductComponent implements OnInit {
     private service: ProductService,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: { isDialog: boolean }
   ) {}
 
   ngOnInit(): void {
@@ -54,16 +62,27 @@ export class ProductComponent implements OnInit {
   }
 
   saveProduct(addMore?: boolean) {
-    FormHelper.submit(this.form, this.formMeta, () => {
+    FormHelper.submit(
+      this.form,
+      this.formMeta,
+      () => {
         if (this.form.value['productId']) {
           // edit
-          this.service.saveInventory(this.inventoryForm.value).subscribe((x) => {
+          this.service
+            .saveInventory(this.inventoryForm.value)
+            .subscribe((x) => {
               console.log(x);
             });
           this.service.update(this.form.value).subscribe((x) => {
             console.log(x);
             this.app.noty.notifyUpdated('Product has been');
-            this.router.navigate(['../'], { relativeTo: this.route });
+
+            // Check if the component was opened within a dialog, and close it
+            if (this.data && this.data.isDialog) {
+              this.dialog.closeAll();
+            } else {
+              this.router.navigate(['../'], { relativeTo: this.route });
+            }
           });
         } else {
           // add
@@ -73,7 +92,6 @@ export class ProductComponent implements OnInit {
               switchMap((x) => {
                 let productInventory = this.inventoryForm.value;
                 productInventory.productId = x.productId;
-                // productInventory.productName = x.productName;
                 return this.service.saveInventory(productInventory);
               })
             )
@@ -93,13 +111,20 @@ export class ProductComponent implements OnInit {
               } else {
                 this.form.reset();
                 this.inventoryForm.reset();
-                this.dialog.closeAll();
-                this.router.navigate(['../', x.productId], {
-                  relativeTo: this.route,
-                });
+
+                // Check if the component was opened within a dialog, and close it
+                if (this.data && this.data.isDialog) {
+                  this.dialog.closeAll();
+                } else {
+                  this.router.navigate(['../', x.productId], {
+                    relativeTo: this.route,
+                  });
+                }
               }
             });
         }
-      }, true);
+      },
+      true
+    );
   }
 }

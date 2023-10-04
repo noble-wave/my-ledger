@@ -27,7 +27,7 @@ export class AppNavComponent {
     { path: 'sell', label: 'Sells List' },
     { path: 'sell/new', label: 'Sell' },
     // { path: 'quickSell', label: 'Quick Sell' },
-    { path: 'import-export', label: 'Import/Export' },
+    { path: 'import-export', label: 'Import/Export/Delete' },
     { path: 'setting', label: 'Settings' },
     { path: 'setting', label: 'Reports' },
   ];
