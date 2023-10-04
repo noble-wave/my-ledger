@@ -21,9 +21,11 @@
                 <app-radio [form]="form" name="isActive" label="Active ?"
                     [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-                <button mat-button mat-raised-button color="primary" (click)="saveProduct(false)">Save</button>
+                <button mat-button mat-raised-button color="primary"
+                    (click)="saveProduct(false)"><mat-icon>save</mat-icon>Save</button>
                 <button type="button" class="ml-8" mat-button mat-raised-button color="primary" *ngIf="!isEdit"
-                    (click)="saveProduct(true)">Save & Add more</button>
+                    (click)="saveProduct(true)"><mat-icon>save</mat-icon>Save &
+                    <mat-icon>add_circle_outline</mat-icon>Add more</button>
 
             </div>
         </div>

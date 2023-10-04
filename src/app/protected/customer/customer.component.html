@@ -19,15 +19,17 @@
                 <app-radio [form]="form" name="isActive" label="Want you active ?"
                     [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-                <button type="submit" mat-button mat-raised-button color="primary">Save</button>
-                <button type="button" class="ml-8" mat-button mat-raised-button color="primary"
-                *ngIf="!isEdit" (click)="saveProduct(true)">Save & Add more</button>
+                <button type="submit" mat-button mat-raised-button
+                    color="primary"><mat-icon>save</mat-icon>Save</button>
+                <button type="button" class="ml-8" mat-button mat-raised-button color="primary" *ngIf="!isEdit"
+                    (click)="saveProduct(true)"><mat-icon>save</mat-icon>Save &
+                    <mat-icon>add_circle_outline</mat-icon>Add more</button>
 
             </form>
         </div>
     </mat-card-content>
 </mat-card>
- <!-- <mat-form-field class="example-form-field">
+<!-- <mat-form-field class="example-form-field">
             <mat-label>Select the Date Range</mat-label>
             <mat-date-range-input [formGroup]="datePicker" [rangePicker]="campaignOnePicker"
               [comparisonStart]="datePicker.value.start" [comparisonEnd]="datePicker.value.end">

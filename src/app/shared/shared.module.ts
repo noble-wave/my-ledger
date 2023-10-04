@@ -59,6 +59,7 @@ import { ColumnOptionsDailogComponent } from './controls/template/local-search-t
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LetDirective } from './directives/let.directive';
 import { IrsControlComponent } from './controls/reactive/control/control.component';
+import { DialogComponent } from './controls/template/dialog/dialog.component';
 
 @NgModule({
   imports: [
@@ -107,7 +108,7 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent, IrsAlertComponent, IrsConfirmComponent,
 
-    IrsViewTemplateComponent, IrsIndexComponent, IrsErrorComponent, ColumnOptionsDailogComponent, IrsControlComponent,]
+    IrsViewTemplateComponent, IrsIndexComponent, IrsErrorComponent, ColumnOptionsDailogComponent, IrsControlComponent, DialogComponent,]
 })
 export class SharedModule {
 

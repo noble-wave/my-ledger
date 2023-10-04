@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div>
-                        <button mat-icon-button (click)="openAddCustomerDialog('500ms', '200ms')">
+                        <button mat-icon-button color="primary" (click)="openAddCustomerDialog('500ms', '200ms')">
                             <mat-icon>add_circle_outline</mat-icon>
                         </button>
                     </div>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div>
-                        <button mat-icon-button (click)="openAddProductDialog('500ms', '200ms')">
+                        <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
                             <mat-icon>add_circle_outline</mat-icon>
                         </button>
                     </div>
@@ -73,7 +73,7 @@
                         </irs-input-template>
                     </div>
                     <div class="item">
-                        <button mat-fab color="basic" aria-label="Example icon button with a delete icon"
+                        <button mat-fab color="basic" color="primary" aria-label="Example icon button with a delete icon"
                             (click)="deleteItem(i)">
                             <mat-icon>delete</mat-icon>
                         </button>
@@ -81,7 +81,7 @@
                 </div>
             </div>
 
-            <a type="button" (click)="addItem()" mat-button mat-raised-button>+ Add item</a>
+            <button mat-raised-button color="primary" (click)="addItem()"> <mat-icon>add_circle_outline</mat-icon> Add Item</button>
 
             <div class="totals-row">
                 <div class="total-amount-square">
@@ -98,8 +98,12 @@
                 </div>
             </div>
             <div class="button-row">
-                <a type="button" (click)="saveSell()" mat-button mat-raised-button>Save</a>
-                <a type="button" (click)="saveSellPrint()" mat-button mat-raised-button>Save and print</a>
+                <button mat-raised-button color="primary" (click)="saveSell()"> <mat-icon>save</mat-icon>Save</button>
+                <button mat-raised-button color="primary" (click)="saveSellPrint()"> <mat-icon>save</mat-icon>Save/
+                    <mat-icon>print</mat-icon>print </button>
+
+                <!-- <a type="button" (click)="saveSell()" mat-button mat-raised-button>Save</a> -->
+                <!-- <a type="button" (click)="saveSellPrint()" mat-button mat-raised-button>Save and print</a> -->
             </div>
 
         </div>

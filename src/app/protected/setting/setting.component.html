@@ -9,8 +9,8 @@
             <div class="section-label" *ngIf="sellSetting?.manageSellStatus">2. Select Default Setting for Sell
                 Status</div>
             <div class="status" *ngIf="sellSetting?.manageSellStatus">
-                <app-select [form]="form" name="defaultSellStatus" label="Select Sell Status"
-                    [options]="statusOptions" optTextLabel="label" optValueLabel="value"></app-select>
+                <app-select [form]="form" name="defaultSellStatus" label="Select Sell Status" [options]="statusOptions"
+                    optTextLabel="label" optValueLabel="value"></app-select>
             </div>
             <div class="section-label">3. Manage Customer</div>
             <app-radio [form]="form" name="manageCustomer"
@@ -23,12 +23,13 @@
                 [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
             <div class="section-label">5. Manage Discount</div>
-            <app-radio [form]="form" name="manageDiscount"
-                label="Would you like to manage Discounts when taking sells?"
+            <app-radio [form]="form" name="manageDiscount" label="Would you like to manage Discounts when taking sells?"
                 [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-            <button type="button" (click)="saveSellSetting()" mat-button mat-raised-button
-                class="apply-button">Apply</button>
+            <button type="button" (click)="saveSellSetting()" mat-button mat-raised-button color="primary"
+                class="apply-button"><mat-icon>
+                    settings
+                </mat-icon>Apply Changes</button>
 
         </div>
     </mat-card-content>
@@ -47,7 +48,8 @@
 
             <div class="section-label" *ngIf="quicksellSetting?.manageQuickSell">2. Add Quick Sell Amounts</div>
 
-            <div class="quick-sell-amount" fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="quicksellSetting?.manageQuickSell">
+            <div class="quick-sell-amount" fxLayout="row wrap" fxLayoutGap="10px grid"
+                *ngIf="quicksellSetting?.manageQuickSell">
                 <div fxFlex="50%" fxFlex.xs="70%"
                     *ngFor="let unitPrice of quickSellForm.value.unitPrices; let i = index;">
                     <!-- <input type="number" [(ngModel)]="unitPrices[i]" /> -->
@@ -62,12 +64,14 @@
                 <!-- <a type="button" (click)="addMore()" mat-button mat-raised-button>+ Add More</a> -->
             </div>
 
-            <button type="button" (click)="saveQuickSellSetting()" mat-button mat-raised-button
-                class="apply-button">Apply</button>
+            <button type="button" (click)="saveQuickSellSetting()" mat-button mat-raised-button color="primary"
+                class="apply-button"><mat-icon>
+                    settings
+                </mat-icon>Apply Changes</button>
 
         </div>
     </mat-card-content>
 
-    
+
 
 </mat-card>

@@ -16,13 +16,16 @@
 
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadProductData()">Export All Product Data</button>
+            <button mat-raised-button (click)="downloadProductData()"
+              color="primary"><mat-icon>download</mat-icon>Export All Product Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadCustomerData()">Export All Customer Data</button>
+            <button mat-raised-button (click)="downloadCustomerData()"
+              color="primary"><mat-icon>download</mat-icon>Export All Customer Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="downloadSellData()">Export All Sell Data</button>
+            <button mat-raised-button (click)="downloadSellData()" color="primary"><mat-icon>download</mat-icon>Export
+              All Sell Data</button>
           </div>
         </div>
 
@@ -54,13 +57,16 @@
           </mat-form-field>
           <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportProductDataByDate()">Export Product</button>
+              <button mat-raised-button (click)="exportProductDataByDate()"
+                color="primary"><mat-icon>download</mat-icon>Export Product</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportCustomerDataByDate()">Export Customer</button>
+              <button mat-raised-button (click)="exportCustomerDataByDate()"
+                color="primary"><mat-icon>download</mat-icon>Export Customer</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportSellDataByDate()">Export Sell</button>
+              <button mat-raised-button (click)="exportSellDataByDate()"
+                color="primary"><mat-icon>download</mat-icon>Export Sell</button>
             </div>
           </div>
         </div>
@@ -77,14 +83,15 @@
         <input type="file" class="upload-box" (change)="onFileChange($event)" accept=".json" multiple />
       </div>
       <div>
-        <button mat-raised-button (click)="uploadFiles()">Import</button>
+        <button mat-raised-button (click)="uploadFiles()" color="primary"><mat-icon>upload_file</mat-icon>
+          Import</button>
       </div>
     </div>
   </div>
 </div>
 
 <div class="container">
-  <h2 class="delete" > 
+  <h2 class="delete">
     <mat-icon>warning</mat-icon> &nbsp;
     <span>Delete Product, Customer, and Sell Data</span>
   </h2>
@@ -104,13 +111,16 @@
 
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="deleteProductData()">Delete All Product Data</button>
+            <button mat-raised-button (click)="deleteProductData()"
+              color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Product Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="deleteCustomerData()">Delete All Customer Data</button>
+            <button mat-raised-button (click)="deleteCustomerData()"
+              color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Customer Data</button>
           </div>
           <div fxFlex="30%" fxFlex.xs="100%">
-            <button mat-raised-button (click)="deleteSellData()">Delete All Sell Data</button>
+            <button mat-raised-button (click)="deleteSellData()"
+              color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Sell Data</button>
           </div>
         </div>
 
@@ -142,13 +152,16 @@
           </mat-form-field>
           <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="deleteProductDataByDate()">Delete Product</button>
+              <button mat-raised-button (click)="deleteProductDataByDate()"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Product</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="deleteCustomerDataByDate()">Delete Customer</button>
+              <button mat-raised-button (click)="deleteCustomerDataByDate()"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Customer</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="deleteSellDataByDate()">Delete Sell</button>
+              <button mat-raised-button (click)="deleteSellDataByDate()"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Sell</button>
             </div>
           </div>
         </div>
@@ -156,3 +169,6 @@
     </mat-accordion>
   </div>
 </div>
+
+
+<button mat-raised-button (click)="openDialog('500ms', '200ms')" color="warn">Primary Dialog</button>

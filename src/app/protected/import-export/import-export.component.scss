@@ -30,13 +30,19 @@
 }
 
 ::-webkit-file-upload-button {
-  color: #ffffff;
-  background: #424242;
+  color: black;
+  background: #00bfa5;
   padding: 15px;
   border: none;
   border-radius:10px;
   box-shadow: 1px 0 1px #4e4b4d;
   outline: none;
+}
+::-webkit-file-upload-button:hover {
+  background: #00bda4e4
+}
+::-webkit-file-upload-button:active {
+  background: #00bfa6a9;
 }
 
 
