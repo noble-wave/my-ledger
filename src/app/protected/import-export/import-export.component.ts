@@ -244,7 +244,7 @@ export class ImportExportComponent {
       },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'Delete') {
+      if (result === 'true') {
         await this.downloadProductData();
 
         try {
@@ -276,7 +276,7 @@ export class ImportExportComponent {
       },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'Delete') {
+      if (result === 'true') {
         await this.downloadCustomerData();
 
         try {
@@ -306,7 +306,7 @@ export class ImportExportComponent {
       },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'Delete') {
+      if (result === 'true') {
         await this.downloadSellData();
 
         try {
@@ -345,7 +345,7 @@ export class ImportExportComponent {
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'Delete') {
+      if (result === 'true') {
         try {
           const productData = await firstValueFrom(
             this.productService.getProductByDate(startDate, endDate)
@@ -399,7 +399,7 @@ export class ImportExportComponent {
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'Delete') {
+      if (result === 'true') {
         try {
           const customerData = await firstValueFrom(
             this.customerService.getCustomerByDate(startDate, endDate)
@@ -455,7 +455,7 @@ export class ImportExportComponent {
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'Delete') {
+      if (result === 'true') {
         try {
           // Call your SellService to get the sell data based on the provided date range
           const sellData = await firstValueFrom(

@@ -78,6 +78,6 @@ export class DialogComponent {
   }
 
   onDelete(): void {
-    this.dialogRef.close('Delete'); 
+    this.dialogRef.close('true'); 
   }
 }
