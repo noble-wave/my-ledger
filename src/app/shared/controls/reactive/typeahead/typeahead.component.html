@@ -12,7 +12,7 @@
       <!-- <mat-option *ngFor="let option of options" [value]="option.text" (onSelectionChange)="onSelection(option)">
         {{option.text}}
       </mat-option> -->
-      <mat-option *ngFor="let item of options" [value]="item[optValueLabel]" (onSelectionChange)="onSelection(item)">
+      <mat-option *ngFor="let item of filteredOptions" [value]="item[optValueLabel]" (onSelectionChange)="selectionChange(item)">
         {{item[optTextLabel]}}
       </mat-option>
     

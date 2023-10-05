@@ -35,13 +35,18 @@
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
                         <div>
-                            <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
+                            <app-select [form]="sellItemForm" name="productId" label="Select a Product"
                                 [options]="products" optTextLabel="productName" optValueLabel="productId"
-                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select> -->
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select>
 
                             <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product"
-                                optTextLabel="productName" [options]="products" icon="icon-name">
+                                optTextLabel="productName" optValueLabel="productId" [options]="products"
+                                icon="icon-name" (onSelectionChange)="handleProductSelection($event, sellItemForm)">
                             </app-typeahead>
+
+                            {{ sellItemForm.value | json}}
+
+
                             <!-- (debounceKeyup)="handleTypeaheadKeyup($event)" -->
                         </div>
                     </div>
@@ -73,15 +78,16 @@
                         </irs-input-template>
                     </div>
                     <div class="item">
-                        <button mat-fab color="basic" color="primary" aria-label="Example icon button with a delete icon"
-                            (click)="deleteItem(i)">
+                        <button mat-fab color="basic" color="primary"
+                            aria-label="Example icon button with a delete icon" (click)="deleteItem(i)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <button mat-raised-button color="primary" (click)="addItem()"> <mat-icon>add_circle_outline</mat-icon> Add Item</button>
+            <button mat-raised-button color="primary" (click)="addItem()"> <mat-icon>add_circle_outline</mat-icon> Add
+                Item</button>
 
             <div class="totals-row">
                 <div class="total-amount-square">
