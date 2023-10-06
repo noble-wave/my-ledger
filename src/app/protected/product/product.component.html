@@ -13,12 +13,12 @@
                 <app-input [form]="form" name="price"></app-input>
                 <!-- <app-input [form]="form" name="Image Url"></app-input>
                 <app-input [form]="form" name="Category"></app-input> -->
-                <app-radio [form]="form" name="isInventory" label="Stock Management?"
+                <app-radio [form]="form" name="isInventory" label="Want you Manage Stock Management?"
                     [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
                 <app-input *ngIf="form.value.isInventory" [form]="inventoryForm" name="count"></app-input>
 
-                <app-radio [form]="form" name="isActive" label="Active ?"
+                <app-radio [form]="form" name="isActive" label="Want you Active ?"
                     [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
                 <button mat-button mat-raised-button color="primary"
