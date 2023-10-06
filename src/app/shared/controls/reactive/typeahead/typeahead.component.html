@@ -1,14 +1,15 @@
 <div *ngIf="form && control">
 
+  <input type="hidden" [formControl]="control">
   <mat-form-field [hideRequiredMarker]="!isRequired" [floatLabel]="floatLabel" class="width100per">
     <mat-icon matPrefix class="irs-input-icon">{{icon}}</mat-icon>
     
-    <input matInput type="text" [value]="viewValue" [placeholder]="label" (keyup)="onKeyup($event)" [matAutocomplete]="auto">
+    <input matInput type="text" [placeholder]="label" (keyup)="onKeyup($event)" [matAutocomplete]="auto">
 
-    <!-- <mat-icon *ngIf="control.value" matSuffix class="irs-input-icon">check</mat-icon>
-    <mat-icon *ngIf="!control.value" matSuffix class="irs-input-icon">cancel</mat-icon> -->
+    <mat-icon *ngIf="control.value" matSuffix class="irs-input-icon">check</mat-icon>
+    <!-- <mat-icon *ngIf="!control.value" matSuffix class="irs-input-icon">cancel</mat-icon> -->
 
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-autocomplete autoActiveFirstOption [displayWith]="displayWith" #auto="matAutocomplete">
       <!-- <mat-option *ngFor="let option of options" [value]="option.text" (onSelectionChange)="onSelection(option)">
         {{option.text}}
       </mat-option> -->

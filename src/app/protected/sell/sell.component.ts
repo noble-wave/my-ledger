@@ -76,6 +76,10 @@ export class SellComponent implements OnDestroy {
     });
   }
 
+  handleRandomProductName(productName: string, sellItemForm: FormGroup) {
+    sellItemForm.get('productName')?.setValue(productName);
+  }
+
   handleProductSelection(product: Product, sellItemForm: FormGroup) {
     sellItemForm.get('productName')?.setValue(product.productName);
     sellItemForm.get('unitPrice')?.setValue(product.price);
@@ -115,6 +119,12 @@ export class SellComponent implements OnDestroy {
       this.calculateTotalQuantity();
     }
   }
+
+  // handleRandomCustomerName(customer: string) {
+  //   this.form.get('customerName')?.setValue(customer.customerName);
+  // }
+
+
 
   handleCustomerSelection(customer: Customer) {
     console.log('Selected customer:', customer);

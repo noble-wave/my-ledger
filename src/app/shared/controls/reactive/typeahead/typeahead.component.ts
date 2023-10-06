@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, AbstractControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { Observable, Subject, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-typeahead',
@@ -24,7 +24,7 @@ export class IrsTypeaheadComponent implements OnInit {
   @Input() optValueLabel: string = 'key';
   control: FormControl;
   isRequired: boolean;
-  private searchUpdated = new Subject();
+  private searchUpdated = new Subject<string>();
   @Output() public debounceKeyup = new EventEmitter<string>();
   @Output() onSelectionChange = new EventEmitter<any>(true);
   filteredOptions: any[];
@@ -49,19 +49,25 @@ export class IrsTypeaheadComponent implements OnInit {
 
     this.onKeyup();
 
+    // this.filteredOptions = this.control.valueChanges.pipe(
+    //   startWith(''),
+    //   map((x) => (x ? this._filter(x) : this.options?.slice() || []))
+    // );
+
     // Autocomplete
-    // this.searchUpdated.debounceTime(100).distinctUntilChanged()
-    // .subscribe((x: string) => { console.log(x); this.debounceKeyup.emit(x); });
+    this.searchUpdated.pipe(debounceTime(100), distinctUntilChanged())
+    .subscribe((x: string) => { console.log(x); this.debounceKeyup.emit(x); });
   }
 
   onKeyup(event?: any) {
     let searchTxt = event?.target?.value;
     this.filteredOptions = this._filter(searchTxt);
+    this.control.setValue(null);
     this.searchUpdated.next(searchTxt);
   }
 
   private _filter(value: string): any[] {
-    if (value) {
+    if (value && this.options) {
       const filterValue = value.toLowerCase();
       return this.options.filter((x) =>
         x[this.optTextLabel].toLowerCase().includes(filterValue)
@@ -80,6 +86,14 @@ export class IrsTypeaheadComponent implements OnInit {
     // console.log(event);
     // let option = this.options.find(x => x[this.optValueLabel] == event.value);
     this.viewValue = option[this.optTextLabel];
+    this.control.setValue(option[this.optValueLabel]);
     this.onSelectionChange.emit(option);
   }
+
+  displayWith = (value: string) => {
+    let option =
+      this.options && this.options.find((x) => x[this.optValueLabel] === value);
+
+    return option && option[this.optTextLabel];
+  };
 }

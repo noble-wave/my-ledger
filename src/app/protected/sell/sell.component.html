@@ -15,6 +15,12 @@
                             <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
                                 (onSelectionChange)="handleCustomerSelection($event)"></app-select>
+
+                            <app-typeahead [form]="form" name="customerId" label="Select a Customer"
+                                optTextLabel="customerName" optValueLabel="customerId" [options]="products"
+                                icon="icon-name" 
+                                (onSelectionChange)="handleCustomerSelection($event)">
+                            </app-typeahead>
                         </div>
                         <div>
                             <button mat-icon-button color="primary" (click)="openAddCustomerDialog('500ms', '200ms')">
@@ -35,16 +41,17 @@
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
                         <div>
-                            <app-select [form]="sellItemForm" name="productId" label="Select a Product"
+                            <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
                                 [options]="products" optTextLabel="productName" optValueLabel="productId"
-                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select>
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select> -->
 
                             <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product"
                                 optTextLabel="productName" optValueLabel="productId" [options]="products"
-                                icon="icon-name" (onSelectionChange)="handleProductSelection($event, sellItemForm)">
+                                icon="icon-name" (debounceKeyup)="handleRandomProductName($event, sellItemForm)"
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)">
                             </app-typeahead>
 
-                            {{ sellItemForm.value | json}}
+                            <!-- {{ sellItemForm.value | json}} -->
 
 
                             <!-- (debounceKeyup)="handleTypeaheadKeyup($event)" -->
