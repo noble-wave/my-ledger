@@ -11,3 +11,9 @@
 .adjust-position {
   margin-top: 1.1em;
 }
+
+.radio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

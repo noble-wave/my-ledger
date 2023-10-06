@@ -1,10 +1,19 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Take Sell</div>
+    <div>Take Order</div>
     <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
-        <h3>Customize Your Sell Section to Suit Your Preferences via Settings.</h3>
+        <div fxLayoutAlign="end center">
+            <button mat-icon-button color="primary" (click)="toggleDetails()">
+                <mat-icon>{{ showDetails ? 'remove' : 'info' }}</mat-icon>
+            </button>
+        </div>
+        <div *ngIf="showDetails" fxLayoutAlign="end center">
+            <!-- Additional details that will be shown when the button is clicked -->
+            <!-- Add your content here -->
+            <h3>Customize Your Sell Section to Suit Your Preferences via Settings.</h3>
+        </div>
         <div>
             <irs-date [form]="form" name="sellDate" label="Sell Date"></irs-date>
 
@@ -12,14 +21,13 @@
                 <div class="form-row">
                     <div *ngIf="setting?.manageCustomer" fxLayout="row">
                         <div>
-                            <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
+                            <!-- <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
-                                (onSelectionChange)="handleCustomerSelection($event)"></app-select>
-
+                                (onSelectionChange)="handleCustomerSelection($event)"></app-select> -->
                             <app-typeahead [form]="form" name="customerId" label="Select a Customer"
-                                optTextLabel="customerName" optValueLabel="customerId" [options]="products"
-                                icon="icon-name" 
-                                (onSelectionChange)="handleCustomerSelection($event)">
+                                optTextLabel="customerName" optValueLabel="customerId" [options]="customers"
+                                icon="icon-name" (debounceKeyup)="handleRandomProductName($event, form)"
+                                (onSelectionChange)="handleCustomerSelection($event, form)">
                             </app-typeahead>
                         </div>
                         <div>
@@ -50,11 +58,6 @@
                                 icon="icon-name" (debounceKeyup)="handleRandomProductName($event, sellItemForm)"
                                 (onSelectionChange)="handleProductSelection($event, sellItemForm)">
                             </app-typeahead>
-
-                            <!-- {{ sellItemForm.value | json}} -->
-
-
-                            <!-- (debounceKeyup)="handleTypeaheadKeyup($event)" -->
                         </div>
                     </div>
                     <div>

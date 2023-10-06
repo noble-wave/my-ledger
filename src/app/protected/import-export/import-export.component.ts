@@ -53,6 +53,7 @@ export class ImportExportComponent {
         new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
         'product.json'
       );
+      this.app.noty.notifyClose('Product data exported successfully.');
     } catch (error) {
       console.error('Error while downloading product data:', error);
       // You can handle errors here
@@ -68,6 +69,7 @@ export class ImportExportComponent {
         new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
         'customer.json'
       );
+      this.app.noty.notifyClose('Customer data exported successfully.');
     } catch (error) {
       console.error('Error while downloading customer data:', error);
       // You can handle errors here
@@ -83,6 +85,7 @@ export class ImportExportComponent {
         new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
         'sell.json'
       );
+      this.app.noty.notifyClose('Sell data exported successfully.');
     } catch (error) {
       console.error('Error while downloading sell data:', error);
       // You can handle errors here
@@ -182,6 +185,7 @@ export class ImportExportComponent {
       .getProductByDate(startDate, endDate)
       .subscribe((data) => {
         this.exportData(data, 'product.json');
+        this.app.noty.notifyClose('Product data exported successfully.');
       });
   }
 
@@ -199,6 +203,7 @@ export class ImportExportComponent {
       .getCustomerByDate(startDate, endDate)
       .subscribe((x) => {
         this.exportData(x, 'customer.json');
+        this.app.noty.notifyClose('Customer data exported successfully.');
       });
   }
 
@@ -214,6 +219,8 @@ export class ImportExportComponent {
 
     this.sellService.getSellByDate(startDate, endDate).subscribe((x) => {
       this.exportData(x, 'sell.json');
+      this.app.noty.notifyClose('Sell data exported successfully.');
+      
     });
   }
 

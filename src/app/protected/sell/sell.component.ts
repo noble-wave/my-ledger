@@ -30,6 +30,7 @@ export class SellComponent implements OnDestroy {
   products: Product[];
   statusOption: any;
   setting: any;
+  showDetails: boolean = false;
 
   constructor(
     private sellService: SellService,
@@ -76,6 +77,10 @@ export class SellComponent implements OnDestroy {
     });
   }
 
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
+
   handleRandomProductName(productName: string, sellItemForm: FormGroup) {
     sellItemForm.get('productName')?.setValue(productName);
   }
@@ -120,15 +125,13 @@ export class SellComponent implements OnDestroy {
     }
   }
 
-  // handleRandomCustomerName(customer: string) {
-  //   this.form.get('customerName')?.setValue(customer.customerName);
-  // }
+  handleRandomCustomerName(customer: Customer, form: FormGroup) {
+    form.get('customerName')?.setValue(customer);
+  }
 
-
-
-  handleCustomerSelection(customer: Customer) {
+  handleCustomerSelection(customer: Customer, form: FormGroup) {
     console.log('Selected customer:', customer);
-    this.form.get('customerName')?.setValue(customer.customerName);
+    form.get('customerName')?.setValue(customer.customerName);
   }
 
   getProductDefaultPrice(sellItemForm: FormGroup): number {

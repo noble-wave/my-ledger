@@ -21,6 +21,7 @@ import { ImportExportComponent } from './import-export/import-export.component';
 import { QuickSellComponent } from './sell/quick-sell/quick-sell.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     SettingComponent,
     ImportExportComponent,
     QuickSellComponent,
+    ReportComponent,
   ],
   imports: [
     CoreModule,
