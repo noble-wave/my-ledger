@@ -22,8 +22,8 @@
             <mat-label>Choose Chart Time Frames</mat-label>
             <mat-select [(value)]="selectedDateRange" (selectionChange)="onDateRangeChange()">
               <mat-option value="allYears">All Years</mat-option>
-              <mat-option value="lastAndThisYear">Last Year and This Year</mat-option>
-              <mat-option value="lastAndThisMonth">Last Month and This Month</mat-option>
+              <mat-option value="last6Year">Last 6 years</mat-option>
+              <mat-option value="last6Months">Last 6 Months</mat-option> 
             </mat-select>
           </mat-form-field>
         </div>
@@ -65,17 +65,27 @@
 
   <ngx-charts-line-chart [view]="chartView" [scheme]="colorScheme" [results]="lineChartData" [xAxis]="showXAxis"
     [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"></ngx-charts-line-chart>
-  <!-- <ngx-charts-pie-chart fxFlex.gt-sm="50%" fxFlex.lt-sm="100%" [view]="chartView" [scheme]="colorScheme"
+    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (window:resize)="onResize($event)"></ngx-charts-line-chart>
+ 
+
+</div>
+
+
+
+
+
+
+
+
+
+ <!-- <ngx-charts-pie-chart  [view]="chartView" [scheme]="colorScheme"
     [results]="chartData" [legend]="showLegend">
   </ngx-charts-pie-chart> -->
 
-  <!-- <ngx-charts-advanced-pie-chart fxFlex.gt-sm="50%" fxFlex.lt-sm="100%" [view]="chartView" [scheme]="colorScheme"
+  <!-- <ngx-charts-advanced-pie-chart  [view]="chartView" [scheme]="colorScheme"
     [results]="chartData">
   </ngx-charts-advanced-pie-chart>
 
-  <ngx-charts-pie-grid fxFlex.gt-sm="50%" fxFlex.lt-sm="100%" [view]="chartView" [scheme]="colorScheme"
+  <ngx-charts-pie-grid [view]="chartView" [scheme]="colorScheme"
     [results]="chartData">
   </ngx-charts-pie-grid> -->
-
-</div>

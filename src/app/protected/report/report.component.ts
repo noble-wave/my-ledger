@@ -123,21 +123,21 @@ export class ReportComponent implements OnInit {
   };
 
   onDateRangeChange() {
-    // Handle date range selection here
     switch (this.selectedDateRange) {
       case 'allYears':
         this.prepareYearlyChartData();
         break;
-      case 'lastAndThisYear':
-        this.prepareLastAndThisYearChartData();
+      case 'last6Year':
+        this.prepareLast6YearsChartData();
         break;
-      case 'lastAndThisMonth':
-        this.prepareLastAndThisMonthChartData();
+      case 'last6Months': 
+        this.prepareLast6MonthsChartData();
         break;
       default:
         break;
     }
   }
+  
 
   addEvent(type: string) {
     if (type === 'year') {
@@ -201,84 +201,80 @@ export class ReportComponent implements OnInit {
     return formattedData;
   }
 
-  prepareLastAndThisYearChartData(): void {
+  prepareLast6YearsChartData(): void {
     const currentDate = new Date();
-    const thisYear = currentDate.getFullYear();
-    const lastYear = thisYear - 1;
-
-    // Filter the 'sells' data for this year and last year
-    const filteredSells = this.sells.filter((sell) => {
-      const sellDate = new Date(sell.sellDate);
-      return (
-        sellDate.getFullYear() === thisYear ||
-        sellDate.getFullYear() === lastYear
-      );
-    });
-
-    // Initialize an object to store yearly aggregates
-    const yearlyData: { [year: string]: number } = {};
-
-    // Loop through the filtered data and aggregate it by year
-    for (const sell of filteredSells) {
-      const sellDate = new Date(sell.sellDate);
-      const year = sellDate.getFullYear().toString();
-
-      // Check if the year exists in the yearlyData object; if not, initialize it to 0
-      if (!yearlyData[year]) {
-        yearlyData[year] = 0;
-      }
-
-      // Add the netAmount to the corresponding year
-      yearlyData[year] += sell.netAmount;
+    const currentYear = currentDate.getFullYear();
+  
+    // Initialize an array to store yearly aggregates for the last 6 years
+    const yearlyData: any[] = [];
+  
+    // Loop through the last 6 years and calculate the difference
+    for (let i = 0; i < 6; i++) {
+      const targetYear = currentYear - i;
+  
+      // Filter the 'sells' data for the specific year
+      const filteredSells = this.sells.filter((sell) => {
+        const sellDate = new Date(sell.sellDate);
+        return sellDate.getFullYear() === targetYear;
+      });
+  
+      // Calculate the total netAmount for the year
+      const yearlyTotal = filteredSells.reduce((total, sell) => total + sell.netAmount, 0);
+  
+      // Add the data to the yearlyData array
+      yearlyData.push({
+        name: targetYear.toString(),
+        value: yearlyTotal,
+      });
     }
-
-    // Convert the aggregated data into an array suitable for the chart
-    this.chartData = Object.keys(yearlyData).map((year) => ({
-      name: year,
-      value: yearlyData[year],
-    }));
+  
+    // Reverse the array to display the most recent year first
+    this.chartData = yearlyData.reverse();
   }
+  
 
-  prepareLastAndThisMonthChartData(): void {
+  prepareLast6MonthsChartData(): void {
     const currentDate = new Date();
-    const thisYear = currentDate.getFullYear();
-    const thisMonth = currentDate.getMonth();
-
-    // Filter the 'sells' data for this month and the last month of the current year
-    const filteredSells = this.sells.filter((sell) => {
-      const sellDate = new Date(sell.sellDate);
-      const sellYear = sellDate.getFullYear();
-      const sellMonth = sellDate.getMonth();
-
-      return (
-        (sellYear === thisYear && sellMonth === thisMonth) ||
-        (sellYear === thisYear && sellMonth === thisMonth - 1) // Last month of the current year
-      );
-    });
-
-    // Initialize an object to store monthly aggregates
-    const monthlyData: { [key: string]: number } = {};
-
-    // Loop through the filtered data and aggregate it by month
-    for (const sell of filteredSells) {
-      const sellDate = new Date(sell.sellDate);
-      const monthYearKey = `${
-        sellDate.getMonth() + 1
-      }-${sellDate.getFullYear()}`;
-
-      // Check if the key exists in the monthlyData object; if not, initialize it to 0
-      if (!monthlyData[monthYearKey]) {
-        monthlyData[monthYearKey] = 0;
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+  
+    // Initialize an array to store monthly aggregates for the last 6 months
+    const monthlyData: any[] = [];
+  
+    // Loop through the last 6 months and calculate the difference
+    for (let i = 0; i < 6; i++) {
+      let targetYear = currentYear;
+      let targetMonth = currentMonth - i;
+  
+      if (targetMonth < 0) {
+        targetYear--; // Adjust the year if necessary
+        targetMonth = 12 + targetMonth;
       }
-
-      // Add the netAmount to the corresponding month
-      monthlyData[monthYearKey] += sell.netAmount;
+  
+      const targetDate = new Date(targetYear, targetMonth, 1);
+  
+      // Filter the 'sells' data for the specific month and year
+      const filteredSells = this.sells.filter((sell) => {
+        const sellDate = new Date(sell.sellDate);
+        return (
+          sellDate.getFullYear() === targetYear &&
+          sellDate.getMonth() === targetMonth
+        );
+      });
+  
+      // Calculate the total netAmount for the month
+      const monthlyTotal = filteredSells.reduce((total, sell) => total + sell.netAmount, 0);
+  
+      // Add the data to the monthlyData array
+      monthlyData.push({
+        name: targetDate.toLocaleString('default', { month: 'long' }) + ' ' + targetYear,
+        value: monthlyTotal,
+      });
     }
-
-    // Convert the aggregated data into an array suitable for the chart
-    this.chartData = Object.keys(monthlyData).map((key) => ({
-      name: key,
-      value: monthlyData[key],
-    }));
+  
+    // Reverse the array to display the most recent month first
+    this.chartData = monthlyData.reverse();
   }
+  
+
 }
