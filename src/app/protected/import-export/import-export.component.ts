@@ -113,12 +113,12 @@ export class ImportExportComponent {
         const jsonData = JSON.parse(e.target.result);
 
         // Identify the file content based on its structure
-        if (this.isProductData(jsonData)) {
+        if (this.isSellData(jsonData)) {
+          this.handleSellUpload(jsonData);
+        } else if (this.isProductData(jsonData)) {
           this.handleProductUpload(jsonData);
         } else if (this.isCustomerData(jsonData)) {
           this.handleCustomerUpload(jsonData);
-        } else if (this.isSellData(jsonData)) {
-          this.handleSellUpload(jsonData);
         } else {
           console.error('Unrecognized JSON data:', jsonData);
         }
@@ -132,17 +132,17 @@ export class ImportExportComponent {
   private isProductData(data: any): boolean {
     // Implement logic to identify product data based on its structure
     // Example: Check if data contains product-related fields
-    return data && data.length > 0 && 'productName' in data[0];
+    return data && data.length > 0 && 'productId' in data[0];
   }
 
   // Check if JSON data represents customer data
   private isCustomerData(data: any): boolean {
-    return data && data.length > 0 && 'customerName' in data[0];
+    return data && data.length > 0 && 'customerId' in data[0];
   }
 
   // Check if JSON data represents sell data
   private isSellData(data: any): boolean {
-    return data && data.length > 0 && 'items' in data[0];
+    return data && data.length > 0 && 'sellId' in data[0];
   }
 
   // Handle uploading product data
@@ -220,7 +220,6 @@ export class ImportExportComponent {
     this.sellService.getSellByDate(startDate, endDate).subscribe((x) => {
       this.exportData(x, 'sell.json');
       this.app.noty.notifyClose('Sell data exported successfully.');
-      
     });
   }
 

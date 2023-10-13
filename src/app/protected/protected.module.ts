@@ -22,6 +22,7 @@ import { QuickSellComponent } from './sell/quick-sell/quick-sell.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReportComponent } from './report/report.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ReportComponent } from './report/report.component';
     SharedServicesModule,
     MatAutocompleteModule,
     MatDialogModule,
+    NgxChartsModule,
     SharedModule,
     RouterModule.forChild([
       {
@@ -72,6 +74,7 @@ import { ReportComponent } from './report/report.component';
 
           { path: 'setting', component: SettingComponent },
           { path: 'import-export', component: ImportExportComponent },
+          { path: 'report', component: ReportComponent },
         ],
       },
     ]),

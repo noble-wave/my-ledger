@@ -1,1 +1,81 @@
-<p>report works!</p>
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+  <div>Analytics</div>
+  <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+</mat-toolbar>
+
+<div class="container">
+  <h2>Sales and Revenue Analysis </h2>
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="hide-on-small">Customize Chart Data</span>
+            <span class="show-on-small">Customize Chart Data</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            Currently I am {{panelOpenState ? 'open' : 'closed'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="margin">
+          <mat-form-field>
+            <mat-label>Choose Chart Time Frames</mat-label>
+            <mat-select [(value)]="selectedDateRange" (selectionChange)="onDateRangeChange()">
+              <mat-option value="allYears">All Years</mat-option>
+              <mat-option value="lastAndThisYear">Last Year and This Year</mat-option>
+              <mat-option value="lastAndThisMonth">Last Month and This Month</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px 10px grid">
+          <div fxFlex="70%" fxFlex.xs="70%">
+            <mat-form-field class="example-form-field">
+              <mat-label>Select the Date Range</mat-label>
+              <mat-date-range-input [formGroup]="datePicker" [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" formControlName="start">
+                <input matEndDate placeholder="End date" formControlName="end">
+              </mat-date-range-input>
+              <mat-hint>Start Date MM/DD/YYYY – End Date MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="30%" fxFlex.xs="70%" class="margin">
+            <button mat-button mat-raised-button color="primary" (click)="addEvent('date')">
+              <mat-icon>save</mat-icon> Submit
+            </button>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+</div>
+
+<div class="chart-container">
+
+  <ngx-charts-bar-vertical theme="dark" [view]="chartView" [scheme]="colorScheme" [results]="chartData"
+    [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+    (window:resize)="onResize($event)">
+  </ngx-charts-bar-vertical>
+
+  <ngx-charts-line-chart [view]="chartView" [scheme]="colorScheme" [results]="lineChartData" [xAxis]="showXAxis"
+    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"></ngx-charts-line-chart>
+  <!-- <ngx-charts-pie-chart fxFlex.gt-sm="50%" fxFlex.lt-sm="100%" [view]="chartView" [scheme]="colorScheme"
+    [results]="chartData" [legend]="showLegend">
+  </ngx-charts-pie-chart> -->
+
+  <!-- <ngx-charts-advanced-pie-chart fxFlex.gt-sm="50%" fxFlex.lt-sm="100%" [view]="chartView" [scheme]="colorScheme"
+    [results]="chartData">
+  </ngx-charts-advanced-pie-chart>
+
+  <ngx-charts-pie-grid fxFlex.gt-sm="50%" fxFlex.lt-sm="100%" [view]="chartView" [scheme]="colorScheme"
+    [results]="chartData">
+  </ngx-charts-pie-grid> -->
+
+</div>

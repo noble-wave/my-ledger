@@ -5,15 +5,15 @@
   border-radius: 10px;
 }
 
-.margin{
+.margin {
   margin-top: 30px !important;
 }
 
-.delete{
+.delete {
   color: #f44336;
 }
 
-.mat-icon{
+.mat-icon {
   vertical-align: middle;
 }
 
@@ -34,13 +34,15 @@
   background: #00bfa5;
   padding: 15px;
   border: none;
-  border-radius:10px;
+  border-radius: 10px;
   box-shadow: 1px 0 1px #4e4b4d;
   outline: none;
 }
+
 ::-webkit-file-upload-button:hover {
   background: #00bda4e4
 }
+
 ::-webkit-file-upload-button:active {
   background: #00bfa6a9;
 }

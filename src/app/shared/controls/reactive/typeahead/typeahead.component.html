@@ -6,7 +6,7 @@
     
     <input matInput type="text" [placeholder]="label" (keyup)="onKeyup($event)" [matAutocomplete]="auto">
 
-    <mat-icon *ngIf="control.value" matSuffix class="irs-input-icon">check</mat-icon>
+    <!-- <mat-icon *ngIf="control.value" matSuffix class="irs-input-icon">check</mat-icon> -->
     <!-- <mat-icon *ngIf="!control.value" matSuffix class="irs-input-icon">cancel</mat-icon> -->
 
     <mat-autocomplete autoActiveFirstOption [displayWith]="displayWith" #auto="matAutocomplete">

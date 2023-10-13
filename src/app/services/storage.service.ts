@@ -60,9 +60,8 @@ export const dbConfig: DBConfig = {
     },
     {
       store: tableNames.sell,
-      storeConfig: { keyPath: 'sellId', autoIncrement: true },
+      storeConfig: { keyPath: 'sellId', autoIncrement: false },
       storeSchema: [
-        { name: 'items', keypath: 'items', options: { unique: false } },
         { name: 'sellDate', keypath: 'sellDate', options: { unique: false } },
       ],
     },
