@@ -2,6 +2,9 @@
     text {
         fill: #fff !important;
     }
+    .gridline-path {
+        stroke: rgba(0, 0, 0, 0.4) !important;
+    }
 }
 .chart-legend .legend-label .active .legend-label-text {
     color: #dcd9d9 !important;
