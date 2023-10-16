@@ -29,14 +29,14 @@ export class ReportComponent implements OnInit {
   yAxisLabel = 'Sell Amount';
   datePicker: FormGroup;
   panelOpenState = false;
-  selectedDateRange: string = 'allYears';
+  selectedDateRange: string = 'last2Weeks';
 
   constructor(private sellService: SellService) {}
 
   ngOnInit(): void {
     this.sellService.getAll().subscribe((sells: Sell[]) => {
       this.sells = sells;
-      this.prepareYearlyChartData(); // Initial chart data (yearly)
+      this.prepareLast2WeeksChartData(); // Initial chart data (yearly)
       this.prepareLineChartData();
       setTimeout(() => {
         this.adjustChartDimensions();
@@ -59,58 +59,6 @@ export class ReportComponent implements OnInit {
       const parentWidth = parentContainer.clientWidth;
       this.chartView = [parentWidth, 400];
     }
-  }
-
-  prepareYearlyChartData(): void {
-    const yearlyData: { [year: string]: number } = {};
-
-    for (const sell of this.sells) {
-      const sellDate = new Date(sell.sellDate);
-      const year = sellDate.getFullYear().toString();
-
-      if (!yearlyData[year]) {
-        yearlyData[year] = 0;
-      }
-
-      yearlyData[year] += sell.netAmount;
-    }
-
-    this.chartData = Object.keys(yearlyData).map((year) => ({
-      name: year,
-      value: yearlyData[year],
-    }));
-  }
-
-  prepareLineChartData(): void {
-    this.lineChartData = [
-      {
-        name: 'Two weeks sale',
-        series: this.formatDataForLineChart(this.sells),
-      },
-    ];
-  }
-
-  formatDataForLineChart(sells: Sell[]): any[] {
-    const lineChartSeries: { name: Date; value: number }[] = [];
-
-    const twoWeeksAgo = new Date();
-    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
-    const filteredSells = sells.filter((sell) => {
-      const sellDate = new Date(sell.sellDate);
-      return sellDate >= twoWeeksAgo;
-    });
-
-    for (const sell of filteredSells) {
-      const sellDate = new Date(sell.sellDate);
-      const dataPoint = {
-        name: sellDate,
-        value: sell.netAmount,
-      };
-      lineChartSeries.push(dataPoint);
-    }
-
-    return lineChartSeries;
   }
 
   onDateRangeChange() {
@@ -180,6 +128,26 @@ export class ReportComponent implements OnInit {
     }
 
     return formattedData;
+  }
+
+  prepareYearlyChartData(): void {
+    const yearlyData: { [year: string]: number } = {};
+
+    for (const sell of this.sells) {
+      const sellDate = new Date(sell.sellDate);
+      const year = sellDate.getFullYear().toString();
+
+      if (!yearlyData[year]) {
+        yearlyData[year] = 0;
+      }
+
+      yearlyData[year] += sell.netAmount;
+    }
+
+    this.chartData = Object.keys(yearlyData).map((year) => ({
+      name: year,
+      value: yearlyData[year],
+    }));
   }
 
   prepareLast6YearsChartData(): void {
@@ -274,5 +242,37 @@ export class ReportComponent implements OnInit {
     }
 
     this.chartData = dailyData;
+  }
+
+  prepareLineChartData(): void {
+    this.lineChartData = [
+      {
+        name: 'Two weeks sale',
+        series: this.formatDataForLineChart(this.sells),
+      },
+    ];
+  }
+
+  formatDataForLineChart(sells: Sell[]): any[] {
+    const lineChartSeries: { name: Date; value: number }[] = [];
+
+    const twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+    const filteredSells = sells.filter((sell) => {
+      const sellDate = new Date(sell.sellDate);
+      return sellDate >= twoWeeksAgo;
+    });
+
+    for (const sell of filteredSells) {
+      const sellDate = new Date(sell.sellDate);
+      const dataPoint = {
+        name: sellDate,
+        value: sell.netAmount,
+      };
+      lineChartSeries.push(dataPoint);
+    }
+
+    return lineChartSeries;
   }
 }

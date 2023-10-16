@@ -20,8 +20,8 @@
             <mat-select [(value)]="selectedDateRange" (selectionChange)="onDateRangeChange()">
               <mat-option value="allYears">All Years</mat-option>
               <mat-option value="last6Years">Last 6 years</mat-option>
-              <mat-option value="last6Months">Last 6 Months</mat-option> 
-              <mat-option value="last2Weeks">Last two weeks</mat-option> 
+              <mat-option value="last6Months">Last 6 Months</mat-option>
+              <mat-option value="last2Weeks">Last two weeks</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -55,15 +55,23 @@
 
 <div class="chart-container">
 
-  <ngx-charts-bar-vertical theme="dark" [view]="chartView" [scheme]="colorScheme" [results]="chartData"
-    [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
-    [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
-    (window:resize)="onResize($event)">
-  </ngx-charts-bar-vertical>
+  <div fxLayout="column" fxLayoutAlign="center center" >
+    <div class="margin">
+      <ngx-charts-bar-vertical theme="dark" [view]="chartView" [scheme]="colorScheme" [results]="chartData"
+        [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+        (window:resize)="onResize($event)">
+      </ngx-charts-bar-vertical>
 
-  <ngx-charts-line-chart [view]="chartView" [scheme]="colorScheme" [results]="lineChartData" [xAxis]="showXAxis"
-    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
-    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (window:resize)="onResize($event)"></ngx-charts-line-chart>
+    </div>
+    <div class="margin">
+      <ngx-charts-line-chart [view]="chartView" [scheme]="colorScheme" [results]="lineChartData" [xAxis]="showXAxis"
+        [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" (window:resize)="onResize($event)"></ngx-charts-line-chart>
+    </div>
+
+  </div>
+
 
 </div>
 
@@ -75,11 +83,11 @@
 
 
 
- <!-- <ngx-charts-pie-chart  [view]="chartView" [scheme]="colorScheme"
+<!-- <ngx-charts-pie-chart  [view]="chartView" [scheme]="colorScheme"
     [results]="chartData" [legend]="showLegend">
   </ngx-charts-pie-chart> -->
 
-  <!-- <ngx-charts-advanced-pie-chart  [view]="chartView" [scheme]="colorScheme"
+<!-- <ngx-charts-advanced-pie-chart  [view]="chartView" [scheme]="colorScheme"
     [results]="chartData">
   </ngx-charts-advanced-pie-chart>
 
