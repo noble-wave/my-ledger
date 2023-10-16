@@ -13,6 +13,7 @@ export class SellSettings extends AppSettings {
   manageCustomer: boolean;
   manageProduct: boolean;
   manageDiscount: boolean;
+  manageGstin: boolean;
 
   constructor() {
     super();
@@ -22,6 +23,7 @@ export class SellSettings extends AppSettings {
     this.manageCustomer = true;
     this.manageProduct = true;
     this.manageDiscount = true;
+    this.manageGstin = true;
   }
 }
 
@@ -58,6 +60,15 @@ export function getSellSettingMeta() {
     {
       key: 'manageDiscount',
       label: 'Manage Discount',
+      controlType: 'radio',
+      options: [
+        { key: true, value: 'Yes' },
+        { key: false, value: 'No' },
+      ],
+    },
+    {
+      key: 'manageGstin',
+      label: 'Manage Gstin',
       controlType: 'radio',
       options: [
         { key: true, value: 'Yes' },

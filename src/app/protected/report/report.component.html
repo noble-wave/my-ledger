@@ -13,8 +13,10 @@
             <span class="hide-on-small">Customize Chart Data</span>
             <span class="show-on-small">Customize Chart Data</span>
           </mat-panel-title>
+          <mat-panel-description>
+            <!-- {{panelOpenState ? 'open' : 'Last two weeks'}},  -->{{ selectedDateRangeText }}
+          </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="margin">
           <mat-form-field>
             <mat-label>Choose Chart Time Frames</mat-label>
             <mat-select [(value)]="selectedDateRange" (selectionChange)="onDateRangeChange()">
@@ -24,7 +26,6 @@
               <mat-option value="last2Weeks">Last two weeks</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
 
         <div fxLayout="row wrap" fxLayoutGap="10px 10px grid">
           <div fxFlex="70%" fxFlex.xs="70%">
@@ -40,7 +41,7 @@
             </mat-form-field>
           </div>
 
-          <div fxFlex="30%" fxFlex.xs="70%" class="margin">
+          <div fxFlex="30%" fxFlex.xs="70%" >
             <button mat-button mat-raised-button color="primary" (click)="addEvent('date')">
               <mat-icon>save</mat-icon> Submit
             </button>

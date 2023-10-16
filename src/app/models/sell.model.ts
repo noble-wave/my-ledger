@@ -13,6 +13,8 @@ export interface Sell {
   netAmount: number;
   sellDate: Date;
   status: SellStatus;
+  userGstin: string;
+  customerGstin: string;
 }
 
 export function getSellMeta() {
@@ -29,6 +31,8 @@ export function getSellMeta() {
     { key: 'netAmount', label: 'Net Amount' },
     { key: 'sellDate', label: 'Sell Date' },
     { key: 'status', label: 'Status' },
+    { key: 'userGstin', label: 'User Gstin' },
+    { key: 'customerGstin', label: 'Customer Gstin' },
   ] as Array<ModelMeta>;
 }
 
@@ -46,10 +50,9 @@ export function getSellItemMeta() {
     { key: 'productId', label: 'ProductId', hide: true },
     { key: 'productName', label: 'Product Name', required: true },
     { key: 'quantity', label: 'Quantity', required: true },
-    { key: 'discount', label: 'Discount', },
-    { key: 'unitPrice', label: 'Unit Price', },
+    { key: 'discount', label: 'Discount' },
+    { key: 'unitPrice', label: 'Unit Price' },
     { key: 'subtotal', label: 'Subtotal' },
-
   ] as Array<ModelMeta>;
 }
 
@@ -60,4 +63,3 @@ export enum SellStatus {
   Delivered = 'Delivered',
   Cancelled = 'Cancelled',
 }
-

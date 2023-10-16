@@ -35,11 +35,21 @@
                                 <mat-icon>add_circle_outline</mat-icon>
                             </button>
                         </div>
+
                     </div>
 
-                    <div *ngIf="setting?.manageSellStatus">
-                        <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
-                            optTextLabel="label" optValueLabel="value"></app-select>
+                    
+                    <div class="row">
+                        <!-- <div class="item" *ngIf="setting?.manageGstin">
+                            <app-input [form]="form" label="Your GSTIN" name="userGstin"></app-input>
+                        </div>
+                        <div class="item" *ngIf="setting?.manageGstin">
+                            <app-input [form]="form" label="Party GSTIN" name="customerGstin"></app-input>
+                        </div> -->
+                        <div class="item" *ngIf="setting?.manageSellStatus">
+                            <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
+                                optTextLabel="label" optValueLabel="value"></app-select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,7 +57,7 @@
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
                 <div class="row product-section" *ngIf="setting?.manageProduct">
-                    <div class="item">
+                    <div class="item" fxLayout="row">
                         <div>
                             <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
                                 [options]="products" optTextLabel="productName" optValueLabel="productId"
@@ -59,11 +69,11 @@
                                 (onSelectionChange)="handleProductSelection($event, sellItemForm)">
                             </app-typeahead>
                         </div>
-                    </div>
-                    <div>
-                        <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
-                            <mat-icon>add_circle_outline</mat-icon>
-                        </button>
+                        <div>
+                            <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="row">

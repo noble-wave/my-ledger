@@ -30,6 +30,7 @@ export class ReportComponent implements OnInit {
   datePicker: FormGroup;
   panelOpenState = false;
   selectedDateRange: string = 'last2Weeks';
+  selectedDateRangeText: string = 'Last two weeks';
 
   constructor(private sellService: SellService) {}
 
@@ -64,15 +65,19 @@ export class ReportComponent implements OnInit {
   onDateRangeChange() {
     switch (this.selectedDateRange) {
       case 'allYears':
+        this.selectedDateRangeText = 'All Years';
         this.prepareYearlyChartData();
         break;
       case 'last6Years':
+        this.selectedDateRangeText = 'Last 6 years';
         this.prepareLast6YearsChartData();
         break;
       case 'last6Months':
+        this.selectedDateRangeText = 'Last 6 Months';
         this.prepareLast6MonthsChartData();
         break;
       case 'last2Weeks':
+        this.selectedDateRangeText = 'Last two weeks';
         this.prepareLast2WeeksChartData();
         break;
       default:
@@ -88,6 +93,7 @@ export class ReportComponent implements OnInit {
     } else if (type === 'date') {
       this.prepareChartData();
     }
+    this.selectedDateRangeText = 'Default Date Range';
   }
 
   prepareChartData(): void {
