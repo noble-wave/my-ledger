@@ -32,7 +32,7 @@ export class SellComponent implements OnDestroy {
   setting: any;
   showDetails: boolean = false;
   selectedOption: string = 'percentage'; // Default to "Percentage"
-  discountValue: number = 0; 
+  discountValue: number ; 
 
   constructor(
     private sellService: SellService,

@@ -94,8 +94,8 @@
                         <mat-form-field appearance="fill">
                             <div fxLayout="row">
                                 <div fxFlex="90%">
-                                    <input matInput [(ngModel)]="discountValue" (input)="updateSubtotal(sellItemForm)"
-                                        placeholder="Enter value" />
+                                    <input matInput [(ngModel)]="discountValue" type="number" (input)="updateSubtotal(sellItemForm)"
+                                        placeholder="Discount"/>
                                 </div>
                                 <div fxFlex="10%">
                                     <mat-select [(ngModel)]="selectedOption"
