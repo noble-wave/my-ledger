@@ -24,11 +24,12 @@ export class AppNavComponent {
     { path: 'customer', label: 'Customers' },
     // { path: 'product-price', label: 'Product Price' },
     // { path: 'product-inventory', label: 'Product Inventory' },
-    { path: 'sell', label: 'Sells List' },
+    { path: 'sell', label: 'Sell List' },
     { path: 'sell/new', label: 'Sell' },
     // { path: 'quickSell', label: 'Quick Sell' },
     { path: 'import-export', label: 'Import/Export/Delete' },
     { path: 'report', label: 'Reports' },
+    { path: 'dashboard', label: 'Dashboard' },
     { path: 'setting', label: 'Settings' },
   ];
 

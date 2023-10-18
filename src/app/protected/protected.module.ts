@@ -23,6 +23,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReportComponent } from './report/report.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SaleDashboardComponent } from './dashboard/sale-dashboard/sale-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     ImportExportComponent,
     QuickSellComponent,
     ReportComponent,
+    DashboardComponent,
+    SaleDashboardComponent,
   ],
   imports: [
     CoreModule,
@@ -75,6 +79,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
           { path: 'setting', component: SettingComponent },
           { path: 'import-export', component: ImportExportComponent },
           { path: 'report', component: ReportComponent },
+          { path: 'dashboard', component: DashboardComponent },
         ],
       },
     ]),
