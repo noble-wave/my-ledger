@@ -38,7 +38,7 @@
 
                     </div>
 
-                    
+
                     <div class="row">
                         <!-- <div class="item" *ngIf="setting?.manageGstin">
                             <app-input [form]="form" label="Your GSTIN" name="userGstin"></app-input>
@@ -79,15 +79,37 @@
                 <div class="row">
                     <div class="item">
                         <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Unit Price" name="unitPrice"></app-input>
+                            label="Unit Price" name="unitPrice" type="number"></app-input>
                     </div>
                     <div class="item">
-                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)" label="Quantity"
-                            name="quantity"></app-input>
+                        <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
+                            label="Quantity" name="quantity"></app-input>
                     </div>
+                    <!-- <div class="item" *ngIf="setting?.manageDiscount">
+                        <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
+                            label="Discount" name="discount" [suffixClass]="'suffix-toggler'"
+                            [suffix]="getDiscountPercentage(sellItemForm)"></app-input>
+                    </div> -->
                     <div class="item" *ngIf="setting?.manageDiscount">
-                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)" label="Discount"
-                            name="discount"></app-input>
+                        <mat-form-field appearance="fill">
+                            <div fxLayout="row">
+                                <div fxFlex="90%">
+                                    <input matInput [(ngModel)]="discountValue" (input)="updateSubtotal(sellItemForm)"
+                                        placeholder="Enter value" />
+                                </div>
+                                <div fxFlex="10%">
+                                    <mat-select [(ngModel)]="selectedOption"
+                                        (ngModelChange)="updateSubtotal(sellItemForm)">
+                                        <mat-option [value]="'percentage'">Percent (%)</mat-option>
+                                        <mat-option [value]="'number'">Number</mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            <mat-icon matSuffix
+                                [ngClass]="{'fa-percent': selectedOption === 'percentage', 'fa-hashtag': selectedOption === 'number'}">
+                                {{ selectedOption === 'percentage' ? 'percent' : 'currency_rupee' }}
+                            </mat-icon>
+                        </mat-form-field>
                     </div>
                 </div>
                 <div class="row">

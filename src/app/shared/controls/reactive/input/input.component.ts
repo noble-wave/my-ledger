@@ -24,6 +24,8 @@ export class IrsInputComponent implements OnInit, OnChanges {
   @Input() icon: string;
   @Input() hint: string;
   @Input() hintEnd: string;
+  @Input() suffix: string;
+  @Input() suffixClass: string;
 
   control!: IrsControl;
   hideRequiredMarker = false;

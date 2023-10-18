@@ -31,6 +31,8 @@ export class SellComponent implements OnDestroy {
   statusOption: any;
   setting: any;
   showDetails: boolean = false;
+  selectedOption: string = 'percentage'; // Default to "Percentage"
+  discountValue: number = 0; 
 
   constructor(
     private sellService: SellService,
@@ -111,20 +113,31 @@ export class SellComponent implements OnDestroy {
   updateSubtotal(sellItemForm: FormGroup) {
     const quantity = sellItemForm.get('quantity')?.value;
     const unitPrice = sellItemForm.get('unitPrice')?.value;
-    const discount = sellItemForm.get('discount')?.value;
     const newUnitPrice = parseFloat(unitPrice); // Convert value to a floating-point number
-    const newDiscount = parseFloat(discount) || 0; // Convert value to a floating-point number
-
-    if (!isNaN(newUnitPrice) && quantity !== undefined) {
-      const subtotal = (newUnitPrice - newDiscount) * quantity; // Calculate the new subtotal
+  
+    if (quantity !== undefined) {
+      let subtotal = 0;
+      let discountValue = 0; // Initialize discountValue variable
+  
+      if (this.selectedOption === 'percentage') {
+        const discountPercentage = this.discountValue / 100; // Convert to decimal
+        discountValue = newUnitPrice * discountPercentage;
+      } else if (this.selectedOption === 'number') {
+        discountValue = this.discountValue;
+      }
+  
+      subtotal = (newUnitPrice - discountValue) * quantity;
+  
+      sellItemForm.get('discount')?.setValue(discountValue);
       sellItemForm.get('subtotal')?.setValue(subtotal);
-      this.calculateGrossAmount(); // Recalculate total amount
+  
+      this.calculateGrossAmount();
       this.calculateTotalDiscount();
       this.calculateNetAmount();
       this.calculateTotalQuantity();
     }
   }
-
+  
   handleRandomCustomerName(customer: Customer, form: FormGroup) {
     form.get('customerName')?.setValue(customer);
   }
@@ -298,4 +311,23 @@ export class SellComponent implements OnDestroy {
       }
     });
   }
+
 }
+
+
+// updateSubtotal2(sellItemForm: FormGroup) {
+//   const quantity = sellItemForm.get('quantity')?.value;
+//   const unitPrice = sellItemForm.get('unitPrice')?.value;
+//   const discount = sellItemForm.get('discount')?.value;
+//   const newUnitPrice = parseFloat(unitPrice); // Convert value to a floating-point number
+//   const newDiscount = parseFloat(discount) || 0; // Convert value to a floating-point number
+
+//   if (!isNaN(newUnitPrice) && quantity !== undefined) {
+//     const subtotal = (newUnitPrice - newDiscount) * quantity; // Calculate the new subtotal
+//     sellItemForm.get('subtotal')?.setValue(subtotal);
+//     this.calculateGrossAmount(); // Recalculate total amount
+//     this.calculateTotalDiscount();
+//     this.calculateNetAmount();
+//     this.calculateTotalQuantity();
+//   }
+// }

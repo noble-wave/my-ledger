@@ -2,7 +2,9 @@
   <mat-icon *ngIf="icon" matPrefix class="irs-input-icon">{{icon}}</mat-icon>
   <mat-label>{{label || control.label}}</mat-label>
   <input [type]="type" matInput [formControl]="control" (change)="valueChanged()" [attr.disabled]="control.disabled ? 'true': 'false'">
-
+  
+  <span *ngIf="suffix" [ngClass]="suffixClass" matSuffix>&nbsp; {{suffix}} &nbsp;</span>
+  
   <mat-hint *ngIf="hintEnd" align="end">{{hintEnd}}</mat-hint>
 
   <mat-error *ngIf="control.hasError('email')">

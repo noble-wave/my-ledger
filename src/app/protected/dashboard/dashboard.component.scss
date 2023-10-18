@@ -1,0 +1,32 @@
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .product-item {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .threshold {
+    padding: 10px;
+    border-radius: 4px;
+    margin: 5px;
+  }
+  
+  .warn-threshold {
+    background-color: #FF5733; /* Warning threshold background color */
+    color: white;
+  }
+  
+  .info-threshold {
+    background-color: #3498DB; /* Info threshold background color */
+    color: white;
+  }
+  

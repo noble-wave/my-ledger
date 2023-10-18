@@ -1,4 +1,28 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Dashboard</div>
+  <div>Dashboard</div>
 </mat-toolbar>
 <app-sale-dashboard></app-sale-dashboard>
+
+<div class="product-list">
+  <div class="threshold-box warn-threshold">
+    <h2>Warning Threshold</h2>
+    <div *ngFor="let product of products">
+      <ng-container *ngIf="product.count < 10">
+        <p>Product: {{ product.name }}</p>
+        <p>Quantity: {{ product.count }}</p>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="threshold-box info-threshold">
+    <h2>Info Threshold</h2>
+    <div *ngFor="let product of products">
+      <ng-container *ngIf="product.count >= 10 && product.count < 20">
+        <p>Product: {{ product.name }}</p>
+        <p>Quantity: {{ product.count }}</p>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
