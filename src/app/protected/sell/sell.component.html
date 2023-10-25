@@ -85,32 +85,12 @@
                         <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
                             label="Quantity" name="quantity"></app-input>
                     </div>
-                    <!-- <div class="item" *ngIf="setting?.manageDiscount">
-                        <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Discount" name="discount" [suffixClass]="'suffix-toggler'"
-                            [suffix]="getDiscountPercentage(sellItemForm)"></app-input>
-                    </div> -->
                     <div class="item" *ngIf="setting?.manageDiscount">
-                        <mat-form-field appearance="fill">
-                            <div fxLayout="row">
-                                <div fxFlex="90%">
-                                    <input matInput [(ngModel)]="discountValue" type="number" (input)="updateSubtotal(sellItemForm)"
-                                        placeholder="Discount"/>
-                                </div>
-                                <div fxFlex="10%">
-                                    <mat-select [(ngModel)]="selectedOption"
-                                        (ngModelChange)="updateSubtotal(sellItemForm)">
-                                        <mat-option [value]="'percentage'">Percent (%)</mat-option>
-                                        <mat-option [value]="'number'">Number</mat-option>
-                                    </mat-select>
-                                </div>
-                            </div>
-                            <mat-icon matSuffix
-                                [ngClass]="{'fa-percent': selectedOption === 'percentage', 'fa-hashtag': selectedOption === 'number'}">
-                                {{ selectedOption === 'percentage' ? 'percent' : 'currency_rupee' }}
-                            </mat-icon>
-                        </mat-form-field>
+                        <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
+                            label="Discount" name="discount" [suffixClass]="'discount-suffix'"
+                            [suffix]="getDiscountPercentage(sellItemForm)"></app-input>
                     </div>
+
                 </div>
                 <div class="row">
 
@@ -149,9 +129,6 @@
                 <button mat-raised-button color="primary" (click)="saveSell()"> <mat-icon>save</mat-icon>Save</button>
                 <button mat-raised-button color="primary" (click)="saveSellPrint()"> <mat-icon>save</mat-icon>Save/
                     <mat-icon>print</mat-icon>print </button>
-
-                <!-- <a type="button" (click)="saveSell()" mat-button mat-raised-button>Save</a> -->
-                <!-- <a type="button" (click)="saveSellPrint()" mat-button mat-raised-button>Save and print</a> -->
             </div>
 
         </div>

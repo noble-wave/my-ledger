@@ -128,3 +128,9 @@ mat-form-field,
 .slider__middle.mat-slider-horizontal .mat-slider-wrapper {
   top: 10px;
 }
+
+.discount-suffix {
+  border-left: 4px solid var(--primary-color);
+  // top: 50%;
+  transform: translateY(-40%);
+}

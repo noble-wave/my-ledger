@@ -1,9 +1,15 @@
 <mat-form-field *ngIf="control" [hintLabel]="hint" [hideRequiredMarker]="hideRequiredMarker">
   <mat-icon *ngIf="icon" matPrefix class="irs-input-icon">{{icon}}</mat-icon>
   <mat-label>{{label || control.label}}</mat-label>
+ <div fxLayout="row" fxLayoutAlign="center center">
   <input [type]="type" matInput [formControl]="control" (change)="valueChanged()" [attr.disabled]="control.disabled ? 'true': 'false'">
   
-  <span *ngIf="suffix" [ngClass]="suffixClass" matSuffix>&nbsp; {{suffix}} &nbsp;</span>
+  <span *ngIf="suffix" [ngClass]="suffixClass">
+    <span >
+      &nbsp;{{suffix}}
+    </span>
+  </span>
+ </div>
   
   <mat-hint *ngIf="hintEnd" align="end">{{hintEnd}}</mat-hint>
 

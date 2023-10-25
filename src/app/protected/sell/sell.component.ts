@@ -31,8 +31,6 @@ export class SellComponent implements OnDestroy {
   statusOption: any;
   setting: any;
   showDetails: boolean = false;
-  selectedOption: string = 'percentage'; // Default to "Percentage"
-  discountValue: number ; 
 
   constructor(
     private sellService: SellService,
@@ -113,31 +111,21 @@ export class SellComponent implements OnDestroy {
   updateSubtotal(sellItemForm: FormGroup) {
     const quantity = sellItemForm.get('quantity')?.value;
     const unitPrice = sellItemForm.get('unitPrice')?.value;
-    const newUnitPrice = parseFloat(unitPrice); // Convert value to a floating-point number
-  
-    if (quantity !== undefined) {
-      let subtotal = 0;
-      let discountValue = 0; // Initialize discountValue variable
-  
-      if (this.selectedOption === 'percentage') {
-        const discountPercentage = this.discountValue / 100; // Convert to decimal
-        discountValue = newUnitPrice * discountPercentage;
-      } else if (this.selectedOption === 'number') {
-        discountValue = this.discountValue;
-      }
-  
-      subtotal = (newUnitPrice - discountValue) * quantity;
-  
-      sellItemForm.get('discount')?.setValue(discountValue);
+    const discount = sellItemForm.get('discount')?.value;
+    const newUnitPrice = parseFloat(unitPrice);
+    const newDiscount = parseFloat(discount) || 0;
+
+    if (!isNaN(newUnitPrice) && quantity !== undefined) {
+      const subtotal = (newUnitPrice - newDiscount) * quantity;
       sellItemForm.get('subtotal')?.setValue(subtotal);
-  
-      this.calculateGrossAmount();
+
+      this.calculateTotalDiscount();
       this.calculateTotalDiscount();
       this.calculateNetAmount();
       this.calculateTotalQuantity();
     }
   }
-  
+
   handleRandomCustomerName(customer: Customer, form: FormGroup) {
     form.get('customerName')?.setValue(customer);
   }
@@ -281,9 +269,7 @@ export class SellComponent implements OnDestroy {
       this.customerService.getAll().subscribe((customers) => {
         this.customers = customers;
       });
-      // Handle the result (e.g., customer data) returned from the pop-up
       if (result) {
-        // Handle the data here (e.g., add it to your customers array)
         console.log('Customer data:', result);
       }
     });
@@ -304,30 +290,23 @@ export class SellComponent implements OnDestroy {
       this.productService.getAll().subscribe((products) => {
         this.products = products;
       });
-      // Handle the result (e.g., product data) returned from the pop-up
       if (result) {
-        // Handle the data here (e.g., add it to your products array)
         console.log('Product data:', result);
       }
     });
   }
 
+  getDiscountPercentage(sellItemForm: FormGroup): string {
+    const unitPrice = sellItemForm.get('unitPrice')?.value;
+    const discount = sellItemForm.get('discount')?.value;
+    const newUnitPrice = parseFloat(unitPrice);
+    const newDiscount = parseFloat(discount) || 0;
+
+    if (!isNaN(newUnitPrice)) {
+      let calculatedPercentage = (newDiscount / newUnitPrice) * 100;
+      let calculatedPercentageDigit = calculatedPercentage.toFixed(1);
+      return `${calculatedPercentageDigit}%`;
+    }
+    return '0%';
+  }
 }
-
-
-// updateSubtotal2(sellItemForm: FormGroup) {
-//   const quantity = sellItemForm.get('quantity')?.value;
-//   const unitPrice = sellItemForm.get('unitPrice')?.value;
-//   const discount = sellItemForm.get('discount')?.value;
-//   const newUnitPrice = parseFloat(unitPrice); // Convert value to a floating-point number
-//   const newDiscount = parseFloat(discount) || 0; // Convert value to a floating-point number
-
-//   if (!isNaN(newUnitPrice) && quantity !== undefined) {
-//     const subtotal = (newUnitPrice - newDiscount) * quantity; // Calculate the new subtotal
-//     sellItemForm.get('subtotal')?.setValue(subtotal);
-//     this.calculateGrossAmount(); // Recalculate total amount
-//     this.calculateTotalDiscount();
-//     this.calculateNetAmount();
-//     this.calculateTotalQuantity();
-//   }
-// }
