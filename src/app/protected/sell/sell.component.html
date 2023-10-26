@@ -56,8 +56,10 @@
 
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
-                <div class="row product-section" *ngIf="setting?.manageProduct">
+                <div class="row product-section" *ngIf="setting?.manageProduct" >
                     <div class="item" fxLayout="row">
+                    <div class="serialNo">{{ i + 1 }}</div>
+
                         <div>
                             <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
                                 [options]="products" optTextLabel="productName" optValueLabel="productId"
@@ -99,7 +101,7 @@
                             [label]="'Subtotal'" [viewOnly]="true">
                         </irs-input-template>
                     </div>
-                    <div class="item">
+                    <div >
                         <button mat-fab color="basic" color="primary"
                             aria-label="Example icon button with a delete icon" (click)="deleteItem(i)">
                             <mat-icon>delete</mat-icon>

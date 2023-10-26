@@ -61,6 +61,11 @@
   /* Ensure flex items can shrink properly */
 }
 
+.serialNo{
+  margin-right: 5px !important;
+  transform: translateY(20%);
+}
+
 /* Media query for screens with width up to 700px */
 @media (max-width: 700px) {
   .form-row {

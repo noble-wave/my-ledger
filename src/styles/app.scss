@@ -134,3 +134,10 @@ mat-form-field,
   // top: 50%;
   transform: translateY(-40%);
 }
+
+@media (max-width: 500px){
+  .discount-suffix {
+    margin-right: -15px;
+    font-size: 10px;
+  }
+}
