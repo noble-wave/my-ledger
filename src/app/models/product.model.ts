@@ -14,6 +14,10 @@ export interface Product {
     updatedAt: Date;
 }
 
+export interface ProductWithInventory extends Product {
+  count: number;
+}
+
 
 export function getProductMeta() {
     return [

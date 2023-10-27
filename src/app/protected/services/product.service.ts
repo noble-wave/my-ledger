@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Product } from '@app/models/product.model';
+import { Product, ProductWithInventory } from '@app/models/product.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
-import { map, of, switchMap } from 'rxjs';
+import {
+  Observable,
+  concatMap,
+  filter,
+  forkJoin,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+} from 'rxjs';
 import cryptoRandomString from 'crypto-random-string';
 import { ProductInventory } from '@app/models/product-inventory.model';
 
@@ -51,6 +60,101 @@ export class ProductService {
     return this.storage.getAll<ProductInventory>(tableNames.inventory);
   }
 
+  getInventoryWarnThreshold1(): Observable<ProductWithInventory[]> {
+    return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
+      map((productInventorys) => {
+        let warnInventoryThreshold = productInventorys.filter(
+          (productInventory) => {
+            return productInventory.count <= 10;
+          }
+        );
+        return warnInventoryThreshold;
+      }),
+      concatMap((inventory) => {
+        // return this.storage.getAllByIndex(tableNames.product, 'productId', IDBKeyRange.on inventory.map(x => x.productId));
+        let productIds = inventory.map((x) => x.productId);
+        return this.storage.getAll<Product>(tableNames.product).pipe(
+          map((x) => {
+            x.filter((y) => productIds.includes(y.productId as string));
+            x.map(
+              (z) =>
+                (z['count'] = inventory.find((y) => y.productId == z.productId))
+            );
+            return x as any;
+          }),
+        );
+      })
+    );
+  }
+
+  getInventoryWarnThreshold(): Observable<ProductWithInventory[]> {
+    return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
+      map((productInventorys) => {
+        const warnInventoryThreshold = productInventorys.filter(
+          (productInventory) => productInventory.count <= 10
+        );
+        return warnInventoryThreshold;
+      }),
+      concatMap((inventory) => {
+        const productIds = inventory.map((x) => x.productId);
+        return this.getAll().pipe(
+          map((products) => {
+            const productsWithInventory: ProductWithInventory[] = products
+              .filter((product) => productIds.includes(product.productId as string))
+              .map((product) => {
+                const inventoryItem = inventory.find((item) => item.productId === product.productId);
+                if (inventoryItem) {
+                  return {
+                    productId: product.productId,
+                    productName: product.productName,
+                    count: inventoryItem.count,
+                  };
+                }
+                return null;
+              })
+              .filter((product) => product !== null) as ProductWithInventory[];
+  
+            return productsWithInventory;
+          })
+        );
+      })
+    );
+  }
+  
+  getInventoryInfoThreshold(): Observable<ProductWithInventory[]> {
+    return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
+      map((productInventorys) => {
+        const warnInventoryThreshold = productInventorys.filter(
+          (productInventory) => productInventory.count >= 10 && productInventory.count <= 25
+        );
+        return warnInventoryThreshold;
+      }),
+      concatMap((inventory) => {
+        const productIds = inventory.map((x) => x.productId);
+        return this.getAll().pipe(
+          map((products) => {
+            const productsWithInventory: ProductWithInventory[] = products
+              .filter((product) => productIds.includes(product.productId as string))
+              .map((product) => {
+                const inventoryItem = inventory.find((item) => item.productId === product.productId);
+                if (inventoryItem) {
+                  return {
+                    productId: product.productId,
+                    productName: product.productName,
+                    count: inventoryItem.count,
+                  };
+                }
+                return null;
+              })
+              .filter((product) => product !== null) as ProductWithInventory[];
+  
+            return productsWithInventory;
+          })
+        );
+      })
+    );
+  }
+  
   updateProductInventory(sellItems: any[]) {
     for (const sellItem of sellItems) {
       // Get the product ID and quantity from the sell item
@@ -94,12 +198,11 @@ export class ProductService {
 
   deleteProductByDate(startDate: Date, endDate: Date) {
     endDate.setDate(endDate.getDate() + 1);
-    return this.storage
-      .deleteByIndex<Product>(
-        tableNames.product,
-        'updatedAt',
-        IDBKeyRange.bound(startDate, endDate, false, true),
-        'productId'
-      );
+    return this.storage.deleteByIndex<Product>(
+      tableNames.product,
+      'updatedAt',
+      IDBKeyRange.bound(startDate, endDate, false, true),
+      'productId'
+    );
   }
 }

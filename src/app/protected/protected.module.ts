@@ -25,6 +25,7 @@ import { ReportComponent } from './report/report.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SaleDashboardComponent } from './dashboard/sale-dashboard/sale-dashboard.component';
+import { ThresholdComponent } from './dashboard/threshold/threshold.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { SaleDashboardComponent } from './dashboard/sale-dashboard/sale-dashboar
     ReportComponent,
     DashboardComponent,
     SaleDashboardComponent,
+    ThresholdComponent,
   ],
   imports: [
     CoreModule,

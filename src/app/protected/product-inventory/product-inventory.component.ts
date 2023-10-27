@@ -29,8 +29,8 @@ export class ProductInventoryComponent implements OnInit{
       idColumnName: 'productId',
       canGoToEdit: true
     });
-    
-    this.products$ = this.service.getAllInventory();
+ 
+    this.products$ = this.service.getInventoryInfoThreshold();
 
     }
 

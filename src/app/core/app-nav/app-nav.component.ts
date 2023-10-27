@@ -21,9 +21,9 @@ export class AppNavComponent {
 
   public paths = [
     { path: 'product', label: 'Products' },
+    { path: 'product-inventory', label: 'Product Inventory' },
     { path: 'customer', label: 'Customers' },
     // { path: 'product-price', label: 'Product Price' },
-    // { path: 'product-inventory', label: 'Product Inventory' },
     { path: 'sell', label: 'Sell List' },
     { path: 'sell/new', label: 'Sell' },
     // { path: 'quickSell', label: 'Quick Sell' },

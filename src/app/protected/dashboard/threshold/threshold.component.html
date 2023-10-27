@@ -1,0 +1,108 @@
+<!-- <div class="main">
+  <div class="product-list">
+    <div class="threshold-box warn-threshold">
+      <div class="threshold">
+        <h2>Warning Threshold</h2>
+        <tr>
+          <th>S. No.</th>
+          <th>Product</th>
+          <th>Quantity</th>
+        </tr>
+        <div *ngFor="let product of warnthreshold; let i = index" fxLayout="row" class="serialNo">
+          <div>
+            <p>S. No. - {{ i + 1 }}</p>
+          </div>&nbsp;&nbsp;&nbsp;
+          <p>Product: {{ product.productName }}</p>&nbsp;&nbsp;
+          <p>Quantity: {{ product.count }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="threshold-box info-threshold">
+      <div class="threshold">
+        <h2>Warn Threshold</h2>
+        <tr>
+          <th>S. No.</th>
+          <th>Product</th>
+          <th>Quantity</th>
+        </tr>
+        <div *ngFor="let product of infothreshold; let i = index">
+          <div class="serialNo">S. No. - {{ i + 1 }}</div>
+          <p>Product: {{ product.productName }}</p>
+          <p>Quantity: {{ product.count }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngFor="let product of warnthreshold">
+    <p>{{ product.productId }} - {{ product.productName }} (Count: {{ product.count }})</p>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="40px">
+    <div class="product-list1">
+      <h3>Warn Threshold</h3>
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Serial NO.</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of warnthreshold; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="product-list2">
+      <h3>Info Threshold</h3>
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Serial NO.</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of infothreshold; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+<div id="dashboard">
+  <div>
+      <div class="sale">
+          <h1 class="sub-title">Product Count Overview </h1>
+          <div class="sale-list">
+              <div>
+                  <h2>Warn-threshold</h2>
+                  <p class="net-amount">{{ warnthreshold.length }}</p>
+              </div>
+              <div>
+                  <h2>Info-threshold</h2>
+                  <p class="net-amount">{{ infothreshold.length }}</p>
+              </div>
+              <div>
+                  <h2>All-Product</h2>
+                  <p class="net-amount">{{ allInventory.length }}</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
