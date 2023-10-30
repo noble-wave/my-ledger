@@ -50,5 +50,11 @@
 }
 
 .sale-list div:hover {
+    color: var(--primary-color);
     transform: translateY(-5px);
+    // background: linear-gradient(to right bottom, #202123, #1a1818);
+}
+
+.sale-list div:active {
+    color: var(--primary-color-darker);
 }

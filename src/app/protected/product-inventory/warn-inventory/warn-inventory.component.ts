@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../services/product.service';
+import { Component } from '@angular/core';
+import { ProductService } from '@app/protected/services/product.service';
 import { LocalTableSettings } from '@app/shared-services';
-import { forkJoin, map } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-product-inventory',
-  templateUrl: './product-inventory.component.html',
-  styleUrls: ['./product-inventory.component.scss']
+  selector: 'app-warn-inventory',
+  templateUrl: './warn-inventory.component.html',
+  styleUrls: ['./warn-inventory.component.scss']
 })
-export class ProductInventoryComponent implements OnInit{
+export class WarnInventoryComponent {
   products$: any;
   tableSettings: LocalTableSettings;
+  productId:string;
 
-  
   constructor(private service: ProductService, private location: Location) { }
 
   ngOnInit(): void {
@@ -31,29 +30,13 @@ export class ProductInventoryComponent implements OnInit{
       idColumnName: 'productId',
       canGoToEdit: true
     });
+    
+    this.products$ = this.service.getInventoryWarnThreshold();
 
-    this.getData();
-
-    }
-
-    getData(){
-      this.products$ = forkJoin([
-        this.service.getAll(),
-        this.service.getAllInventory(),
-      ]).pipe(
-        map((res: any[]) => {
-          let pri = res[0];
-          let pr = res [1];
-
-          pr.forEach((x) => {
-            x['productName'] = pri.find((y) => y.productId == x.productId)?.productName;
-          });
-          return pr;
-        })
-      );
     }
 
     navigateBack() {
       this.location.back();
     }
+
 }

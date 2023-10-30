@@ -309,4 +309,17 @@ export class SellComponent implements OnDestroy {
     }
     return '0%';
   }
+  getProductQuantity(sellItemForm: FormGroup): string {
+    const unitPrice = sellItemForm.get('unitPrice')?.value;
+    const discount = sellItemForm.get('discount')?.value;
+    const newUnitPrice = parseFloat(unitPrice);
+    const newDiscount = parseFloat(discount) || 0;
+
+    if (!isNaN(newUnitPrice)) {
+      let calculatedPercentage = (newDiscount / newUnitPrice) * 100;
+      let calculatedPercentageDigit = calculatedPercentage.toFixed(0);
+      return `${calculatedPercentageDigit}`;
+    }
+    return '0';
+  }
 }

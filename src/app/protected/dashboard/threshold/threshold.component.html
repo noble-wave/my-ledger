@@ -87,22 +87,22 @@
 
 <div id="dashboard">
   <div>
-      <div class="sale">
-          <h1 class="sub-title">Product Count Overview </h1>
-          <div class="sale-list">
-              <div>
-                  <h2>Warn-threshold</h2>
-                  <p class="net-amount">{{ warnthreshold.length }}</p>
-              </div>
-              <div>
-                  <h2>Info-threshold</h2>
-                  <p class="net-amount">{{ infothreshold.length }}</p>
-              </div>
-              <div>
-                  <h2>All-Product</h2>
-                  <p class="net-amount">{{ allInventory.length }}</p>
-              </div>
-          </div>
+    <div class="sale">
+      <h1 class="sub-title">Threshold Status Overview</h1>
+      <div class="sale-list">
+        <div (click)="navigateToOtherPage('warn')">
+          <h2>Critical Quantity Warning</h2>
+          <p class="net-amount">{{ warnthreshold.length }}</p>
+        </div>
+        <div (click)="navigateToOtherPage('info')">
+          <h2>Cautionary Quantity Information</h2>
+          <p class="net-amount">{{ infothreshold.length }}</p>
+        </div>
+        <div (click)="navigateToOtherPage('inventory')">
+          <h2>Products with Available Inventory</h2>
+          <p class="net-amount">{{ allInventory.length }}</p>
+        </div>
       </div>
+    </div>
   </div>
 </div>

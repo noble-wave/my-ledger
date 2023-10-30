@@ -6,13 +6,16 @@ import {
   Optional,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getProductMeta } from '@app/models/product.model';
+import { Product, getProductMeta } from '@app/models/product.model';
 import { AppService } from '@app/services/app.service';
 import { ProductService } from '../services/product.service';
 import { FormHelper, FormMeta, ModelMeta } from '@app/shared-services';
 import { FormGroup } from '@angular/forms';
-import { getProductInventoryMeta } from '@app/models/product-inventory.model';
-import { switchMap } from 'rxjs';
+import {
+  ProductInventory,
+  getProductInventoryMeta,
+} from '@app/models/product-inventory.model';
+import { of, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -68,11 +71,13 @@ export class ProductComponent implements OnInit {
       () => {
         if (this.form.value['productId']) {
           // edit
-          this.service
-            .saveInventory(this.inventoryForm.value)
-            .subscribe((x) => {
-              console.log(x);
-            });
+          if (this.form.value.isInventory === true) {
+            this.service
+              .saveInventory(this.inventoryForm.value)
+              .subscribe((x) => {
+                console.log(x);
+              });
+          }
           this.service.update(this.form.value).subscribe((x) => {
             console.log(x);
             this.app.noty.notifyUpdated('Product has been');
@@ -89,13 +94,18 @@ export class ProductComponent implements OnInit {
           this.service
             .add(this.form.value)
             .pipe(
-              switchMap((x) => {
+              switchMap((x: Product | any) => {
                 let productInventory = this.inventoryForm.value;
                 productInventory.productId = x.productId;
-                return this.service.saveInventory(productInventory);
+                // save inventory if managing inventory for this product
+                if (x.isInventory === true) {
+                  return this.service.saveInventory(productInventory);
+                } else {
+                  return of(x);
+                }
               })
             )
-            .subscribe((x) => {
+            .subscribe((x: Product | ProductInventory | any) => {
               console.log(x);
               this.app.noty.notifyClose('Product has been added');
               if (addMore) {

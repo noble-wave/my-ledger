@@ -10,10 +10,6 @@
   font-weight: 500;
 }
 
-// .sale {
-//     text-align: center;
-// }
-
 .sale-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -50,8 +46,16 @@
 }
 
 .sale-list div:hover {
+  color: var(--primary-color);
   transform: translateY(-5px);
+  // background: linear-gradient(to right bottom, #202123, #1a1818);
 }
+
+.sale-list div:active {
+  color: var(--primary-color-darker);
+}
+
+
 
 // .product-list {
 //   display: flex;

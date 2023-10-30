@@ -1,6 +1,14 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
     <div>Take Order</div>
-    <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
+    <!-- <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
+    </button> -->
+    <div fxLayoutGap="10px">
+        <a type="button"  (click)="openAddProductDialog('500ms', '200ms')" mat-button
+            mat-raised-button>Add Product</a>
+        <a type="button"  (click)="openAddCustomerDialog('500ms', '200ms')" mat-button
+            mat-raised-button>Add Customer</a>
+        <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
+    </div>
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
@@ -19,7 +27,7 @@
 
             <div class="form-container">
                 <div class="form-row">
-                    <div *ngIf="setting?.manageCustomer" fxLayout="row">
+                    <div *ngIf="setting?.manageCustomer" >
                         <div>
                             <!-- <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
@@ -30,11 +38,11 @@
                                 (onSelectionChange)="handleCustomerSelection($event, form)">
                             </app-typeahead>
                         </div>
-                        <div>
+                        <!-- <div>
                             <button mat-icon-button color="primary" (click)="openAddCustomerDialog('500ms', '200ms')">
                                 <mat-icon>add_circle_outline</mat-icon>
                             </button>
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -56,9 +64,9 @@
 
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
-                <div class="row product-section" *ngIf="setting?.manageProduct" >
-                    <div class="item" fxLayout="row">
-                    <!-- <div class="serialNo">{{ i + 1 }}</div> -->
+                <div class="row product-section" *ngIf="setting?.manageProduct">
+                    <div class="item" fxLayout="row" >
+                        <!-- <div class="serialNo">{{ i + 1 }}</div> -->
 
                         <div>
                             <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
@@ -73,7 +81,7 @@
                         </div>
                         <div>
                             <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
-                                <mat-icon>add_circle_outline</mat-icon>
+                                <mat-icon>edit</mat-icon>
                             </button>
                         </div>
                     </div>
@@ -85,7 +93,8 @@
                     </div>
                     <div class="item">
                         <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Quantity" name="quantity"></app-input>
+                            label="Quantity" name="quantity"[suffixClass]="'discount-suffix'"
+                            [suffix]="getProductQuantity(sellItemForm)"></app-input>
                     </div>
                     <div class="item" *ngIf="setting?.manageDiscount">
                         <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
@@ -101,7 +110,7 @@
                             [label]="'Subtotal'" [viewOnly]="true">
                         </irs-input-template>
                     </div>
-                    <div >
+                    <div>
                         <button mat-fab color="basic" color="primary"
                             aria-label="Example icon button with a delete icon" (click)="deleteItem(i)">
                             <mat-icon>delete</mat-icon>

@@ -26,6 +26,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SaleDashboardComponent } from './dashboard/sale-dashboard/sale-dashboard.component';
 import { ThresholdComponent } from './dashboard/threshold/threshold.component';
+import { WarnInventoryComponent } from './product-inventory/warn-inventory/warn-inventory.component';
+import { InfoInventoryComponent } from './product-inventory/info-inventory/info-inventory.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { ThresholdComponent } from './dashboard/threshold/threshold.component';
     DashboardComponent,
     SaleDashboardComponent,
     ThresholdComponent,
+    WarnInventoryComponent,
+    InfoInventoryComponent,
   ],
   imports: [
     CoreModule,
@@ -72,6 +76,8 @@ import { ThresholdComponent } from './dashboard/threshold/threshold.component';
 
           { path: 'product-price', component: ProductPriceComponent },
           { path: 'product-inventory', component: ProductInventoryComponent },
+          { path: 'warn-inventory', component: WarnInventoryComponent },
+          { path: 'info-inventory', component: InfoInventoryComponent },
 
           { path: 'sell/new', component: SellComponent },
           { path: 'sell', component: SellListComponent },
