@@ -195,9 +195,33 @@ export class ProductService {
     );
   }
 
+  // getProductInventoryByDate(startDate: Date, endDate: Date) {
+  //   endDate.setDate(endDate.getDate() + 1);
+  //   return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
+  //     map((inventoryItems) =>
+  //       inventoryItems.filter((inventoryItem) => {
+  //         return inventoryItem.updatedAt >= startDate && inventoryItem.updatedAt <= endDate;
+  //       })
+  //     )
+  //   );
+  // }
+  
+
+  getProductInventoryByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage.getAll<Product>(tableNames.product).pipe(
+      map((products) =>
+        products.filter((product) => {
+          return product.updatedAt >= startDate && product.updatedAt <= endDate;
+        })
+      )
+    );
+  }
+
   deleteAllProduct() {
     return this.storage.clear(tableNames.product);
   }
+
   deleteAllProductInventory() {
     return this.storage.clear(tableNames.inventory);
   }
@@ -211,4 +235,15 @@ export class ProductService {
       'productId'
     );
   }
+  
+  deleteProductInventoryByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage.deleteByIndex<ProductInventory>(
+      tableNames.inventory,
+      'updatedAt',
+      IDBKeyRange.bound(startDate, endDate, false, true),
+      'productId'
+    );
+  }
+
 }

@@ -309,6 +309,8 @@ export class SellComponent implements OnDestroy {
     }
     return '0%';
   }
+  
+//decrypted Function
   getProductQuantity(sellItemForm: FormGroup): string {
     const unitPrice = sellItemForm.get('unitPrice')?.value;
     const discount = sellItemForm.get('discount')?.value;

@@ -65,7 +65,7 @@
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
                 <div class="row product-section" *ngIf="setting?.manageProduct">
-                    <div class="item" fxLayout="row" >
+                    <div class="item"  >
                         <!-- <div class="serialNo">{{ i + 1 }}</div> -->
 
                         <div>
@@ -79,11 +79,11 @@
                                 (onSelectionChange)="handleProductSelection($event, sellItemForm)">
                             </app-typeahead>
                         </div>
-                        <div>
+                        <!-- <div>
                             <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="row">
@@ -93,8 +93,10 @@
                     </div>
                     <div class="item">
                         <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
+                            label="Quantity" name="quantity"></app-input>
+                        <!-- <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
                             label="Quantity" name="quantity"[suffixClass]="'discount-suffix'"
-                            [suffix]="getProductQuantity(sellItemForm)"></app-input>
+                            [suffix]="getProductQuantity(sellItemForm)"></app-input> -->
                     </div>
                     <div class="item" *ngIf="setting?.manageDiscount">
                         <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
@@ -123,6 +125,10 @@
                 Item</button>
 
             <div class="totals-row">
+                <div class="total-amount-square">
+                    <app-input [form]="form"
+                        label="Balance" name="customerId" type="number"></app-input>
+                </div>
                 <div class="total-amount-square">
                     Gross Amount<br>
                     {{ calculateGrossAmount() | currency:'INR':'symbol':'1.2-2' }}

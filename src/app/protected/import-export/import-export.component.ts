@@ -212,6 +212,33 @@ export class ImportExportComponent {
         this.app.noty.notifyClose('Product data exported successfully.');
       });
   }
+  
+  exportProductAndInventoryDataByDate() {
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+  
+    if (!startDate || !endDate) {
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+  
+    this.productService.getProductByDate(startDate, endDate).subscribe((productData) => {
+      this.productService.getProductInventoryByDate(startDate, endDate).subscribe((inventoryData) => {
+        const combinedData = {
+          products: productData,
+          inventory: inventoryData
+        };
+  
+        this.exportCombinedData(combinedData, 'productAndInventory.json');
+        this.app.noty.notifyClose('Product by Date data with Inventory exported successfully.');
+      });
+    });
+  }
+  
+  exportCombinedData(data: any, fileName: string) {
+    saveAs(new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' }), fileName);
+  }
+  
 
   exportCustomerDataByDate() {
     const startDate = this.datePicker.get('start')?.value;
@@ -400,6 +427,75 @@ export class ImportExportComponent {
       }
     });
   }
+
+  async deleteProductAndInventoryDataByDateAndDownload(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
+    const startDate = this.datePicker.get('start')?.value;
+    const endDate = this.datePicker.get('end')?.value;
+  
+    if (!startDate || !endDate) {
+      this.app.noty.notifyError('Please select both start and end dates.');
+      return;
+    }
+  
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        dialogTitle: 'Delete Product and Inventory Data',
+        dialogContent:
+          'Are you sure you want to delete the product and inventory data by date range?<br> <br>This action will also download the file.',
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+        color: 'warn',
+      },
+    });
+  
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === 'true') {
+        try {
+          const productData = await firstValueFrom(
+            this.productService.getProductByDate(startDate, endDate)
+          );
+  
+          const inventoryData = await firstValueFrom(
+            this.productService.getProductInventoryByDate(startDate, endDate)
+          );
+  
+          const combinedData = {
+            products: productData,
+            inventory: inventoryData
+          };
+  
+          this.exportDataFile(combinedData, 'productAndInventoryByDate.json');
+  
+          const deleteProductResult = await firstValueFrom(
+            this.productService.deleteProductByDate(startDate, endDate)
+          );
+  
+          const deleteInventoryResult = await firstValueFrom(
+            this.productService.deleteProductInventoryByDate(startDate, endDate)
+          );
+  
+          // Check the delete results if necessary
+  
+          this.app.noty.notifyClose('Product and Inventory data deleted successfully.');
+        } catch (error) {
+          console.error('Error while exporting and deleting product and inventory data:', error);
+          // Handle errors here
+        }
+      }
+    });
+  }
+  
+  // exportDataFile(data: any, fileName: string) {
+  //   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' });
+  //   saveAs(blob, fileName);
+  // }
+  
 
   //  Delete customer data based on date range and also Download
   async deleteCustomerDataByDate(
