@@ -47,10 +47,16 @@ export class ImportExportComponent {
   async downloadProductData() {
     try {
       const x = await firstValueFrom(this.productService.getAll());
-      this.products = x;
-      let exportData = this.products;
+      const y = await firstValueFrom(this.productService.getAllInventory());
+
+      const combinedData = {
+        products: x,
+        inventory: y,
+      };
+      // this.products = x;
+      // let exportData = this.products;
       saveAs(
-        new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
+        new Blob([JSON.stringify(combinedData, null, 2)], { type: 'JSON' }),
         'product.json'
       );
       this.app.noty.notifyClose('Product data exported successfully.');
@@ -115,11 +121,12 @@ export class ImportExportComponent {
         // Identify the file content based on its structure
         if (this.isSellData(jsonData)) {
           this.handleSellUpload(jsonData);
-        } else if (this.isProductData(jsonData)) {
-          this.handleProductUpload(jsonData);
+        } else if (jsonData && jsonData.products && jsonData.inventory) {
+          this.handleProductUpload(jsonData.products, jsonData.inventory);
         } else if (this.isCustomerData(jsonData)) {
           this.handleCustomerUpload(jsonData);
-        } else {
+        } 
+        else {
           console.error('Unrecognized JSON data:', jsonData);
         }
       };
@@ -146,11 +153,28 @@ export class ImportExportComponent {
   }
 
   // Handle uploading product data
-  private handleProductUpload(productData: any): void {
-    this.productService.uploadProductData(productData).subscribe(() => {
-      console.log('Product data uploaded successfully.');
-      this.app.noty.notifyClose('Product data uploaded successfully.');
-    });
+  private handleProductUpload(products: any[], inventory: any[]): void {
+    this.productService.uploadProductData(products).subscribe(
+      () => {
+        console.log('Product data uploaded successfully.');
+        this.app.noty.notifyClose('Product data uploaded successfully.');
+      },
+      (error) => {
+        console.error('Error uploading product data:', error);
+        this.app.noty.notifyError('Error uploading product data:');
+      }
+    );
+  
+    this.productService.uploadProductInventoryData(inventory).subscribe(
+      () => {
+        console.log('Product inventory data uploaded successfully.');
+        this.app.noty.notifyClose('Product inventory data uploaded successfully.');
+      },
+      (error) => {
+        console.error('Error uploading product inventory:', error);
+        this.app.noty.notifyError('Error uploading product inventory:');
+      }
+    );
   }
 
   // Handle uploading customer data
@@ -189,7 +213,6 @@ export class ImportExportComponent {
       });
   }
 
-  // Export customer data based on date range
   exportCustomerDataByDate() {
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
@@ -255,6 +278,7 @@ export class ImportExportComponent {
 
         try {
           await firstValueFrom(this.productService.deleteAllProduct());
+          await firstValueFrom(this.productService.deleteAllProductInventory());
           this.app.noty.notifyClose('Data download and delete.');
         } catch (error) {
           // Handle the error, you might want to add error handling code here

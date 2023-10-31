@@ -180,6 +180,9 @@ export class ProductService {
   uploadProductData(productData: any[]) {
     return this.storage.bulkAdd(tableNames.product, productData);
   }
+  uploadProductInventoryData(productData: any[]) {
+    return this.storage.bulkAdd(tableNames.inventory, productData);
+  }
 
   getProductByDate(startDate: Date, endDate: Date) {
     endDate.setDate(endDate.getDate() + 1);
@@ -194,6 +197,9 @@ export class ProductService {
 
   deleteAllProduct() {
     return this.storage.clear(tableNames.product);
+  }
+  deleteAllProductInventory() {
+    return this.storage.clear(tableNames.inventory);
   }
 
   deleteProductByDate(startDate: Date, endDate: Date) {
