@@ -92,15 +92,15 @@
       <div class="sale-list">
         <div (click)="navigateToOtherPage('warn')">
           <h2>Critical Quantity Warning</h2>
-          <p class="net-amount">{{ warnthreshold.length }}</p>
+          <p class="net-amount">{{ warnthreshold?.length }}</p>
         </div>
         <div (click)="navigateToOtherPage('info')">
           <h2>Cautionary Quantity Information</h2>
-          <p class="net-amount">{{ infothreshold.length }}</p>
+          <p class="net-amount">{{ infothreshold?.length }}</p>
         </div>
         <div (click)="navigateToOtherPage('inventory')">
           <h2>Products with Available Inventory</h2>
-          <p class="net-amount">{{ allInventory.length }}</p>
+          <p class="net-amount">{{ allInventory?.length }}</p>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { SellService } from '../services/sell.service';
 import { saveAs } from 'file-saver';
 import { AppService } from '@app/services/app.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, forkJoin } from 'rxjs';
 import { tableNames } from '@app/services/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@app/shared/controls/template/dialog/dialog.component';
@@ -125,9 +125,9 @@ export class ImportExportComponent {
           this.handleProductUpload(jsonData.products, jsonData.inventory);
         } else if (this.isCustomerData(jsonData)) {
           this.handleCustomerUpload(jsonData);
-        } 
-        else {
+        } else {
           console.error('Unrecognized JSON data:', jsonData);
+          this.app.noty.notifyError('Unrecognized JSON data:');
         }
       };
 
@@ -164,11 +164,13 @@ export class ImportExportComponent {
         this.app.noty.notifyError('Error uploading product data:');
       }
     );
-  
+
     this.productService.uploadProductInventoryData(inventory).subscribe(
       () => {
         console.log('Product inventory data uploaded successfully.');
-        this.app.noty.notifyClose('Product inventory data uploaded successfully.');
+        this.app.noty.notifyClose(
+          'Product inventory data uploaded successfully.'
+        );
       },
       (error) => {
         console.error('Error uploading product inventory:', error);
@@ -212,7 +214,7 @@ export class ImportExportComponent {
         this.app.noty.notifyClose('Product data exported successfully.');
       });
   }
-  
+
   exportProductAndInventoryDataByDate() {
     const startDate = this.datePicker.get('start')?.value;
     const endDate = this.datePicker.get('end')?.value;
@@ -222,21 +224,25 @@ export class ImportExportComponent {
       return;
     }
   
-    this.productService.getProductByDate(startDate, endDate).subscribe((productData) => {
-      this.productService.getProductInventoryByDate(startDate, endDate).subscribe((inventoryData) => {
-        const combinedData = {
-          products: productData,
-          inventory: inventoryData
-        };
+    forkJoin({
+      productData: this.productService.getProductByDate(startDate, endDate),
+      inventoryData: this.productService.getProductInventoryByDate(startDate, endDate)
+    }).subscribe(({ productData, inventoryData }) => {
+      const combinedData = {
+        products: productData,
+        inventory: inventoryData,
+      };
   
-        this.exportCombinedData(combinedData, 'productAndInventory.json');
-        this.app.noty.notifyClose('Product by Date data with Inventory exported successfully.');
-      });
+      this.exportCombinedData(combinedData, 'productAndInventory.json');
+      this.app.noty.notifyClose('Product by Date data with Inventory exported successfully.');
     });
   }
   
   exportCombinedData(data: any, fileName: string) {
-    saveAs(new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' }), fileName);
+    saveAs(
+      new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }),
+      fileName
+    );
   }
   
 
@@ -429,73 +435,57 @@ export class ImportExportComponent {
   }
 
   async deleteProductAndInventoryDataByDateAndDownload(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ) {
-    const startDate = this.datePicker.get('start')?.value;
-    const endDate = this.datePicker.get('end')?.value;
-  
-    if (!startDate || !endDate) {
-      this.app.noty.notifyError('Please select both start and end dates.');
-      return;
-    }
-  
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: {
-        dialogTitle: 'Delete Product and Inventory Data',
-        dialogContent:
-          'Are you sure you want to delete the product and inventory data by date range?<br> <br>This action will also download the file.',
-        cancelButtonText: 'Cancel',
-        confirmButtonText: 'Delete',
-        color: 'warn',
-      },
-    });
-  
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'true') {
-        try {
-          const productData = await firstValueFrom(
-            this.productService.getProductByDate(startDate, endDate)
-          );
-  
-          const inventoryData = await firstValueFrom(
-            this.productService.getProductInventoryByDate(startDate, endDate)
-          );
-  
-          const combinedData = {
-            products: productData,
-            inventory: inventoryData
-          };
-  
-          this.exportDataFile(combinedData, 'productAndInventoryByDate.json');
-  
-          const deleteProductResult = await firstValueFrom(
-            this.productService.deleteProductByDate(startDate, endDate)
-          );
-  
-          const deleteInventoryResult = await firstValueFrom(
-            this.productService.deleteProductInventoryByDate(startDate, endDate)
-          );
-  
-          // Check the delete results if necessary
-  
-          this.app.noty.notifyClose('Product and Inventory data deleted successfully.');
-        } catch (error) {
-          console.error('Error while exporting and deleting product and inventory data:', error);
-          // Handle errors here
-        }
-      }
-    });
+  enterAnimationDuration: string,
+  exitAnimationDuration: string
+) {
+  const startDate = this.datePicker.get('start')?.value;
+  const endDate = this.datePicker.get('end')?.value;
+
+  if (!startDate || !endDate) {
+    this.app.noty.notifyError('Please select both start and end dates.');
+    return;
   }
-  
-  // exportDataFile(data: any, fileName: string) {
-  //   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'JSON' });
-  //   saveAs(blob, fileName);
-  // }
-  
+
+  const dialogRef = this.dialog.open(DialogComponent, {
+    width: '400px',
+    enterAnimationDuration,
+    exitAnimationDuration,
+    data: {
+      dialogTitle: 'Delete Product and Inventory Data',
+      dialogContent:
+        'Are you sure you want to delete the product and inventory data by date range?<br> <br>This action will also download the file.',
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Delete',
+      color: 'warn',
+    },
+  });
+
+  dialogRef.afterClosed().subscribe(async (result) => {
+    if (result === 'true') {
+      try {
+        // Fetch data to export
+        const productData = await firstValueFrom(this.productService.getProductByDate(startDate, endDate));
+        const inventoryData = await firstValueFrom(this.productService.getProductInventoryByDate(startDate, endDate));
+        const combinedData = {
+          products: productData,
+          inventory: inventoryData,
+        };
+
+        // Export data
+        this.exportDataFile(combinedData, 'productAndInventoryByDate.json');
+
+        // Delete data
+        await firstValueFrom(this.productService.deleteProductByDate(startDate, endDate));
+        await firstValueFrom(this.productService.deleteProductInventoryByDate(startDate, endDate));
+
+        this.app.noty.notifyClose('Product and Inventory data deleted successfully.');
+      } catch (error) {
+        console.error('Error while exporting and deleting product and inventory data:', error);
+        // Handle errors here
+      }
+    }
+  });
+}
 
   //  Delete customer data based on date range and also Download
   async deleteCustomerDataByDate(

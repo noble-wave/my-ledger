@@ -76,7 +76,8 @@
                             <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product"
                                 optTextLabel="productName" optValueLabel="productId" [options]="products"
                                 icon="icon-name" (debounceKeyup)="handleRandomProductName($event, sellItemForm)"
-                                (onSelectionChange)="handleProductSelection($event, sellItemForm)">
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)" 
+                                (navigateClick)="openUpdateProductDialog( sellItemForm)" [suffixActionIcon]="'edit'">
                             </app-typeahead>
                         </div>
                         <!-- <div>
@@ -103,7 +104,6 @@
                             label="Discount" name="discount" [suffixClass]="'discount-suffix'"
                             [suffix]="getDiscountPercentage(sellItemForm)"></app-input>
                     </div>
-
                 </div>
                 <div class="row">
 

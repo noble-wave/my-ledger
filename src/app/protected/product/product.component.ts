@@ -38,29 +38,50 @@ export class ProductComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private dialog: MatDialog,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: { isDialog: boolean }
-  ) {}
+    @Optional()
+    @Inject(MAT_DIALOG_DATA)
+    public data: { isDialog: boolean; productId?: string }
+  ) {
+    if (this.data && this.data.productId) {
+      console.log('Received productId:', this.data.productId);
+      // You can access this.data.productId in your component logic
+    }
+  }
 
   ngOnInit(): void {
     this.modelMeta = getProductMeta();
     this.inventoryMeta = getProductInventoryMeta();
-    this.route.params.subscribe((x) => {
-      if (x['id']) {
-        this.isEdit = true;
-        this.service.get(x['id']).subscribe((y) => {
-          this.form = this.app.meta.toFormGroup(y, this.modelMeta);
-        });
-
-        this.service.getProductInventory(x['id']).subscribe((y) => {
-          this.inventoryForm = this.app.meta.toFormGroup(y, this.inventoryMeta);
-        });
+    if (this.data?.isDialog) {
+      if (this.data.productId) {
+        this.buildProductForm(this.data.productId);
       } else {
-        this.form = this.app.meta.toFormGroup(
-          { isActive: true },
-          this.modelMeta
-        );
-        this.inventoryForm = this.app.meta.toFormGroup({}, this.inventoryMeta);
+        this.buildNewProductForm();
       }
+    } else {
+      this.route.params.subscribe((x) => {
+        if (x['id']) {
+          let productId = x['id'];
+          this.buildProductForm(productId);
+        } else {
+          this.buildNewProductForm();
+        }
+      });
+    }
+  }
+
+  private buildNewProductForm() {
+    this.form = this.app.meta.toFormGroup({ isActive: true }, this.modelMeta);
+    this.inventoryForm = this.app.meta.toFormGroup({}, this.inventoryMeta);
+  }
+
+  private buildProductForm(productId: string) {
+    this.isEdit = true;
+    this.service.get(productId).subscribe((y) => {
+      this.form = this.app.meta.toFormGroup(y, this.modelMeta);
+    });
+
+    this.service.getProductInventory(productId).subscribe((y) => {
+      this.inventoryForm = this.app.meta.toFormGroup(y, this.inventoryMeta);
     });
   }
 
@@ -69,14 +90,15 @@ export class ProductComponent implements OnInit {
       this.form,
       this.formMeta,
       () => {
-        if (this.form.value['productId']) {
+        let productId = this.form.value['productId'];
+        if (productId) {
           // edit
           if (this.form.value.isInventory === true) {
-            this.service
-              .saveInventory(this.inventoryForm.value)
-              .subscribe((x) => {
-                console.log(x);
-              });
+            let productInventory = this.inventoryForm.value;
+            productInventory.productId = productId;
+            this.service.saveInventory(productInventory).subscribe((x) => {
+              console.log(x);
+            });
           }
           this.service.update(this.form.value).subscribe((x) => {
             console.log(x);

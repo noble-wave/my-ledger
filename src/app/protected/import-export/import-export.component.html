@@ -55,7 +55,7 @@
           </mat-form-field>
           <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="exportProductDataByDate()"
+              <button mat-raised-button (click)="exportProductAndInventoryDataByDate()"
                 color="primary"><mat-icon>download</mat-icon>Export Product</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">
@@ -144,7 +144,7 @@
           </mat-form-field>
           <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
             <div fxFlex="30%" fxFlex.xs="70%">
-              <button mat-raised-button (click)="deleteProductDataByDate('500ms', '200ms')"
+              <button mat-raised-button (click)="deleteProductAndInventoryDataByDateAndDownload('500ms', '200ms')"
                 color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Product</button>
             </div>
             <div fxFlex="30%" fxFlex.xs="70%">

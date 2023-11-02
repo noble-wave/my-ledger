@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, AbstractControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
-import { Observable, Subject, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
+import { Observable, Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-typeahead',
@@ -22,11 +22,13 @@ export class IrsTypeaheadComponent implements OnInit {
   @Input() viewValue: string;
   @Input() optTextLabel: string = 'value';
   @Input() optValueLabel: string = 'key';
+  @Input() suffixActionIcon: string | boolean;
   control: FormControl;
   isRequired: boolean;
   private searchUpdated = new Subject<string>();
   @Output() public debounceKeyup = new EventEmitter<string>();
   @Output() onSelectionChange = new EventEmitter<any>(true);
+  @Output() navigateClick: EventEmitter<void> = new EventEmitter<void>();
   filteredOptions: any[];
 
   constructor() {}
@@ -55,8 +57,12 @@ export class IrsTypeaheadComponent implements OnInit {
     // );
 
     // Autocomplete
-    this.searchUpdated.pipe(debounceTime(100), distinctUntilChanged())
-    .subscribe((x: string) => { console.log(x); this.debounceKeyup.emit(x); });
+    this.searchUpdated
+      .pipe(debounceTime(100), distinctUntilChanged())
+      .subscribe((x: string) => {
+        console.log(x);
+        this.debounceKeyup.emit(x);
+      });
   }
 
   onKeyup(event?: any) {
@@ -93,7 +99,14 @@ export class IrsTypeaheadComponent implements OnInit {
   displayWith = (value: string) => {
     let option =
       this.options && this.options.find((x) => x[this.optValueLabel] === value);
-
     return option && option[this.optTextLabel];
   };
+
+  onActionIconClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.control.value) {
+      this.navigateClick.emit();
+    }
+  }
 }

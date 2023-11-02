@@ -184,40 +184,47 @@ export class ProductService {
     return this.storage.bulkAdd(tableNames.inventory, productData);
   }
 
-  getProductByDate(startDate: Date, endDate: Date) {
-    endDate.setDate(endDate.getDate() + 1);
-    return this.storage.getAll<Product>(tableNames.product).pipe(
-      map((products) =>
-        products.filter((product) => {
-          return product.updatedAt >= startDate && product.updatedAt <= endDate;
-        })
-      )
-    );
-  }
-
-  // getProductInventoryByDate(startDate: Date, endDate: Date) {
+  // getProductByDate(startDate: Date, endDate: Date) {
   //   endDate.setDate(endDate.getDate() + 1);
-  //   return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
-  //     map((inventoryItems) =>
-  //       inventoryItems.filter((inventoryItem) => {
-  //         return inventoryItem.updatedAt >= startDate && inventoryItem.updatedAt <= endDate;
+  //   return this.storage.getAll<Product>(tableNames.product).pipe(
+  //     map((products) =>
+  //       products.filter((product) => {
+  //         return product.updatedAt >= startDate && product.updatedAt <= endDate;
   //       })
   //     )
   //   );
   // }
+  getProductByDate(startDate: Date, endDate: Date) {
+    const nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1);
   
-
-  getProductInventoryByDate(startDate: Date, endDate: Date) {
-    endDate.setDate(endDate.getDate() + 1);
     return this.storage.getAll<Product>(tableNames.product).pipe(
       map((products) =>
         products.filter((product) => {
-          return product.updatedAt >= startDate && product.updatedAt <= endDate;
+          const productDate = new Date(product.updatedAt);
+          return productDate >= startDate && productDate < nextDay;
         })
       )
     );
   }
 
+  getProductInventoryByDate(startDate: Date, endDate: Date) {
+    const nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1); // Increment end date by 1 day
+  
+    return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
+      map((inventoryItems) =>
+        inventoryItems.filter((inventoryItem) => {
+          if (inventoryItem.updatedAt) { // Check if updatedAt is defined
+            const itemDate = new Date(inventoryItem.updatedAt); // Convert updatedAt to a Date
+            return itemDate >= startDate && itemDate < nextDay; // Adjusted comparison for endDate
+          }
+          return false; // If updatedAt is undefined, filter it out
+        })
+      )
+    );
+  }
+  
   deleteAllProduct() {
     return this.storage.clear(tableNames.product);
   }

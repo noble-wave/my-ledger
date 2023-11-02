@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductService } from '@app/protected/services/product.service';
 import { LocalTableSettings } from '@app/shared-services';
 import { Location } from '@angular/common';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-warn-inventory',
@@ -28,10 +29,22 @@ export class WarnInventoryComponent {
       columns: columns,
       displayColumns: displayColumns,
       idColumnName: 'productId',
-      canGoToEdit: true
+      canGoToEdit: true,
+      canGoToEditCommands: ['../', 'product'] 
     });
     
     this.products$ = this.service.getInventoryWarnThreshold();
+
+    // this.products$ = this.service.getInventoryWarnThreshold().pipe(
+    //   map((productInventorys) => {
+    //     productInventorys.forEach((productInventory) => {
+    //       productInventory['updatedAt'] = new Date(productInventory.updatedAt)
+    //         ?.toISOString()
+    //         .split('T')[0];
+    //     });
+    //     return productInventorys;
+    //   })
+    // );
 
     }
 

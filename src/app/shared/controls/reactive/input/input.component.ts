@@ -40,11 +40,11 @@ export class IrsInputComponent implements OnInit, OnChanges {
       this.type = 'text';
     }
 
-    this.control = this.form.get(this.name) as IrsControl;
+    this.control = this.form?.get(this.name) as IrsControl;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['form']) {
+    if (changes['form'] && this.form) {
       this.control = this.form.get(this.name) as IrsControl;
     }
   }

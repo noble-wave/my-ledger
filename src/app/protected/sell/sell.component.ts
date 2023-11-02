@@ -309,19 +309,40 @@ export class SellComponent implements OnDestroy {
     }
     return '0%';
   }
-  
-//decrypted Function
-  getProductQuantity(sellItemForm: FormGroup): string {
-    const unitPrice = sellItemForm.get('unitPrice')?.value;
-    const discount = sellItemForm.get('discount')?.value;
-    const newUnitPrice = parseFloat(unitPrice);
-    const newDiscount = parseFloat(discount) || 0;
 
-    if (!isNaN(newUnitPrice)) {
-      let calculatedPercentage = (newDiscount / newUnitPrice) * 100;
-      let calculatedPercentageDigit = calculatedPercentage.toFixed(0);
-      return `${calculatedPercentageDigit}`;
+  openUpdateProductDialog1(sellItemForm: FormGroup) {
+    const controlValue = sellItemForm.get('productId')?.value;
+
+    if (controlValue) {
+      this.router.navigate(['../', 'product', controlValue]);
     }
-    return '0';
+  }
+  openUpdateProductDialog(sellItemForm: FormGroup) {
+    const controlValue = sellItemForm.get('productId')?.value;
+
+    if (controlValue) {
+      const dialogRef = this.dialog.open(ProductComponent, {
+        width: '400px',
+        data: { isDialog:"true", productId: controlValue }, 
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+      });
+    }
   }
 }
+
+
+  //decrypted Function
+  // getProductQuantity(sellItemForm: FormGroup): string {
+  //   let productId = sellItemForm.get('productId')?.value;
+
+  //   if (productId) {
+  //     this.productService.getProductInventory(productId).subscribe((x) => {
+  //       let productCount = x.count;
+  //       console.log(productCount);
+  //       return `${productCount}`;
+  //     });
+  //   }
+  //   return '0';
+  // }

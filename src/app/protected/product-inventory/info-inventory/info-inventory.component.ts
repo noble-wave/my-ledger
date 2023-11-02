@@ -28,7 +28,8 @@ export class InfoInventoryComponent {
       columns: columns,
       displayColumns: displayColumns,
       idColumnName: 'productId',
-      canGoToEdit: true
+      canGoToEdit: true,
+      canGoToEditCommands: ['../', 'product'] 
     });
     
     this.products$ = this.service.getInventoryInfoThreshold();
