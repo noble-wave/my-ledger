@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Sell, SellStatus } from '@app/models/sell.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import cryptoRandomString from 'crypto-random-string';
-import { map } from 'rxjs';
+import { forkJoin, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -46,29 +46,57 @@ export class SellService {
   }
 
   getSellByDate(startDate: Date, endDate: Date) {
-    endDate.setDate(endDate.getDate() + 1);
+    const nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+  
     return this.storage.getAll<Sell>(tableNames.sell).pipe(
       map((sells) =>
-      sells.filter((sell) => {
-          return sell.sellDate >= startDate && sell.sellDate <= endDate;
+        sells.filter((sell) => {
+          const sellDate = new Date(sell.sellDate);
+          return sellDate >= startDate && sellDate < nextDay;
         })
       )
     );
   }
+  
 
   deleteAllSell() {
     return this.storage.clear(tableNames.sell);
   }
 
+  // deleteSellByDate(startDate: Date, endDate: Date) {
+  //   endDate.setDate(endDate.getDate() + 1);
+  //   return this.storage
+  //     .deleteByIndex<Sell>(
+  //       tableNames.sell,
+  //       'sellDate',
+  //       IDBKeyRange.bound(startDate, endDate, false, true),
+  //       'sellDate'
+  //     );
+  // }
+
   deleteSellByDate(startDate: Date, endDate: Date) {
     endDate.setDate(endDate.getDate() + 1);
-    return this.storage
-      .deleteByIndex<Sell>(
-        tableNames.sell,
-        'sellDate',
-        IDBKeyRange.bound(startDate, endDate, false, true),
-        'sellDate'
-      );
+    return this.storage.getAll<Sell>(tableNames.sell).pipe(
+      switchMap((sells) => {
+        const filteredCustomers = sells.filter((sell) => {
+          const sellDate = new Date(sell.sellDate);
+          return sellDate >= startDate && sellDate <= endDate;
+        });
+  
+        const deleteOperations = filteredCustomers.map((sell) => {
+          if (sell.sellId !== undefined) {
+            return this.storage.deleteRecord(tableNames.sell, sell.sellId);
+          }
+          return null;
+        });
+  
+        // Filter out any potential 'null' values from the previous step
+        const validDeleteOperations = deleteOperations.filter((op) => op !== null);
+  
+        return forkJoin(validDeleteOperations);
+      })
+    );
   }
 
 }
