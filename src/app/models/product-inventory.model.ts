@@ -2,7 +2,6 @@ import { ModelMeta } from '@app/shared-services';
 
 export interface ProductInventory {
   productId: string;
-  // productName: string;
   count: number;
   updatedAt?: Date;
 }

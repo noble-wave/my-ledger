@@ -13,6 +13,7 @@ export interface Customer {
     createdAt: Date;
     updatedAt: Date;
 }
+
 export function getCustomerMeta() {
     return [
         { key: 'customerId', label: 'CustomerId', hide: true },

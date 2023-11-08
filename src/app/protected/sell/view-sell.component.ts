@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SellService } from '../services/sell.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-view-sell',
@@ -13,7 +15,8 @@ export class ViewSellComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private sellService: SellService
+    private sellService: SellService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +35,10 @@ export class ViewSellComponent {
         });
       }
     });
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 
   printPage(): void {

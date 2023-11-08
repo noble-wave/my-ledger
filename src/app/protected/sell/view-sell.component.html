@@ -1,6 +1,9 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
     <div>View Sell</div>
-    <a type="button" routerLink="/sell" mat-button mat-raised-button>List</a>
+    <div fxLayoutGap="10px">
+        <a type="button" (click)="navigateBack()" mat-button mat-raised-button>Back</a>
+        <a type="button" routerLink="/sell" mat-button mat-raised-button>List</a>
+    </div>
 </mat-toolbar>
 
 
@@ -46,6 +49,7 @@
         <p><strong>Gross Amount:</strong> {{ sell?.grossAmount | currency: 'INR' }}</p>
         <p><strong>Total Discount:</strong> {{ sell?.totalDiscount | currency: 'INR' }}</p>
         <p><strong>Net Amount:</strong> {{ sell?.netAmount | currency: 'INR' }}</p>
+        <p *ngIf="sell?.arrears"><strong>Arrears:</strong> {{ sell?.arrears | currency: 'INR' }}</p>
     </div>
 </div>
 

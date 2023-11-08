@@ -482,10 +482,10 @@ export class ImportExportComponent {
 
           // Delete data
           await firstValueFrom(
-            this.productService.deleteProductByDate(startDate, endDate)
+            this.productService.deleteProductInventoryByDate(startDate, endDate)
           );
           await firstValueFrom(
-            this.productService.deleteProductInventoryByDate(startDate, endDate)
+            this.productService.deleteProductByDate(startDate, endDate)
           );
 
           this.app.noty.notifyClose(

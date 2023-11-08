@@ -79,12 +79,12 @@ export class SellService {
     endDate.setDate(endDate.getDate() + 1);
     return this.storage.getAll<Sell>(tableNames.sell).pipe(
       switchMap((sells) => {
-        const filteredCustomers = sells.filter((sell) => {
+        const filteredSells = sells.filter((sell) => {
           const sellDate = new Date(sell.sellDate);
           return sellDate >= startDate && sellDate <= endDate;
         });
   
-        const deleteOperations = filteredCustomers.map((sell) => {
+        const deleteOperations = filteredSells.map((sell) => {
           if (sell.sellId !== undefined) {
             return this.storage.deleteRecord(tableNames.sell, sell.sellId);
           }

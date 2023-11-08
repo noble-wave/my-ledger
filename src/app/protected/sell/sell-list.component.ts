@@ -23,6 +23,7 @@ export class SellListComponent {
       { name: 'status', text: 'Status', sell: 5 },
       { name: 'totalQuantity', text: 'Total Quantity', sell: 6 },
       { name: 'netAmount', text: 'Net Amount', sell: 7 },
+      { name: 'arrears', text: 'Arrears', sell: 8 },
     ];
     let excludeColumns = ['customerId'];
     let displayColumns = columns.filter(

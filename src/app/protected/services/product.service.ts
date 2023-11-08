@@ -257,12 +257,12 @@ export class ProductService {
     endDate.setDate(endDate.getDate() + 1);
     return this.storage.getAll<Product>(tableNames.product).pipe(
       switchMap((products) => {
-        const filteredCustomers = products.filter((product) => {
+        const filteredProducts = products.filter((product) => {
           const updatedAtDate = new Date(product.updatedAt);
           return updatedAtDate >= startDate && updatedAtDate <= endDate;
         });
   
-        const deleteOperations = filteredCustomers.map((product) => {
+        const deleteOperations = filteredProducts.map((product) => {
           if (product.productId !== undefined) {
             return this.storage.deleteRecord(tableNames.product, product.productId);
           }
@@ -278,27 +278,27 @@ export class ProductService {
   }
 
   deleteProductInventoryByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
     return this.storage.getAll<Product>(tableNames.product).pipe(
       switchMap((products) => {
-        const filteredProductIds = products
-          .filter((product) => {
-            const updatedAtDate = new Date(product.updatedAt);
-            return updatedAtDate >= startDate && updatedAtDate <= endDate;
-          })
-          .map((product) => product.productId)
-          .filter((productId) => !!productId); // Filter out undefined values
-  
-        // Delete product inventory entries for each product ID
-        const deleteOperations = filteredProductIds.map((productId) => {
-          return this.storage.deleteRecord(tableNames.inventory, productId as string | number);
+        const filteredProducts = products.filter((product) => {
+          const updatedAtDate = new Date(product.updatedAt);
+          return updatedAtDate >= startDate && updatedAtDate <= endDate;
         });
   
-        return forkJoin(deleteOperations);
+        const deleteOperations = filteredProducts.map((product) => {
+          if (product.productId !== undefined) {
+            return this.storage.deleteRecord(tableNames.inventory, product.productId);
+          }
+          return null;
+        });
+  
+        // Filter out any potential 'null' values from the previous step
+        const validDeleteOperations = deleteOperations.filter((op) => op !== null);
+  
+        return forkJoin(validDeleteOperations);
       })
     );
   }
   
-  
-  
-
 }
