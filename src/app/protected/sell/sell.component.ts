@@ -258,13 +258,15 @@ export class SellComponent implements OnDestroy {
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
       let sellId;
-      sellId = x.sellId
+      sellId = x.sellId;
       if (this.showAmountPaidAndBalanceDue === true) {
         let paymentDate;
         paymentDate = new Date();
-        this.sellService.addSellPayment(sellPayment, sellId, x.customerId, paymentDate).subscribe((y) => {
-          console.log('payment Saved',y);
-        });
+        this.sellService
+          .addSellPayment(sellPayment, sellId, x.customerId, paymentDate)
+          .subscribe((y) => {
+            console.log('payment Saved', y);
+          });
       }
       this.app.noty.notifyClose('Sell has been taken');
       this.form.reset();
@@ -280,39 +282,40 @@ export class SellComponent implements OnDestroy {
 
   saveSell() {
     let sell = this.form.value;
-    let sellPayment: SellPayment; 
+    let sellPayment: SellPayment;
     let sellItems = this.sellItemForms.map((x) => x.value);
     sell.items = sellItems;
-  
+
     this.productService.updateProductInventory(sellItems); // Update product inventory
-  
+
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
       let sellId = x.sellId;
-      let customerId = x.customerId ;
-  
+      let customerId = x.customerId;
+
       if (this.showAmountPaidAndBalanceDue === true) {
-        let paymentDate = new Date(); 
-        let paymentId = `custom_payment_id`; 
-  
+        let paymentDate = new Date();
+        let paymentId = `custom_payment_id`;
+
         sellPayment = {
           paymentId: paymentId,
           sellId: sellId,
           customerId: customerId,
-          amountPaid: this.amountPaid, 
-          paymentDate: paymentDate
+          amountPaid: this.amountPaid,
+          paymentDate: paymentDate,
         };
         this.sellService.addSellPayment1(sellPayment).subscribe((y) => {
           console.log('Payment Saved', y);
         });
       }
-  
+
       this.app.noty.notifyClose('Sell has been taken');
-      this.form.reset();
-      Object.keys(this.form.controls).forEach(key => {
-        this.form.get(key)?.setValue(null);
-        this.form.get(key)?.setErrors(null);
+      console.log('Before reset:', this.form.value);
+      this.form.reset({
+        sellDate: new Date(),
+        status: this.setting.defaultSellStatus,
       });
+      console.log('After reset:', this.form.value);
       this.sellPaymentForm.reset();
       this.resetSellItemForms();
       this.form.markAsPristine();
@@ -324,9 +327,9 @@ export class SellComponent implements OnDestroy {
   }
 
   resetSellItemForms() {
-    for (const sellItemForm of this.sellItemForms) {
-      sellItemForm.reset();
-    }
+    // this.form = this.app.meta.toFormGroup({ sellDate: new Date(), status: this.setting.defaultSellStatus }, this.modelMeta);
+    this.sellItemForms = [];
+    this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
   }
 
   saveSellPrint() {

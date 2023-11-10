@@ -4,7 +4,8 @@
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
-        <h2>"Welcome to our Quick Sales page! We've simplified selling your favorite products for your utmost
+        <h2 *ngIf="!hasSeenWelcomeMessage">"Welcome to our Quick Sales page! We've simplified selling your favorite
+            products for your utmost
             convenience."</h2>
     </mat-card-content>
 </mat-card>

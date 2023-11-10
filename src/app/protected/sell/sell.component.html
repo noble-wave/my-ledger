@@ -40,7 +40,7 @@
                         <div>
                             <!-- <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
-                                (onSelectionChange)="handleCustomerSelection($event)"></app-select> -->
+                                (onSelectionChange)="handleCustomerSelection($event,form)"></app-select> -->
                             <app-typeahead [form]="form" name="customerId" label="Select a Customer"
                                 optTextLabel="customerName" optValueLabel="customerId" [options]="customers"
                                 icon="icon-name" (debounceKeyup)="handleRandomProductName($event, form)"
@@ -159,10 +159,10 @@
             <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" *ngIf="showAmountPaidAndBalanceDue">
                 <div class="total-amount-square">
                     <app-input [form]="sellPaymentForm" label="Amount Paid" name="amountPaid" type="number"
-                    (onValueChange)="valueChanged($event)"></app-input>
+                        (onValueChange)="valueChanged($event)"></app-input>
                 </div>
 
-                <div class="total-amount-square" >
+                <div class="total-amount-square">
                     Balance Due<br>
                     {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
