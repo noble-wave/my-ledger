@@ -13,8 +13,7 @@ export const tableNames = {
   customer: 'customer',
   inventory: 'inventory',
   sell: 'sell',
-  sellSetting: 'sellSetting',
-  quickSellSetting: 'quickSellSetting',
+  sellPayment: 'sellPayment',
 };
 
 export const dbConfig: DBConfig = {
@@ -63,6 +62,14 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: 'sellId', autoIncrement: false },
       storeSchema: [
         { name: 'sellDate', keypath: 'sellDate', options: { unique: false } },
+      ],
+    },
+    {
+      store: tableNames.sellPayment,
+      storeConfig: { keyPath: 'paymentId', autoIncrement: false },
+      storeSchema: [
+        { name: 'sellId', keypath: 'sellId', options: { unique: false } },
+        { name: 'customerId', keypath: 'customerId', options: { unique: false } }
       ],
     },
   ],

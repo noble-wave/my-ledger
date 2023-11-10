@@ -28,6 +28,7 @@ import { SaleDashboardComponent } from './dashboard/sale-dashboard/sale-dashboar
 import { ThresholdComponent } from './dashboard/threshold/threshold.component';
 import { WarnInventoryComponent } from './product-inventory/warn-inventory/warn-inventory.component';
 import { InfoInventoryComponent } from './product-inventory/info-inventory/info-inventory.component';
+import { DueBalanceComponent } from './dashboard/due-balance/due-balance.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { InfoInventoryComponent } from './product-inventory/info-inventory/info-
     ThresholdComponent,
     WarnInventoryComponent,
     InfoInventoryComponent,
+    DueBalanceComponent,
   ],
   imports: [
     CoreModule,

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Sell, SellStatus } from '@app/models/sell.model';
+import { Sell, SellPayment, SellStatus } from '@app/models/sell.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import cryptoRandomString from 'crypto-random-string';
-import { forkJoin, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SellService {
   constructor(private storage: StorageService) {}
-  private apiUrl = 'your_api_url_here';
+  private sellIdSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 
   addSell(sellData: Sell) {
@@ -18,12 +18,32 @@ export class SellService {
     return this.storage.addRecord<Sell>(tableNames.sell, sellData);
   }
 
+  addSellPayment1(sellPayment: SellPayment) {
+    sellPayment.paymentId = `oi_${cryptoRandomString({ length: 15 })}`;
+    return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
+  }
+  addSellPayment(sellPayment: SellPayment,sellId: string, customerId: string, paymentDate: Date) {
+    sellPayment.paymentId = `oi_${cryptoRandomString({ length: 15 })}`;
+    sellPayment.sellId = sellId;
+    sellPayment.customerId = customerId;
+    sellPayment.paymentDate = paymentDate; 
+    return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
+  }
+
   getAll() {
     return this.storage.getAll<Sell>(tableNames.sell);
   }
 
+  getAllSellPayment() {
+    return this.storage.getAll<SellPayment>(tableNames.sellPayment);
+  }
+
   get(sellId: string) {
     return this.storage.getByKey<Sell>(tableNames.sell, sellId);
+  }
+
+  getSellPayment(paymentId: string) {
+    return this.storage.getByKey<Sell>(tableNames.sellPayment, paymentId);
   }
 
   getStatusOptions() {
@@ -39,10 +59,6 @@ export class SellService {
 
   uploadSellData(sellData: any[]) {
     return this.storage.bulkAdd(tableNames.sell, sellData);
-  }
-
-  getDataByDate(startDate: string, endDate: string) {
-    return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
   }
 
   getSellByDate(startDate: Date, endDate: Date) {

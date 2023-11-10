@@ -1,12 +1,21 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
     <div>Take Order</div>
-    <!-- <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
-    </button> -->
-    <div fxLayoutGap="10px">
-        <a type="button"  (click)="openAddProductDialog('500ms', '200ms')" mat-button
-            mat-raised-button>Add Product</a>
-        <a type="button"  (click)="openAddCustomerDialog('500ms', '200ms')" mat-button
-            mat-raised-button>Add Customer</a>
+
+    <div fxHide fxShow.xs="true" fxLayout="row" fxLayoutGap="5px">
+        <a type="button" (click)="openAddProductDialog('500ms', '200ms')" mat-button mat-raised-button>
+            <mat-icon>add_circle_outline</mat-icon> <mat-icon>inventory_2</mat-icon>
+        </a>
+        <a type="button" (click)="openAddCustomerDialog('500ms', '200ms')" mat-button mat-raised-button>
+            <mat-icon>add_circle_outline</mat-icon><mat-icon>manage_accounts</mat-icon>
+        </a>
+        <a type="button" routerLink="../" mat-button mat-raised-button>
+            <mat-icon>list_alt</mat-icon>
+        </a>
+    </div>
+
+    <div fxShow fxHide.xs="true" fxLayoutGap="10px">
+        <a type="button" (click)="openAddProductDialog('500ms', '200ms')" mat-button mat-raised-button>Add Product</a>
+        <a type="button" (click)="openAddCustomerDialog('500ms', '200ms')" mat-button mat-raised-button>Add Customer</a>
         <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
     </div>
 </mat-toolbar>
@@ -27,7 +36,7 @@
 
             <div class="form-container">
                 <div class="form-row">
-                    <div *ngIf="setting?.manageCustomer" >
+                    <div *ngIf="setting?.manageCustomer">
                         <div>
                             <!-- <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
@@ -65,7 +74,7 @@
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
                 <div class="row product-section" *ngIf="setting?.manageProduct">
-                    <div class="item"  >
+                    <div class="item">
                         <!-- <div class="serialNo">{{ i + 1 }}</div> -->
 
                         <div>
@@ -76,7 +85,7 @@
                             <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product"
                                 optTextLabel="productName" optValueLabel="productId" [options]="products"
                                 icon="icon-name" (debounceKeyup)="handleRandomProductName($event, sellItemForm)"
-                                (onSelectionChange)="handleProductSelection($event, sellItemForm)" 
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"
                                 (navigateClick)="openUpdateProductDialog( sellItemForm)" [suffixActionIcon]="'edit'">
                             </app-typeahead>
                         </div>
@@ -121,25 +130,41 @@
                 </div>
             </div>
 
-            <button mat-raised-button color="primary" (click)="addItem()"> <mat-icon>add_circle_outline</mat-icon> Add
-                Item</button>
+            <div fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column" fxLayoutGap="20px"
+                fxLayoutAlign.xs="start start">
+                <div fxLayoutAlign.xs="start ">
+                    <button mat-raised-button color="primary" (click)="addItem()">
+                        <mat-icon>add_circle_outline</mat-icon> Add
+                        Item</button>
+                </div>
+                <!-- <div>
+                    <app-input [form]="form" label="Amount Paid" name="customerId" type="number"></app-input>
+                </div> -->
+                <div fxLayout="row">
+                    <div class="total-amount-square">
+                        Gross Amount<br>
+                        {{ calculateGrossAmount() | currency:'INR':'symbol':'1.2-2' }}
+                    </div>
+                    <div class="total-amount-square" *ngIf="setting?.manageDiscount">
+                        Total Discount<br>
+                        {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
+                    </div>
+                    <div class="total-amount-square">
+                        Net Amount<br>
+                        {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
+                    </div>
+                </div>
+            </div>
 
-            <div class="totals-row">
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" *ngIf="showAmountPaidAndBalanceDue">
                 <div class="total-amount-square">
-                    <app-input [form]="form"
-                        label="Arrears" name="arrears" type="number"></app-input>
+                    <app-input [form]="sellPaymentForm" label="Amount Paid" name="amountPaid" type="number"
+                    (onValueChange)="valueChanged($event)"></app-input>
                 </div>
-                <div class="total-amount-square">
-                    Gross Amount<br>
-                    {{ calculateGrossAmount() | currency:'INR':'symbol':'1.2-2' }}
-                </div>
-                <div class="total-amount-square" *ngIf="setting?.manageDiscount">
-                    Total Discount<br>
-                    {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
-                </div>
-                <div class="total-amount-square">
-                    Net Amount<br>
-                    {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
+
+                <div class="total-amount-square" >
+                    Balance Due<br>
+                    {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
             </div>
             <div class="button-row">

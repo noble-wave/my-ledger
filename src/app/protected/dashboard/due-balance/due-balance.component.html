@@ -1,0 +1,21 @@
+<div id="dashboard">
+    <div>
+        <div class="sale">
+            <h1 class="sub-title">Pending Liabilities </h1>
+            <div class="sale-list">
+                <div>
+                    <h2>Last 30 Days</h2>
+                    <p class="net-amount">{{ last30DaysDueAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+                </div>
+                <div>
+                    <h2>Last 90 Days</h2>
+                    <p class="net-amount">{{ last90DaysDueAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+                </div>
+                <div>
+                    <h2>All-Time</h2>
+                    <p class="net-amount">{{ allTimeDueAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,7 +23,6 @@ export class SellListComponent {
       { name: 'status', text: 'Status', sell: 5 },
       { name: 'totalQuantity', text: 'Total Quantity', sell: 6 },
       { name: 'netAmount', text: 'Net Amount', sell: 7 },
-      { name: 'arrears', text: 'Arrears', sell: 8 },
     ];
     let excludeColumns = ['customerId'];
     let displayColumns = columns.filter(
@@ -47,7 +46,7 @@ export class SellListComponent {
               return qty;
             }, 0) || 1;
 
-          sell['sellDisplayDate'] = new Date(sell.sellDate)
+          sell['sellDisplayDate'] = new Date(sell?.sellDate)
             ?.toISOString()
             .split('T')[0];
         });
