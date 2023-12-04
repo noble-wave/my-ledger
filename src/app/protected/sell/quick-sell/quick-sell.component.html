@@ -1,11 +1,15 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Discover the Unparalleled Ease of One-Click Sales</div>
+    <div>Quick Sales</div>
     <a type="button" routerLink="../sell" mat-button mat-raised-button>List</a>
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
-        <h2>"Welcome to our Quick Sales page! We've simplified selling your favorite products for your utmost
+        <h2 *ngIf="!hasSeenWelcomeMessage">"Welcome to our Quick Sales page! We've simplified selling your favorite
+            products for your utmost
             convenience."</h2>
+        <h4>
+            Discover the Unparalleled Ease of One-Quick Sales
+        </h4>
     </mat-card-content>
 </mat-card>
 <mat-card>
@@ -30,8 +34,8 @@
 <mat-card>
     <mat-card-content>
         <div class="quickSell-container">
-            <p>If you prefer a custom sell, simply enter
-                your desired quantity and hit 'sell' – it's that easy!</p>
+            <h4>If you prefer a custom sell, simply enter
+                your desired quantity and hit 'sell' – it's that easy!</h4>
             <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign=" center">
                 <div fxFlex="50%" fxFlex.xs="70%" *ngFor="let sellItemForm of sellItemForms">
                     <app-input [form]="sellItemForm" label="Unit Price" name="unitPrice"></app-input>

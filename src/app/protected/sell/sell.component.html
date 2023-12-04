@@ -3,10 +3,8 @@
     <!-- <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
     </button> -->
     <div fxLayoutGap="10px">
-        <a type="button"  (click)="openAddProductDialog('500ms', '200ms')" mat-button
-            mat-raised-button>Add Product</a>
-        <a type="button"  (click)="openAddCustomerDialog('500ms', '200ms')" mat-button
-            mat-raised-button>Add Customer</a>
+        <a type="button" (click)="openAddProductDialog('500ms', '200ms')" mat-button mat-raised-button>Add Product</a>
+        <a type="button" (click)="openAddCustomerDialog('500ms', '200ms')" mat-button mat-raised-button>Add Customer</a>
         <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
     </div>
 </mat-toolbar>
@@ -27,11 +25,11 @@
 
             <div class="form-container">
                 <div class="form-row">
-                    <div *ngIf="setting?.manageCustomer" >
+                    <div *ngIf="setting?.manageCustomer">
                         <div>
                             <!-- <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
-                                (onSelectionChange)="handleCustomerSelection($event)"></app-select> -->
+                                (onSelectionChange)="handleCustomerSelection($event,form)"></app-select> -->
                             <app-typeahead [form]="form" name="customerId" label="Select a Customer"
                                 optTextLabel="customerName" optValueLabel="customerId" [options]="customers"
                                 icon="icon-name" (debounceKeyup)="handleRandomProductName($event, form)"
@@ -65,7 +63,7 @@
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
                 <div class="row product-section" *ngIf="setting?.manageProduct">
-                    <div class="item"  >
+                    <div class="item">
                         <!-- <div class="serialNo">{{ i + 1 }}</div> -->
 
                         <div>
@@ -76,7 +74,7 @@
                             <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product"
                                 optTextLabel="productName" optValueLabel="productId" [options]="products"
                                 icon="icon-name" (debounceKeyup)="handleRandomProductName($event, sellItemForm)"
-                                (onSelectionChange)="handleProductSelection($event, sellItemForm)" 
+                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"
                                 (navigateClick)="openUpdateProductDialog( sellItemForm)" [suffixActionIcon]="'edit'">
                             </app-typeahead>
                         </div>

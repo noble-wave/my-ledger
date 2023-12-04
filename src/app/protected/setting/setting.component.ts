@@ -11,6 +11,8 @@ import { ModelMeta } from '@app/shared-services';
 import { AppService } from '@app/services/app.service';
 import { SettingService } from '../services/setting.service';
 import { Subject, takeUntil } from 'rxjs';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-setting',
@@ -33,7 +35,8 @@ export class SettingComponent implements OnDestroy {
     private sellService: SellService,
     private app: AppService,
     private settingService: SettingService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -159,5 +162,9 @@ export class SettingComponent implements OnDestroy {
   onRadioChange(manageSellStatus: any) {
     console.log('Selected sell Status:', manageSellStatus);
     this.form.get('manageSellStatus')?.setValue(manageSellStatus.value);
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 }

@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 export class ProductInventoryComponent implements OnInit {
   products$: any;
   tableSettings: LocalTableSettings;
+  selectedDate: Date = new Date();
 
   constructor(private service: ProductService, private location: Location) {}
 
@@ -32,7 +33,7 @@ export class ProductInventoryComponent implements OnInit {
       displayColumns: displayColumns,
       idColumnName: 'productId',
       canGoToEdit: true,
-      canGoToEditCommands: ['../', 'product'] 
+      canGoToEditCommands: ['../', 'product'],
     });
 
     this.getData();
@@ -51,8 +52,17 @@ export class ProductInventoryComponent implements OnInit {
           x['productName'] = pri.find(
             (y) => y.productId == x.productId
           )?.productName;
-          x['updatedAt'] = new Date(x['updatedAt'])?.toISOString().split('T')[0];
+          x['updatedAt'] = new Date(x['updatedAt'])
+            ?.toISOString()
+            .split('T')[0];
         });
+        pr.sort(
+          (a, b) =>
+            (new Date(b.updatedAt).getTime() === this.selectedDate.getTime()
+              ? 1
+              : new Date(b.updatedAt).getTime()) -
+            new Date(a.updatedAt).getTime()
+        );
         return pr;
       })
     );

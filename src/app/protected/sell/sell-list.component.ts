@@ -11,6 +11,7 @@ import { map } from 'rxjs';
 export class SellListComponent {
   sells$: any;
   tableSettings: LocalTableSettings;
+  selectedDate: Date = new Date();
 
   constructor(private service: SellService) {}
 
@@ -23,7 +24,6 @@ export class SellListComponent {
       { name: 'status', text: 'Status', sell: 5 },
       { name: 'totalQuantity', text: 'Total Quantity', sell: 6 },
       { name: 'netAmount', text: 'Net Amount', sell: 7 },
-      { name: 'arrears', text: 'Arrears', sell: 8 },
     ];
     let excludeColumns = ['customerId'];
     let displayColumns = columns.filter(
@@ -51,6 +51,12 @@ export class SellListComponent {
             ?.toISOString()
             .split('T')[0];
         });
+        sells.sort(
+          (a, b) =>
+            (new Date(b.sellDate).getTime() === this.selectedDate.getTime()
+              ? 1
+              : new Date(b.sellDate).getTime()) - new Date(a.sellDate).getTime()
+        );
         return sells;
       })
     );

@@ -1,5 +1,11 @@
 import { getSellItemMeta, getSellMeta } from '@app/models/sell.model';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { AppService } from '@app/services/app.service';
 import { ModelMeta } from '@app/shared-services';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -224,7 +230,12 @@ export class SellComponent implements OnDestroy {
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
       this.app.noty.notifyClose('Sell has been taken');
-      this.form.reset();
+      console.log('Before reset:', this.form.value);
+      this.form.reset({
+        sellDate: new Date(),
+        status: this.setting.defaultSellStatus,
+      });
+      console.log('After reset:', this.form.value);
       this.resetSellItemForms();
       this.form.markAsPristine();
       this.form.markAsUntouched();
@@ -233,9 +244,9 @@ export class SellComponent implements OnDestroy {
   }
 
   resetSellItemForms() {
-    for (const sellItemForm of this.sellItemForms) {
-      sellItemForm.reset();
-    }
+    // this.form = this.app.meta.toFormGroup({ sellDate: new Date(), status: this.setting.defaultSellStatus }, this.modelMeta);
+    this.sellItemForms = [];
+    this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
   }
 
   saveSellPrint() {
@@ -323,26 +334,24 @@ export class SellComponent implements OnDestroy {
     if (controlValue) {
       const dialogRef = this.dialog.open(ProductComponent, {
         width: '400px',
-        data: { isDialog:"true", productId: controlValue }, 
+        data: { isDialog: 'true', productId: controlValue },
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
-      });
+      dialogRef.afterClosed().subscribe((result) => {});
     }
   }
 }
 
+//decrypted Function
+// getProductQuantity(sellItemForm: FormGroup): string {
+//   let productId = sellItemForm.get('productId')?.value;
 
-  //decrypted Function
-  // getProductQuantity(sellItemForm: FormGroup): string {
-  //   let productId = sellItemForm.get('productId')?.value;
-
-  //   if (productId) {
-  //     this.productService.getProductInventory(productId).subscribe((x) => {
-  //       let productCount = x.count;
-  //       console.log(productCount);
-  //       return `${productCount}`;
-  //     });
-  //   }
-  //   return '0';
-  // }
+//   if (productId) {
+//     this.productService.getProductInventory(productId).subscribe((x) => {
+//       let productCount = x.count;
+//       console.log(productCount);
+//       return `${productCount}`;
+//     });
+//   }
+//   return '0';
+// }

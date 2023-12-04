@@ -13,29 +13,30 @@ import { ModelMeta } from '@app/shared-services';
 })
 export class QuickSellComponent {
   setting: any;
-  
-  sell : any = {
-  customerId: undefined,
-  customerName: undefined,
-  customerPhoneNumber: undefined,
-  items: [
-    {
-      productId: undefined,
-      productName: undefined,
-      quantity: 1,
-      unitPrice: 0,
-      discount: 0,
-      subtotal: 0,
-      netAmount: 0,
-    },
-  ],
-  grossAmount:0,
-  sellDate: new Date(),
-  status: '',
-  totalQuantity: 1,
-  netAmount: 0,
-  totalDiscount: 0,
-};
+  hasSeenWelcomeMessage: boolean = false;
+
+  sell: any = {
+    customerId: undefined,
+    customerName: undefined,
+    customerPhoneNumber: undefined,
+    items: [
+      {
+        productId: undefined,
+        productName: undefined,
+        quantity: 1,
+        unitPrice: 0,
+        discount: 0,
+        subtotal: 0,
+        netAmount: 0,
+      },
+    ],
+    grossAmount: 0,
+    sellDate: new Date(),
+    status: '',
+    totalQuantity: 1,
+    netAmount: 0,
+    totalDiscount: 0,
+  };
   form: FormGroup;
   sellItemForms: FormGroup[];
   sellItemMeta: ModelMeta[];
@@ -53,21 +54,26 @@ export class QuickSellComponent {
 
       this.sellItemMeta = getSellItemMeta();
       this.sellItemForms = [];
-      this.sellItemForms.push(
-        this.app.meta.toFormGroup({}, this.sellItemMeta)
-      );
+      this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
     });
 
     this.form = this.formBuilder.group({});
- 
+
+    let hasSeenMessage = localStorage.getItem('hasSeenWelcomeMessage');
+    if (hasSeenMessage) {
+      this.hasSeenWelcomeMessage = true;
+    }
   }
 
   saveSell(unitPrice: number) {
     this.sell.items[0].unitPrice = unitPrice;
     this.sell.grossAmount = this.sell.items[0].quantity * unitPrice;
-    this.sell.netAmount = this.sell.grossAmount ;
+    this.sell.netAmount = this.sell.grossAmount;
     this.sell.items[0].subtotal = this.sell.netAmount;
     this.sellService.addSell(this.sell).subscribe(() => {
+      this.app.noty.notifyClose('Sells have been taken');
+      localStorage.setItem('hasSeenWelcomeMessage', 'true');
+      this.hasSeenWelcomeMessage = true;
     });
   }
 
@@ -77,25 +83,25 @@ export class QuickSellComponent {
         unitPrice: form.value.unitPrice,
       };
     });
-  
+
     // Update each sell item and save it
     for (let i = 0; i < sellItems.length; i++) {
       this.sell.items[i].unitPrice = sellItems[i].unitPrice;
-      this.sell.grossAmount = this.sell.items[i].quantity * sellItems[i].unitPrice;
+      this.sell.grossAmount =
+        this.sell.items[i].quantity * sellItems[i].unitPrice;
       this.sell.netAmount = this.sell.grossAmount;
       this.sell.items[i].subtotal = this.sell.netAmount;
-  
+
       // Save the individual sell item
       this.sellService.addSell(this.sell).subscribe((response) => {
         console.log(response);
       });
     }
-  
+
     // Handle additional logic or notifications as needed
     this.app.noty.notifyClose('Sells have been taken');
     // Reset the form and sell item forms
     this.form.reset();
     this.sellItemForms = [this.app.meta.toFormGroup({}, this.sellItemMeta)];
   }
-  
 }
