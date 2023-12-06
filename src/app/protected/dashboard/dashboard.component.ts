@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +9,12 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
-  constructor() {}
+  constructor( private location: Location,) {}
 
   ngOnInit(): void {}
+
+  navigateBack(){
+    this.location.back();
+  }
 
 }

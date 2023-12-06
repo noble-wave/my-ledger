@@ -1,13 +1,30 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Take Order</div>
-    <!-- <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
-    </button> -->
-    <div fxLayoutGap="10px">
-        <a type="button" (click)="openAddProductDialog('500ms', '200ms')" mat-button mat-raised-button>Add Product</a>
-        <a type="button" (click)="openAddCustomerDialog('500ms', '200ms')" mat-button mat-raised-button>Add Customer</a>
-        <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>Take Order</div>
     </div>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openAddProductDialog('500ms', '200ms')">
+            <mat-icon> inventory_2</mat-icon>
+            <span>Add Product</span>
+        </button>
+        <button mat-menu-item (click)="openAddCustomerDialog('500ms', '200ms')">
+            <mat-icon>person</mat-icon>
+            <span>Add Customer</span>
+        </button>
+        <button mat-menu-item routerLink="../">
+            <mat-icon>list_alt</mat-icon>
+            <span>Sell List</span>
+        </button>
+    </mat-menu>
 </mat-toolbar>
+
 <mat-card>
     <mat-card-content>
         <div fxLayoutAlign="end center">
@@ -21,7 +38,6 @@
             <h3>Customize Your Sell Section to Suit Your Preferences via Settings.</h3>
         </div>
         <div>
-            <irs-date [form]="form" name="sellDate" label="Sell Date"></irs-date>
 
             <div class="form-container">
                 <div class="form-row">
@@ -46,22 +62,30 @@
 
 
                     <div class="row">
-                        <!-- <div class="item" *ngIf="setting?.manageGstin">
-                            <app-input [form]="form" label="Your GSTIN" name="userGstin"></app-input>
+                        <div class="item">
+                            <!-- <div class="item" *ngIf="setting?.manageGstin">
+                                <app-input [form]="form" label="Your GSTIN" name="userGstin"></app-input>
+                            </div>
+                            <div class="item" *ngIf="setting?.manageGstin">
+                                <app-input [form]="form" label="Party GSTIN" name="customerGstin"></app-input>
+                            </div> -->
+                            <div *ngIf="setting?.manageSellStatus">
+                                <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
+                                    optTextLabel="label" optValueLabel="value"></app-select>
+                            </div>
                         </div>
-                        <div class="item" *ngIf="setting?.manageGstin">
-                            <app-input [form]="form" label="Party GSTIN" name="customerGstin"></app-input>
-                        </div> -->
-                        <div class="item" *ngIf="setting?.manageSellStatus">
-                            <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
-                                optTextLabel="label" optValueLabel="value"></app-select>
+                        <div class="item">
+                            <irs-date [form]="form" name="sellDate" label="Sell Date"></irs-date>
                         </div>
                     </div>
                 </div>
             </div>
 
-
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
+                <div class="line" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+                    <span class="number">Item {{ i + 1 }}</span>
+                  </div>
+                  
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
                         <!-- <div class="serialNo">{{ i + 1 }}</div> -->

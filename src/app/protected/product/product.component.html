@@ -1,5 +1,15 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+<!-- <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
     <div>{{isEdit ? 'Update' : 'Add'}} Product</div>
+    <a type="button" routerLink="../" mat-button mat-raised-button *ngIf="!(data?.isDialog === true)">List</a>
+</mat-toolbar> -->
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>{{isEdit ? 'Update' : 'Add'}} Product</div>
+    </div>
     <a type="button" routerLink="../" mat-button mat-raised-button *ngIf="!(data?.isDialog === true)">List</a>
 </mat-toolbar>
 

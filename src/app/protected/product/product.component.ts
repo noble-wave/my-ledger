@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product, getProductMeta } from '@app/models/product.model';
 import { AppService } from '@app/services/app.service';
 import { ProductService } from '../services/product.service';
+import { Location } from '@angular/common';
 import { FormHelper, FormMeta, ModelMeta } from '@app/shared-services';
 import { FormGroup } from '@angular/forms';
 import {
@@ -38,6 +39,7 @@ export class ProductComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private dialog: MatDialog,
+    private location: Location,
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: { isDialog: boolean; productId?: string }
@@ -158,5 +160,9 @@ export class ProductComponent implements OnInit {
       },
       true
     );
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 }

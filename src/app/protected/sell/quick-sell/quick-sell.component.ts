@@ -5,6 +5,8 @@ import { SellService } from '@app/protected/services/sell.service';
 import { SettingService } from '@app/protected/services/setting.service';
 import { AppService } from '@app/services/app.service';
 import { ModelMeta } from '@app/shared-services';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-quick-sell',
@@ -45,7 +47,8 @@ export class QuickSellComponent {
     private settingService: SettingService,
     private sellService: SellService,
     private app: AppService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -103,5 +106,9 @@ export class QuickSellComponent {
     // Reset the form and sell item forms
     this.form.reset();
     this.sellItemForms = [this.app.meta.toFormGroup({}, this.sellItemMeta)];
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 }

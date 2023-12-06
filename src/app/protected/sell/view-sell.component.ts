@@ -16,7 +16,7 @@ export class ViewSellComponent {
   constructor(
     private route: ActivatedRoute,
     private sellService: SellService,
-    private location: Location
+    private location: Location,
   ) {}
 
   ngOnInit(): void {
@@ -57,43 +57,41 @@ export class ViewSellComponent {
             <head>
                 <title>Invoice Generated</title>
                 <style>
-                // FOR DESABLE THE PRINT FOOTER
-
+                /* FOR DISABLING THE PRINT FOOTER */
                 @page {
-                    size: auto;
-                    margin: 0;
-                  }
-                @print {
-                  @page :footer {
-                      display: none;
-                  }
-                
-                @page :header {
-                      display: none;
-                  }
+                  size: auto;
+                  margin: 0;
                 }
-
+              
+                @page :footer {
+                  display: none;
+                }
+              
+                @page :header {
+                  display: none;
+                }
+              
                 .sell-details {
                   display: flex;
                   flex-direction: column;
-                  align-items: center;  
+                  align-items: center;
                   padding: 20px;
                   background-color: var(--primary);
                   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 }
-                
+              
                 .sell-header {
                   width: 100%;
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
                 }
-                
+              
                 .sell-id {
                   font-size: 16px;
                   color: #666;
                 }
-                
+              
                 .sell-summary {
                   width: 100%;
                   display: flex;
@@ -102,33 +100,34 @@ export class ViewSellComponent {
                   padding: 0 20px;
                   box-sizing: border-box;
                 }
-                
+              
                 .customer-info {
                   flex: 2;
                 }
-                
+              
                 .status {
                   flex: 1;
                   text-align: right;
                 }
-                
+              
                 .product-list {
                   width: 100%;
                   margin-top: 30px;
                 }
-                
+              
                 .product-table {
                   width: 100%;
                   border-collapse: collapse;
                   margin-top: 10px;
                 }
-                
-                .product-table th, .product-table td {
+              
+                .product-table th,
+                .product-table td {
                   padding: 10px;
                   text-align: left;
                   border-bottom: 1px solid #616161;
                 }
-                
+              
                 .total {
                   width: 100%;
                   margin-top: 20px;
@@ -139,8 +138,8 @@ export class ViewSellComponent {
                   padding: 0 20px;
                   box-sizing: border-box;
                 }
-                
-                </style>
+              </style>
+              
             </head>
             <body>${printContents}</body>
             </html>
@@ -273,4 +272,5 @@ export class ViewSellComponent {
       }
     }
   }
+
 }

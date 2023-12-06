@@ -89,7 +89,7 @@ export class QuickSellSettings extends AppSettings {
     super();
     this.name = 'quickSellSettings';
     this.manageQuickSell = false;
-    this.unitPrices = [10, 20, 50, 60];
+    this.unitPrices = [20, 40, 60, 80];
   }
 }
 

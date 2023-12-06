@@ -6,6 +6,8 @@ import { getCustomerMeta } from '@app/models/customer.model';
 import { FormHelper, FormMeta, ModelMeta } from '@app/shared-services';
 import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-customer',
@@ -25,6 +27,7 @@ export class CustomerComponent {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private dialog: MatDialog,
+    private location: Location,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: { isDialog: boolean }
   ) {}
 
@@ -84,5 +87,9 @@ export class CustomerComponent {
       },
       true
     );
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 }

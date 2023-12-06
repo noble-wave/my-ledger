@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedServicesModule } from './shared-services';
 import { NgxIndexedDBModule } from 'ngx-indexed-db';
 import { dbConfig } from './services/storage.service';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { dbConfig } from './services/storage.service';
     NgxIndexedDBModule.forRoot(dbConfig),
 
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { LocalTableSettings } from '@app/shared-services';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-customer-list',
@@ -10,8 +12,9 @@ import { LocalTableSettings } from '@app/shared-services';
 export class CustomerListComponent {
   customers$: any;
   tableSettings: LocalTableSettings;
+  showDetails: boolean = false;
 
-  constructor(private service: CustomerService) { }
+  constructor(private service: CustomerService, private location: Location) { }
 
   ngOnInit(): void {
     let columns = [
@@ -33,5 +36,13 @@ export class CustomerListComponent {
     });
 
     this.customers$ = this.service.getAll();
+  }
+
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 }

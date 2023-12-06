@@ -2,6 +2,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SellService } from '../services/sell.service';
 import { Sell } from '@app/models/sell.model';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-report',
@@ -32,7 +34,7 @@ export class ReportComponent implements OnInit {
   selectedDateRange: string = 'last2Weeks';
   selectedDateRangeText: string = 'Last two weeks';
 
-  constructor(private sellService: SellService) {}
+  constructor(private sellService: SellService, private location: Location) {}
 
   ngOnInit(): void {
     this.sellService.getAll().subscribe((sells: Sell[]) => {
@@ -51,6 +53,10 @@ export class ReportComponent implements OnInit {
       start: new FormControl(currentDate),
       end: new FormControl(new Date()),
     });
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 
   adjustChartDimensions(): void {

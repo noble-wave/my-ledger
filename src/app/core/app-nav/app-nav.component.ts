@@ -18,6 +18,9 @@ export class AppNavComponent {
       shareReplay()
     );
   setting: any;
+  isDrawerOpen = false;
+
+ 
 
   public paths = [
     { path: 'product', label: 'Products' },
@@ -48,5 +51,9 @@ export class AppNavComponent {
           this.paths = this.paths.filter((item) => item.path !== 'quickSell');
         }
     });
+  }
+
+  toggleDrawer() {
+    this.isDrawerOpen = !this.isDrawerOpen;
   }
 }

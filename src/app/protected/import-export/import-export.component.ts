@@ -8,6 +8,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { firstValueFrom, forkJoin, map } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@app/shared/controls/template/dialog/dialog.component';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-import-export',
@@ -28,7 +30,8 @@ export class ImportExportComponent {
     private productService: ProductService,
     private sellService: SellService,
     private app: AppService,
-    public dialog: MatDialog
+    private location: Location,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,10 @@ export class ImportExportComponent {
       start: new FormControl(currentDate),
       end: new FormControl(new Date()),
     });
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 
   // exportData is your array which you want to dowanload as json and sample.json is your file name, customize the below lines as per your need.

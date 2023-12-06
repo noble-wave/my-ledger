@@ -20,6 +20,8 @@ import { SettingService } from '../services/setting.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerComponent } from '../customer/customer.component';
 import { ProductComponent } from '../product/product.component';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-sell',
@@ -46,7 +48,8 @@ export class SellComponent implements OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private settingService: SettingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private location: Location,
   ) {}
 
   ngOnDestroy(): void {
@@ -85,6 +88,10 @@ export class SellComponent implements OnDestroy {
 
   toggleDetails() {
     this.showDetails = !this.showDetails;
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 
   handleRandomProductName(productName: string, sellItemForm: FormGroup) {

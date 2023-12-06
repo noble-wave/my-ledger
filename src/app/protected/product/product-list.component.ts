@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalTableSettings } from '@app/shared-services';
 import { ProductService } from '../services/product.service';
 import { forkJoin, map } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
@@ -11,8 +12,9 @@ import { forkJoin, map } from 'rxjs';
 export class ProductListComponent implements OnInit {
   products$: any;
   tableSettings: LocalTableSettings;
+  showDetails: boolean = false;
 
-  constructor(private service: ProductService) {}
+  constructor(private service: ProductService, private location: Location) {}
 
   ngOnInit(): void {
     let columns = [
@@ -35,9 +37,8 @@ export class ProductListComponent implements OnInit {
     });
 
     this.getData();
-  
   }
- 
+
   getData() {
     this.products$ = forkJoin([
       this.service.getAllInventory(),
@@ -53,6 +54,14 @@ export class ProductListComponent implements OnInit {
         return pr;
       })
     );
-
   }
+
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
+
+  navigateBack() {
+    this.location.back();
+  }
+  
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { LocalTableSettings } from '@app/shared-services';
 import { SellService } from '../services/sell.service';
 import { map } from 'rxjs';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-sell-list',
@@ -12,8 +14,10 @@ export class SellListComponent {
   sells$: any;
   tableSettings: LocalTableSettings;
   selectedDate: Date = new Date();
+  showDetails: boolean = false;
 
-  constructor(private service: SellService) {}
+
+  constructor(private service: SellService, private location: Location) {}
 
   ngOnInit(): void {
     let columns = [
@@ -60,5 +64,13 @@ export class SellListComponent {
         return sells;
       })
     );
+  }
+
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
+
+  navigateBack(){
+    this.location.back();
   }
 }

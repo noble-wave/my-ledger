@@ -1,6 +1,11 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-  <div>Analytics</div>
-  <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+          (click)="navigateBack()">
+          <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+      </button>
+      <div>Analytics</div>
+  </div>
 </mat-toolbar>
 
 <div class="container">

@@ -1,5 +1,11 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Quick Sales</div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>Quick Sales</div>
+    </div>
     <a type="button" routerLink="../sell" mat-button mat-raised-button>List</a>
 </mat-toolbar>
 <mat-card>

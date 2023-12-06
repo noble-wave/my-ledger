@@ -1,6 +1,11 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-  <div>Export- Import - Delete</div>
-  <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+          (click)="navigateBack()">
+          <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+      </button>
+      <div>Export- Import - Delete</div>
+    </div>
 </mat-toolbar>
 <div class="container">
   <h2>Export Product, Customer, and Sell Data</h2>
@@ -90,8 +95,10 @@
 
 <div class="container">
   <h2 class="delete">
-    <mat-icon>warning</mat-icon> &nbsp;
-    <span>Delete Product, Customer, and Sell Data</span>
+    <mat-icon class="delete_icon1">dangerous</mat-icon> &nbsp;
+    <span>Delete Product, Customer, and Sell Data</span>&nbsp;
+    <mat-icon class="delete_icon">delete</mat-icon> &nbsp;
+
   </h2>
 
   <div class="container">

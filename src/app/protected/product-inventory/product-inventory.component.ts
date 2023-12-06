@@ -13,6 +13,7 @@ export class ProductInventoryComponent implements OnInit {
   products$: any;
   tableSettings: LocalTableSettings;
   selectedDate: Date = new Date();
+  showDetails: boolean = false;
 
   constructor(private service: ProductService, private location: Location) {}
 
@@ -70,5 +71,9 @@ export class ProductInventoryComponent implements OnInit {
 
   navigateBack() {
     this.location.back();
+  }
+
+  toggleDetails(){
+    this.showDetails = !this.showDetails
   }
 }
