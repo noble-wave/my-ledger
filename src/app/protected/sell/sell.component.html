@@ -28,14 +28,11 @@
 <mat-card>
     <mat-card-content>
         <div fxLayoutAlign="end center">
-            <button mat-icon-button color="primary" (click)="toggleDetails()">
-                <mat-icon>{{ showDetails ? 'remove' : 'info' }}</mat-icon>
+            <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="settings()">
+                <mat-icon aria-label="Side nav toggle icon">settings</mat-icon>
             </button>
-        </div>
-        <div *ngIf="showDetails" fxLayoutAlign="end center">
-            <!-- Additional details that will be shown when the button is clicked -->
-            <!-- Add your content here -->
-            <h3>Customize Your Sell Section to Suit Your Preferences via Settings.</h3>
+
         </div>
         <div>
 
@@ -84,8 +81,8 @@
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
                 <div class="line" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
                     <span class="number">Item {{ i + 1 }}</span>
-                  </div>
-                  
+                </div>
+
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
                         <!-- <div class="serialNo">{{ i + 1 }}</div> -->

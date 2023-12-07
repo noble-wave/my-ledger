@@ -6,16 +6,31 @@
         </button>
         <div>Quick Sales</div>
     </div>
-    <a type="button" routerLink="../sell" mat-button mat-raised-button>List</a>
+    <!-- <a type="button" routerLink="../sell" mat-button mat-raised-button>List</a> -->
+    <button class="flex-grow-0 transparent-button" type="button" routerLink="../sell" aria-label="Toggle sidenav"
+    mat-icon-button>
+    <mat-icon aria-label="Side nav toggle icon"> view_list</mat-icon>
+</button>
 </mat-toolbar>
 <mat-card>
     <mat-card-content>
-        <h2 *ngIf="!hasSeenWelcomeMessage">"Welcome to our Quick Sales page! We've simplified selling your favorite
-            products for your utmost
-            convenience."</h2>
-        <h4>
-            Discover the Unparalleled Ease of One-Quick Sales
-        </h4>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+                <h2 *ngIf="!hasSeenWelcomeMessage">"Welcome to our Quick Sales page! We've simplified selling your
+                    favorite
+                    products for your utmost
+                    convenience."</h2>
+                <h4>
+                    Discover the Unparalleled Ease of One-Quick Sales
+                </h4>
+            </div>
+            <div>
+                <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+                    (click)="settings()">
+                    <mat-icon aria-label="Side nav toggle icon">settings</mat-icon>
+                </button>
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>
 <mat-card>

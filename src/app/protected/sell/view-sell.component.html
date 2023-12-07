@@ -1,14 +1,23 @@
+
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>View Sell</div>
-    <div fxLayoutGap="10px">
-        <a type="button" (click)="navigateBack()" mat-button mat-raised-button>Back</a>
-        <a type="button" routerLink="/sell" mat-button mat-raised-button>List</a>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>View Sell</div>
+    </div>
+    <div fxLayoutAlign="space-between center">
+        <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+            <a type="button" (click)="printInvoice()" mat-button mat-raised-button>Print</a>
+        </div>
+        <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
     </div>
 </mat-toolbar>
 
 
 <!-- view-sell.component.html -->
-<div class="sell-details" #sellDetails>  
+<div class="sell-details" #sellDetails>
     <div class="sell-header">
         <h2>Sell Details</h2>
         <p class="sell-id"><strong>SellId:</strong> {{ sell?.sellId }}</p>
@@ -53,6 +62,7 @@
     </div>
 </div>
 
-<div fxLayoutAlign="center center">
+
+<div fxLayoutAlign="center center" fxShow fxHide.xs >
     <a type="button" (click)="printPage()" mat-button mat-raised-button>Print</a>
 </div>

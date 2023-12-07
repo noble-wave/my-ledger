@@ -12,7 +12,11 @@
                 <mat-icon>{{ showDetails ? 'remove' : 'info' }}</mat-icon>
             </button>
         </div>
-        <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a>
+        <!-- <a type="button" routerLink="./new" mat-button mat-raised-button><mat-icon>add</mat-icon></a> -->
+        <button class="flex-grow-0 transparent-button" type="button" routerLink="./new" aria-label="Toggle sidenav"
+            mat-icon-button>
+            <mat-icon aria-label="Side nav toggle icon">add</mat-icon>
+        </button>
     </div>
 </mat-toolbar>
 <mat-card>

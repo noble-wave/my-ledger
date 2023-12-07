@@ -38,7 +38,6 @@ export class SellComponent implements OnDestroy {
   products: Product[];
   statusOption: any;
   setting: any;
-  showDetails: boolean = false;
 
   constructor(
     private sellService: SellService,
@@ -86,8 +85,8 @@ export class SellComponent implements OnDestroy {
     });
   }
 
-  toggleDetails() {
-    this.showDetails = !this.showDetails;
+  settings() {
+    this.router.navigate(['/setting']);
   }
 
   navigateBack(){

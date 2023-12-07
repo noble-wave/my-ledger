@@ -12,6 +12,7 @@ import { AppService } from '@app/services/app.service';
 import { SettingService } from '../services/setting.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -36,10 +37,19 @@ export class SettingComponent implements OnDestroy {
     private app: AppService,
     private settingService: SettingService,
     private fb: FormBuilder,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+
+    this.route.fragment.subscribe(fragment => {
+      console.log('Fragment:', fragment);
+      if (fragment) {
+        this.scrollToElement(fragment);
+      }
+    });
+
     this.modelMeta = getSellSettingMeta();
     this.statusOptions = this.sellService.getStatusOptions();
     // Retrieve sell settings and populate the form
@@ -86,6 +96,13 @@ export class SettingComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next(undefined);
     this.destroy$.complete();
+  }
+
+  private scrollToElement(fragment: string): void {
+    const element = document.getElementById(fragment);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    }
   }
 
   // Deprecated

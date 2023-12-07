@@ -6,8 +6,12 @@
         </button>
         <div>{{isEdit ? 'Update' : 'Add'}} Customer</div>
     </div>
-    <a type="button" routerLink="../" mat-button mat-raised-button *ngIf="!(data?.isDialog === true)">List</a>
-</mat-toolbar>
+    <!-- <a type="button" routerLink="../" mat-button mat-raised-button *ngIf="!(data?.isDialog === true)">List</a> -->
+    <button class="flex-grow-0 transparent-button" type="button" routerLink="../" aria-label="Toggle sidenav"
+        mat-icon-button *ngIf="!(data?.isDialog === true)">
+        <mat-icon aria-label="Side nav toggle icon"> view_list</mat-icon>
+    </button>
+</mat-toolbar>  
 
 <mat-card>
     <mat-card-content>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { getSellItemMeta, getSellMeta } from '@app/models/sell.model';
 import { SellService } from '@app/protected/services/sell.service';
@@ -6,7 +6,7 @@ import { SettingService } from '@app/protected/services/setting.service';
 import { AppService } from '@app/services/app.service';
 import { ModelMeta } from '@app/shared-services';
 import { Location } from '@angular/common';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quick-sell',
@@ -14,6 +14,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./quick-sell.component.scss'],
 })
 export class QuickSellComponent {
+  @ViewChild('quickSellSettingElement', { static: true })
+  quickSellSettingElement: ElementRef;
+
   setting: any;
   hasSeenWelcomeMessage: boolean = false;
 
@@ -49,6 +52,7 @@ export class QuickSellComponent {
     private app: AppService,
     private formBuilder: FormBuilder,
     private location: Location,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -108,7 +112,13 @@ export class QuickSellComponent {
     this.sellItemForms = [this.app.meta.toFormGroup({}, this.sellItemMeta)];
   }
 
-  navigateBack(){
+  navigateBack() {
     this.location.back();
+  }
+
+  settings() {
+    this.router.navigate(['/setting'], {
+      fragment: 'quickSellSetting',
+    });
   }
 }
