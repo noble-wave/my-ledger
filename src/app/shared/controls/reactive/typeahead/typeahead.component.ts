@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, AbstractControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
-import { Subject } from 'rxjs';
+import { Observable, Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
-  selector: 'irs-typeahead',
+  selector: 'app-typeahead',
   templateUrl: './typeahead.component.html',
-  styleUrls: ['./typeahead.component.scss']
+  styleUrls: ['./typeahead.component.scss'],
 })
 export class IrsTypeaheadComponent implements OnInit {
   @Input() form: AbstractControl;
@@ -18,24 +18,30 @@ export class IrsTypeaheadComponent implements OnInit {
   @Input() icon: string;
   @Input() isDisabled: boolean;
   @Input() floatLabel: FloatLabelType;
-  @Input() options: any;
+  @Input() options: any[];
   @Input() viewValue: string;
-  control: AbstractControl;
+  @Input() optTextLabel: string = 'value';
+  @Input() optValueLabel: string = 'key';
+  @Input() suffixActionIcon: string | boolean;
+  control: FormControl;
   isRequired: boolean;
-  private searchUpdated = new Subject();
+  private searchUpdated = new Subject<string>();
   @Output() public debounceKeyup = new EventEmitter<string>();
+  @Output() onSelectionChange = new EventEmitter<any>(true);
+  @Output() navigateClick: EventEmitter<void> = new EventEmitter<void>();
+  filteredOptions: any[];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (!this.viewValue) {
       this.viewValue = '';
     }
 
-    this.control = this.form.get(this.name) as AbstractControl;
+    this.control = this.form.get(this.name) as FormControl;
     if (this.control && this.control.validator) {
       const validator = this.control.validator(new FormControl());
-      this.isRequired = (validator && validator['required']) ? true : false;
+      this.isRequired = validator && validator['required'] ? true : false;
     }
 
     // Default float type Auto
@@ -43,21 +49,64 @@ export class IrsTypeaheadComponent implements OnInit {
       this.floatLabel = 'auto';
     }
 
+    this.onKeyup();
+
+    // this.filteredOptions = this.control.valueChanges.pipe(
+    //   startWith(''),
+    //   map((x) => (x ? this._filter(x) : this.options?.slice() || []))
+    // );
+
     // Autocomplete
-    // this.searchUpdated.debounceTime(100).distinctUntilChanged()
-    // .subscribe((x: string) => { console.log(x); this.debounceKeyup.emit(x); });
+    this.searchUpdated
+      .pipe(debounceTime(100), distinctUntilChanged())
+      .subscribe((x: string) => {
+        console.log(x);
+        this.debounceKeyup.emit(x);
+      });
   }
 
-  onKeyup(event: any) {
-    let search = event.target.value;
+  onKeyup(event?: any) {
+    let searchTxt = event?.target?.value;
+    this.filteredOptions = this._filter(searchTxt);
     this.control.setValue(null);
-    this.searchUpdated.next(search);
-
+    this.searchUpdated.next(searchTxt);
   }
 
+  private _filter(value: string): any[] {
+    if (value && this.options) {
+      const filterValue = value.toLowerCase();
+      return this.options.filter((x) =>
+        x[this.optTextLabel].toLowerCase().includes(filterValue)
+      );
+    } else {
+      return [];
+    }
+  }
+
+  // Deprecated
   onSelection(option) {
     this.control.setValue(option.value);
   }
 
-}
+  selectionChange(option) {
+    // console.log(event);
+    // let option = this.options.find(x => x[this.optValueLabel] == event.value);
+    this.viewValue = option[this.optTextLabel];
+    this.control.setValue(option[this.optValueLabel]);
+    this.onSelectionChange.emit(option);
+  }
 
+  displayWith = (value: string) => {
+    let option =
+      this.options && this.options.find((x) => x[this.optValueLabel] === value);
+    return option && option[this.optTextLabel];
+  };
+
+  onActionIconClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.control.value) {
+      this.navigateClick.emit();
+    }
+  }
+}

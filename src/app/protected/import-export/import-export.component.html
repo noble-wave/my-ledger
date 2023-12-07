@@ -1,0 +1,170 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+          (click)="navigateBack()">
+          <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+      </button>
+      <div>Export- Import - Delete</div>
+    </div>
+</mat-toolbar>
+<div class="container">
+  <h2>Export Product, Customer, and Sell Data</h2>
+
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="hide-on-small">Export All Data</span>
+            <span class="show-on-small">Export All Data</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="downloadProductData()"
+              color="primary"><mat-icon>download</mat-icon>Export All Product Data</button>
+          </div>
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="downloadCustomerData()"
+              color="primary"><mat-icon>download</mat-icon>Export All Customer Data</button>
+          </div>
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="downloadSellData()" color="primary"><mat-icon>download</mat-icon>Export
+              All Sell Data</button>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="hide-on-small">Export Data by Date Range</span>
+            <span class="show-on-small">Export Data by Date Range</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="download-section">
+          <mat-form-field class="example-form-field">
+            <mat-label>Select the Date Range</mat-label>
+            <mat-date-range-input [formGroup]="datePicker" [rangePicker]="picker">
+              <input matStartDate placeholder="Start date" formControlName="start">
+              <input matEndDate placeholder="End date" formControlName="end">
+            </mat-date-range-input>
+            <mat-hint>Start Date MM/DD/YYYY – End Date MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+          <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="exportProductAndInventoryDataByDate()"
+                color="primary"><mat-icon>download</mat-icon>Export Product</button>
+            </div>
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="exportCustomerDataByDate()"
+                color="primary"><mat-icon>download</mat-icon>Export Customer</button>
+            </div>
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="exportSellDataByDate()"
+                color="primary"><mat-icon>download</mat-icon>Export Sell</button>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+
+<div class="container">
+  <div class="download-section">
+    <h2>Import JSON Data</h2>
+    <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign=" center">
+      <div>
+        <input type="file" class="upload-box" (change)="onFileChange($event)" accept=".json" multiple />
+      </div>
+      <div>
+        <button mat-raised-button (click)="uploadFiles()" color="primary"><mat-icon>upload_file</mat-icon>
+          Import</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h2 class="delete">
+    <mat-icon class="delete_icon1">dangerous</mat-icon> &nbsp;
+    <span>Delete Product, Customer, and Sell Data</span>&nbsp;
+    <mat-icon class="delete_icon">delete</mat-icon> &nbsp;
+
+  </h2>
+
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="hide-on-small">Delete All Data</span>
+            <span class="show-on-small">Delete All Data</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="deleteProductData('500ms', '200ms')"
+              color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Product Data</button>
+          </div>
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="deleteCustomerData('500ms', '200ms')"
+              color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Customer Data</button>
+          </div>
+          <div fxFlex="30%" fxFlex.xs="100%">
+            <button mat-raised-button (click)="deleteSellData('500ms', '200ms')"
+              color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Sell Data</button>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="container">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="hide-on-small">Delete Data by Date Range</span>
+            <span class="show-on-small">Delete Data by Date Range</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="download-section">
+          <mat-form-field class="example-form-field">
+            <mat-label>Select the Date Range</mat-label>
+            <mat-date-range-input [formGroup]="datePicker" [rangePicker]="picker1">
+              <input matStartDate placeholder="Start date" formControlName="start">
+              <input matEndDate placeholder="End date" formControlName="end">
+            </mat-date-range-input>
+            <mat-hint>Start Date MM/DD/YYYY – End Date MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker1></mat-date-range-picker>
+          </mat-form-field>
+          <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="deleteProductAndInventoryDataByDateAndDownload('500ms', '200ms')"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Product</button>
+            </div>
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="deleteCustomerDataByDate( '500ms', '200ms')"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Customer</button>
+            </div>
+            <div fxFlex="30%" fxFlex.xs="70%">
+              <button mat-raised-button (click)="deleteSellDataByDate('500ms', '200ms')"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Sell</button>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

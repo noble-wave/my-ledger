@@ -1,0 +1,21 @@
+<div id="dashboard">
+    <div>
+        <div class="sale">
+            <h1 class="sub-title">Sales Overview </h1>
+            <div class="sale-list">
+                <div>
+                    <h2>Last 30 Days</h2>
+                    <p class="net-amount">{{ last30DaysNetAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+                </div>
+                <div>
+                    <h2>Last 90 Days</h2>
+                    <p class="net-amount">{{ last90DaysNetAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+                </div>
+                <div>
+                    <h2>All-Time</h2>
+                    <p class="net-amount">{{ allTimeNetAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

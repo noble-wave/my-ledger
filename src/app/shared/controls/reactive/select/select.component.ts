@@ -4,10 +4,10 @@ import { FloatLabelType } from '@angular/material/form-field';
 import { IrsControl } from '@shared-services';
 
 @Component({
-  selector: 'irs-select',
+  selector: 'app-select',
   templateUrl: './select.component.html',
 })
-export class IrsSelectComponent implements OnInit, OnChanges {
+export class AppSelectComponent implements OnInit, OnChanges {
 
   @Input() form: AbstractControl; // FormGroup;
   @Input() name: string;
@@ -38,7 +38,8 @@ export class IrsSelectComponent implements OnInit, OnChanges {
 
   selectionChange(event) {
     // console.log(event);
-    this.onSelectionChange.emit(event.value);
+    let option = this.options.find(x => x[this.optValueLabel] == event.value);
+    this.onSelectionChange.emit(option);
   }
 
 }

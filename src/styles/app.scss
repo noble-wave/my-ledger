@@ -128,3 +128,16 @@ mat-form-field,
 .slider__middle.mat-slider-horizontal .mat-slider-wrapper {
   top: 10px;
 }
+
+.discount-suffix {
+  border-left: 2.5px solid var(--primary-color);
+  // top: 50%;
+  transform: translateY(-40%);
+}
+
+@media (max-width: 500px){
+  .discount-suffix {
+    margin-right: -15px;
+    font-size: 10px;
+  }
+}

@@ -30,6 +30,12 @@ export class AppNotificationService {
     });
   }
 
+  notifyClose(message: string, action?: string) {
+    this._snackbar.open(message, action || 'Close!', {
+      duration: 4000,
+    });
+  }
+
   notifyUpdated(message: string, action?: string) {
     this._snackbar.open(message, action || 'Successully updated!', {
       duration: 4000,

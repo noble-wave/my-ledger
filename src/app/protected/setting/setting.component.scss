@@ -1,0 +1,52 @@
+/* Add this to your component's .scss or .css file */
+
+.settings-container {
+    // max-width: 500px;
+    // margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .status{
+    max-width: 350px;
+  }
+  .section-label {
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  .apply-button {
+    margin-top: 30px;
+  }
+  
+  /* Responsive Styles for Smaller Screens (e.g., smartphones) */
+  @media (max-width: 600px) {
+    .settings-container {
+      max-width: 100%;
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 1.2rem;
+    }
+  
+    .section-label {
+      margin-top: 15px;
+    }
+  
+    .apply-button {
+      margin-top: 20px;
+    }
+  }
+  
+// input {
+//   font-size: 16px;
+//   padding: 70px 40px 70px 40px;
+//   border: 1px solid #ccc;
+//   margin-bottom: 10px;
+//   border-radius: 5px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+//     background: linear-gradient(to right bottom, #202123, #1a1818);
+
+// }

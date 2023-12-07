@@ -37,12 +37,12 @@ import { MatTreeModule } from '@angular/material/tree';
 
 
 import { IrsInputComponent } from './controls/reactive/input/input.component';
-import { IrsSelectComponent } from './controls/reactive/select/select.component';
+import { AppSelectComponent } from './controls/reactive/select/select.component';
 import { IrsTableComponent } from './controls/reactive/table/table.component';
 import { IrsToggleComponent } from './controls/reactive/toggle/toggle.component';
 import { IrsCheckboxComponent } from './controls/reactive/checkbox/checkbox.component';
 import { IrsTypeaheadComponent } from './controls/reactive/typeahead/typeahead.component';
-import { IrsDateComponent } from './controls/reactive/date/date.component';
+import { AppDateComponent } from './controls/reactive/date/date.component';
 
 
 import { IrsSearchTemplateComponent } from './controls/template/search-template/search-template.component';
@@ -59,6 +59,7 @@ import { ColumnOptionsDailogComponent } from './controls/template/local-search-t
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LetDirective } from './directives/let.directive';
 import { IrsControlComponent } from './controls/reactive/control/control.component';
+import { DialogComponent } from './controls/template/dialog/dialog.component';
 
 @NgModule({
   imports: [
@@ -92,8 +93,8 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
 
     LetDirective,
 
-    IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
-    IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent, IrsControlComponent,
+    IrsInputComponent, AppSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
+    AppDateComponent, IrsRadioComponent, IrsLocalTableComponent, IrsControlComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent,
 
@@ -102,12 +103,12 @@ import { IrsControlComponent } from './controls/reactive/control/control.compone
   declarations: [
     LetDirective,
 
-    IrsInputComponent, IrsSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
-    IrsDateComponent, IrsRadioComponent, IrsLocalTableComponent,
+    IrsInputComponent, AppSelectComponent, IrsTableComponent, IrsToggleComponent, IrsCheckboxComponent, IrsTypeaheadComponent,
+    AppDateComponent, IrsRadioComponent, IrsLocalTableComponent,
 
     IrsSearchTemplateComponent, IrsInputTemplateComponent, IrsAlertComponent, IrsConfirmComponent,
 
-    IrsViewTemplateComponent, IrsIndexComponent, IrsErrorComponent, ColumnOptionsDailogComponent, IrsControlComponent,]
+    IrsViewTemplateComponent, IrsIndexComponent, IrsErrorComponent, ColumnOptionsDailogComponent, IrsControlComponent, DialogComponent,]
 })
 export class SharedModule {
 

@@ -33,7 +33,7 @@ export class SearchTableSettings extends TableSettings {
 export class Column {
   name: string;
   text?: string;
-  order?: number;
+  sell?: number;
 }
 
 export class RowAction {
@@ -45,6 +45,7 @@ export class RowAction {
 }
 
 export class LocalTableSettings {
+  tableIdentifier?: string; // should be unique for all tables, would be used for exclude columns list and etc
   columns: Array<Column>;
   displayColumns: Array<Column>;
   idColumnName = 'id';

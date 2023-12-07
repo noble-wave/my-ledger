@@ -1,23 +1,47 @@
+<!-- <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div>{{isEdit ? 'Update' : 'Add'}} Product</div>
+    <a type="button" routerLink="../" mat-button mat-raised-button *ngIf="!(data?.isDialog === true)">List</a>
+</mat-toolbar> -->
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div>Add Product</div>
-    <a type="button" routerLink="../" mat-button mat-raised-button>List</a>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>{{isEdit ? 'Update' : 'Add'}} Product</div>
+    </div>
+    <!-- <a type="button" routerLink="../" mat-button mat-raised-button *ngIf="!(data?.isDialog === true)">List</a> -->
+    <button class="flex-grow-0 transparent-button" type="button" routerLink="../" aria-label="Toggle sidenav"
+    mat-icon-button *ngIf="!(data?.isDialog === true)">
+    <mat-icon aria-label="Side nav toggle icon"> view_list</mat-icon>
+</button>
 </mat-toolbar>
 
 <mat-card>
     <mat-card-content>
         <div *ngIf="form">
-            <form id="productForm" [formGroup]="form" (submit)="saveProduct()">
+            <div>
 
                 <app-input [form]="form" name="productName"></app-input>
                 <app-input [form]="form" name="description"></app-input>
-                <app-input [form]="form" name="Image Url"></app-input>
-                <app-input [form]="form" name="Category"></app-input>
-                <app-radio [form]="form" name="isActive" [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+                <app-input [form]="form" name="price"></app-input>
+                <!-- <app-input [form]="form" name="Image Url"></app-input>
+                <app-input [form]="form" name="Category"></app-input> -->
+                <app-radio [form]="form" name="isInventory" label="Want you Manage Stock Management?"
+                    [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-                <button mat-button mat-raised-button color="primary">Save</button>
+                <app-input *ngIf="form.value.isInventory" [form]="inventoryForm" name="count"></app-input>
 
-                {{form.value | json}}
-            </form>
+                <app-radio [form]="form" name="isActive" label="Want you Active ?"
+                    [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+
+                <button mat-button mat-raised-button color="primary"
+                    (click)="saveProduct(false)"><mat-icon>save</mat-icon>Save</button>
+                <button type="button" class="ml-8" mat-button mat-raised-button color="primary" *ngIf="!isEdit"
+                    (click)="saveProduct(true)"><mat-icon>save</mat-icon>Save &
+                    <mat-icon>add_circle_outline</mat-icon>Add more</button>
+
+            </div>
         </div>
     </mat-card-content>
 </mat-card>

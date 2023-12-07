@@ -1,0 +1,68 @@
+
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>View Sell</div>
+    </div>
+    <div fxLayoutAlign="space-between center">
+        <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+            <a type="button" (click)="printInvoice()" mat-button mat-raised-button>Print</a>
+        </div>
+        <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+    </div>
+</mat-toolbar>
+
+
+<!-- view-sell.component.html -->
+<div class="sell-details" #sellDetails>
+    <div class="sell-header">
+        <h2>Sell Details</h2>
+        <p class="sell-id"><strong>SellId:</strong> {{ sell?.sellId }}</p>
+    </div>
+    <div class="sell-summary">
+        <div class="customer-info">
+            <p *ngIf="sell?.customerName"><strong>Customer:</strong> {{ sell?.customerName }}</p>
+            <p><strong>Sell Date:</strong> {{ sell?.sellDate | date: 'longDate' }}</p>
+        </div>
+        <div class="status">
+            <p *ngIf="sell?.status"><strong>Status:</strong> {{ sell?.status }}</p>
+        </div>
+    </div>
+    <div class="product-list">
+        <h3>Products</h3>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th *ngIf="sell?.items && sell.items.length > 0 && sell.items[0]?.productName">Product</th>
+                    <th>Quantity</th>
+                    <th *ngIf="sell?.items && sell.items.length > 0 && sell.items[0]?.discount">Discount</th>
+                    <th>Unit Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of sell?.items">
+                    <td *ngIf="item?.productName">{{ item?.productName }}</td>
+                    <td>{{ item?.quantity }}</td>
+                    <td *ngIf="item?.discount">{{ item?.discount | currency: 'INR' }}</td>
+                    <td>{{ item?.unitPrice | currency: 'INR' }}</td>
+                    <td>{{ item?.subtotal | currency: 'INR' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="total">
+        <p><strong>Gross Amount:</strong> {{ sell?.grossAmount | currency: 'INR' }}</p>
+        <p><strong>Total Discount:</strong> {{ sell?.totalDiscount | currency: 'INR' }}</p>
+        <p><strong>Net Amount:</strong> {{ sell?.netAmount | currency: 'INR' }}</p>
+        <p *ngIf="sell?.arrears"><strong>Arrears:</strong> {{ sell?.arrears | currency: 'INR' }}</p>
+    </div>
+</div>
+
+
+<div fxLayoutAlign="center center" fxShow fxHide.xs >
+    <a type="button" (click)="printPage()" mat-button mat-raised-button>Print</a>
+</div>

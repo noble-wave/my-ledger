@@ -1,7 +1,8 @@
 <mat-form-field [hideRequiredMarker]="viewOnly || !isRequired">
   <mat-icon *ngIf="icon && iconAtStart" matPrefix>{{icon}}</mat-icon>
-  <input #control [type]="type" [required]="isRequired" matInput [placeholder]="label"
-    [(ngModel)]="model[bindingPropertyName]" (change)="changed()" [disabled]="viewOnly ? 'true': 'false'" [contentEditable]="viewOnly ? 'true': 'false'" />
+  <mat-label>{{label}}</mat-label>
+  <input #control [type]="type" [required]="isRequired" matInput [(ngModel)]="model[bindingPropertyName]"
+    (change)="changed()" [disabled]="viewOnly ? 'true': 'false'" [contentEditable]="viewOnly ? 'true': 'false'" />
   <mat-icon *ngIf="icon && !iconAtStart" matSuffix>{{icon}}</mat-icon>
 </mat-form-field>
 

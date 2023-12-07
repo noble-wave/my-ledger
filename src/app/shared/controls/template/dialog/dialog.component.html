@@ -1,0 +1,20 @@
+<!-- <div  [style.color]="'white'" class="dialog-content" mat-dialog-content>
+    <h1 mat-dialog-title>{{ dialogTitle }}</h1>
+    <p>{{ dialogContent }}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button [ngClass]="color" mat-raised-button mat-dialog-close>{{ cancelButtonText }}</button>
+    <button [ngClass]="color" mat-raised-button mat-dialog-close cdkFocusInitial>{{ confirmButtonText }}</button>
+  </div>
+   -->
+<h1 mat-dialog-title>{{ data.dialogTitle }}</h1>
+<div mat-dialog-content [innerHTML]="data.dialogContent"></div>
+<div mat-dialog-actions>
+  <button [ngStyle]="{ 'background-color': data.color }" [ngClass]="data.color" mat-raised-button mat-dialog-close>
+    {{ data.cancelButtonText }}
+  </button>
+  <button [ngStyle]="{ 'background-color': data.color }" [ngClass]="data.color" mat-raised-button mat-dialog-close
+    cdkFocusInitial (click)="onDelete()">
+    {{ data.confirmButtonText }}
+  </button>
+</div>

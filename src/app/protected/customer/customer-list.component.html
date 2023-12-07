@@ -1,0 +1,49 @@
+<!-- <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div>Customers</div>
+    <div fxLayoutAlign="space-between center">
+        <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+            <button mat-icon-button color="primary" (click)="toggleDetails()">
+                <mat-icon>{{ showDetails ? 'remove' : 'info' }}</mat-icon>
+            </button>
+        </div>
+        <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a>
+    </div>
+</mat-toolbar> -->
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>Customers</div>
+    </div>
+    <div fxLayoutAlign="space-between center">
+        <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+            <button mat-icon-button color="primary" (click)="toggleDetails()">
+                <mat-icon>{{ showDetails ? 'remove' : 'info' }}</mat-icon>
+            </button>
+        </div>
+        <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+        <button class="flex-grow-0 transparent-button" type="button" routerLink="./new" aria-label="Toggle sidenav"
+            mat-icon-button>
+            <mat-icon aria-label="Side nav toggle icon">add</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<mat-card>
+    <mat-card-content>
+        <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+            <div fxLayoutAlign="end center">
+                <!-- <button mat-icon-button color="primary" (click)="toggleDetails()">
+                    <mat-icon>{{ showDetails ? 'remove' : 'info' }}</mat-icon>
+                </button> -->
+            </div>
+            <div *ngIf="showDetails" fxLayoutAlign="end center">
+                <h4>Enhance your list viewing and interaction experience by tilting your screen for optimal display,
+                    illustrated by the screen rotation icon.<mat-icon>
+                        screen_rotation_up</mat-icon> </h4>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+<irs-local-table [data]="customers$" [settings]="tableSettings"></irs-local-table>

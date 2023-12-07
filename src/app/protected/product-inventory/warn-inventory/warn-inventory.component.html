@@ -1,0 +1,10 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="navigateBack()">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div>Warn-inventory</div>
+    </div>
+</mat-toolbar>
+<irs-local-table [data]="products$" [settings]="tableSettings"></irs-local-table>

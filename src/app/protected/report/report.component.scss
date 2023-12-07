@@ -1,0 +1,45 @@
+mat-form-field {
+  margin-right: 12px;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.chart-container {
+  width: 100% !important;
+}
+
+.hide-on-small {
+  display: inline;
+}
+
+.show-on-small {
+  display: none;
+}
+
+/* Media query for small screens (adjust the max-width as needed) */
+@media (max-width: 768px) {
+  .hide-on-small {
+    display: none;
+  }
+
+  .show-on-small {
+    width: 120px;
+    display: inline;
+  }
+
+  .margin {
+    margin-top: 30px !important;
+  }
+}
+
+.margin {
+  margin-bottom: 80px !important;
+  border-bottom: 1px solid #ccc; /* Adjust the border style as needed */
+  margin-bottom: 10px; /* Adjust the margin as needed to control the spacing between items */
+  padding-bottom: 10px; 
+}
