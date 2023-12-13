@@ -22,7 +22,6 @@ import { CustomerComponent } from '../customer/customer.component';
 import { ProductComponent } from '../product/product.component';
 import { Location } from '@angular/common';
 
-
 @Component({
   selector: 'app-sell',
   templateUrl: './sell.component.html',
@@ -38,6 +37,7 @@ export class SellComponent implements OnDestroy {
   products: Product[];
   statusOption: any;
   setting: any;
+  refreshing: boolean;
 
   constructor(
     private sellService: SellService,
@@ -46,9 +46,10 @@ export class SellComponent implements OnDestroy {
     private app: AppService,
     private router: Router,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
     private settingService: SettingService,
     private dialog: MatDialog,
-    private location: Location,
+    private location: Location
   ) {}
 
   ngOnDestroy(): void {
@@ -85,11 +86,19 @@ export class SellComponent implements OnDestroy {
     });
   }
 
+  resetOnSave() {
+    this.modelMeta = getSellMeta();
+    this.form = this.app.meta.toFormGroup(
+      { sellDate: new Date() },
+      this.modelMeta
+    );
+  }
+
   settings() {
     this.router.navigate(['/setting']);
   }
 
-  navigateBack(){
+  navigateBack() {
     this.location.back();
   }
 
@@ -229,6 +238,17 @@ export class SellComponent implements OnDestroy {
   }
 
   saveSell() {
+    const hasValidSellItem = this.sellItemForms.some((sellItemForm) => {
+      const unitPrice = sellItemForm.get('unitPrice')?.value;
+      const quantity = sellItemForm.get('quantity')?.value;
+      return !!unitPrice && !!quantity;
+    });
+
+    if (!hasValidSellItem) {
+      this.app.noty.notifyLocalValidationError('');
+      return;
+    }
+
     let sell = this.form.value;
     let sellItems = this.sellItemForms.map((x) => x.value);
     sell.items = sellItems;
@@ -237,25 +257,42 @@ export class SellComponent implements OnDestroy {
       console.log(x);
       this.app.noty.notifyClose('Sell has been taken');
       console.log('Before reset:', this.form.value);
-      this.form.reset({
-        sellDate: new Date(),
-        status: this.setting.defaultSellStatus,
-      });
       console.log('After reset:', this.form.value);
+      // this.router.navigate([], {queryParams: {time: new Date()}})
+      this.refreshing = true;
+      this.cdr.detectChanges();
       this.resetSellItemForms();
-      this.form.markAsPristine();
-      this.form.markAsUntouched();
-      this.form.updateValueAndValidity();
+      this.refreshing = false;
+      this.cdr.detectChanges();
     });
   }
 
   resetSellItemForms() {
     // this.form = this.app.meta.toFormGroup({ sellDate: new Date(), status: this.setting.defaultSellStatus }, this.modelMeta);
     this.sellItemForms = [];
+    // this.form.reset();
     this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
+
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+    this.form.updateValueAndValidity();
+    this.form.reset({
+      sellDate: new Date(),
+      status: this.setting.defaultSellStatus,
+    });
   }
 
   saveSellPrint() {
+    const hasValidSellItem = this.sellItemForms.some((sellItemForm) => {
+      const unitPrice = sellItemForm.get('unitPrice')?.value;
+      const quantity = sellItemForm.get('quantity')?.value;
+      return !!unitPrice && !!quantity;
+    });
+
+    if (!hasValidSellItem) {
+      this.app.noty.notifyLocalValidationError('');
+      return;
+    }
     let sell = this.form.value;
     let sellItems = this.sellItemForms.map((x) => x.value);
     sell.items = sellItems;

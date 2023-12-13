@@ -1,4 +1,3 @@
-
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
     <div fxLayout="row" fxLayoutAlign="space-between center">
         <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
@@ -11,7 +10,10 @@
         <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
             <a type="button" (click)="printInvoice()" mat-button mat-raised-button>Print</a>
         </div>
-        <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+        <button class="flex-grow-0 transparent-button" type="button" routerLink="../../new" aria-label="Toggle sidenav"
+            mat-icon-button>
+            <mat-icon aria-label="Side nav toggle icon">edit_square</mat-icon>
+        </button>
     </div>
 </mat-toolbar>
 
@@ -63,6 +65,6 @@
 </div>
 
 
-<div fxLayoutAlign="center center" fxShow fxHide.xs >
+<div fxLayoutAlign="center center" fxShow fxHide.xs>
     <a type="button" (click)="printPage()" mat-button mat-raised-button>Print</a>
 </div>

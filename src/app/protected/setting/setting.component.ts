@@ -13,7 +13,7 @@ import { SettingService } from '../services/setting.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-
+import { RefreshService } from '../services/refresh.service';
 
 @Component({
   selector: 'app-setting',
@@ -38,12 +38,12 @@ export class SettingComponent implements OnDestroy {
     private settingService: SettingService,
     private fb: FormBuilder,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private refreshService: RefreshService
   ) {}
 
   ngOnInit(): void {
-
-    this.route.fragment.subscribe(fragment => {
+    this.route.fragment.subscribe((fragment) => {
       console.log('Fragment:', fragment);
       if (fragment) {
         this.scrollToElement(fragment);
@@ -77,7 +77,6 @@ export class SettingComponent implements OnDestroy {
       this.quicksellSetting.manageQuickSell = x;
     });
 
-
     this.settingService
       .getQuickSellSetting()
       .pipe(takeUntil(this.destroy$))
@@ -87,10 +86,10 @@ export class SettingComponent implements OnDestroy {
         this.quicksellSetting = x;
       });
 
-      // this.quickSellForm = this.fb.group({
-      //   manageQuickSell: [true], // Your other controls here
-      //   unitPrices: this.fb.array([]), // Initialize unitPrices as an empty FormArray
-      // });
+    // this.quickSellForm = this.fb.group({
+    //   manageQuickSell: [true], // Your other controls here
+    //   unitPrices: this.fb.array([]), // Initialize unitPrices as an empty FormArray
+    // });
   }
 
   ngOnDestroy(): void {
@@ -101,7 +100,11 @@ export class SettingComponent implements OnDestroy {
   private scrollToElement(fragment: string): void {
     const element = document.getElementById(fragment);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
     }
   }
 
@@ -143,16 +146,17 @@ export class SettingComponent implements OnDestroy {
   }
 
   addMore() {
-    const unitPricesFormArray = this.quickSellForm.get('unitPrices') as FormArray;
+    const unitPricesFormArray = this.quickSellForm.get(
+      'unitPrices'
+    ) as FormArray;
     unitPricesFormArray.push(this.fb.control(''));
   }
-  
 
   saveQuickSellSetting() {
     let quickSellSetting = this.quickSellForm.value;
+    this.refreshService.isChnage$.next(quickSellSetting);
     quickSellSetting.unitPrices = this.unitPrices;
     console.log(quickSellSetting);
-
     // Check if data exists in the storage
     this.settingService.getQuickSellSetting().subscribe((x) => {
       if (x && x.id) {
