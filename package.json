@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "dist:ng": "ng deploy --branch=gh-pages --base-href=https://my-ledger.etrivia.app --no-silent",
     "test": "ng test"
   },
   "private": true,
