@@ -21,20 +21,20 @@
 <!-- view-sell.component.html -->
 <div class="sell-details" #sellDetails>
     <div class="sell-header">
-        <h2>Sell Details</h2>
-        <p class="sell-id"><strong>SellId:</strong> {{ sell?.sellId }}</p>
+        <h2>INVOICE</h2>
+        <p class="sell-id"><strong>Id:</strong> {{ sell?.sellId }}</p>
     </div>
     <div class="sell-summary">
         <div class="customer-info">
-            <p *ngIf="sell?.customerName"><strong>Customer:</strong> {{ sell?.customerName }}</p>
-            <p><strong>Sell Date:</strong> {{ sell?.sellDate | date: 'longDate' }}</p>
+            <p *ngIf="sell?.customerName"><strong>Bill To:</strong> {{ sell?.customerName }}</p>
+            <p><strong>Date:</strong> {{ sell?.sellDate | date: 'longDate' }}</p>
         </div>
         <div class="status">
             <p *ngIf="sell?.status"><strong>Status:</strong> {{ sell?.status }}</p>
         </div>
     </div>
     <div class="product-list">
-        <h3>Products</h3>
+        <!-- <h3>Products</h3> -->
         <table class="product-table">
             <thead>
                 <tr>
