@@ -1,20 +1,25 @@
 <div *ngIf="form && control">
 
   <input type="hidden" [formControl]="control">
-  <mat-form-field [hideRequiredMarker]="!isRequired" [floatLabel]="floatLabel" class="width100per" >
-    <mat-icon matPrefix class="irs-input-icon">{{icon}}</mat-icon>
-    
-    <input matInput type="text" [placeholder]="label" (keyup)="onKeyup($event)" [matAutocomplete]="auto">
-    <mat-icon *ngIf="suffixActionIcon && control.value" matSuffix class="irs-input-icon clickable" (click)="onActionIconClick($event)">{{suffixActionIcon}}</mat-icon>
+  <mat-form-field [hideRequiredMarker]="!isRequired" class="width100per">
+    <!-- <mat-icon matPrefix class="irs-input-icon">{{icon}}</mat-icon> -->
+    <mat-label>{{label}}</mat-label>
+    <input #myInput="matAutocompleteTrigger" matInput type="text" [placeholder]="label" (keyup)="onKeyup($event)"
+      [value]="viewValue" [matAutocomplete]="auto" (click)="myInput.openPanel(); $event.stopPropagation()"
+      required="true" aria-label="Region">
+
+    <mat-icon *ngIf="suffixActionIcon && control.value" matSuffix class="irs-input-icon clickable"
+      (click)="onActionIconClick($event)">{{suffixActionIcon}}</mat-icon>
 
     <mat-autocomplete autoActiveFirstOption [displayWith]="displayWith" #auto="matAutocomplete">
       <!-- <mat-option *ngFor="let option of options" [value]="option.text" (onSelectionChange)="onSelection(option)">
         {{option.text}}
       </mat-option> -->
-      <mat-option *ngFor="let item of filteredOptions" [value]="item[optValueLabel]" (onSelectionChange)="selectionChange(item)">
+      <mat-option *ngFor="let item of filteredOptions" [value]="item[optValueLabel]"
+        (onSelectionChange)="selectionChange(item)">
         {{item[optTextLabel]}}
       </mat-option>
-    
+
     </mat-autocomplete>
 
     <mat-error *ngIf="control.hasError('email')">
@@ -34,6 +39,3 @@
     </mat-error>
   </mat-form-field>
 </div>
-
-
-

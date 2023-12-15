@@ -37,7 +37,7 @@ export class QuickSellComponent {
     ],
     grossAmount: 0,
     sellDate: new Date(),
-    status: '',
+    status: 'Delivered',
     totalQuantity: 1,
     netAmount: 0,
     totalDiscount: 0,
