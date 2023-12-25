@@ -4,7 +4,11 @@
             (click)="navigateBack()">
             <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
         </button>
-        <div>Products</div>
+        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+            (click)="demoData('enterAnimationDuration', 'exitAnimationDuration')">
+            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+        </button>
+        <div class="red">Products</div>
     </div>
     <div fxLayoutAlign="space-between center">
         <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
