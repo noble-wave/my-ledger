@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Sell, SellStatus } from '@app/models/sell.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import cryptoRandomString from 'crypto-random-string';
-import { forkJoin, map, switchMap } from 'rxjs';
+import { Observable, forkJoin, map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,12 @@ export class SellService {
 
   getAll() {
     return this.storage.getAll<Sell>(tableNames.sell);
+  }
+
+  isDataPresent(): Observable<boolean> {
+    return this.storage.getAll<Sell>(tableNames.sell).pipe(
+      map((sells) => sells.length > 0)
+    );
   }
 
   get(sellId: string) {
@@ -98,5 +104,7 @@ export class SellService {
       })
     );
   }
+
+ 
 
 }

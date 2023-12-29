@@ -10,7 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@app/shared/controls/template/dialog/dialog.component';
 import { Location } from '@angular/common';
 
-
 @Component({
   selector: 'app-import-export',
   templateUrl: './import-export.component.html',
@@ -31,7 +30,7 @@ export class ImportExportComponent {
     private sellService: SellService,
     private app: AppService,
     private location: Location,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +43,7 @@ export class ImportExportComponent {
     });
   }
 
-  navigateBack(){
+  navigateBack() {
     this.location.back();
   }
 
@@ -308,7 +307,7 @@ export class ImportExportComponent {
       data: {
         dialogTitle: 'Delete Product Data',
         dialogContent:
-          'Are you sure you want to delete the all product data?<br> <br>This action will also download the file.',
+          'Are you sure you want to delete the all product data?<br> <br>This action will also download deleted data as file.',
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Delete',
         color: 'warn',
@@ -341,7 +340,7 @@ export class ImportExportComponent {
       data: {
         dialogTitle: 'Delete Customer Data',
         dialogContent:
-          'Are you sure you want to delete the all customer data?<br> <br>This action will also download the file.',
+          'Are you sure you want to delete the all customer data?<br> <br>This action will also download deleted data as file.',
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Delete',
         color: 'warn',
@@ -371,7 +370,7 @@ export class ImportExportComponent {
       data: {
         dialogTitle: 'Delete sell Data',
         dialogContent:
-          'Are you sure you want to delete the all sell data?<br> <br>This action will also download the file.',
+          'Are you sure you want to delete the all sell data?<br> <br>This action will also download deleted data as file.',
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Delete',
         color: 'warn',
@@ -409,7 +408,7 @@ export class ImportExportComponent {
       data: {
         dialogTitle: 'Delete Product Data',
         dialogContent:
-          'Are you sure you want to delete the product data by date range?<br> <br>This action will also download the file.',
+          'Are you sure you want to delete the product data by date range?<br> <br>This action will also download deleted data as file.',
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Delete',
         color: 'warn',
@@ -462,7 +461,7 @@ export class ImportExportComponent {
       data: {
         dialogTitle: 'Delete Product and Inventory Data',
         dialogContent:
-          'Are you sure you want to delete the product and inventory data by date range?<br> <br>This action will also download the file.',
+          'Are you sure you want to delete the product and inventory data by date range?<br> <br>This action will also download deleted data as file.',
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Delete',
         color: 'warn',
@@ -529,7 +528,7 @@ export class ImportExportComponent {
       data: {
         dialogTitle: 'Delete Customer Data',
         dialogContent:
-          'Are you sure you want to delete the customer data by date range?<br> <br> This action will also download the file.',
+          'Are you sure you want to delete the customer data by date range?<br> <br> This action will also download deleted data as file.',
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Delete',
         color: 'warn',
@@ -585,7 +584,7 @@ export class ImportExportComponent {
       data: {
         dialogTitle: 'Delete Sell Data',
         dialogContent:
-          'Are you sure you want to delete the sell data by date range? <br> <br>This action will also download the file.',
+          'Are you sure you want to delete the sell data by date range? <br> <br>This action will also download deleted data as file.',
         cancelButtonText: 'Cancel',
         confirmButtonText: 'Delete',
         color: 'warn',

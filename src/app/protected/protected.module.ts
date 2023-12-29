@@ -28,6 +28,7 @@ import { SaleDashboardComponent } from './dashboard/sale-dashboard/sale-dashboar
 import { ThresholdComponent } from './dashboard/threshold/threshold.component';
 import { WarnInventoryComponent } from './product-inventory/warn-inventory/warn-inventory.component';
 import { InfoInventoryComponent } from './product-inventory/info-inventory/info-inventory.component';
+import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { InfoInventoryComponent } from './product-inventory/info-inventory/info-
     ThresholdComponent,
     WarnInventoryComponent,
     InfoInventoryComponent,
+    DummyDataLoaderComponent,
   ],
   imports: [
     CoreModule,
@@ -88,6 +90,7 @@ import { InfoInventoryComponent } from './product-inventory/info-inventory/info-
           { path: 'import-export', component: ImportExportComponent },
           { path: 'report', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },
+          { path: 'dummy-data-loader', component: DummyDataLoaderComponent },
         ],
       },
     ]),
