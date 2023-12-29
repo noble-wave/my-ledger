@@ -90,6 +90,7 @@ import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.
           { path: 'import-export', component: ImportExportComponent },
           { path: 'report', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },
+          { path: 'dummy-data-loader', component: DummyDataLoaderComponent },
         ],
       },
     ]),

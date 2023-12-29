@@ -1,1 +1,33 @@
-<p>dummy-data-loader works!</p>
+<div class="main">
+    <div *ngIf="loading" id="loader"></div>
+
+    <div *ngIf="!loading" class="animate-bottom">
+        <h2>{{ dataPresent ? 'Some data is already present in the app.' : 'Sample data has been successfully processed!' }}</h2>
+        <p *ngIf="dataPresent">If you still want Dummy Data then 
+            <button mat-raised-button (click)="uploadFiles()"
+            color="warn"> Click me</button>
+        </p>
+        <p>
+            Embark on a comprehensive journey through the application, adeptly navigating key sections such as product,
+            sales, and customer management.
+        </p>
+
+        <p>Once you've explored the application and you're ready to start fresh with your data:
+            <br />
+            1. Navigate to the side panel, or click the menu button located in the top-left corner if the side
+            navigation is not open.
+            <br />
+            2. Remove dummy-data entries from the import/export/delete section.
+            <br />
+            3. Look for the delete option positioned at the bottom of the page.
+            <br />
+            4. Click the button to reveal three options for individual data deletion.
+            <br />
+            <br />
+
+            you can efficiently manage your data and initiate a fresh start whenever needed.
+
+        </p>
+    </div>
+
+</div>

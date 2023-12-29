@@ -10,7 +10,8 @@ mat-form-field {
 }
 
 .chart-container {
-  width: 100% !important;
+  width: 99% !important;
+  margin-top: 30px;
 }
 
 .hide-on-small {
@@ -37,9 +38,9 @@ mat-form-field {
   }
 }
 
-.margin {
-  margin-bottom: 80px !important;
-  border-bottom: 1px solid #ccc; /* Adjust the border style as needed */
-  margin-bottom: 10px; /* Adjust the margin as needed to control the spacing between items */
-  padding-bottom: 10px; 
-}
+// .margin {
+//   margin-bottom: 80px !important;
+//   border-bottom: 1px solid #ccc; /* Adjust the border style as needed */
+//   margin-bottom: 10px; /* Adjust the margin as needed to control the spacing between items */
+//   padding-bottom: 10px; 
+// }

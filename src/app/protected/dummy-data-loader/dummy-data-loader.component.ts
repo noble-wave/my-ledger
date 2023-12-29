@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { AppService } from '@app/services/app.service';
 import { CustomerService } from '../services/customer.service';
 import { ProductService } from '../services/product.service';
@@ -10,10 +9,11 @@ import { SellService } from '../services/sell.service';
 @Component({
   selector: 'app-dummy-data-loader',
   templateUrl: './dummy-data-loader.component.html',
-  styleUrls: ['./dummy-data-loader.component.scss']
+  styleUrls: ['./dummy-data-loader.component.scss'],
 })
-export class DummyDataLoaderComponent {
-  @Output() dataUploaded: EventEmitter<void> = new EventEmitter<void>();
+export class DummyDataLoaderComponent implements OnInit {
+  loading: boolean = true;
+  dataPresent: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -23,43 +23,62 @@ export class DummyDataLoaderComponent {
     private sellService: SellService
   ) {}
 
-  // Upload sample JSON files from assets/ledger-data
-  uploadSampleData(): void {
-    const fileNames = ['customer.json', 'product.json', 'sell.json'];
+  ngOnInit(): void {
 
-    fileNames.forEach((fileName) => {
-      const filePath = `assets/ledger-data/${fileName}`;
+    this.sellService.isDataPresent().subscribe((dataPresent) => {
+      this.dataPresent = dataPresent;
 
-      this.http.get(filePath).pipe(
-        map((jsonData) => {
-          // Identify the file content based on its structure
-          if (this.isSellData(jsonData)) {
-            this.handleSellUpload(jsonData);
-          } else if (this.isProductData(jsonData)) {
-            this.handleProductUpload(jsonData);
-          } else if (this.isCustomerData(jsonData)) {
-            this.handleCustomerUpload(jsonData);
-          } else {
-            console.error('Unrecognized JSON data:', jsonData);
-            this.app.noty.notifyError('Unrecognized JSON data:');
-          }
-        }),
-        catchError((error) => {
-          console.error(`Error reading file ${fileName}:`, error);
-          return of(null);
-        })
-      ).subscribe();
+      if (!dataPresent) {
+        this.uploadFiles();
+      } else {
+        this.loading = false;
+      }
     });
-
-    // Emit event indicating data upload
-    this.dataUploaded.emit();
   }
 
-  // Check if JSON data represents product data
-  private isProductData(data: any): boolean {
-    // Implement logic to identify product data based on its structure
-    // Example: Check if data contains product-related fields
-    return data && data.length > 0 && 'productId' in data[0];
+  uploadFiles(): void {
+    const folderPath = 'assets/ledger-data';
+    const fileNames = ['product.json', 'sell.json', 'customer.json'];
+
+    fileNames.forEach((fileName) => {
+      const filePath = `${folderPath}/${fileName}`;
+
+      this.http
+        .get(filePath)
+        .pipe(
+          catchError((error) => {
+            console.error(`Error reading file ${filePath}:`, error);
+            return [];
+          })
+        )
+        .subscribe((jsonData: any) => {
+          this.handleFileUpload(fileName, jsonData);
+        });
+    });
+  }
+
+  // Handle file upload based on content
+  private handleFileUpload(fileName: string, jsonData: any): void {
+    if (this.isSellData(jsonData)) {
+      this.handleSellUpload(jsonData);
+    } else if (jsonData && jsonData.products && jsonData.inventory) {
+      this.handleProductUpload(jsonData.products, jsonData.inventory);
+    } else if (this.isCustomerData(jsonData)) {
+      this.handleCustomerUpload(jsonData);
+    } else {
+      this.loading = false;
+      console.error('Unrecognized JSON data:', jsonData);
+      this.app.noty.notifyError('Unrecognized JSON data:');
+    }
+    // this.loading = false;
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
+    
+    if (this.dataPresent) {
+      this.app.noty.notifyClose('dummy-data uploaded successfully.');
+    }
+  
   }
 
   // Check if JSON data represents customer data
@@ -73,28 +92,37 @@ export class DummyDataLoaderComponent {
   }
 
   // Handle uploading product data
- // dummy-data-loader.component.ts
-private handleProductUpload(jsonData: any): void {
-  // Assuming jsonData is an array containing both products and inventory
-  const products = jsonData.products;
-  const inventory = jsonData.inventory;
+  private handleProductUpload(products: any[], inventory: any[]): void {
+    this.productService.uploadProductData(products).subscribe(
+      () => {
+        console.log('Product data uploaded successfully.');
+        // this.app.noty.notifyClose('Product data uploaded successfully.');
+      },
+      (error) => {
+        console.error('Error uploading product data:', error);
+        this.app.noty.notifyError('Error uploading product data:');
+      }
+    );
 
-  // Rest of the method remains unchanged
-  this.productService.uploadProductData(products).subscribe(
-    // ... rest of the code
-  );
-
-  this.productService.uploadProductInventoryData(inventory).subscribe(
-    // ... rest of the code
-  );
-}
-
+    this.productService.uploadProductInventoryData(inventory).subscribe(
+      () => {
+        console.log('Product inventory data uploaded successfully.');
+        // this.app.noty.notifyClose(
+        //   'Product inventory data uploaded successfully.'
+        // );
+      },
+      (error) => {
+        console.error('Error uploading product inventory:', error);
+        this.app.noty.notifyError('Error uploading product inventory:');
+      }
+    );
+  }
 
   // Handle uploading customer data
   private handleCustomerUpload(customerData: any): void {
     this.customerService.uploadCustomerData(customerData).subscribe(() => {
       console.log('Customer data uploaded successfully.');
-      this.app.noty.notifyClose('Customer data uploaded successfully.');
+      // this.app.noty.notifyClose('Customer data uploaded successfully.');
     });
   }
 
@@ -102,9 +130,7 @@ private handleProductUpload(jsonData: any): void {
   private handleSellUpload(sellData: any): void {
     this.sellService.uploadSellData(sellData).subscribe(() => {
       console.log('Sell data uploaded successfully.');
-      this.app.noty.notifyClose('Sell data uploaded successfully.');
+      // this.app.noty.notifyClose('Sell data uploaded successfully.');
     });
   }
-
-
 }

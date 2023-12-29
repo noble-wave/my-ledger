@@ -5,6 +5,9 @@ import { forkJoin, map } from 'rxjs';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@app/shared/controls/template/dialog/dialog.component';
+import { Router } from '@angular/router';
+import { DummyDataLoaderComponent } from '../dummy-data-loader/dummy-data-loader.component';
+
 
 
 @Component({
@@ -16,12 +19,12 @@ export class ProductListComponent implements OnInit {
   products$: any;
   tableSettings: LocalTableSettings;
   showDetails: boolean = false;
-  // @ViewChild(DummyDataLoaderComponent) dummyDataLoader?: DummyDataLoaderComponent;
 
   constructor(
     private service: ProductService,
     private location: Location,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -104,14 +107,12 @@ export class ProductListComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'true' ) {
-        // this.dummyDataLoader.dataUploaded.subscribe(() => {
-        //   // Handle data upload completion, e.g., refresh the data
-        //   this.getData();
-        // });
+      if (result === 'true') {
+        this.router.navigate(['/dummy-data-loader']);
 
-        // this.dummyDataLoader.uploadFiles();
       }
     });
   }
+
+  
 }

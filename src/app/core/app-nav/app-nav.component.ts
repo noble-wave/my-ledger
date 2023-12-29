@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { RefreshService } from '@app/protected/services/refresh.service';
+import { SettingService } from '@app/protected/services/setting.service';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
@@ -26,18 +27,30 @@ export class AppNavComponent {
     { path: 'customer', label: 'Customers' },
     { path: 'sell', label: 'Sell List' },
     { path: 'sell/new', label: 'Sell' },
-    { path: 'import-export', label: 'Import/Export/Delete' },
-    { path: 'report', label: 'Reports' },
     { path: 'dashboard', label: 'Dashboard' },
+    { path: 'report', label: 'Reports' },
+    { path: 'import-export', label: 'Import/Export/Delete' },
     { path: 'setting', label: 'Settings' },
   ];
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private refreshService: RefreshService
+    private refreshService: RefreshService,
+    private settingService: SettingService
   ) {}
 
   ngOnInit(): void {
+
+    this.settingService.getQuickSellSetting().subscribe((x) => {
+      this.setting = { ...x };
+      // console.log('Setting data:', this.setting);
+        if (this.setting.manageQuickSell) {
+          this.paths.splice(3, 0, { path: 'quickSell', label: 'Quick Sell' });
+        } else {
+          this.paths = this.paths.filter((item) => item.path !== 'quickSell');
+        }
+    });
+
     this.refreshService.isChnage$.subscribe((x) => {
       if (x.manageQuickSell) {
         this.paths.splice(3, 0, { path: 'quickSell', label: 'Quick Sell' });
@@ -45,6 +58,8 @@ export class AppNavComponent {
         this.paths = this.paths.filter((item) => item.path !== 'quickSell');
       }
     });
+
+   
   }
 
   toggleDrawer() {

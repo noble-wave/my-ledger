@@ -79,9 +79,11 @@
             </div>
 
             <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
-                <div class="line" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+                <!-- <div class="line" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
                     <span class="number">Item {{ i + 1 }}</span>
-                </div>
+                </div> -->
+                <div class="divider" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true"
+                ><span>Item {{ i + 1 }}</span></div>
 
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
