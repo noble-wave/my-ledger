@@ -1,0 +1,297 @@
+{
+  "products": [
+    {
+      "productId": "pr_148d4c25f8",
+      "productName": "Hydroxychloroquine",
+      "description": " treat or prevent malaria",
+      "price": "235",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-26T06:54:43.239Z",
+      "updatedAt": "2023-10-26T06:54:45.639Z"
+    },
+    {
+      "productId": "pr_351fc5718e",
+      "productName": "abc",
+      "price": "20",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-26T14:31:54.057Z",
+      "updatedAt": "2023-10-27T07:21:38.870Z"
+    },
+    {
+      "productId": "pr_38344f2996",
+      "productName": "Folic acid",
+      "description": "pervent to cancer",
+      "price": "323",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-25T06:48:06.369Z",
+      "updatedAt": "2023-10-25T06:49:50.695Z"
+    },
+    {
+      "productId": "pr_3b082124b2",
+      "productName": "Lithium",
+      "description": "Effects the flow of sodium through nerve and muscle cells ",
+      "price": "38",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-24T07:00:36.890Z",
+      "updatedAt": "2023-10-24T07:00:36.890Z"
+    },
+    {
+      "productId": "pr_5e7f5b894e",
+      "productName": "Betadine",
+      "description": "skin Infection",
+      "price": "132",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-23T06:44:29.021Z",
+      "updatedAt": "2023-10-23T06:44:29.021Z"
+    },
+    {
+      "productId": "pr_61042cd617",
+      "productName": "Calcium carbonate",
+      "description": "minerals",
+      "price": "32",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-22T06:46:05.931Z",
+      "updatedAt": "2023-10-22T06:46:05.931Z"
+    },
+    {
+      "productId": "pr_63c21e3118",
+      "productName": "Glucose",
+      "description": " low blood sugar (hypoglycemia)",
+      "price": "200",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-21T06:53:10.024Z",
+      "updatedAt": "2023-10-21T06:53:10.024Z"
+    },
+    {
+      "productId": "pr_68a4cfec5d",
+      "productName": "pqr",
+      "price": "40",
+      "isActive": true,
+      "createdAt": "2023-10-26T14:32:03.947Z",
+      "updatedAt": "2023-10-26T14:32:03.947Z"
+    },
+    {
+      "productId": "pr_69bac62996",
+      "productName": "paracetamol",
+      "description": "fever",
+      "price": "8",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-17T10:37:09.809Z",
+      "updatedAt": "2023-10-20T06:50:32.996Z"
+    },
+    {
+      "productId": "pr_6e56032994",
+      "productName": "Torex",
+      "description": "Cough",
+      "price": "79",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-19T12:54:09.969Z",
+      "updatedAt": "2023-10-19T12:54:09.969Z"
+    },
+    {
+      "productId": "pr_725f2786e4",
+      "productName": "product",
+      "description": "1",
+      "price": "1313",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-27T06:58:49.190Z",
+      "updatedAt": "2023-10-27T07:01:19.609Z"
+    },
+    {
+      "productId": "pr_7b0fbc0435",
+      "productName": "Gas-X",
+      "description": "Relieve painful pressure caused by excess gas",
+      "price": "12",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-18T06:52:06.857Z",
+      "updatedAt": "2023-10-18T06:52:06.857Z"
+    },
+    {
+      "productId": "pr_8f61f6589e",
+      "productName": "Ibuprofen Tablets",
+      "description": " Relief of mild to moderate pain.",
+      "price": "14",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-17T06:57:16.533Z",
+      "updatedAt": "2023-10-17T06:57:16.533Z"
+    },
+    {
+      "productId": "pr_94087d1991",
+      "productName": "Saridon",
+      "price": "20",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-16T14:28:13.796Z",
+      "updatedAt": "2023-10-16T14:28:13.796Z"
+    },
+    {
+      "productId": "pr_a0cdf13f69",
+      "productName": "Megapen",
+      "description": "for treat cutting",
+      "price": "21",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-15T06:38:44.509Z",
+      "updatedAt": "2023-10-15T06:38:44.509Z"
+    },
+    {
+      "productId": "pr_a2ac9bed54",
+      "productName": "Aciloc",
+      "description": "Stomach Gas",
+      "price": "2",
+      "isActive": true,
+      "isInventory": false,
+      "createdAt": "2023-10-26T12:56:46.436Z",
+      "updatedAt": "2023-10-26T12:56:52.038Z"
+    },
+    {
+      "productId": "pr_aae32e0fa6",
+      "productName": "Amoxicillin",
+      "description": "antiboitic",
+      "price": "234",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-14T06:42:58.723Z",
+      "updatedAt": "2023-10-14T06:42:58.723Z"
+    },
+    {
+      "productId": "pr_be49bd32cd",
+      "productName": "Ibuprofen injection",
+      "description": "Reduce fever and treat pain.",
+      "price": "120",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-13T06:58:16.077Z",
+      "updatedAt": "2023-10-13T06:58:16.077Z"
+    },
+    {
+      "productId": "pr_be75adfb09",
+      "productName": "Aciloc Rd",
+      "description": "Stomach Gas",
+      "price": "5",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-12T12:57:51.865Z",
+      "updatedAt": "2023-10-12T12:57:51.865Z"
+    },
+    {
+      "productId": "pr_d40233ba4f",
+      "productName": "Morphine",
+      "description": " Treat moderate to severe pain",
+      "price": "69",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-11T07:01:57.338Z",
+      "updatedAt": "2023-10-11T07:01:57.338Z"
+    },
+    {
+      "productId": "pr_e8525b2f27",
+      "productName": "cipla",
+      "description": "cough",
+      "price": "123",
+      "isActive": true,
+      "isInventory": true,
+      "createdAt": "2023-10-9T10:37:33.178Z",
+      "updatedAt": "2023-10-10T06:50:55.219Z"
+    }
+  ],
+  "inventory": [
+    {
+      "productId": "pr_148d4c25f8",
+      "count": "8",
+      "updatedAt": "2023-10-26T06:54:45.638Z"
+    },
+    {
+      "productId": "pr_38344f2996",
+      "count": "15",
+      "updatedAt": "2023-10-25T06:49:50.674Z"
+    },
+    {
+      "productId": "pr_3b082124b2",
+      "count": "9",
+      "updatedAt": "2023-10-24T07:00:36.936Z"
+    },
+    {
+      "productId": "pr_5e7f5b894e",
+      "count": "25",
+      "updatedAt": "2023-10-23T06:44:29.061Z"
+    },
+    {
+      "productId": "pr_61042cd617",
+      "count": "8",
+      "updatedAt": "2023-10-22T06:46:05.972Z"
+    },
+    {
+      "productId": "pr_63c21e3118",
+      "count": "18",
+      "updatedAt": "2023-10-21T06:53:10.029Z"
+    },
+    {
+      "productId": "pr_69bac62996",
+      "count": "5",
+      "updatedAt": "2023-10-20T06:50:32.975Z"
+    },
+    {
+      "productId": "pr_6e56032994",
+      "count": "250",
+      "updatedAt": "2023-10-19T12:54:09.995Z"
+    },
+    {
+      "productId": "pr_7b0fbc0435",
+      "count": "3",
+      "updatedAt": "2023-10-18T06:52:06.898Z"
+    },
+    {
+      "productId": "pr_8f61f6589e",
+      "count": 24,
+      "updatedAt": "2023-10-17T08:14:24.038Z"
+    },
+    {
+      "productId": "pr_94087d1991",
+      "count": "30",
+      "updatedAt": "2023-10-16T14:28:13.824Z"
+    },
+    {
+      "productId": "pr_a0cdf13f69",
+      "count": "1233",
+      "updatedAt": "2023-10-15T06:38:47.214Z"
+    },
+    {
+      "productId": "pr_aae32e0fa6",
+      "count": "5",
+      "updatedAt": "2023-10-14T06:42:58.748Z"
+    },
+    {
+      "productId": "pr_be49bd32cd",
+      "count": "9",
+      "updatedAt": "2023-10-13T06:58:16.082Z"
+    },
+    {
+      "productId": "pr_be75adfb09",
+      "count": "20",
+      "updatedAt": "2023-10-12T12:57:51.897Z"
+    },
+    {
+      "productId": "pr_d40233ba4f",
+      "count": "16",
+      "updatedAt": "2023-10-11T07:01:57.378Z"
+    },
+    {
+      "productId": "pr_e8525b2f27",
+      "count": "12",
+      "updatedAt": "2023-10-10T06:50:55.199Z"
+    }
+  ]
+}
