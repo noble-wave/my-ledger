@@ -18,7 +18,7 @@ export function getCustomerMeta() {
     return [
         { key: 'customerId', label: 'CustomerId', hide: true },
         { key: 'customerName', label: 'Customer Name', required: true },
-        { key: 'phoneNumber', label: 'Phone Number', required: true },
+        { key: 'phoneNumber', label: 'Phone Number', required: false },
         { key: 'email', label: 'Email', required: false },
         { key: 'addressLine1', label: 'Address Line1', required: false },
         { key: 'addressLine2', label: 'Address Line2', required: false },

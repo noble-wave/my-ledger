@@ -38,18 +38,18 @@
         <table class="product-table">
             <thead>
                 <tr>
-                    <th *ngIf="sell?.items && sell.items.length > 0 && sell.items[0]?.productName">Product</th>
+                    <th>Product</th>
                     <th>Quantity</th>
-                    <th *ngIf="sell?.items && sell.items.length > 0 && sell.items[0]?.discount">Discount</th>
+                    <th>Discount</th>
                     <th>Unit Price</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let item of sell?.items">
-                    <td *ngIf="item?.productName">{{ item?.productName }}</td>
+                    <td >{{ item?.productName }}</td>
                     <td>{{ item?.quantity }}</td>
-                    <td *ngIf="item?.discount">{{ item?.discount | currency: 'INR' }}</td>
+                    <td >{{ item?.discount | currency: 'INR' }}</td>
                     <td>{{ item?.unitPrice | currency: 'INR' }}</td>
                     <td>{{ item?.subtotal | currency: 'INR' }}</td>
                 </tr>

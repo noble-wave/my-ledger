@@ -7,8 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@app/shared/controls/template/dialog/dialog.component';
 import { Router } from '@angular/router';
 import { DummyDataLoaderComponent } from '../dummy-data-loader/dummy-data-loader.component';
-
-
+import { SellService } from '../services/sell.service';
 
 @Component({
   selector: 'app-product-list',
@@ -19,23 +18,26 @@ export class ProductListComponent implements OnInit {
   products$: any;
   tableSettings: LocalTableSettings;
   showDetails: boolean = false;
+  dataPresent: boolean = false;
 
   constructor(
     private service: ProductService,
     private location: Location,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private sellService: SellService
   ) {}
 
   ngOnInit(): void {
-    const isFirstVisit = localStorage.getItem('isFirstVisitProductList');
-
-    if (!isFirstVisit) {
-      localStorage.setItem('isFirstVisitProductList', 'true');
-
-      this.demoData('enterAnimationDuration', 'exitAnimationDuration');
-    }
-
+    this.sellService.isDataPresent().subscribe((dataPresent) => {
+      this.dataPresent = dataPresent;
+      const isFirstVisit = localStorage.getItem('isFirstVisitProductList');
+      if (!isFirstVisit || !dataPresent) {
+        localStorage.setItem('isFirstVisitProductList', 'true');
+        this.demoData('enterAnimationDuration', 'exitAnimationDuration');
+      }
+    });
+    
     let columns = [
       { name: 'productId', text: 'Product Id', sell: 1 },
       { name: 'productName', text: 'Product Name', sell: 2 },
@@ -109,10 +111,7 @@ export class ProductListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result === 'true') {
         this.router.navigate(['/dummy-data-loader']);
-
       }
     });
   }
-
-  
 }
