@@ -107,3 +107,40 @@ export function getQuickSellSettingMeta() {
     },
   ] as Array<ModelMeta>;
 }
+
+export class SellPrintSettings extends AppSettings {
+    posName: string;
+    phoneNumber?: string;
+    email?: string;
+    address?: string;
+    logoUrl?: string;
+    pinCode?: string;
+    state?: string;
+    country?: string;
+    
+
+  constructor() {
+    super();
+    this.posName = '';
+    this.phoneNumber = '';
+    this.email = '';
+    this.address = '';
+    this.logoUrl = '';
+    this.pinCode = '';
+    this.state = '';
+    this.country = '';
+  }
+}
+
+export function getSellPrintSettingsMeta() {
+  return [
+    { key: 'posName', label: 'business/shop name', required: false },
+    { key: 'phoneNumber', label: 'Phone Number', required: false },
+    { key: 'email', label: 'Email', required: false },
+    { key: 'address', label: 'Address', required: false },
+    { key: 'logoUrl', label: 'Logo Url', required: false },
+    { key: 'pinCode', label: 'Pincode ', required: false },
+    { key: 'state', label: 'State', required: false },
+    { key: 'country', label: 'Country', required: false },
+  ] as Array<ModelMeta>;
+}

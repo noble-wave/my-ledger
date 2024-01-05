@@ -1,45 +1,85 @@
 /* Add this to your component's .scss or .css file */
 
 .settings-container {
-    // max-width: 500px;
-    // margin: 0 auto;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  // max-width: 500px;
+  // margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.status {
+  max-width: 350px;
+}
+
+.section-label {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.apply-button {
+  margin-top: 30px;
+}
+
+.sellPrintSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.download-section {
+  margin-bottom: 20px;
+}
+
+.upload-box {
+  font-size: 15px;
+  background: #252525;
+  border-radius: 10px;
+  width: 300px;
+  outline: none;
+}
+
+::-webkit-file-upload-button {
+  color: black;
+  background: #00bfa5;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 1px 0 1px #4e4b4d;
+  outline: none;
+}
+
+::-webkit-file-upload-button:hover {
+  background: #00bda4e4
+}
+
+::-webkit-file-upload-button:active {
+  background: #00bfa6a9;
+}
+
+/* Responsive Styles for Smaller Screens (e.g., smartphones) */
+@media (max-width: 600px) {
+  .settings-container {
+    max-width: 100%;
+    padding: 10px;
   }
 
-  .status{
-    max-width: 350px;
+  h2 {
+    font-size: 1.2rem;
   }
+
   .section-label {
-    font-weight: bold;
+    margin-top: 15px;
+  }
+
+  .apply-button {
     margin-top: 20px;
   }
-  
-  .apply-button {
-    margin-top: 30px;
-  }
-  
-  /* Responsive Styles for Smaller Screens (e.g., smartphones) */
-  @media (max-width: 600px) {
-    .settings-container {
-      max-width: 100%;
-      padding: 10px;
-    }
-  
-    h2 {
-      font-size: 1.2rem;
-    }
-  
-    .section-label {
-      margin-top: 15px;
-    }
-  
-    .apply-button {
-      margin-top: 20px;
-    }
-  }
-  
+}
+
+
 // input {
 //   font-size: 16px;
 //   padding: 70px 40px 70px 40px;

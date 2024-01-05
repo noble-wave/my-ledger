@@ -6,6 +6,8 @@ import {
   QuickSellSettings,
   getSellSettingMeta,
   getQuickSellSettingMeta,
+  getSellPrintSettingsMeta,
+  SellPrintSettings,
 } from '@app/models/sell-setting.model';
 import { ModelMeta } from '@app/shared-services';
 import { AppService } from '@app/services/app.service';
@@ -27,8 +29,11 @@ export class SettingComponent implements OnDestroy {
   modelMeta: ModelMeta[];
   quickSellForm: FormGroup;
   quickSellMeta: ModelMeta[];
+  sellPrintForm: FormGroup;
+  sellPrintMeta: ModelMeta[];
   sellSetting: any = { manageSellStatus: true };
   quicksellSetting: any = { manageQuickSell: false };
+  imageBlob: Blob;
 
   unitPrices: Array<number> = [];
 
@@ -67,6 +72,12 @@ export class SettingComponent implements OnDestroy {
         this.sellSetting = sellSettings;
       });
 
+    this.sellPrintMeta = getSellPrintSettingsMeta();
+    this.sellPrintForm = this.app.meta.toFormGroup(
+      new SellPrintSettings(),
+      this.sellPrintMeta
+    );
+
     //save unit price for Quick sell Page
     this.quickSellMeta = getQuickSellSettingMeta();
     this.quickSellForm = this.app.meta.toFormGroup(
@@ -85,11 +96,6 @@ export class SettingComponent implements OnDestroy {
         this.unitPrices = [...this.quickSellForm.value.unitPrices];
         this.quicksellSetting = x;
       });
-
-    // this.quickSellForm = this.fb.group({
-    //   manageQuickSell: [true], // Your other controls here
-    //   unitPrices: this.fb.array([]), // Initialize unitPrices as an empty FormArray
-    // });
   }
 
   ngOnDestroy(): void {
@@ -187,5 +193,40 @@ export class SettingComponent implements OnDestroy {
 
   navigateBack() {
     this.location.back();
+  }
+
+  onFileChange(event: any): void {
+    if (event.target.value) {
+      const file = event.target.files[0];
+      this.imageBlob = new Blob([file], { type: file.type });
+    }
+  }
+
+  saveSellPrintSetting() {
+    this.sellPrintForm.get('logoUrl')?.setValue(this.imageBlob);
+    const formValue = this.sellPrintForm.value;
+    console.log(formValue);
+
+    // Check if data exists in the storage
+    this.settingService.getSellPrintSetting().subscribe((settings) => {
+      if (settings && settings.id) {
+        // Data exists, update it
+        let existingSetting = { ...settings, ...formValue };
+        this.settingService.SellPrintUpdate(existingSetting).subscribe(() => {
+          this.sellPrintForm.patchValue(existingSetting);
+        });
+        this.app.noty.notifyUpdated('Setting has been');
+      } else {
+        // No data exists, add it
+        this.settingService
+          .addSellPrintSetting(formValue)
+          .subscribe((newSettings) => {
+            if (newSettings) {
+              this.sellPrintForm.patchValue(newSettings);
+              this.app.noty.notifyAdded('Setting has been');
+            }
+          });
+      }
+    });
   }
 }

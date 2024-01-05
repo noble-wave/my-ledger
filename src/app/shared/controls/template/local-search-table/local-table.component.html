@@ -17,7 +17,7 @@
       </div>
     </div>
 
-
+    <div class="table-responsive">
     <mat-table [dataSource]="dataSource" matSort [matSortActive]="settings.defaultSortColumnName" matSortDisableClear [matSortDirection]="settings.defaultSortDirection">
 
       <ng-container *ngFor="let column of settings.columns; index as i; last as isLast">
@@ -52,6 +52,7 @@
       </mat-row> -->
 
     </mat-table>
+    </div>
 
     <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20, 30, 50]" [showFirstLastButtons]="true">
     </mat-paginator>
