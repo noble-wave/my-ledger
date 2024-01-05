@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SellSettings, QuickSellSettings } from '@app/models/sell-setting.model';
+import { SellSettings, QuickSellSettings, SellPrintSettings } from '@app/models/sell-setting.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import { map } from 'rxjs';
 
@@ -21,6 +21,12 @@ export class SettingService {
     return this.storage.addRecord<QuickSellSettings>(tableNames.misc, quickSellSettings);
   }
 
+  addSellPrintSetting(sellPrintSettings: SellPrintSettings) {
+    sellPrintSettings.name = 'sellPrintSettings';
+    delete sellPrintSettings.id;
+    return this.storage.addRecord<SellPrintSettings>(tableNames.misc, sellPrintSettings);
+  }
+
   update(settings: SellSettings) {
     settings.name = 'sellSettings';
     return this.storage.updateRecord(tableNames.misc, settings);
@@ -29,6 +35,11 @@ export class SettingService {
   quickSellUpdate(quickSellSettings: QuickSellSettings) {
     quickSellSettings.name = 'quickSellSettings';
     return this.storage.updateRecord(tableNames.misc, quickSellSettings);
+  }
+
+  SellPrintUpdate(sellPrintSettings: SellPrintSettings) {
+    sellPrintSettings.name = 'sellPrintSettings';
+    return this.storage.updateRecord(tableNames.misc, sellPrintSettings);
   }
 
   getSellSetting() {
@@ -54,6 +65,20 @@ export class SettingService {
             return x;
           } else {
             return new QuickSellSettings();
+          }
+        })
+      );
+  }
+
+  getSellPrintSetting() {
+    return this.storage
+      .getByIndex<SellPrintSettings>(tableNames.misc, 'name', 'sellPrintSettings')
+      .pipe(
+        map((x) => {
+          if (x) {
+            return x;
+          } else {
+            return new SellPrintSettings();
           }
         })
       );

@@ -15,6 +15,14 @@
   align-items: center;
 }
 
+.businessSetion {
+  gap : 20px;
+}
+
+img {
+ margin-top: 20px;
+}
+
 .sell-id {
   font-size: 16px;
   color: #666;
@@ -41,12 +49,16 @@
 .product-list {
   width: 100%;
   margin-top: 30px;
+  overflow-x: auto;
 }
 
 .product-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   margin-top: 10px;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .product-table th, .product-table td {
@@ -71,6 +83,13 @@
   /* Mobile-friendly styling */
 .sell-details {
   padding: 10px;
+}
+
+.sell-header{
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+  padding: 0;
 }
 
 .sell-summary {

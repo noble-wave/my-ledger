@@ -72,19 +72,64 @@
                         <input matInput type="number" [(ngModel)]="unitPrices[i]">
                     </mat-form-field>
                 </div>
-
-                <!-- {{unitPrices | json }} -->
-                <!-- <a type="button" (click)="addMore()" mat-button mat-raised-button>+ Add More</a> -->
             </div>
-
             <button type="button" (click)="saveQuickSellSetting()" mat-button mat-raised-button color="primary"
                 class="apply-button"><mat-icon>
                     settings
                 </mat-icon>Apply Changes</button>
-
         </div>
     </mat-card-content>
+</mat-card>
 
+<mat-card>
+    <mat-card-content>
+        <div class="settings-container" id="SellPrintSetting">
+            <h1>Configure Print Settings</h1>
+            <div class="download-section">
+                <!-- <h4>1. Upload Logo and Images</h4> -->
+                <h4 class="section-subtitle">1. Upload Your Company Logo and Images</h4>
+                <p class="section-description">Enhance your brand presence by uploading a professional logo and images
+                    for printing.</p>
+                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign=" center">
+                    <div>
+                        <input type="file" class="upload-box" (change)="onFileChange($event)"
+                            accept="image/png, image/gif, image/jpeg" multiple />
+                    </div>
+                    <div>
+                        <!-- <button mat-raised-button (click)="uploadFiles()"
+                            color="primary"><mat-icon>upload_file</mat-icon>
+                            Upload</button> -->
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="sellPrintForm">
+                <!-- <h4>2. Provide Company/Shop Details.</h4> -->
+                <h4 class="section-subtitle">2. Provide Detailed Company/Shop Information</h4>
+                <p class="section-description">Fill in the necessary details about your company, shop, or organization
+                    for accurate and comprehensive print settings.</p>
 
+                <form [formGroup]="sellPrintForm" (submit)="saveQuickSellSetting()">
+                    <div class="sellPrintSection">
+                        <app-input [form]="sellPrintForm" name="posName"></app-input>
+                        <app-input [form]="sellPrintForm" name="phoneNumber"></app-input>
+                        <app-input [form]="sellPrintForm" name="email"></app-input>
 
+                    </div>
+                    <div class="sellPrintSection">
+                        <app-input [form]="sellPrintForm" name="address"></app-input>
+                        <app-input [form]="sellPrintForm" name="pinCode"></app-input>
+                        <app-input [form]="sellPrintForm" name="state"></app-input>
+                        <app-input [form]="sellPrintForm" name="country"></app-input>
+
+                    </div>
+                </form>
+            </div>
+
+            <button type="button" (click)="saveSellPrintSetting()" mat-button mat-raised-button color="primary"
+                class="apply-button"><mat-icon>
+                    settings
+                </mat-icon>Apply Changes</button>
+        </div>
+
+    </mat-card-content>
 </mat-card>

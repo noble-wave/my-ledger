@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SellService } from '../services/sell.service';
 import { Location } from '@angular/common';
+import { CustomerService } from '../services/customer.service';
+import { forkJoin, map } from 'rxjs';
+import { SettingService } from '../services/setting.service';
 
 @Component({
   selector: 'app-view-sell',
@@ -11,19 +14,33 @@ import { Location } from '@angular/common';
 export class ViewSellComponent {
   sellId: any;
   sell: any;
+  customer: any;
+  setting: any;
+  imageToShow: any;
 
   constructor(
     private route: ActivatedRoute,
     private sellService: SellService,
-    private location: Location
+    private location: Location,
+    private customerService: CustomerService,
+    private router: Router,
+    private settingService: SettingService,
   ) {}
 
   ngOnInit(): void {
+    this.settingService.getSellPrintSetting().subscribe((x) => {
+      this.setting = { ...x };
+      this.createImageFromBlob(this.setting.logoUrl);
+
+    });
     this.route.params.subscribe((x: any) => {
       if (x) {
         // this.isEdit = true;
         this.sellService.get(x.sellId).subscribe((y: any) => {
           this.sell = y;
+          this.customerService.get(this.sell.customerId).subscribe((c: any) =>{
+            this.customer = c;
+          })
           this.route.queryParamMap.subscribe((z) => {
             if (z.has('print')) {
               if (z.get('print') === 'true') {
@@ -37,6 +54,25 @@ export class ViewSellComponent {
           });
         });
       }
+    });
+    
+  }
+
+  createImageFromBlob(image:Blob){
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+       this.imageToShow = reader.result;
+    }, false);
+
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+  }
+ 
+  
+  settings() {
+    this.router.navigate(['/setting'], {
+      fragment: 'SellPrintSetting',
     });
   }
 
@@ -93,6 +129,14 @@ export class ViewSellComponent {
                   display: flex;
                   justify-content: space-between;
                   align-items: center;
+                }
+
+                .businessSetion {
+                  gap : 20px;
+                }
+                
+                img {
+                 margin-top: 10px;
                 }
               
                 .sell-id {
@@ -201,6 +245,14 @@ export class ViewSellComponent {
               display: flex;
               justify-content: space-between;
               align-items: center;
+            }
+
+            .businessSetion {
+              gap : 20px;
+            }
+            
+            img {
+             margin-top: 10px;
             }
           
             .sell-id {

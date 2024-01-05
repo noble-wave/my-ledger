@@ -14,8 +14,8 @@ export class CustomerService {
   private apiUrl = 'your_api_url_here';
 
   
-  get(id: string) {
-    return this.storage.getByKey<Customer>(tableNames.customer, id);
+  get(customerId: string) {
+    return this.storage.getByKey<Customer>(tableNames.customer, customerId);
   }
 
   getAll() {

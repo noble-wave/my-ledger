@@ -37,6 +37,11 @@ mat-form-field {
     margin-top: 30px !important;
   }
 }
+@media (max-width: 599px) {
+ .submit{
+  margin-top: 20px;
+ }
+}
 
 // .margin {
 //   margin-bottom: 80px !important;
