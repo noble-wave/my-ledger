@@ -1,4 +1,9 @@
-import { getSellItemMeta, getSellMeta } from '@app/models/sell.model';
+import {
+  SellPayment,
+  getSellItemMeta,
+  getSellMeta,
+  getSellPaymentMeta,
+} from '@app/models/sell.model';
 import {
   ChangeDetectorRef,
   Component,
@@ -31,13 +36,17 @@ export class SellComponent implements OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   form: FormGroup;
   sellItemForms: FormGroup[];
+  sellPaymentForm: FormGroup;
   modelMeta: ModelMeta[];
   sellItemMeta: ModelMeta[];
+  sellPaymentMeta: ModelMeta[];
   customers: Customer[];
   products: Product[];
   statusOption: any;
   setting: any;
   refreshing: boolean;
+  amountPaid: number = 0;
+  showAmountPaidAndBalanceDue: boolean = false;
 
   constructor(
     private sellService: SellService,
@@ -67,6 +76,9 @@ export class SellComponent implements OnDestroy {
     this.sellItemMeta = getSellItemMeta();
     this.sellItemForms = [];
     this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
+
+    this.sellPaymentMeta = getSellPaymentMeta();
+    this.sellPaymentForm = this.app.meta.toFormGroup({}, this.sellPaymentMeta);
 
     this.customerService.getAll().subscribe((customers) => {
       this.customers = customers;
@@ -153,7 +165,12 @@ export class SellComponent implements OnDestroy {
 
   handleCustomerSelection(customer: Customer, form: FormGroup) {
     console.log('Selected customer:', customer);
-    form.get('customerName')?.setValue(customer.customerName);
+    if (customer) {
+      form.get('customerName')?.setValue(customer.customerName);
+      this.showAmountPaidAndBalanceDue = true;
+    } else {
+      this.showAmountPaidAndBalanceDue = false;
+    }
   }
 
   getProductDefaultPrice(sellItemForm: FormGroup): number {
@@ -215,6 +232,19 @@ export class SellComponent implements OnDestroy {
     return totalDiscount;
   }
 
+  calculateBalanceDue(): number {
+    const netAmount = this.calculateNetAmount();
+    const balanceDue = netAmount - this.amountPaid;
+
+    this.form.get('dueAmount')?.setValue(balanceDue);
+    return balanceDue;
+  }
+
+  valueChanged(amountPaid: number) {
+    this.amountPaid = amountPaid;
+    this.calculateBalanceDue();
+  }
+
   addItem() {
     const newSellItemForm = new FormGroup({
       productId: new FormControl(''),
@@ -250,11 +280,31 @@ export class SellComponent implements OnDestroy {
     }
 
     let sell = this.form.value;
+    let sellPayment: SellPayment;
     let sellItems = this.sellItemForms.map((x) => x.value);
     sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
+
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
+      let sellId = x.sellId;
+      let customerId = x.customerId;
+
+      if (this.showAmountPaidAndBalanceDue === true) {
+        let paymentDate = new Date();
+        let paymentId = `custom_payment_id`;
+        sellPayment = {
+          paymentId: paymentId,
+          sellId: sellId,
+          customerId: customerId,
+          amountPaid: this.amountPaid,
+          paymentDate: paymentDate,
+        };
+        this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
+          console.log('Payment Saved', y);
+        });
+      }
+
       this.app.noty.notifyClose('Sell has been taken');
       console.log('Before reset:', this.form.value);
       console.log('After reset:', this.form.value);
@@ -262,6 +312,8 @@ export class SellComponent implements OnDestroy {
       this.refreshing = true;
       this.cdr.detectChanges();
       this.resetSellItemForms();
+      this.amountPaid = 0;
+      this.sellPaymentForm.reset();
       this.refreshing = false;
       this.cdr.detectChanges();
     });
@@ -294,11 +346,29 @@ export class SellComponent implements OnDestroy {
       return;
     }
     let sell = this.form.value;
+    let sellPayment: SellPayment;
     let sellItems = this.sellItemForms.map((x) => x.value);
     sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
+      let sellId = x.sellId;
+      let customerId = x.customerId;
+
+      if (this.showAmountPaidAndBalanceDue === true) {
+        let paymentDate = new Date();
+        let paymentId = `custom_payment_id`;
+        sellPayment = {
+          paymentId: paymentId,
+          sellId: sellId,
+          customerId: customerId,
+          amountPaid: this.amountPaid,
+          paymentDate: paymentDate,
+        };
+        this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
+          console.log('Payment Saved', y);
+        });
+      }
       this.app.noty.notifyClose('Sell has been taken and go to print');
       this.router.navigate(['/sell/view', x.sellId], {
         relativeTo: this.route,

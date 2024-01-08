@@ -82,8 +82,9 @@
                 <!-- <div class="line" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
                     <span class="number">Item {{ i + 1 }}</span>
                 </div> -->
-                <div class="divider" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true"
-                ><span>Item {{ i + 1 }}</span></div>
+                <div class="divider" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+                    <span>Item {{ i + 1 }}</span>
+                </div>
 
                 <div class="row product-section" *ngIf="setting?.manageProduct">
                     <div class="item">
@@ -159,6 +160,18 @@
                     {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
                 </div>
             </div>
+
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" *ngIf="showAmountPaidAndBalanceDue">
+                <div class="total-amount-square">
+                    <app-input [form]="sellPaymentForm" label="Amount Paid" name="amountPaid" type="number"
+                        (onValueChange)="valueChanged($event)"></app-input>
+                </div>
+                <div class="total-amount-square">
+                    Balance Due<br>
+                    {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+
             <div class="button-row">
                 <button mat-raised-button color="primary" (click)="saveSell()"> <mat-icon>save</mat-icon>Save</button>
                 <button mat-raised-button color="primary" (click)="saveSellPrint()"> <mat-icon>save</mat-icon>Save/

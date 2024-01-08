@@ -88,7 +88,7 @@
         <p><strong>Gross Amount:</strong> {{ sell?.grossAmount | currency: 'INR' }}</p>
         <p><strong>Total Discount:</strong> {{ sell?.totalDiscount | currency: 'INR' }}</p>
         <p><strong>Net Amount:</strong> {{ sell?.netAmount | currency: 'INR' }}</p>
-        <p *ngIf="sell?.arrears"><strong>Arrears:</strong> {{ sell?.arrears | currency: 'INR' }}</p>
+        <p *ngIf="sell?.dueAmount"><strong>Balance Due:</strong> {{ sell?.dueAmount | currency: 'INR' }}</p>
     </div>
 </div>
 
