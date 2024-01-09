@@ -20,7 +20,7 @@ export const tableNames = {
 
 export const dbConfig: DBConfig = {
   name: 'etrivia-ledger',
-  version: 1,
+  version: 1.01,
   objectStoresMeta: [
     {
       store: tableNames.misc,

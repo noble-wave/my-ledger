@@ -155,7 +155,7 @@ export class SellComponent implements OnDestroy {
       this.calculateTotalDiscount();
       this.calculateTotalDiscount();
       this.calculateNetAmount();
-      this.calculateTotalQuantity();
+      this.calculateBalanceDue();
     }
   }
 
@@ -211,18 +211,6 @@ export class SellComponent implements OnDestroy {
     return netAmount;
   }
 
-  calculateTotalQuantity(): number {
-    let totalQuantity = 0;
-    for (const sellItemForm of this.sellItemForms) {
-      if (sellItemForm && sellItemForm.get('quantity')) {
-        const quantity = sellItemForm.get('quantity')?.value || 0;
-        totalQuantity += Number(quantity);
-      }
-    }
-    this.form.get('totalQuantity')?.setValue(totalQuantity);
-    return totalQuantity;
-  }
-
   calculateTotalDiscount(): number {
     const grossAmount = this.calculateGrossAmount();
     const netAmount = this.calculateNetAmount();
@@ -259,7 +247,7 @@ export class SellComponent implements OnDestroy {
     this.calculateGrossAmount();
     this.calculateTotalDiscount();
     this.calculateNetAmount();
-    this.calculateTotalQuantity();
+    this.calculateBalanceDue();
   }
 
   deleteItem(index: number) {

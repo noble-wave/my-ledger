@@ -10,6 +10,7 @@ import {
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
 import { IrsControl } from '@shared-services';
+import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-input',
@@ -46,6 +47,14 @@ export class IrsInputComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['form'] && this.form) {
       this.control = this.form.get(this.name) as IrsControl;
+
+      if (this.control) {
+        this.control.valueChanges
+          .pipe(startWith(this.control.value))
+          .subscribe((value) => {
+            this.onValueChange.emit(value);
+          });
+      }
     }
   }
 

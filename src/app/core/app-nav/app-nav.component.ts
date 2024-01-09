@@ -25,6 +25,7 @@ export class AppNavComponent {
     { path: 'product', label: 'Products' },
     { path: 'product-inventory', label: 'Product Inventory' },
     { path: 'customer', label: 'Customers' },
+    { path: 'customer-dueAmount', label: 'Customers/Due Amount' },
     { path: 'sell', label: 'Sell List' },
     { path: 'sell/new', label: 'Sell' },
     { path: 'dashboard', label: 'Dashboard' },
@@ -40,15 +41,14 @@ export class AppNavComponent {
   ) {}
 
   ngOnInit(): void {
-
     this.settingService.getQuickSellSetting().subscribe((x) => {
       this.setting = { ...x };
       // console.log('Setting data:', this.setting);
-        if (this.setting.manageQuickSell) {
-          this.paths.splice(3, 0, { path: 'quickSell', label: 'Quick Sell' });
-        } else {
-          this.paths = this.paths.filter((item) => item.path !== 'quickSell');
-        }
+      if (this.setting.manageQuickSell) {
+        this.paths.splice(4, 0, { path: 'quickSell', label: 'Quick Sell' });
+      } else {
+        this.paths = this.paths.filter((item) => item.path !== 'quickSell');
+      }
     });
 
     this.refreshService.isChnage$.subscribe((x) => {
@@ -58,8 +58,6 @@ export class AppNavComponent {
         this.paths = this.paths.filter((item) => item.path !== 'quickSell');
       }
     });
-
-   
   }
 
   toggleDrawer() {

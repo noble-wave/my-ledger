@@ -164,7 +164,7 @@
             <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" *ngIf="showAmountPaidAndBalanceDue">
                 <div class="total-amount-square">
                     <app-input [form]="sellPaymentForm" label="Amount Paid" name="amountPaid" type="number"
-                        (onValueChange)="valueChanged($event)"></app-input>
+                        (onValueChange)="valueChanged($event)" ></app-input>
                 </div>
                 <div class="total-amount-square">
                     Balance Due<br>

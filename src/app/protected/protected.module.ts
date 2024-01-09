@@ -30,6 +30,8 @@ import { WarnInventoryComponent } from './product-inventory/warn-inventory/warn-
 import { InfoInventoryComponent } from './product-inventory/info-inventory/info-inventory.component';
 import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.component';
 import { DueBalanceComponent } from './dashboard/due-balance/due-balance.component';
+import { CustomerDueAmountComponent } from './customer/customer-due-amount/customer-due-amount.component';
+import { CustomerPaymentComponent } from './customer/customer-payment/customer-payment.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { DueBalanceComponent } from './dashboard/due-balance/due-balance.compone
     InfoInventoryComponent,
     DummyDataLoaderComponent,
     DueBalanceComponent,
+    CustomerDueAmountComponent,
+    CustomerPaymentComponent,
   ],
   imports: [
     CoreModule,
@@ -93,6 +97,9 @@ import { DueBalanceComponent } from './dashboard/due-balance/due-balance.compone
           { path: 'report', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'dummy-data-loader', component: DummyDataLoaderComponent },
+
+          { path: 'customer-dueAmount', component: CustomerDueAmountComponent},
+          { path: 'customer-dueAmount/:customerId', component: CustomerPaymentComponent},
         ],
       },
     ]),
