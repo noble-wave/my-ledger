@@ -24,7 +24,7 @@ export class CustomerDueAmountComponent {
     let columns = [
       { name: 'customerId', text: 'Customer Id', sell: 1 },
       { name: 'customerName', text: 'Customer Name', sell: 2 },
-      { name: 'TotalDueAmount', text: 'Total Due Amount', sell: 3 },
+      { name: 'totalDueAmount', text: 'Total Due Amount', sell: 3 },
     ];
     let excludeColumns = ['customerId'];
     let displayColumns = columns.filter(
@@ -55,9 +55,9 @@ export class CustomerDueAmountComponent {
           let dueAmount = sells
             .filter((y) => y.customerId == x.customerId)
             ?.reduce((a, b) => a + (Number(b.dueAmount) || 0), 0);
-          x['TotalDueAmount'] = dueAmount;
+          x['totalDueAmount'] = dueAmount;
         });
-        return customers.filter((x) => x['TotalDueAmount'] > 0);
+        return customers.filter((x) => x['totalDueAmount'] > 0);
       })
     );
   }

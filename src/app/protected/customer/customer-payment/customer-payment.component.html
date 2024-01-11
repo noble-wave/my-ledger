@@ -1,13 +1,55 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
-            (click)="navigateBack()">
-            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
-        </button>
-        <div>Customers - Payment</div>
+<ng-container *ngIf="{
+    customerSellsData: customerSells$ | async
+} as observables">
+
+    <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="navigateBack()">
+                <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+            </button>
+            <div>Customers - Payment</div>
+        </div>
+        <div fxLayoutAlign="space-between center">
+
+            <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+        </div>
+    </mat-toolbar>
+    <mat-card>
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="div-container">
+                <div class="name" *ngIf="observables.customerSellsData">
+                    <h3>
+                        Customer Name:
+                    </h3>
+                    <h3>{{ observables.customerSellsData[0]?.customerName }}</h3>
+                </div>
+                <div>
+                    <h3>Total Due Amount:</h3>
+                    <h3>{{totalDueAmount}}</h3>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div>
+        <mat-card>
+            <mat-card-content>
+                <div class="div-container">
+                    <h3 fxLayoutAlign="center ">Unsettled Sales Transactions</h3>
+                    <irs-local-table [data]="customerSells$" [settings]="tableSettings"></irs-local-table>
+                </div>
+            </mat-card-content>
+        </mat-card>
     </div>
-    <div fxLayoutAlign="space-between center">
-        
-        <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+    <div>
+        <mat-card>
+            <mat-card-content>
+               <div class="div-container">
+                <h3 fxLayoutAlign="center ">Customer Payment History</h3>
+                <app-payment></app-payment>
+               </div>
+            </mat-card-content>
+        </mat-card>
     </div>
-</mat-toolbar>
+
+</ng-container>

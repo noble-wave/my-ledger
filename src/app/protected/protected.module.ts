@@ -32,6 +32,7 @@ import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.
 import { DueBalanceComponent } from './dashboard/due-balance/due-balance.component';
 import { CustomerDueAmountComponent } from './customer/customer-due-amount/customer-due-amount.component';
 import { CustomerPaymentComponent } from './customer/customer-payment/customer-payment.component';
+import { PaymentComponent } from './customer/customer-payment/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CustomerPaymentComponent } from './customer/customer-payment/customer-p
     DueBalanceComponent,
     CustomerDueAmountComponent,
     CustomerPaymentComponent,
+    PaymentComponent,
   ],
   imports: [
     CoreModule,
