@@ -8,7 +8,7 @@ import { Observable, forkJoin, map, switchMap } from 'rxjs';
   providedIn: 'root',
 })
 export class SellService {
-  constructor(private storage: StorageService) {}
+    constructor(private storage: StorageService) {}
   private apiUrl = 'your_api_url_here';
 
 
@@ -18,18 +18,24 @@ export class SellService {
     return this.storage.addRecord<Sell>(tableNames.sell, sellData);
   }
 
+  updateSell(sellData: Sell) {
+    // sell.updatedAt = new Date();
+    return this.storage.updateRecord(tableNames.sell, sellData);
+  }
+
   addSellPayment1(sellPayment: SellPayment) {
-    sellPayment.paymentId = `oi_${cryptoRandomString({ length: 15 })}`;
+    sellPayment.paymentId = `pi_${cryptoRandomString({ length: 15 })}`;
     return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
   }
   
-  addSellPayment(sellPayment: SellPayment,sellId: string, customerId: string, paymentDate: Date) {
-    sellPayment.paymentId = `oi_${cryptoRandomString({ length: 15 })}`;
-    sellPayment.sellId = sellId;
-    sellPayment.customerId = customerId;
-    sellPayment.paymentDate = paymentDate; 
-    return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
-  }
+  //decrypted Function
+  // addSellPayment(sellPayment: SellPayment,sellId: string, customerId: string, paymentDate: Date) {
+  //   sellPayment.paymentId = `oi_${cryptoRandomString({ length: 15 })}`;
+  //   sellPayment.sellId = sellId;
+  //   sellPayment.customerId = customerId;
+  //   sellPayment.paymentDate = paymentDate; 
+  //   return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
+  // }
 
   getAll() {
     return this.storage.getAll<Sell>(tableNames.sell);

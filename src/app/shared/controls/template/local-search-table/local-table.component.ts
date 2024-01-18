@@ -21,6 +21,7 @@ import { ColumnOptionsDailogComponent } from './column-options-dailog/column-opt
 export class IrsLocalTableComponent implements OnInit, OnDestroy {
   @Input() settings: LocalTableSettings;
   @Input() data: Observable<any>;
+  @Input() tableHeading: string;
 
   dataSource = new MatTableDataSource();
   // isLoadingResults = true;

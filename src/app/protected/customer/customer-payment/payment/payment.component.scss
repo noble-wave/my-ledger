@@ -1,0 +1,30 @@
+.div-container {
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0px 20px 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    gap: 20px;
+}
+
+.sell-list {
+    max-height: 300px;
+    overflow-y: auto;
+    // display: block;
+    // width: 100%;
+    // overflow-x: auto;
+}
+
+.table-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+.header {
+    font-weight: bold;
+}
+
+.cell {
+    flex: 1;
+    text-align: center;
+}

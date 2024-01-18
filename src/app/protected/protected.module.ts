@@ -33,6 +33,9 @@ import { DueBalanceComponent } from './dashboard/due-balance/due-balance.compone
 import { CustomerDueAmountComponent } from './customer/customer-due-amount/customer-due-amount.component';
 import { CustomerPaymentComponent } from './customer/customer-payment/customer-payment.component';
 import { PaymentComponent } from './customer/customer-payment/payment/payment.component';
+import { ViewPaymentComponent } from './customer/customer-payment/view-payment/view-payment.component';
+import { SetteldSellListComponent } from './customer/customer-payment/settled-sell-list/settled-sell-list.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -60,6 +63,8 @@ import { PaymentComponent } from './customer/customer-payment/payment/payment.co
     CustomerDueAmountComponent,
     CustomerPaymentComponent,
     PaymentComponent,
+    ViewPaymentComponent,
+    SetteldSellListComponent,
   ],
   imports: [
     CoreModule,
@@ -69,6 +74,7 @@ import { PaymentComponent } from './customer/customer-payment/payment/payment.co
     SharedServicesModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatListModule,
     NgxChartsModule,
     SharedModule,
     RouterModule.forChild([
@@ -100,8 +106,12 @@ import { PaymentComponent } from './customer/customer-payment/payment/payment.co
           { path: 'dashboard', component: DashboardComponent },
           { path: 'dummy-data-loader', component: DummyDataLoaderComponent },
 
-          { path: 'customer-dueAmount', component: CustomerDueAmountComponent},
-          { path: 'customer-dueAmount/:customerId', component: CustomerPaymentComponent},
+          { path: 'customer-dueAmount', component: CustomerDueAmountComponent },
+          {
+            path: 'customer-dueAmount/:customerId',
+            component: CustomerPaymentComponent,
+          },
+          { path: 'payment', component: PaymentComponent },
         ],
       },
     ]),

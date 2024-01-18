@@ -6,17 +6,17 @@ import { LocalTableSettings } from '@app/shared-services';
 import { Observable, forkJoin, map } from 'rxjs';
 
 @Component({
-  selector: 'app-customer-payment',
-  templateUrl: './customer-payment.component.html',
-  styleUrls: ['./customer-payment.component.scss'],
+  selector: 'app-settled-sell-list',
+  templateUrl: './settled-sell-list.component.html',
+  styleUrls: ['./settled-sell-list.component.scss']
 })
-export class CustomerPaymentComponent {
+export class SetteldSellListComponent {
   customerId: any;
   customerDetail: any;
   customerSells$: Observable<any[]>;
   tableSettings: LocalTableSettings;
   totalDueAmount: number | string = 0;
-  tableHeading: string = 'Unsettled Sales Transactions';
+  tableHeading: string = 'settled Sales Transactions';
 
   constructor(
     private location: Location,
@@ -80,7 +80,7 @@ export class CustomerPaymentComponent {
           0
         );
 
-        return customerSells.filter((x) => x.dueAmount > 0);
+        return customerSells.filter((x) => x.dueAmount <= 0);
       })
     );
   }
