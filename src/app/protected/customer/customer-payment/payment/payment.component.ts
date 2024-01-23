@@ -23,7 +23,7 @@ export class PaymentComponent implements OnDestroy {
   paymentForm: FormGroup;
   paymentMeta: ModelMeta[];
   selectedSells: string[] = [];
-
+  
   constructor(
     private location: Location,
     private route: ActivatedRoute,
@@ -72,6 +72,11 @@ export class PaymentComponent implements OnDestroy {
               .split('T')[0];
           });
 
+          // for (let i = 0; i < customerSells.length; i++){
+          //   customerSells[i]["sellDisplayDate"] = new Date (customerSells[i].sellDate)?.toISOString()
+          //                 .split('T')[0];
+          // }
+
           customerSells.sort(
             (a, b) =>
               new Date(a.sellDate).getTime() - new Date(b.sellDate).getTime()
@@ -108,7 +113,7 @@ export class PaymentComponent implements OnDestroy {
     let payment = this.paymentForm.value;
     if (payment.amountPaid <= this.selectedDueAmount) {
       let amountPaid = payment.amountPaid;
-     
+
       let selectedSellLists = this.customerSells.filter(
         (x) => this.selectedSells.indexOf(x.sellId) > -1
       );
@@ -129,7 +134,7 @@ export class PaymentComponent implements OnDestroy {
           sell.dueAmount = newDueAmount;
           amountPaid = 0;
         }
-       
+
         this.sellService.updateSell(sell).subscribe(() => {
           console.log(`Sell DueAmount updated`);
         });
@@ -150,40 +155,82 @@ export class PaymentComponent implements OnDestroy {
         // window.location.reload();
         this.getCustomerPaymentData();
         this.paymentForm.reset({
-          paymentDate: new Date()
+          paymentDate: new Date(),
         });
       });
 
       // this.sellService.updateSell(newlist).subscribe(() => {
       //     console.log(`Sell DueAmount updated`);
       //   });
-    } else {
-      this.app.noty.notifyError('Due amount should be greather or qual to paid amount');
-      // window.alert('Due amount should be greather or qual to paid amount');
-    }
+    } 
   }
 
-   async addPayment(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '400px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: {
-        dialogTitle: 'Update Payment',
-        dialogContent:
-          'Are you sure you want to update the payment?<br> <br>Please verify again.',
-        cancelButtonText: 'No',
-        confirmButtonText: 'Yes',
-        color: 'warn',
-      },
-    });
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'true') {
-        await this.upDatePayment();
-      }
-    });
+  async addPayment1() {
+    let payment = this.paymentForm.value;
+    let amountPaid = payment.amountPaid;
+  
+    if (payment.amountPaid <= this.selectedDueAmount) {
+      let selectedSellLists = this.customerSells.filter(
+        (x) => this.selectedSells.indexOf(x.sellId) > -1
+      );
+  
+      let sells = JSON.parse(JSON.stringify(selectedSellLists));
+      sells.sort(
+        (a, b) =>
+          new Date(a.sellDate).getTime() - new Date(b.sellDate).getTime()
+      );
+      const dueAmountDetails = sells.map((sell) => {
+        let subtractedAmount = Math.min(sell.dueAmount, amountPaid);
+        amountPaid -= subtractedAmount;
+        return `<tr><td>${sell.dueAmount}</td><td> - </td><td>${subtractedAmount}</td></tr>`;
+      }).join('');
+      
+      const table = `<table><thead><tr><th>Selected Due Amount</th><th>-</th><th>Amount Paid</th></tr></thead><tbody>${dueAmountDetails}</tbody></table>`;
+      
+      // Now 'table' contains the HTML representation of the dueAmountDetails in a table format
+      
+
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '400px',
+        enterAnimationDuration: '500ms',
+        exitAnimationDuration: '200ms',
+        data: {
+          dialogTitle: 'Update Payment',
+          dialogContent:
+           `<div>Amount Paid = ${payment.amountPaid}<br>${table}</div>
+                      <br>  Are you sure you want to update the payment?`,
+          cancelButtonText: 'No',
+          confirmButtonText: 'Yes',
+          color: 'warn',
+        },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        if (result === 'true') {
+          await this.upDatePayment();
+        }
+      });
+    } else {
+      this.app.noty.notifyError(
+        'Due amount should be greather or qual to paid amount'
+      );
+    }
   }
+  selectAllOptions() {
+    // Check if all options are already selected
+    const allSelected = this.customerSells.every(sell => this.selectedSells.includes(sell.sellId));
+
+    if (allSelected) {
+        // Unselect all options
+        this.selectedSells = [];
+    } else {
+        // Select all options
+        this.selectedSells = this.customerSells.map(sell => sell.sellId);
+    }
+
+    // Trigger existing logic for calculating total due amount
+    this.onNgModelChange(this.selectedSells);
+}
+
+
+
 }

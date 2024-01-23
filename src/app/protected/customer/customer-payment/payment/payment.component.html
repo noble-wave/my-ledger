@@ -15,28 +15,29 @@
         <div class="sell-list">
             <mat-selection-list #list [ngModel]="selectedSells" (ngModelChange)="onNgModelChange($event)">
                 <div class="table-container">
-                <mat-list-option [disabled]="true" togglePosition="before">
-                    <!-- Table Header -->
-                    <div class="table-row header">
-                        <div class="cell">Due Amount</div>
-                        <div class="cell">Sell Date</div>
-                        <!-- <div class="cell">ID</div> -->
-                    </div>
-                </mat-list-option>
-                <!-- List Options -->
-                <mat-list-option togglePosition="before" *ngFor="let sell of customerSells" [value]="sell.sellId">
-                    <div class="table-row">
-                        <div class="cell">{{ sell.dueAmount }}</div>
-                        <div class="cell">{{ sell.sellDisplayDate }}</div>
-                        <!-- <div class="cell">{{ sell.sellId }}</div> -->
-                    </div>
-                </mat-list-option>
-            </div>
-            </mat-selection-list>   
+                    <mat-selection-list  >
+                            <!-- Table Header -->
+                            <div class="table-row header">
+                                <mat-checkbox class="example-margin"(click)="selectAllOptions()"></mat-checkbox>
+                                <div class="cell">Due Amount</div>
+                                <div class="cell">Sell Date</div>
+                                <!-- <div class="cell">ID</div> -->
+                            </div>
+                    </mat-selection-list>
+                    <!-- List Options -->
+                    <mat-list-option togglePosition="before" *ngFor="let sell of customerSells" [value]="sell.sellId">
+                        <div class="table-row">
+                            <div class="cell">{{ sell.dueAmount }}</div>
+                            <div class="cell">{{ sell.sellDisplayDate }}</div>
+                            <!-- <div class="cell">{{ sell.sellId }}</div> -->
+                        </div>
+                    </mat-list-option>
+                </div>
+            </mat-selection-list>
         </div>
 
         <div fxLayout="row warp" class="div-container" fxLayoutAlign=" center">
-            
+
             <irs-date [form]="paymentForm" name="paymentDate" label="Payment Date"></irs-date>
             <div>
                 <!-- Total Due Amount: {{ totalDueAmount }} -->
@@ -44,11 +45,12 @@
                     <mat-label>Selected Due Amount</mat-label>
                     <input matInput type="number" placeholder="Due Amount" value="{{ selectedDueAmount }}" readonly="">
                     <mat-hint align="end">Sum of Selected Due Amount</mat-hint>
-                  </mat-form-field>
+                </mat-form-field>
             </div>
 
-            <app-input type="number" [form]="paymentForm" name = amountPaid></app-input>
-            <button mat-raised-button (click)="addPayment('500ms', '200ms')" color="primary"><mat-icon>account_balance_wallet</mat-icon>
+            <app-input type="number" [form]="paymentForm" name=amountPaid></app-input>
+            <button mat-raised-button (click)="addPayment1()"
+                color="primary"><mat-icon>account_balance_wallet</mat-icon>
                 Save Payment</button>
         </div>
     </mat-card-content>

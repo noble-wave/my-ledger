@@ -5,7 +5,7 @@
     {{ data.cancelButtonText }}
   </button>
   <button [ngStyle]="{ 'background-color': data.color }" [ngClass]="data.color" mat-raised-button mat-dialog-close
-    cdkFocusInitial (click)="onDelete()">
+    (click)="onDelete()">
     {{ data.confirmButtonText }}
   </button>
 </div>
