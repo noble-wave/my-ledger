@@ -51,8 +51,7 @@
                 <span *ngIf="customer?.email">{{customer?.email}}<br></span>
                 <span *ngIf="customer?.addressLine1">{{customer?.addressLine1}}<br></span>
                 <span *ngIf="customer?.addressLine2">{{customer?.addressLine2}}<br></span>
-                <span *ngIf="customer?.pinCode">pincode - {{customer?.pinCode}}<br></span>
-                <span *ngIf="customer?.state">state - {{customer?.state}}<br></span>
+                <span *ngIf="customer?.pinCode">{{customer?.pinCode}}, {{customer?.state}}<br></span>
                 <span *ngIf="customer?.country">{{customer?.country}}<br></span>
             </p>
         </div>
@@ -92,13 +91,14 @@
     </div> -->
     <div >
         <div>
-            <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="space-between center" >
                 <div>
-                    <P><strong>Bank Details</strong><br>
-                        <span>Name: ULTRANET</span><br>
-                        <span>Ifsc Code: YESB0CMSNOC</span><br>
-                        <span>Account No: 708090608693451</span><br>
-                        <span>Bank: Yes Bank </span>
+                    <!-- *ngIf="setting?.posName">{{setting?.posName}}</strong -->
+                    <P><strong *ngIf="setting?.accontNumber">Bank Details</strong><br>
+                        <span *ngIf="setting?.accountName">Name: {{setting?.accountName}}</span><br>
+                        <span *ngIf="setting?.ifscCode">Ifsc Code: {{setting?.ifscCode}}</span><br>
+                        <span *ngIf="setting?.accontNumber">Account No: {{setting?.accontNumber}}</span><br>
+                        <span *ngIf="setting?.bankName">Bank: {{setting?.bankName}} </span>
                         </P>
                 </div>
                 <div>
@@ -108,13 +108,13 @@
                     <p *ngIf="sell?.dueAmount"><strong>Balance Due:</strong> {{ sell?.dueAmount | currency: 'INR' }}</p>
                 </div>
             </div>
-            <div fxLayout="row"  class="businessSetion">
+            <div fxLayout="row"  class="businessSetion" *ngIf="setting?.upiId">
                 <div>
-                    <P><strong>Payment Qr Code</strong><br>
-                        <span>Upi Id:</span><br>
-                        <span>billbook8693451@yesbank</span>
+                    <P><strong *ngIf="setting?.upiId">Payment Qr Code</strong><br>
+                        <span *ngIf="setting?.upiId">Upi Id:</span><br>
+                        <span *ngIf="setting?.upiId">{{setting?.upiId}}</span>
                         </P>
-                    <img alt="girl image"  src='/assets/sw/payment1.png' width="200" height="15">
+                    <img alt="girl image"  src='/assets/sw/payment1.png' width="200" height="15" *ngIf="setting?.upiId">
                 </div>
                 <div>
                     <img alt="girl image"  src='/assets/sw/qr.png' width="70" height="70">

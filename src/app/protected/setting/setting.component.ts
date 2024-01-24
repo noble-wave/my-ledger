@@ -77,6 +77,12 @@ export class SettingComponent implements OnDestroy {
       new SellPrintSettings(),
       this.sellPrintMeta
     );
+    this.settingService
+    .getSellPrintSetting()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((x) => {
+      this.sellPrintForm.patchValue(x);
+    });
 
     //save unit price for Quick sell Page
     this.quickSellMeta = getQuickSellSettingMeta();

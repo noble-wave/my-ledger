@@ -23,7 +23,7 @@ export class PaymentComponent implements OnDestroy {
   paymentForm: FormGroup;
   paymentMeta: ModelMeta[];
   selectedSells: string[] = [];
-  
+
   constructor(
     private location: Location,
     private route: ActivatedRoute,
@@ -162,33 +162,54 @@ export class PaymentComponent implements OnDestroy {
       // this.sellService.updateSell(newlist).subscribe(() => {
       //     console.log(`Sell DueAmount updated`);
       //   });
-    } 
+    }
   }
 
   async addPayment1() {
     let payment = this.paymentForm.value;
     let amountPaid = payment.amountPaid;
-  
+
     if (payment.amountPaid <= this.selectedDueAmount) {
       let selectedSellLists = this.customerSells.filter(
         (x) => this.selectedSells.indexOf(x.sellId) > -1
       );
-  
+
       let sells = JSON.parse(JSON.stringify(selectedSellLists));
       sells.sort(
         (a, b) =>
           new Date(a.sellDate).getTime() - new Date(b.sellDate).getTime()
       );
+
       const dueAmountDetails = sells.map((sell) => {
         let subtractedAmount = Math.min(sell.dueAmount, amountPaid);
         amountPaid -= subtractedAmount;
-        return `<tr><td>${sell.dueAmount}</td><td> - </td><td>${subtractedAmount}</td></tr>`;
+        let remainingAmount = sell.dueAmount - subtractedAmount;
+      
+        const formattedDueAmount = sell.dueAmount.toLocaleString();
+        const formattedSubtractedAmount = subtractedAmount.toLocaleString();
+        const formattedRemainingAmount = remainingAmount.toLocaleString();
+      
+        return `<tr>
+                  <td class="spaced-number">${formattedDueAmount}</td>
+                  <td>-</td>
+                  <td class="spaced-number">${formattedSubtractedAmount}</td>
+                  <td>=</td>
+                  <td class="spaced-number">${formattedRemainingAmount}</td>
+                </tr>`;
       }).join('');
       
-      const table = `<table><thead><tr><th>Selected Due Amount</th><th>-</th><th>Amount Paid</th></tr></thead><tbody>${dueAmountDetails}</tbody></table>`;
-      
-      // Now 'table' contains the HTML representation of the dueAmountDetails in a table format
-      
+        const table = `<table>
+                <thead>
+                  <tr>
+                    <th>Selected Due Amount</th>
+                    <th>-</th>
+                    <th>Amount Paid</th>
+                    <th>=</th>
+                    <th>Remaining Due Amount</th>
+                  </tr>
+                </thead>
+                <tbody>${dueAmountDetails}</tbody>
+              </table>`;
 
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '400px',
@@ -196,8 +217,7 @@ export class PaymentComponent implements OnDestroy {
         exitAnimationDuration: '200ms',
         data: {
           dialogTitle: 'Update Payment',
-          dialogContent:
-           `<div>Amount Paid = ${payment.amountPaid}<br>${table}</div>
+          dialogContent: `<div>Amount Paid = ${payment.amountPaid}<br>${table}</div>
                       <br>  Are you sure you want to update the payment?`,
           cancelButtonText: 'No',
           confirmButtonText: 'Yes',
@@ -217,20 +237,19 @@ export class PaymentComponent implements OnDestroy {
   }
   selectAllOptions() {
     // Check if all options are already selected
-    const allSelected = this.customerSells.every(sell => this.selectedSells.includes(sell.sellId));
+    const allSelected = this.customerSells.every((sell) =>
+      this.selectedSells.includes(sell.sellId)
+    );
 
     if (allSelected) {
-        // Unselect all options
-        this.selectedSells = [];
+      // Unselect all options
+      this.selectedSells = [];
     } else {
-        // Select all options
-        this.selectedSells = this.customerSells.map(sell => sell.sellId);
+      // Select all options
+      this.selectedSells = this.customerSells.map((sell) => sell.sellId);
     }
 
     // Trigger existing logic for calculating total due amount
     this.onNgModelChange(this.selectedSells);
-}
-
-
-
+  }
 }
