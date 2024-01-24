@@ -150,7 +150,7 @@ export function getSellPrintSettingsMeta() {
     { key: 'country', label: 'Country', required: false },
     { key: 'bankName', label: 'Bank Name', required: false },
     { key: 'accountName', label: 'Account Name', required: false },
-    { key: 'accontNumber', label: 'Accont Number', required: false },
+    { key: 'accontNumber', label: 'Accont Number', required: true },
     { key: 'ifscCode', label: 'Ifsc Code', required: false },
     { key: 'upiId', label: 'Upi Id', required: false },
   ] as Array<ModelMeta>;

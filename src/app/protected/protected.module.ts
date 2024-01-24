@@ -36,6 +36,7 @@ import { PaymentComponent } from './customer/customer-payment/payment/payment.co
 import { ViewPaymentComponent } from './customer/customer-payment/view-payment/view-payment.component';
 import { SetteldSellListComponent } from './customer/customer-payment/settled-sell-list/settled-sell-list.component';
 import { MatListModule } from '@angular/material/list';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { MatListModule } from '@angular/material/list';
     SetteldSellListComponent,
   ],
   imports: [
+    QRCodeModule,
     CoreModule,
     MatBadgeModule,
     MatExpansionModule,

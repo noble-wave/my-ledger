@@ -91,7 +91,7 @@
     </div> -->
     <div >
         <div>
-            <div fxLayout="row" fxLayoutAlign="space-between center" >
+            <div fxLayout="row" fxLayoutAlign="space-between center" *ngIf="setting?.accontNumber" >
                 <div>
                     <!-- *ngIf="setting?.posName">{{setting?.posName}}</strong -->
                     <P><strong *ngIf="setting?.accontNumber">Bank Details</strong><br>
@@ -117,16 +117,20 @@
                     <img alt="girl image"  src='/assets/sw/payment1.png' width="200" height="15" *ngIf="setting?.upiId">
                 </div>
                 <div>
-                    <img alt="girl image"  src='/assets/sw/qr.png' width="70" height="70">
+                    <!-- <img alt="girl image"  src='/assets/sw/qr.png' width="70" height="70"> -->
+                    <qrcode [qrdata]="upiId" [width]="70" [errorCorrectionLevel]="'M'"></qrcode>
+                    <!-- <img alt="Payment QR Code" [src]="'https://api.qrserver.com/v1/create-qr-code/?data=' + upiId" width="70" height="70"> -->
+
                 </div>
             </div>
-            <div>
+            <!-- <div>
+
                 <P><strong>Terms And Conditions:</strong><br>
                 <span>1. Recharge Is Valid For 30 Days Only.</span><br>
                 <span>2. Recharge Amount Is Non-Refundable.</span><br>
                 <span>3. This Is Computer Generated Invoice Need No Signature.</span>
                 </P>
-            </div>
+            </div> -->
         </div>
     </div>
 
