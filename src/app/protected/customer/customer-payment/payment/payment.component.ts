@@ -23,6 +23,7 @@ export class PaymentComponent implements OnDestroy {
   paymentForm: FormGroup;
   paymentMeta: ModelMeta[];
   selectedSells: string[] = [];
+  dialogDueAmount: any;
 
   constructor(
     private location: Location,
@@ -180,36 +181,13 @@ export class PaymentComponent implements OnDestroy {
           new Date(a.sellDate).getTime() - new Date(b.sellDate).getTime()
       );
 
-      const dueAmountDetails = sells.map((sell) => {
+      this.dialogDueAmount = sells.map((sell) => {
         let subtractedAmount = Math.min(sell.dueAmount, amountPaid);
         amountPaid -= subtractedAmount;
         let remainingAmount = sell.dueAmount - subtractedAmount;
-      
-        const formattedDueAmount = sell.dueAmount.toLocaleString();
-        const formattedSubtractedAmount = subtractedAmount.toLocaleString();
-        const formattedRemainingAmount = remainingAmount.toLocaleString();
-      
-        return `<tr>
-                  <td class="spaced-number">${formattedDueAmount}</td>
-                  <td>-</td>
-                  <td class="spaced-number">${formattedSubtractedAmount}</td>
-                  <td>=</td>
-                  <td class="spaced-number">${formattedRemainingAmount}</td>
-                </tr>`;
-      }).join('');
-      
-        const table = `<table>
-                <thead>
-                  <tr>
-                    <th>Selected Due Amount</th>
-                    <th>-</th>
-                    <th>Amount Paid</th>
-                    <th>=</th>
-                    <th>Remaining Due Amount</th>
-                  </tr>
-                </thead>
-                <tbody>${dueAmountDetails}</tbody>
-              </table>`;
+
+        return { sell, subtractedAmount, remainingAmount };
+      });
 
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '400px',
@@ -217,8 +195,9 @@ export class PaymentComponent implements OnDestroy {
         exitAnimationDuration: '200ms',
         data: {
           dialogTitle: 'Update Payment',
-          dialogContent: `<div>Amount Paid = ${payment.amountPaid}<br>${table}</div>
-                      <br>  Are you sure you want to update the payment?`,
+          textAlign: 'left',
+          fontSize: '16px',
+          dialogContent: this.generateDialogContent(),
           cancelButtonText: 'No',
           confirmButtonText: 'Yes',
           color: 'warn',
@@ -251,5 +230,43 @@ export class PaymentComponent implements OnDestroy {
 
     // Trigger existing logic for calculating total due amount
     this.onNgModelChange(this.selectedSells);
+  }
+
+  generateDialogContent() {
+    const tableRows = this.dialogDueAmount
+      .map((item) => {
+        const formattedDueAmount = item.sell.dueAmount.toLocaleString();
+        const formattedSubtractedAmount =
+          item.subtractedAmount.toLocaleString();
+        const formattedRemainingAmount = item.remainingAmount.toLocaleString();
+
+        return `<tr>
+                <td>${formattedDueAmount}</td>
+                <td>-</td>
+                <td>${formattedSubtractedAmount}</td>
+                <td>=</td>
+                <td>${formattedRemainingAmount}</td>
+              </tr>`;
+      })
+      .join('');
+
+    return `<div class="dialog-content">
+              Amount Paid = ${this.paymentForm.value.amountPaid}
+              <br>
+              <table>
+                <thead>
+                  <tr class="table-header">
+                    <th>Selected Due Amount</th>
+                    <th>-</th>
+                    <th>Amount Paid</th>
+                    <th>=</th>
+                    <th>Remaining Due Amount</th>
+                  </tr>
+                </thead>
+                <tbody>${tableRows}</tbody>
+              </table>
+              <br>
+              Are you sure you want to update the payment?
+            </div>`;
   }
 }
