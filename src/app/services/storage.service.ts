@@ -13,13 +13,14 @@ export const tableNames = {
   customer: 'customer',
   inventory: 'inventory',
   sell: 'sell',
+  sellPayment: 'sellPayment',
   sellSetting: 'sellSetting',
   quickSellSetting: 'quickSellSetting',
 };
 
 export const dbConfig: DBConfig = {
   name: 'etrivia-ledger',
-  version: 1,
+  version: 2,
   objectStoresMeta: [
     {
       store: tableNames.misc,
@@ -63,6 +64,14 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: 'sellId', autoIncrement: false },
       storeSchema: [
         { name: 'sellDate', keypath: 'sellDate', options: { unique: false } },
+      ],
+    },
+    {
+      store: tableNames.sellPayment,
+      storeConfig: { keyPath: 'paymentId', autoIncrement: false },
+      storeSchema: [
+        { name: 'sellId', keypath: 'sellId', options: { unique: false } },
+        { name: 'customerId', keypath: 'customerId', options: { unique: false } }
       ],
     },
   ],

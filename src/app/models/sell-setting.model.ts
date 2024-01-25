@@ -117,6 +117,12 @@ export class SellPrintSettings extends AppSettings {
     pinCode?: string;
     state?: string;
     country?: string;
+    bankName?: string;
+    accountName?: string;
+    accontNumber?: string;
+    ifscCode?: string;
+    upiId?: string;
+    
     
 
   constructor() {
@@ -142,5 +148,10 @@ export function getSellPrintSettingsMeta() {
     { key: 'pinCode', label: 'Pincode ', required: false },
     { key: 'state', label: 'State', required: false },
     { key: 'country', label: 'Country', required: false },
+    { key: 'bankName', label: 'Bank Name', required: false },
+    { key: 'accountName', label: 'Account Name', required: false },
+    { key: 'accontNumber', label: 'Accont Number', required: true },
+    { key: 'ifscCode', label: 'Ifsc Code', required: false },
+    { key: 'upiId', label: 'Upi Id', required: false },
   ] as Array<ModelMeta>;
 }

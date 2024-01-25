@@ -1,0 +1,59 @@
+<ng-container *ngIf="{
+    customerSellsData: customerSells$ | async
+} as observables">
+
+    <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+                (click)="navigateBack()">
+                <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+            </button>
+            <div>Customers - Payment</div>
+        </div>
+        <div fxLayoutAlign="space-between center">
+
+            <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+        </div>
+    </mat-toolbar>
+    <mat-card>
+        <mat-card-content>
+            <div fxLayoutAlign="space-between center" fxLayout="row wrap" class="div-container">
+                <div class="name" *ngIf="observables.customerSellsData">
+                    <h3> Customer Name: {{ observables.customerSellsData[0]?.customerName }}</h3>
+                </div>
+                <div>
+                    <h3>Total Due Amount: {{totalDueAmount}}</h3>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <mat-tab-group>
+                        <mat-tab label="Unsettled"> 
+                            <irs-local-table [data]="customerSells$" [settings]="tableSettings"
+                            [tableHeading]="tableHeading"></irs-local-table>
+                        </mat-tab>
+                        <mat-tab label="Settled">
+                            <ng-template matTabContent>
+                                <app-settled-sell-list></app-settled-sell-list>
+                            </ng-template>
+                          </mat-tab>
+                      </mat-tab-group>
+                </div>
+
+            </div>
+            <div>
+                <div>
+                    <div class="margin">
+                        <button mat-raised-button (click)="addPayment()" color="primary"><mat-icon>account_balance_wallet</mat-icon>
+                          Add Payment</button>
+                        <!-- <button mat-raised-button [routerLink]="['/payment']" [queryParams]="{custId: customerId}"
+                            color="primary"><mat-icon>account_balance_wallet</mat-icon>
+                            Add Payment</button> -->
+                    </div>
+                    <app-view-payment></app-view-payment>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

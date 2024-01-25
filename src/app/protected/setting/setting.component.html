@@ -104,23 +104,41 @@
             </div>
             <div *ngIf="sellPrintForm">
                 <!-- <h4>2. Provide Company/Shop Details.</h4> -->
-                <h4 class="section-subtitle">2. Provide Detailed Company/Shop Information</h4>
-                <p class="section-description">Fill in the necessary details about your company, shop, or organization
-                    for accurate and comprehensive print settings.</p>
+
 
                 <form [formGroup]="sellPrintForm" (submit)="saveQuickSellSetting()">
-                    <div class="sellPrintSection">
-                        <app-input [form]="sellPrintForm" name="posName"></app-input>
-                        <app-input [form]="sellPrintForm" name="phoneNumber"></app-input>
-                        <app-input [form]="sellPrintForm" name="email"></app-input>
+                    <div>
+                        <h4 class="section-subtitle">2. Provide Detailed Company/Shop Information</h4>
+                        <p class="section-description">Fill in the necessary details about your company, shop, or
+                            organization
+                            for accurate and comprehensive print settings.</p>
+                        <div class="sellPrintSection">
+                            <app-input [form]="sellPrintForm" name="posName"></app-input>
+                            <app-input [form]="sellPrintForm" name="phoneNumber"></app-input>
+                            <app-input [form]="sellPrintForm" name="email"></app-input>
 
+                        </div>
+                        <div class="sellPrintSection">
+                            <app-input [form]="sellPrintForm" name="address"></app-input>
+                            <app-input [form]="sellPrintForm" name="pinCode"></app-input>
+                            <app-input [form]="sellPrintForm" name="state"></app-input>
+                            <app-input [form]="sellPrintForm" name="country"></app-input>
+
+                        </div>
                     </div>
-                    <div class="sellPrintSection">
-                        <app-input [form]="sellPrintForm" name="address"></app-input>
-                        <app-input [form]="sellPrintForm" name="pinCode"></app-input>
-                        <app-input [form]="sellPrintForm" name="state"></app-input>
-                        <app-input [form]="sellPrintForm" name="country"></app-input>
-
+                    <div>
+                        <h4 class="section-subtitle">3. Provide Bank Detailed of Company/Shop</h4>
+                        <p class="section-description">Fill in the necessary details about your Bank Detail
+                            for accurate and comprehensive print settings.</p>
+                        <div class="sellPrintSection">
+                            <app-input [form]="sellPrintForm" name="bankName"></app-input>
+                            <app-input [form]="sellPrintForm" name="accountName"></app-input>
+                            <app-input [form]="sellPrintForm" name="accontNumber"></app-input>
+                            <app-input [form]="sellPrintForm" name="ifscCode"></app-input>
+                        </div>
+                        <div class="sellPrintSection">
+                            <app-input [form]="sellPrintForm" name="upiId"></app-input>
+                        </div>
                     </div>
                 </form>
             </div>

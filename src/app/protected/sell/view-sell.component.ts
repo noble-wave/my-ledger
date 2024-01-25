@@ -17,6 +17,7 @@ export class ViewSellComponent {
   customer: any;
   setting: any;
   imageToShow: any;
+  upiId: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class ViewSellComponent {
   ngOnInit(): void {
     this.settingService.getSellPrintSetting().subscribe((x) => {
       this.setting = { ...x };
+      this.upiId = `upi://pay?pa=${x.upiId}`;
       this.createImageFromBlob(this.setting.logoUrl);
 
     });

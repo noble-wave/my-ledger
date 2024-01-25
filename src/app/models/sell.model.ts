@@ -15,6 +15,7 @@ export interface Sell {
   status: SellStatus;
   userGstin: string;
   customerGstin: string;
+  dueAmount: number;
 }
 
 export function getSellMeta() {
@@ -33,6 +34,8 @@ export function getSellMeta() {
     { key: 'status', label: 'Status' },
     { key: 'userGstin', label: 'User Gstin' },
     { key: 'customerGstin', label: 'Customer Gstin' },
+    { key: 'dueAmount', label: 'Due Amount' },
+
   ] as Array<ModelMeta>;
 }
 
@@ -62,4 +65,21 @@ export enum SellStatus {
   Shipped = 'Shipped',
   Delivered = 'Delivered',
   Cancelled = 'Cancelled',
+}
+
+export interface SellPayment {
+  paymentId: string;
+  paymentDate: Date;
+  amountPaid: number;
+  sellId?: string;
+  customerId: string;
+}
+export function getSellPaymentMeta() {
+  return [
+    { key: 'paymentId', label: 'PaymentId', hide: true },
+    { key: 'paymentDate', label: 'Payment Date', required: true },
+    { key: 'amountPaid', label: 'Amount Paid', required: true },
+    { key: 'sellId', label: 'SellId', hide: true, required: true },
+    { key: 'customerId', label: 'Customer Id' },
+  ] as Array<ModelMeta>;
 }

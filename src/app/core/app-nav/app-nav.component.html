@@ -18,7 +18,8 @@
           {{ item.label }}
         </a>
         <!-- Add a divider after the "Customers" link -->
-        <mat-divider *ngIf="item.path === 'customer' && i !== paths.length - 1"></mat-divider>
+        <mat-divider *ngIf="item.path === 'product-inventory' && i !== paths.length - 1"></mat-divider>
+        <mat-divider *ngIf="item.path === 'customer-dueAmount' && i !== paths.length - 1"></mat-divider>
         <mat-divider *ngIf="item.path === 'sell/new' && i !== paths.length - 1"></mat-divider>
       </ng-container>
     </mat-nav-list>

@@ -162,7 +162,7 @@ export class ProductService {
       const quantity = sellItem.quantity;
 
       // Use the getProductInventory method to get the current product inventory
-      this.getProductInventory(productId).subscribe((productInventory) => {
+      this.getProductInventory(productId)?.subscribe((productInventory) => {
         // Check if productInventory exists
         if (productInventory) {
           // Subtract the sell item's quantity from the product inventory count

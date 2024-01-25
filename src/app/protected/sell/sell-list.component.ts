@@ -26,7 +26,7 @@ export class SellListComponent {
       { name: 'sellDisplayDate', text: 'Sell Date', sell: 3 },
       { name: 'customerName', text: 'Customer Name', sell: 4 },
       { name: 'status', text: 'Status', sell: 5 },
-      { name: 'totalQuantity', text: 'Total Quantity', sell: 6 },
+      { name: 'qty', text: 'Total Quantity', sell: 6 },
       { name: 'netAmount', text: 'Net Amount', sell: 7 },
     ];
     let excludeColumns = ['customerId'];

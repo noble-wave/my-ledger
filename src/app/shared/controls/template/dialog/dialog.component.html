@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>{{ data.dialogTitle }}</h1>
-<div mat-dialog-content [innerHTML]="data.dialogContent"></div>
+<div mat-dialog-content [innerHTML]="data.dialogContent" [ngStyle]="{ 'text-align': data.textAlign, 'font-size': data.fontSize }"></div>
 <div mat-dialog-actions>
   <button [ngStyle]="{ 'background-color': data.color }" [ngClass]="data.color" mat-raised-button mat-dialog-close>
     {{ data.cancelButtonText }}
   </button>
   <button [ngStyle]="{ 'background-color': data.color }" [ngClass]="data.color" mat-raised-button mat-dialog-close
-    cdkFocusInitial (click)="onDelete()">
+    (click)="onDelete()">
     {{ data.confirmButtonText }}
   </button>
 </div>

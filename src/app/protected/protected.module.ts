@@ -29,6 +29,14 @@ import { ThresholdComponent } from './dashboard/threshold/threshold.component';
 import { WarnInventoryComponent } from './product-inventory/warn-inventory/warn-inventory.component';
 import { InfoInventoryComponent } from './product-inventory/info-inventory/info-inventory.component';
 import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.component';
+import { DueBalanceComponent } from './dashboard/due-balance/due-balance.component';
+import { CustomerDueAmountComponent } from './customer/customer-due-amount/customer-due-amount.component';
+import { CustomerPaymentComponent } from './customer/customer-payment/customer-payment.component';
+import { PaymentComponent } from './customer/customer-payment/payment/payment.component';
+import { ViewPaymentComponent } from './customer/customer-payment/view-payment/view-payment.component';
+import { SetteldSellListComponent } from './customer/customer-payment/settled-sell-list/settled-sell-list.component';
+import { MatListModule } from '@angular/material/list';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -52,8 +60,15 @@ import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.
     WarnInventoryComponent,
     InfoInventoryComponent,
     DummyDataLoaderComponent,
+    DueBalanceComponent,
+    CustomerDueAmountComponent,
+    CustomerPaymentComponent,
+    PaymentComponent,
+    ViewPaymentComponent,
+    SetteldSellListComponent,
   ],
   imports: [
+    QRCodeModule,
     CoreModule,
     MatBadgeModule,
     MatExpansionModule,
@@ -61,6 +76,7 @@ import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.
     SharedServicesModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatListModule,
     NgxChartsModule,
     SharedModule,
     RouterModule.forChild([
@@ -91,6 +107,13 @@ import { DummyDataLoaderComponent } from './dummy-data-loader/dummy-data-loader.
           { path: 'report', component: ReportComponent },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'dummy-data-loader', component: DummyDataLoaderComponent },
+
+          { path: 'customer-dueAmount', component: CustomerDueAmountComponent },
+          {
+            path: 'customer-dueAmount/:customerId',
+            component: CustomerPaymentComponent,
+          },
+          { path: 'payment', component: PaymentComponent },
         ],
       },
     ]),
