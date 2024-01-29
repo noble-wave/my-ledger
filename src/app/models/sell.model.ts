@@ -6,10 +6,10 @@ export interface Sell {
   customerId: string;
   customerName: string;
   customerPhoneNumber: string;
-  items: SellItem[];
-  totalDiscount: Number;
-  totalQuantity: Number;
-  grossAmount: Number;
+  // items: SellItem[];
+  totalDiscount: number;
+  totalQuantity: number;
+  grossAmount: number;
   netAmount: number;
   sellDate: Date;
   status: SellStatus;
@@ -25,7 +25,7 @@ export function getSellMeta() {
     { key: 'customerId', label: 'Customer Id' },
     { key: 'customerName', label: 'Customer Name' },
     { key: 'customerPhoneNumber', label: 'Customer Phone Number' },
-    { key: 'items', label: 'Items' },
+    // { key: 'items', label: 'Items' },
     { key: 'totalDiscount', label: 'Total Discount' },
     { key: 'totalQuantity', label: 'Total Quantity' },
     { key: 'grossAmount', label: 'Gross Amount' },
@@ -40,16 +40,20 @@ export function getSellMeta() {
 }
 
 export interface SellItem {
+  sellItemId?: string;
+  sellId?: string;
   productId: number;
   productName: string;
   quantity: number;
-  discount: Number;
+  discount: number;
   unitPrice: number;
   subtotal: number;
 }
 
 export function getSellItemMeta() {
   return [
+    { key: 'sellItemId', label: 'SellItemId', hide: true },
+    { key: 'sellId', label: 'sellId', hide: true },
     { key: 'productId', label: 'ProductId', hide: true },
     { key: 'productName', label: 'Product Name', required: true },
     { key: 'quantity', label: 'Quantity', required: true },

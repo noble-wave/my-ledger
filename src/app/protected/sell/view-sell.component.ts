@@ -18,6 +18,8 @@ export class ViewSellComponent {
   setting: any;
   imageToShow: any;
   upiId: any;
+  sellItes: any;
+  sellItems: import("d:/work/Angular/my-ledger/src/app/models/sell.model").SellItem[];
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +42,12 @@ export class ViewSellComponent {
         // this.isEdit = true;
         this.sellService.get(x.sellId).subscribe((y: any) => {
           this.sell = y;
-          this.customerService.get(this.sell.customerId).subscribe((c: any) =>{
+          this.sellService.getAllSellItem().subscribe((sellItem) => {
+            this.sellItems = sellItem.filter(
+              (sellItem) => sellItem.sellId === x.sellId
+              );
+          })
+          this.customerService.get(this.sell.customerId)?.subscribe((c: any) =>{
             this.customer = c;
           })
           this.route.queryParamMap.subscribe((z) => {

@@ -45,11 +45,11 @@ export class SellListComponent {
     this.sells$ = this.service.getAll().pipe(
       map((sells) => {
         sells.forEach((sell) => {
-          sell['qty'] =
-            sell.items?.reduce((qty, sellItem) => {
-              qty += sellItem.quantity;
-              return qty;
-            }, 0) || 1;
+          // sell['qty'] =
+          //   sell.items?.reduce((qty, sellItem) => {
+          //     qty += sellItem.quantity;
+          //     return qty;
+          //   }, 0) || 1;
 
           sell['sellDisplayDate'] = new Date(sell.sellDate)
             ?.toISOString()
@@ -64,6 +64,8 @@ export class SellListComponent {
         return sells;
       })
     );
+    
+    // this.getData();
   }
 
   toggleDetails() {
@@ -74,3 +76,39 @@ export class SellListComponent {
     this.location.back();
   }
 }
+
+
+// getData() {
+//   this.sells$ = forkJoin([
+//     this.service.getAll(),
+//     this.service.getAllSellItem(),
+//   ]).pipe(
+//     map((res: any[]) => {
+//       let sells = res[0];
+//       let sellItems = res[1];
+
+//       sells.forEach((sell) => {
+//         let addtotalquantity = sellItems.filter((y) => y.sellId == sell.sellId);
+        
+//         sell['qty'] = addtotalquantity?.length > 0 ? 
+//         addtotalquantity.reduce((qty, sellItem) => {
+//             qty += sellItem.quantity;
+//             return qty;
+//           }, 0) : 1;
+
+//         sell['sellDisplayDate'] = new Date(sell.sellDate)
+//           ?.toISOString()
+//           .split('T')[0];
+//       });
+
+//       sells.sort(
+//         (a, b) =>
+//           (new Date(b.sellDate).getTime() === this.selectedDate.getTime()
+//             ? 1
+//             : new Date(b.sellDate).getTime()) - new Date(a.sellDate).getTime()
+//       );
+
+//       return sells;
+//     })
+//   );
+// }

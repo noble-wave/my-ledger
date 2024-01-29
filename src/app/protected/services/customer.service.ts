@@ -35,7 +35,7 @@ export class CustomerService {
   }
 
   uploadCustomerData(customerData: any[]) {
-    return this.storage.bulkAdd(tableNames.customer, customerData);
+    return this.storage.bulkPut(tableNames.customer, customerData);
   }
   
   getCustomerByDate(startDate: Date, endDate: Date) {
