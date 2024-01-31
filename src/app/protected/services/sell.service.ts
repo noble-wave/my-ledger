@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Sell, SellPayment, SellStatus } from '@app/models/sell.model';
+import { Sell, SellItem, SellPayment, SellStatus } from '@app/models/sell.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import cryptoRandomString from 'crypto-random-string';
 import { Observable, forkJoin, map, switchMap } from 'rxjs';
@@ -27,6 +27,18 @@ export class SellService {
     sellPayment.paymentId = `pi_${cryptoRandomString({ length: 15 })}`;
     return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
   }
+
+  addSellItem(sellItem: SellItem) {
+    sellItem.sellItemId = `si_${cryptoRandomString({ length: 15 })}`;
+    return this.storage.addRecord<SellItem>(tableNames.sellItem, sellItem);
+  }
+
+  addSellItems(sellItems: SellItem[]) {
+    sellItems.forEach((sellItem) => {
+      sellItem.sellItemId = `si_${cryptoRandomString({ length: 15 })}`;
+    });
+    return this.storage.bulkAdd(tableNames.sellItem, sellItems);
+  }
   
   //decrypted Function
   // addSellPayment(sellPayment: SellPayment,sellId: string, customerId: string, paymentDate: Date) {
@@ -36,6 +48,14 @@ export class SellService {
   //   sellPayment.paymentDate = paymentDate; 
   //   return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
   // }
+//   addSellItems(sellItems: SellItem[]) {
+//     const sellItemsWithId = sellItems.map(item => ({
+//         ...item,
+//         sellItemId: `si_${cryptoRandomString({ length: 15 })}`
+//     }));
+//     return this.storage.bulkAdd(tableNames.sellItem, sellItemsWithId);
+// }
+
 
   getAll() {
     return this.storage.getAll<Sell>(tableNames.sell);
@@ -43,6 +63,10 @@ export class SellService {
 
   getAllSellPayment() {
     return this.storage.getAll<SellPayment>(tableNames.sellPayment);
+  }
+
+  getAllSellItem() {
+    return this.storage.getAll<SellItem>(tableNames.sellItem);
   }
 
   isDataPresent(): Observable<boolean> {
@@ -59,6 +83,10 @@ export class SellService {
     return this.storage.getByKey<Sell>(tableNames.sellPayment, paymentId);
   }
 
+  getAllSellItemId(sellItemId: string) {
+    return this.storage.getByKey<Sell>(tableNames.sellItem, sellItemId);
+  }
+
   getStatusOptions() {
     return this.toArray(SellStatus);
   }
@@ -71,7 +99,7 @@ export class SellService {
   }
 
   uploadSellData(sellData: any[]) {
-    return this.storage.bulkAdd(tableNames.sell, sellData);
+    return this.storage.bulkPut(tableNames.sell, sellData);
   }
 
   getDataByDate(startDate: string, endDate: string) {

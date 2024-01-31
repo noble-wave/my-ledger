@@ -16,11 +16,12 @@ export const tableNames = {
   sellPayment: 'sellPayment',
   sellSetting: 'sellSetting',
   quickSellSetting: 'quickSellSetting',
+  sellItem: 'sellItem',
 };
 
 export const dbConfig: DBConfig = {
   name: 'etrivia-ledger',
-  version: 2,
+  version: 3,
   objectStoresMeta: [
     {
       store: tableNames.misc,
@@ -72,6 +73,14 @@ export const dbConfig: DBConfig = {
       storeSchema: [
         { name: 'sellId', keypath: 'sellId', options: { unique: false } },
         { name: 'customerId', keypath: 'customerId', options: { unique: false } }
+      ],
+    },
+    {
+      store: tableNames.sellItem,
+      storeConfig: { keyPath: 'sellItemId', autoIncrement: false },
+      storeSchema: [
+        { name: 'sellId', keypath: 'sellId', options: { unique: false } },
+        { name: 'productId', keypath: 'productId', options: { unique: false } }
       ],
     },
   ],
@@ -188,6 +197,10 @@ export class StorageService {
   }
 
   bulkAdd(tableName: string, obj: Array<any>) {
+    return this.db.bulkAdd(tableName, obj);
+  }
+
+  bulkPut(tableName: string, obj: Array<any>) {
     return this.db.bulkPut(tableName, obj);
   }
 

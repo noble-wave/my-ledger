@@ -169,7 +169,7 @@ export class ProductService {
           productInventory.count -= quantity;
 
           // Save the updated product inventory using the saveInventory method
-          this.saveInventory(productInventory).subscribe(() => {
+          this.saveInventory(productInventory)?.subscribe(() => {
             console.log(`Product inventory updated for product: ${productId}`);
           });
         }
@@ -178,10 +178,10 @@ export class ProductService {
   }
 
   uploadProductData(productData: any[]) {
-    return this.storage.bulkAdd(tableNames.product, productData);
+    return this.storage.bulkPut(tableNames.product, productData);
   }
   uploadProductInventoryData(productData: any[]) {
-    return this.storage.bulkAdd(tableNames.inventory, productData);
+    return this.storage.bulkPut(tableNames.inventory, productData);
   }
 
   // getProductByDate(startDate: Date, endDate: Date) {

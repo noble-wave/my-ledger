@@ -223,8 +223,13 @@ export class SellComponent implements OnDestroy {
   calculateBalanceDue(): number {
     const netAmount = this.calculateNetAmount();
     const balanceDue = netAmount - this.amountPaid;
-
-    this.form.get('dueAmount')?.setValue(balanceDue);
+    
+    if (this.showAmountPaidAndBalanceDue === true) {
+      this.form.get('dueAmount')?.setValue(balanceDue);
+    }
+    else {
+      this.form.get('dueAmount')?.setValue(0);
+  }
     return balanceDue;
   }
 
@@ -270,13 +275,21 @@ export class SellComponent implements OnDestroy {
     let sell = this.form.value;
     let sellPayment: SellPayment;
     let sellItems = this.sellItemForms.map((x) => x.value);
-    sell.items = sellItems;
+    // sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
 
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
       let sellId = x.sellId;
       let customerId = x.customerId;
+
+      sellItems.forEach((sellItem) => {
+        sellItem.sellId = sellId;
+      });
+
+      this.sellService.addSellItems(sellItems).subscribe((z) => {
+        // console.log(z);
+      });
 
       if (this.showAmountPaidAndBalanceDue === true) {
         let paymentDate = new Date();
@@ -336,12 +349,20 @@ export class SellComponent implements OnDestroy {
     let sell = this.form.value;
     let sellPayment: SellPayment;
     let sellItems = this.sellItemForms.map((x) => x.value);
-    sell.items = sellItems;
+    // sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
       let sellId = x.sellId;
       let customerId = x.customerId;
+
+      sellItems.forEach((sellItem) => {
+        sellItem.sellId = sellId;
+      });
+
+      this.sellService.addSellItems(sellItems).subscribe((z) => {
+        // console.log(z);
+      });
 
       if (this.showAmountPaidAndBalanceDue === true) {
         let paymentDate = new Date();
