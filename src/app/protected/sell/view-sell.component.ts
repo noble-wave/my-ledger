@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SellService } from '../services/sell.service';
 import { Location } from '@angular/common';
 import { CustomerService } from '../services/customer.service';
-import { forkJoin, map } from 'rxjs';
 import { SettingService } from '../services/setting.service';
+import { SellItem } from '@app/models/sell.model';
 
 @Component({
   selector: 'app-view-sell',
@@ -19,7 +19,7 @@ export class ViewSellComponent {
   imageToShow: any;
   upiId: any;
   sellItes: any;
-  sellItems: import("d:/work/Angular/my-ledger/src/app/models/sell.model").SellItem[];
+  sellItems: SellItem[];
 
   constructor(
     private route: ActivatedRoute,
@@ -64,7 +64,7 @@ export class ViewSellComponent {
         });
       }
     });
-    
+
   }
 
   createImageFromBlob(image:Blob){
@@ -77,8 +77,8 @@ export class ViewSellComponent {
        reader.readAsDataURL(image);
     }
   }
- 
-  
+
+
   settings() {
     this.router.navigate(['/setting'], {
       fragment: 'SellPrintSetting',
@@ -115,15 +115,15 @@ export class ViewSellComponent {
                   size: auto;
                   margin: 0;
                 }
-              
+
                 @page :footer {
                   display: none;
                 }
-              
+
                 @page :header {
                   display: none;
                 }
-              
+
                 .sell-details {
                   display: flex;
                   flex-direction: column;
@@ -132,7 +132,7 @@ export class ViewSellComponent {
                   background-color: var(--primary);
                   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 }
-              
+
                 .sell-header {
                   width: 100%;
                   display: flex;
@@ -143,16 +143,16 @@ export class ViewSellComponent {
                 .businessSetion {
                   gap : 20px;
                 }
-                
+
                 img {
                  margin-top: 10px;
                 }
-              
+
                 .sell-id {
                   font-size: 16px;
                   color: #666;
                 }
-              
+
                 .sell-summary {
                   width: 100%;
                   display: flex;
@@ -161,34 +161,34 @@ export class ViewSellComponent {
                   padding: 0 20px;
                   box-sizing: border-box;
                 }
-              
+
                 .customer-info {
                   flex: 2;
                 }
-              
+
                 .status {
                   flex: 1;
                   text-align: right;
                 }
-              
+
                 .product-list {
                   width: 100%;
                   margin-top: 30px;
                 }
-              
+
                 .product-table {
                   width: 100%;
                   border-collapse: collapse;
                   margin-top: 10px;
                 }
-              
+
                 .product-table th,
                 .product-table td {
                   padding: 10px;
                   text-align: left;
                   border-bottom: 1px solid #616161;
                 }
-              
+
                 .total {
                   width: 100%;
                   margin-top: 20px;
@@ -200,7 +200,7 @@ export class ViewSellComponent {
                   box-sizing: border-box;
                 }
               </style>
-              
+
             </head>
             <body>${printContents}</body>
             </html>
@@ -231,15 +231,15 @@ export class ViewSellComponent {
               size: auto;
               margin: 0;
             }
-          
+
             @page :footer {
               display: none;
             }
-          
+
             @page :header {
               display: none;
             }
-          
+
             .sell-details {
               display: flex;
               flex-direction: column;
@@ -248,7 +248,7 @@ export class ViewSellComponent {
               background-color: var(--primary);
               box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
-          
+
             .sell-header {
               width: 100%;
               display: flex;
@@ -259,16 +259,16 @@ export class ViewSellComponent {
             .businessSetion {
               gap : 20px;
             }
-            
+
             img {
              margin-top: 10px;
             }
-          
+
             .sell-id {
               font-size: 16px;
               color: #666;
             }
-          
+
             .sell-summary {
               width: 100%;
               display: flex;
@@ -277,34 +277,34 @@ export class ViewSellComponent {
               padding: 0 20px;
               box-sizing: border-box;
             }
-          
+
             .customer-info {
               flex: 2;
             }
-          
+
             .status {
               flex: 1;
               text-align: right;
             }
-          
+
             .product-list {
               width: 100%;
               margin-top: 30px;
             }
-          
+
             .product-table {
               width: 100%;
               border-collapse: collapse;
               margin-top: 10px;
             }
-          
+
             .product-table th,
             .product-table td {
               padding: 10px;
               text-align: left;
               border-bottom: 1px solid #616161;
             }
-          
+
             .total {
               width: 100%;
               margin-top: 20px;
