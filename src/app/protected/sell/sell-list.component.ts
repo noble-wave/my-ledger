@@ -69,11 +69,9 @@ export class SellListComponent {
             return qty + Number(sellItem.quantity);
           }, 0);
           
-          if (sell.sellDate) {
           sell['sellDisplayDate'] = new Date(sell.sellDate)
             .toISOString()
             .split('T')[0];
-        }
 
         });
 
