@@ -37,6 +37,9 @@ import { ViewPaymentComponent } from './customer/customer-payment/view-payment/v
 import { SetteldSellListComponent } from './customer/customer-payment/settled-sell-list/settled-sell-list.component';
 import { MatListModule } from '@angular/material/list';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ImportDataComponent } from './import-export/import-data/import-data.component';
+import { ExportDataComponent } from './import-export/export-data/export-data.component';
+import { DeleteDataComponent } from './import-export/delete-data/delete-data.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +69,9 @@ import { QRCodeModule } from 'angularx-qrcode';
     PaymentComponent,
     ViewPaymentComponent,
     SetteldSellListComponent,
+    ImportDataComponent,
+    ExportDataComponent,
+    DeleteDataComponent,
   ],
   imports: [
     QRCodeModule,

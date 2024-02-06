@@ -1,0 +1,49 @@
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  
+  .margin {
+    margin-top: 30px !important;
+  }
+  
+  .download-section {
+    margin-bottom: 20px;
+  }
+  
+  .upload-box {
+    font-size: 15px;
+    background: #252525;
+    border-radius: 10px;
+    width: 300px;
+    outline: none;
+  }
+  
+  ::-webkit-file-upload-button {
+    color: black;
+    background: #00bfa5;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 0 1px #4e4b4d;
+    outline: none;
+  }
+  
+  ::-webkit-file-upload-button:hover {
+    background: #00bda4e4
+  }
+  
+  ::-webkit-file-upload-button:active {
+    background: #00bfa6a9;
+  }
+  
+  
+  @media screen and (max-width: 768px) {
+    .container {
+      max-width: 100%;
+      padding: 10px;
+    }
+  }
+  

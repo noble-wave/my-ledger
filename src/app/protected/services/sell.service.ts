@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Sell, SellItem, SellPayment, SellStatus } from '@app/models/sell.model';
+import {
+  Sell,
+  SellItem,
+  SellPayment,
+  SellStatus,
+} from '@app/models/sell.model';
 import { StorageService, tableNames } from '@app/services/storage.service';
 import cryptoRandomString from 'crypto-random-string';
 import { Observable, forkJoin, map, switchMap } from 'rxjs';
@@ -8,9 +13,8 @@ import { Observable, forkJoin, map, switchMap } from 'rxjs';
   providedIn: 'root',
 })
 export class SellService {
-    constructor(private storage: StorageService) {}
+  constructor(private storage: StorageService) {}
   private apiUrl = 'your_api_url_here';
-
 
   addSell(sellData: Sell) {
     sellData.sellId = `oi_${cryptoRandomString({ length: 10 })}`;
@@ -19,13 +23,15 @@ export class SellService {
   }
 
   updateSell(sellData: Sell) {
-    // sell.updatedAt = new Date();
     return this.storage.updateRecord(tableNames.sell, sellData);
   }
 
   addSellPayment1(sellPayment: SellPayment) {
     sellPayment.paymentId = `pi_${cryptoRandomString({ length: 15 })}`;
-    return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
+    return this.storage.addRecord<SellPayment>(
+      tableNames.sellPayment,
+      sellPayment
+    );
   }
 
   addSellItem(sellItem: SellItem) {
@@ -39,23 +45,6 @@ export class SellService {
     });
     return this.storage.bulkAdd(tableNames.sellItem, sellItems);
   }
-  
-  //decrypted Function
-  // addSellPayment(sellPayment: SellPayment,sellId: string, customerId: string, paymentDate: Date) {
-  //   sellPayment.paymentId = `oi_${cryptoRandomString({ length: 15 })}`;
-  //   sellPayment.sellId = sellId;
-  //   sellPayment.customerId = customerId;
-  //   sellPayment.paymentDate = paymentDate; 
-  //   return this.storage.addRecord<SellPayment>(tableNames.sellPayment, sellPayment);
-  // }
-//   addSellItems(sellItems: SellItem[]) {
-//     const sellItemsWithId = sellItems.map(item => ({
-//         ...item,
-//         sellItemId: `si_${cryptoRandomString({ length: 15 })}`
-//     }));
-//     return this.storage.bulkAdd(tableNames.sellItem, sellItemsWithId);
-// }
-
 
   getAll() {
     return this.storage.getAll<Sell>(tableNames.sell);
@@ -70,9 +59,9 @@ export class SellService {
   }
 
   isDataPresent(): Observable<boolean> {
-    return this.storage.getAll<Sell>(tableNames.sell).pipe(
-      map((sells) => sells.length > 0)
-    );
+    return this.storage
+      .getAll<Sell>(tableNames.sell)
+      .pipe(map((sells) => sells.length > 0));
   }
 
   get(sellId: string) {
@@ -102,14 +91,18 @@ export class SellService {
     return this.storage.bulkPut(tableNames.sell, sellData);
   }
 
-  getDataByDate(startDate: string, endDate: string) {
-    return this.storage.getAll<any>(`${this.apiUrl}/products?startDate=${startDate}&endDate=${endDate}`);
+  uploadSellPaymentData(sellPaymentData: any[]) {
+    return this.storage.bulkPut(tableNames.sellPayment, sellPaymentData);
+  }
+
+  uploadSellItemsData(sellItemsData: any[]) {
+    return this.storage.bulkPut(tableNames.sellItem, sellItemsData);
   }
 
   getSellByDate(startDate: Date, endDate: Date) {
     const nextDay = new Date(endDate);
     nextDay.setDate(nextDay.getDate() + 1);
-  
+
     return this.storage.getAll<Sell>(tableNames.sell).pipe(
       map((sells) =>
         sells.filter((sell) => {
@@ -119,10 +112,45 @@ export class SellService {
       )
     );
   }
-  
+
+  getSellPaymentByDate(startDate: Date, endDate: Date) {
+    const nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    return this.storage.getAll<Sell>(tableNames.sell).pipe(
+      map((sells) =>
+        sells.filter((sell) => {
+          const sellDate = new Date(sell.sellDate);
+          return sellDate >= startDate && sellDate < nextDay;
+        })
+      )
+    );
+  }
+
+  getSellItemsByDate(startDate: Date, endDate: Date) {
+    const nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    return this.storage.getAll<Sell>(tableNames.sellItem).pipe(
+      map((sellItems) =>
+        sellItems.filter((sellItem) => {
+          const sellDate = new Date(sellItem.sellDate);
+          return sellDate >= startDate && sellDate < nextDay;
+        })
+      )
+    );
+  }
 
   deleteAllSell() {
     return this.storage.clear(tableNames.sell);
+  }
+
+  deleteAllSellPayment() {
+    return this.storage.clear(tableNames.sellPayment);
+  }
+
+  deleteAllSellItems() {
+    return this.storage.clear(tableNames.sellItem);
   }
 
   // deleteSellByDate(startDate: Date, endDate: Date) {
@@ -138,28 +166,79 @@ export class SellService {
 
   deleteSellByDate(startDate: Date, endDate: Date) {
     endDate.setDate(endDate.getDate() + 1);
-    return this.storage.getAll<Sell>(tableNames.sell).pipe(
-      switchMap((sells) => {
-        const filteredSells = sells.filter((sell) => {
-          const sellDate = new Date(sell.sellDate);
+    return this.storage.getAll<SellPayment>(tableNames.sellPayment).pipe(
+      switchMap((sellPayments) => {
+        const filteredSells = sellPayments.filter((sellPayment) => {
+          const sellDate = new Date(sellPayment.paymentDate);
           return sellDate >= startDate && sellDate <= endDate;
         });
-  
-        const deleteOperations = filteredSells.map((sell) => {
-          if (sell.sellId !== undefined) {
-            return this.storage.deleteRecord(tableNames.sell, sell.sellId);
+
+        const deleteOperations = filteredSells.map((sellPayment) => {
+          if (sellPayment.paymentId !== undefined) {
+            return this.storage.deleteRecord(tableNames.sell, sellPayment.paymentId);
           }
           return null;
         });
-  
+
         // Filter out any potential 'null' values from the previous step
-        const validDeleteOperations = deleteOperations.filter((op) => op !== null);
-  
+        const validDeleteOperations = deleteOperations.filter(
+          (op) => op !== null
+        );
+
         return forkJoin(validDeleteOperations);
       })
     );
   }
 
- 
+  // Need to be improvment that delete sellPayment and sellItems throw by filter form sellList-sellId not by Date.
 
+  // deleteSellPaymentByDate(startDate: Date, endDate: Date) {
+  //   endDate.setDate(endDate.getDate() + 1);
+  //   return this.storage.getAll<SellItem>(tableNames.sellItem).pipe(
+  //     switchMap((sellItems) => {
+  //       const filteredSells = sellItems.filter((sellItem) => {
+  //         const sellDate = new Date(sellItem.sellDate);
+  //         return sellDate >= startDate && sellDate <= endDate;
+  //       });
+
+  //       const deleteOperations = filteredSells.map((sellItem) => {
+  //         if (sellItem.sellItemId !== undefined) {
+  //           return this.storage.deleteRecord(tableNames.sellItem, sellItem.sellItemId);
+  //         }
+  //         return null;
+  //       });
+
+  //       const validDeleteOperations = deleteOperations.filter(
+  //         (op) => op !== null
+  //       );
+
+  //       return forkJoin(validDeleteOperations);
+  //     })
+  //   );
+  // }
+
+  // deleteSellItemsByDate(startDate: Date, endDate: Date) {
+  //   endDate.setDate(endDate.getDate() + 1);
+  //   return this.storage.getAll<Sell>(tableNames.sell).pipe(
+  //     switchMap((sells) => {
+  //       const filteredSells = sells.filter((sell) => {
+  //         const sellDate = new Date(sell.sellDate);
+  //         return sellDate >= startDate && sellDate <= endDate;
+  //       });
+
+  //       const deleteOperations = filteredSells.map((sell) => {
+  //         if (sell.sellId !== undefined) {
+  //           return this.storage.deleteRecord(tableNames.sell, sell.sellId);
+  //         }
+  //         return null;
+  //       });
+
+  //       const validDeleteOperations = deleteOperations.filter(
+  //         (op) => op !== null
+  //       );
+
+  //       return forkJoin(validDeleteOperations);
+  //     })
+  //   );
+  // }
 }

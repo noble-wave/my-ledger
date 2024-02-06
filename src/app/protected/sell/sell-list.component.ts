@@ -40,35 +40,6 @@ export class SellListComponent {
       canGoToView: true,
     });
 
-    // this.sells$ = this.service.getAll().pipe(
-    //   map((sells) => {
-    //     sells.forEach((sell) => {
-    //       // sell['qty'] =
-    //       //   sell.items?.reduce((qty, sellItem) => {
-    //       //     qty += sellItem.quantity;
-    //       //     return qty;
-    //       //   }, 0) || 1;
-
-    //       sell['qty'] =
-    //         sell.items?.reduce((qty, sellItem) => {
-    //           qty += sellItem.quantity;
-    //           return qty;
-    //         }, 0) || 1;
-
-    //       sell['sellDisplayDate'] = new Date(sell.sellDate)
-    //         ?.toISOString()
-    //         .split('T')[0];
-    //     });
-    //     sells.sort(
-    //       (a, b) =>
-    //         (new Date(b.sellDate).getTime() === this.selectedDate.getTime()
-    //           ? 1
-    //           : new Date(b.sellDate).getTime()) - new Date(a.sellDate).getTime()
-    //     );
-    //     return sells;
-    //   })
-    // );
-
     this.getData();
   }
 
@@ -97,10 +68,13 @@ export class SellListComponent {
           sell['qty'] = addtotalquantity.reduce((qty, sellItem) => {
             return qty + Number(sellItem.quantity);
           }, 0);
-
+          
+          if (sell.sellDate) {
           sell['sellDisplayDate'] = new Date(sell.sellDate)
-            ?.toISOString()
+            .toISOString()
             .split('T')[0];
+        }
+
         });
 
         sells.sort(

@@ -9,21 +9,6 @@
   margin-top: 30px !important;
 }
 
-.delete {
-  color: #f44336;
-}
-
-.delete_icon {
-  vertical-align: middle;
-}
-
-.delete_icon1 {
-  vertical-align: middle;
-  font-size: 38px !important;
-  height: 46px;
-  width: 34px;
-}
-
 .download-section {
   margin-bottom: 20px;
 }
@@ -59,26 +44,5 @@
   .container {
     max-width: 100%;
     padding: 10px;
-  }
-}
-
-/* Default styling for larger screens */
-.hide-on-small {
-  display: inline;
-}
-
-.show-on-small {
-  display: none;
-}
-
-/* Media query for small screens (adjust the max-width as needed) */
-@media (max-width: 768px) {
-  .hide-on-small {
-    display: none;
-  }
-
-  .show-on-small {
-    width: 150px;
-    display: inline;
   }
 }

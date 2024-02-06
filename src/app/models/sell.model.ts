@@ -43,6 +43,7 @@ export interface SellItem {
   sellItemId?: string;
   sellId?: string;
   productId: number;
+  sellDate: Date;
   productName: string;
   quantity: number;
   discount: number;
@@ -55,6 +56,7 @@ export function getSellItemMeta() {
     { key: 'sellItemId', label: 'SellItemId', hide: true },
     { key: 'sellId', label: 'sellId', hide: true },
     { key: 'productId', label: 'ProductId', hide: true },
+    { key: 'sellDate', label: 'Sell Date' },
     { key: 'productName', label: 'Product Name', required: true },
     { key: 'quantity', label: 'Quantity', required: true },
     { key: 'discount', label: 'Discount' },
