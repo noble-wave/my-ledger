@@ -42,13 +42,13 @@ export class DueBalanceComponent {
       currentDate
     );
   }
-  
+ 
   calculateDueAmountInRange(startDate: Date, endDate: Date): number {
     return this.sells
-      .filter((sell) => {
+      .filter(sell => {
         let sellDate = new Date(sell.sellDate);
         return sellDate >= startDate && sellDate <= endDate;
       })
-      .reduce((dueAmount, sell) => dueAmount + sell.dueAmount, 0);
+      .reduce((dueAmount, sell) => dueAmount + Number(sell.dueAmount), 0);
   }
 }

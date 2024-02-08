@@ -285,6 +285,7 @@ export class SellComponent implements OnDestroy {
 
       sellItems.forEach((sellItem) => {
         sellItem.sellId = sellId;
+        sellItem.sellDate = new Date();
       });
 
       this.sellService.addSellItems(sellItems).subscribe((z) => {

@@ -42,7 +42,7 @@ export class SaleDashboardComponent {
         let sellDate = new Date(sell.sellDate);
         return sellDate >= startDate && sellDate <= endDate;
       })
-      .reduce((totalNetAmount, sell) => totalNetAmount + sell.netAmount, 0);
+      .reduce((totalNetAmount, sell) => totalNetAmount + Number(sell.netAmount), 0);
   }
 
 }

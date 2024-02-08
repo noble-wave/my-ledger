@@ -1,0 +1,75 @@
+<div class="container">
+    <h2 class="delete">
+      <mat-icon class="delete_icon1">dangerous</mat-icon> &nbsp;
+      <span>Delete Product, Customer, and Sell Data</span>&nbsp;
+      <mat-icon class="delete_icon">delete</mat-icon> &nbsp;
+  
+    </h2>
+  
+    <div class="container">
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="hide-on-small">Delete All Data</span>
+              <span class="show-on-small">Delete All Data</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+  
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div fxFlex="33%" fxFlex.xs="100%">
+              <button mat-raised-button (click)="deleteProductData('500ms', '200ms')"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Product</button>
+            </div>
+            <div fxFlex="33%" fxFlex.xs="100%">
+              <button mat-raised-button (click)="deleteCustomerData('500ms', '200ms')"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Customer</button>
+            </div>
+            <div fxFlex="33%" fxFlex.xs="100%">
+              <button mat-raised-button (click)="deleteSellData('500ms', '200ms')"
+                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Sell</button>
+            </div>
+          </div>
+  
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="container">
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="hide-on-small">Delete Data by Date Range</span>
+              <span class="show-on-small">Delete Data by Date Range</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="download-section">
+            <mat-form-field class="example-form-field">
+              <mat-label>Select the Date Range</mat-label>
+              <mat-date-range-input [formGroup]="datePicker" [rangePicker]="picker1">
+                <input matStartDate placeholder="Start date" formControlName="start">
+                <input matEndDate placeholder="End date" formControlName="end">
+              </mat-date-range-input>
+              <mat-hint>Start Date MM/DD/YYYY – End Date MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker1></mat-date-range-picker>
+            </mat-form-field>
+            <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
+              <div fxFlex="33%" fxFlex.xs="100%">
+                <button mat-raised-button (click)="deleteProductAndInventoryDataByDateAndDownload('500ms', '200ms')"
+                  color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Product</button>
+              </div>
+              <div fxFlex="33%" fxFlex.xs="100%">
+                <button mat-raised-button (click)="deleteCustomerDataByDate( '500ms', '200ms')"
+                  color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Customer</button>
+              </div>
+              <div fxFlex="33%" fxFlex.xs="100%">
+                <button mat-raised-button (click)="deleteSellDataByDate('500ms', '200ms')"
+                  color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Sell</button>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
