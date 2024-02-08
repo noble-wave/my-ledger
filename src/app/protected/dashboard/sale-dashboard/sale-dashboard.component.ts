@@ -45,8 +45,4 @@ export class SaleDashboardComponent {
       .reduce((totalNetAmount, sell) => totalNetAmount + Number(sell.netAmount), 0);
   }
 
-  // sell['qty'] = addtotalquantity.reduce((qty, sellItem) => {
-  //   return qty + Number(sellItem.quantity);
-  // }, 0);
-
 }

@@ -11,26 +11,20 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
-                    <div fxFlex="25%" fxFlex.xs="70%">
+                <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                    <div fxFlex="33%" fxFlex.xs="100%">
                         <button mat-raised-button (click)="downloadProductData()"
                             color="primary"><mat-icon>download</mat-icon>Export All Product</button>
                     </div>
-                    <div fxFlex="25%" fxFlex.xs="70%">
+                    <div fxFlex="33%" fxFlex.xs="100%">
                         <button mat-raised-button (click)="downloadCustomerData()"
                             color="primary"><mat-icon>download</mat-icon>Export All Customer</button>
                     </div>
-                    <div fxFlex="25%" fxFlex.xs="70%">
+                    <div fxFlex="33%" fxFlex.xs="100%">
                         <button mat-raised-button (click)="downloadSellData()"
                             color="primary"><mat-icon>download</mat-icon>Export
                             All Payment</button>
                     </div>
-                    <div fxFlex="25%" fxFlex.xs="70%">
-                        <button mat-raised-button (click)="downloadSellData()"
-                            color="primary"><mat-icon>download</mat-icon>Export
-                            All Sell</button>
-                    </div>
-
                 </div>
 
             </mat-expansion-panel>
@@ -57,21 +51,17 @@
                         <mat-date-range-picker #picker></mat-date-range-picker>
                     </mat-form-field>
                     <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
-                        <div fxFlex="25%" fxFlex.xs="70%">
+                        <div fxFlex="33%" fxFlex.xs="100%">
                             <button mat-raised-button (click)="exportProductAndInventoryDataByDate()"
                                 color="primary"><mat-icon>download</mat-icon>Export Product</button>
                         </div>
-                        <div fxFlex="25%" fxFlex.xs="70%">
+                        <div fxFlex="33%" fxFlex.xs="100%">
                             <button mat-raised-button (click)="exportCustomerDataByDate()"
                                 color="primary"><mat-icon>download</mat-icon>Export Customer</button>
                         </div>
-                        <div fxFlex="25%" fxFlex.xs="70%">
+                        <div fxFlex="33%" fxFlex.xs="100%">
                             <button mat-raised-button (click)="exportSellDataByDate()"
                                 color="primary"><mat-icon>download</mat-icon>Export Sell</button>
-                        </div>
-                        <div fxFlex="25%" fxFlex.xs="70%">
-                            <button mat-raised-button (click)="exportSellDataByDate()"
-                                color="primary"><mat-icon>download</mat-icon>Export Payment</button>
                         </div>
                     </div>
                 </div>

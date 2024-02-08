@@ -14,9 +14,6 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./export-data.component.scss'],
 })
 export class ExportDataComponent {
-  customers: any;
-  products: any;
-  sells: any;
   datePicker: FormGroup;
   panelOpenState = false;
 
@@ -55,33 +52,42 @@ export class ExportDataComponent {
 
       this.app.noty.notifyClose('Products and Product Inventorys data exported successfully.');
     } catch (error) {
-      console.error('Error while downloading product data:', error);
+      console.error('Error while downloading products data:', error);
     }
   }
 
   async downloadCustomerData() {
     try {
-      const x = await firstValueFrom(this.customerService.getAll());
-      this.customers = x;
-      const csv = Papa.unparse(this.customers);
-      const blob = new Blob([csv], { type: 'text/csv' });
-      saveAs(blob, 'customer.csv');
-      this.app.noty.notifyClose('Customer data exported successfully as CSV.');
+      const customers = await firstValueFrom(this.customerService.getAll());
+      const csvCustomers = Papa.unparse(customers);
+      const customersBlob = new Blob([csvCustomers], { type: 'text/csv' });
+      saveAs(customersBlob, 'customers.csv');
+      this.app.noty.notifyClose('Customers data exported successfully as CSV.');
     } catch (error) {
-      console.error('Error while downloading customer data:', error);
+      console.error('Error while downloading customers data:', error);
       // You can handle errors here
     }
   }
 
   async downloadSellData() {
     try {
-      const x = await firstValueFrom(this.sellService.getAll());
-      this.sells = x;
-      const csv = Papa.unparse(this.sells);
-      const blob = new Blob([csv], { type: 'text/csv' });
-      saveAs(blob, 'sell.csv');
+      const sells = await firstValueFrom(this.sellService.getAll());
+      const sellItems = await firstValueFrom(this.sellService.getAllSellItem());
+      const sellPayments = await firstValueFrom(this.sellService.getAllSellPayment());
 
-      this.app.noty.notifyClose('Sell data exported successfully.');
+      const csvSells = Papa.unparse(sells);
+      const csvSellItems = Papa.unparse(sellItems);
+      const csvSellPayments = Papa.unparse(sellPayments);
+
+      const sellsBlob = new Blob([csvSells], { type: 'text/csv' });
+      const sellItemsBlob = new Blob([csvSellItems], { type: 'text/csv' });
+      const sellPaymentsBlob = new Blob([csvSellPayments], { type: 'text/csv' });
+
+      saveAs(sellsBlob, 'sells.csv');
+      saveAs(sellItemsBlob, 'sellItems.csv');
+      saveAs(sellPaymentsBlob, 'sellPayments.csv');
+
+      this.app.noty.notifyClose('Sells, Sell Itmes and Sell Payments data exported successfully.');
     } catch (error) {
       console.error('Error while downloading sell data:', error);
       // You can handle errors here
@@ -110,7 +116,7 @@ export class ExportDataComponent {
       this.exportData(csvProducts, 'products.csv');
       this.exportData(csvInventory, 'productInventorys.csv');
       this.app.noty.notifyClose(
-        'Product by Date data with Inventory exported successfully.'
+        'Products and product Inventorys by Date data exported successfully.'
       );
     });
   }
@@ -129,8 +135,8 @@ export class ExportDataComponent {
       .getCustomerByDate(startDate, endDate)
       .subscribe((x) => {
         const csv = Papa.unparse(x);
-        this.exportData(csv, 'customer.csv');
-        this.app.noty.notifyClose('Customer data exported successfully.');
+        this.exportData(csv, 'customers.csv');
+        this.app.noty.notifyClose('Customers data exported successfully.');
       });
   }
 
@@ -144,11 +150,28 @@ export class ExportDataComponent {
       return;
     }
 
-    this.sellService.getSellByDate(startDate, endDate).subscribe((x) => {
-      const csv = Papa.unparse(x);
-      this.exportData(csv, 'sell.csv');
-      this.app.noty.notifyClose('Sell data exported successfully.');
+    forkJoin({
+      sells: this.sellService.getSellByDate(startDate, endDate),
+      sellItmes: this.sellService.getSellItemsByDate(startDate, endDate),
+      sellPayments: this.sellService.getSellPaymentsByDate(startDate, endDate),
+    }).subscribe(({ sells, sellItmes, sellPayments }) => {
+      const csvsells = Papa.unparse(sells);
+      const csvsellItmes = Papa.unparse(sellItmes);
+      const csvsellPayments = Papa.unparse(sellPayments);
+
+      this.exportData(csvsells, 'sells.csv');
+      this.exportData(csvsellItmes, 'sellItmes.csv');
+      this.exportData(csvsellPayments, 'sellPayments.csv');
+      this.app.noty.notifyClose(
+        'sells, Sell Itmes and Sell Payments by Date data exported successfully.'
+      );
     });
+
+    // this.sellService.getSellByDate(startDate, endDate).subscribe((x) => {
+    //   const csv = Papa.unparse(x);
+    //   this.exportData(csv, 'sells.csv');
+    //   this.app.noty.notifyClose('Sells data exported successfully.');
+    // });
   }
 
   // Generic method to export data as a JSON file

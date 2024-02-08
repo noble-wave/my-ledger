@@ -65,7 +65,11 @@ export class ImportDataComponent {
           header: true,
           complete: (result) => {
             const data = result.data;
-            if (this.isSellData(data)) {
+            if (this.isSellItmesData(data)) {
+              this.handleSellItemsUpload(data);
+            } else if (this.isSellPaymentsData(data)) {
+              this.handleSellPaymentUpload(data);
+            } else if (this.isSellData(data)) {
               this.handleSellUpload(data);
             } else if (this.isProductInventoryData(data)) {
               this.handleProductInventoryUpload(data);
@@ -89,26 +93,29 @@ export class ImportDataComponent {
     }
   }
 
-  // Check if JSON data represents product data
-  private isProductInventoryData(data: any): boolean {
+  // Check if CSV data represents in data
+  private isSellItmesData(data: any): boolean {
     // Implement logic to identify product data based on its structure
     // Example: Check if data contains product-related fields
+    return data && data.length > 0 && 'sellItemId' in data[0];
+  }
+  private isSellPaymentsData(data: any): boolean {
+    return data && data.length > 0 && 'paymentId' in data[0];
+  }
+
+  private isSellData(data: any): boolean {
+    return data && data.length > 0 && 'sellId' in data[0];
+  }
+  private isProductInventoryData(data: any): boolean {
     return data && data.length > 0 && 'count' in data[0];
   }
+
   private isProductData(data: any): boolean {
-    // Implement logic to identify product data based on its structure
-    // Example: Check if data contains product-related fields
     return data && data.length > 0 && 'productId' in data[0];
   }
 
-  // Check if JSON data represents customer data
   private isCustomerData(data: any): boolean {
     return data && data.length > 0 && 'customerId' in data[0];
-  }
-
-  // Check if JSON data represents sell data
-  private isSellData(data: any): boolean {
-    return data && data.length > 0 && 'sellId' in data[0];
   }
 
   // Handle uploading product data
@@ -152,6 +159,22 @@ export class ImportDataComponent {
   // Handle uploading sell data
   private handleSellUpload(sellData: any): void {
     this.sellService.uploadSellData(sellData).subscribe(() => {
+      console.log('Sell data uploaded successfully.');
+      this.app.noty.notifyClose('Sell data uploaded successfully.');
+    });
+  }
+
+  // Handle uploading sell data
+  private handleSellItemsUpload(sellData: any): void {
+    this.sellService.uploadSellItemsData(sellData).subscribe(() => {
+      console.log('Sell data uploaded successfully.');
+      this.app.noty.notifyClose('Sell data uploaded successfully.');
+    });
+  }
+
+  // Handle uploading sell data
+  private handleSellPaymentUpload(sellData: any): void {
+    this.sellService.uploadSellPaymentsData(sellData).subscribe(() => {
       console.log('Sell data uploaded successfully.');
       this.app.noty.notifyClose('Sell data uploaded successfully.');
     });

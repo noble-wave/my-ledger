@@ -16,6 +16,24 @@ export class SellService {
   constructor(private storage: StorageService) {}
   private apiUrl = 'your_api_url_here';
 
+  
+  isDataPresent(): Observable<boolean> {
+    return this.storage
+      .getAll<Sell>(tableNames.sell)
+      .pipe(map((sells) => sells.length > 0));
+  }
+
+  getStatusOptions() {
+    return this.toArray(SellStatus);
+  }
+
+  private toArray(enumme) {
+    let obj = Object.keys(enumme).map((key) => {
+      return { label: key, value: enumme[key] };
+    });
+    return obj;
+  }
+
   addSell(sellData: Sell) {
     sellData.sellId = `oi_${cryptoRandomString({ length: 10 })}`;
     sellData.sellNumber = `${cryptoRandomString({ length: 6 })}`;
@@ -58,12 +76,6 @@ export class SellService {
     return this.storage.getAll<SellItem>(tableNames.sellItem);
   }
 
-  isDataPresent(): Observable<boolean> {
-    return this.storage
-      .getAll<Sell>(tableNames.sell)
-      .pipe(map((sells) => sells.length > 0));
-  }
-
   get(sellId: string) {
     return this.storage.getByKey<Sell>(tableNames.sell, sellId);
   }
@@ -72,26 +84,27 @@ export class SellService {
     return this.storage.getByKey<Sell>(tableNames.sellPayment, paymentId);
   }
 
-  getAllSellItemId(sellItemId: string) {
+  getAllSellItemById(sellItemId: string) {
     return this.storage.getByKey<Sell>(tableNames.sellItem, sellItemId);
   }
 
-  getStatusOptions() {
-    return this.toArray(SellStatus);
+  deleteAllSell() {
+    return this.storage.clear(tableNames.sell);
   }
 
-  private toArray(enumme) {
-    let obj = Object.keys(enumme).map((key) => {
-      return { label: key, value: enumme[key] };
-    });
-    return obj;
+  deleteAllSellPayment() {
+    return this.storage.clear(tableNames.sellPayment);
+  }
+
+  deleteAllSellItems() {
+    return this.storage.clear(tableNames.sellItem);
   }
 
   uploadSellData(sellData: any[]) {
     return this.storage.bulkPut(tableNames.sell, sellData);
   }
 
-  uploadSellPaymentData(sellPaymentData: any[]) {
+  uploadSellPaymentsData(sellPaymentData: any[]) {
     return this.storage.bulkPut(tableNames.sellPayment, sellPaymentData);
   }
 
@@ -113,45 +126,48 @@ export class SellService {
     );
   }
 
-  getSellPaymentByDate(startDate: Date, endDate: Date) {
-    const nextDay = new Date(endDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-
-    return this.storage.getAll<Sell>(tableNames.sell).pipe(
-      map((sells) =>
-        sells.filter((sell) => {
-          const sellDate = new Date(sell.sellDate);
-          return sellDate >= startDate && sellDate < nextDay;
-        })
-      )
-    );
-  }
-
   getSellItemsByDate(startDate: Date, endDate: Date) {
     const nextDay = new Date(endDate);
     nextDay.setDate(nextDay.getDate() + 1);
-
-    return this.storage.getAll<Sell>(tableNames.sellItem).pipe(
-      map((sellItems) =>
-        sellItems.filter((sellItem) => {
-          const sellDate = new Date(sellItem.sellDate);
-          return sellDate >= startDate && sellDate < nextDay;
-        })
+  
+    return this.storage.getAll<Sell>(tableNames.sell).pipe(
+      switchMap((sells) =>
+        this.storage.getAll<SellPayment>(tableNames.sellItem).pipe(
+          map((sellItems) =>
+          sellItems.filter((sellItem) =>
+              sells.some((sell) => {
+                const sellDate = new Date(sell.sellDate);
+                return sell.sellId === sellItem.sellId &&
+                  sellDate >= startDate && sellDate < nextDay;
+              })
+            )
+          )
+        )
       )
     );
   }
 
-  deleteAllSell() {
-    return this.storage.clear(tableNames.sell);
+  getSellPaymentsByDate(startDate: Date, endDate: Date) {
+    const nextDay = new Date(endDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+  
+    return this.storage.getAll<Sell>(tableNames.sell).pipe(
+      switchMap((sells) =>
+        this.storage.getAll<SellPayment>(tableNames.sellPayment).pipe(
+          map((sellPayments) =>
+            sellPayments.filter((sellPayment) =>
+              sells.some((sell) => {
+                const sellDate = new Date(sell.sellDate);
+                return sell.sellId === sellPayment.sellId &&
+                  sellDate >= startDate && sellDate < nextDay;
+              })
+            )
+          )
+        )
+      )
+    );
   }
-
-  deleteAllSellPayment() {
-    return this.storage.clear(tableNames.sellPayment);
-  }
-
-  deleteAllSellItems() {
-    return this.storage.clear(tableNames.sellItem);
-  }
+  
 
   // deleteSellByDate(startDate: Date, endDate: Date) {
   //   endDate.setDate(endDate.getDate() + 1);

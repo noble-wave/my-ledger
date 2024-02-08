@@ -17,21 +17,17 @@
           </mat-expansion-panel-header>
   
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
-            <div fxFlex="25%" fxFlex.xs="100%">
+            <div fxFlex="33%" fxFlex.xs="100%">
               <button mat-raised-button (click)="deleteProductData('500ms', '200ms')"
                 color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Product</button>
             </div>
-            <div fxFlex="25%" fxFlex.xs="100%">
+            <div fxFlex="33%" fxFlex.xs="100%">
               <button mat-raised-button (click)="deleteCustomerData('500ms', '200ms')"
                 color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Customer</button>
             </div>
-            <div fxFlex="25%" fxFlex.xs="100%">
+            <div fxFlex="33%" fxFlex.xs="100%">
               <button mat-raised-button (click)="deleteSellData('500ms', '200ms')"
                 color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Sell</button>
-            </div>
-            <div fxFlex="25%" fxFlex.xs="100%">
-              <button mat-raised-button (click)="deleteSellData('500ms', '200ms')"
-                color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete All Payment</button>
             </div>
           </div>
   
@@ -59,21 +55,17 @@
               <mat-date-range-picker #picker1></mat-date-range-picker>
             </mat-form-field>
             <div fxLayout="row wrap" fxLayoutGap="10px 10px grid" class="margin">
-              <div fxFlex="25%" fxFlex.xs="70%">
+              <div fxFlex="33%" fxFlex.xs="100%">
                 <button mat-raised-button (click)="deleteProductAndInventoryDataByDateAndDownload('500ms', '200ms')"
                   color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Product</button>
               </div>
-              <div fxFlex="25%" fxFlex.xs="70%">
+              <div fxFlex="33%" fxFlex.xs="100%">
                 <button mat-raised-button (click)="deleteCustomerDataByDate( '500ms', '200ms')"
                   color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Customer</button>
               </div>
-              <div fxFlex="25%" fxFlex.xs="70%">
+              <div fxFlex="33%" fxFlex.xs="100%">
                 <button mat-raised-button (click)="deleteSellDataByDate('500ms', '200ms')"
                   color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Sell</button>
-              </div>
-              <div fxFlex="25%" fxFlex.xs="70%">
-                <button mat-raised-button (click)="deleteSellDataByDate('500ms', '200ms')"
-                  color="warn"><mat-icon>delete</mat-icon><mat-icon>download</mat-icon> Delete Payment</button>
               </div>
             </div>
           </div>

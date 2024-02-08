@@ -8,7 +8,7 @@ import { AppService } from '@app/services/app.service';
 import { DialogComponent } from '@app/shared/controls/template/dialog/dialog.component';
 import { saveAs } from 'file-saver';
 import * as Papa from 'papaparse';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-delete-data',
@@ -16,9 +16,6 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./delete-data.component.scss'],
 })
 export class DeleteDataComponent {
-  customers: any;
-  products: any;
-  sells: any;
   datePicker: FormGroup;
   panelOpenState = false;
 
@@ -160,17 +157,28 @@ export class DeleteDataComponent {
 
         try {
           // Call your SellService to get the sell data based on the provided date range
-          const sellData = await firstValueFrom(this.sellService.getAll());
+          const sells = await firstValueFrom(this.sellService.getAll());
+          const sellItems = await firstValueFrom(this.sellService.getAllSellItem());
+          const sellPayments = await firstValueFrom(this.sellService.getAllSellPayment());
 
           // Export the sell data to a file
-          const csv = Papa.unparse(sellData);
-          this.exportData(csv, 'sell.csv');
+          const csvSells = Papa.unparse(sells);
+          const csvSellItems = Papa.unparse(sellItems);
+          const csvSellPayments = Papa.unparse(sellPayments);
+
+          this.exportData(csvSells, 'sells.csv');
+          this.exportData(csvSellItems, 'sellItems.csv');
+          this.exportData(csvSellPayments, 'sellPayments.csv');
 
           // After exporting, delete the sell data by date range
           const deleteResult = await firstValueFrom(
-            this.sellService.deleteAllSell()
-          );
-
+            forkJoin([
+                this.sellService.deleteAllSell(),
+                this.sellService.deleteAllSellItems(),
+                this.sellService.deleteAllSellPayment()
+            ])
+        );
+        
           // Check the deleteResult if necessary
 
           this.app.noty.notifyClose(

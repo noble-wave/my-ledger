@@ -3,7 +3,6 @@ import { CustomerService } from '../services/customer.service';
 import { ProductService } from '../services/product.service';
 import { SellService } from '../services/sell.service';
 import { AppService } from '@app/services/app.service';
-import { FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 
 @Component({
@@ -13,9 +12,6 @@ import { Location } from '@angular/common';
 })
 export class ImportExportComponent {
   selectedFiles: FileList | null = null;
-  customers: any;
-  products: any;
-  sells: any;
 
   constructor(
     private customerService: CustomerService,
@@ -69,13 +65,6 @@ export class ImportExportComponent {
 
       reader.readAsText(file);
     }
-  }
-
-  // Check if JSON data represents product data
-  private isProductData(data: any): boolean {
-    // Implement logic to identify product data based on its structure
-    // Example: Check if data contains product-related fields
-    return data && data.length > 0 && 'productId' in data[0];
   }
 
   // Check if JSON data represents customer data
