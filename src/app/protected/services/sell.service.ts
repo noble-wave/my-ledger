@@ -120,7 +120,7 @@ export class SellService {
       map((sells) =>
         sells.filter((sell) => {
           const sellDate = new Date(sell.sellDate);
-          return sellDate >= startDate && sellDate < nextDay;
+          return sellDate >= startDate && sellDate <= nextDay;
         })
       )
     );
@@ -138,7 +138,7 @@ export class SellService {
               sells.some((sell) => {
                 const sellDate = new Date(sell.sellDate);
                 return sell.sellId === sellItem.sellId &&
-                  sellDate >= startDate && sellDate < nextDay;
+                  sellDate >= startDate && sellDate <= nextDay;
               })
             )
           )
@@ -159,7 +159,7 @@ export class SellService {
               sells.some((sell) => {
                 const sellDate = new Date(sell.sellDate);
                 return sell.sellId === sellPayment.sellId &&
-                  sellDate >= startDate && sellDate < nextDay;
+                  sellDate >= startDate && sellDate <= nextDay;
               })
             )
           )
@@ -180,23 +180,22 @@ export class SellService {
   //     );
   // }
 
-  deleteSellByDate(startDate: Date, endDate: Date) {
+   deleteSellByDate(startDate: Date, endDate: Date) {
     endDate.setDate(endDate.getDate() + 1);
-    return this.storage.getAll<SellPayment>(tableNames.sellPayment).pipe(
-      switchMap((sellPayments) => {
-        const filteredSells = sellPayments.filter((sellPayment) => {
-          const sellDate = new Date(sellPayment.paymentDate);
+    return this.storage.getAll<Sell>(tableNames.sell).pipe(
+      switchMap((sells) => {
+        const filteredSells = sells.filter((sell) => {
+          const sellDate = new Date(sell.sellDate);
           return sellDate >= startDate && sellDate <= endDate;
         });
 
-        const deleteOperations = filteredSells.map((sellPayment) => {
-          if (sellPayment.paymentId !== undefined) {
-            return this.storage.deleteRecord(tableNames.sell, sellPayment.paymentId);
+        const deleteOperations = filteredSells.map((sell) => {
+          if (sell.sellId !== undefined) {
+            return this.storage.deleteRecord(tableNames.sell, sell.sellId);
           }
           return null;
         });
 
-        // Filter out any potential 'null' values from the previous step
         const validDeleteOperations = deleteOperations.filter(
           (op) => op !== null
         );
@@ -206,55 +205,86 @@ export class SellService {
     );
   }
 
-  // Need to be improvment that delete sellPayment and sellItems throw by filter form sellList-sellId not by Date.
+  deleteSellPaymentByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage.getAll<SellPayment>(tableNames.sellPayment).pipe(
+      switchMap((sellPayments) => {
+        const filteredSells = sellPayments.filter((sellPayment) => {
+          const paymentDate = new Date(sellPayment.paymentDate);
+          return paymentDate >= startDate && paymentDate <= endDate;
+        });
 
-  // deleteSellPaymentByDate(startDate: Date, endDate: Date) {
-  //   endDate.setDate(endDate.getDate() + 1);
-  //   return this.storage.getAll<SellItem>(tableNames.sellItem).pipe(
-  //     switchMap((sellItems) => {
-  //       const filteredSells = sellItems.filter((sellItem) => {
-  //         const sellDate = new Date(sellItem.sellDate);
-  //         return sellDate >= startDate && sellDate <= endDate;
-  //       });
+        const deleteOperations = filteredSells.map((sellPayment) => {
+          if (sellPayment.paymentId !== undefined) {
+            return this.storage.deleteRecord(tableNames.sellPayment, sellPayment.paymentId);
+          }
+          return null;
+        });
 
-  //       const deleteOperations = filteredSells.map((sellItem) => {
-  //         if (sellItem.sellItemId !== undefined) {
-  //           return this.storage.deleteRecord(tableNames.sellItem, sellItem.sellItemId);
-  //         }
-  //         return null;
-  //       });
+        const validDeleteOperations = deleteOperations.filter(
+          (op) => op !== null
+        );
 
-  //       const validDeleteOperations = deleteOperations.filter(
-  //         (op) => op !== null
-  //       );
+        return forkJoin(validDeleteOperations);
+      })
+    );
+  }
 
-  //       return forkJoin(validDeleteOperations);
-  //     })
-  //   );
-  // }
+  deleteSellPaymentByDate1(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage.getAll<Sell>(tableNames.sell).pipe(
+      switchMap((sells) => {
+        return this.storage.getAll<SellPayment>(tableNames.sellPayment).pipe(
+          map((sellPayments) => {
+            const filteredSellPayments = sellPayments.filter((sellPayment) =>
+              sells.some((sell) => {
+                const sellDate = new Date(sell.sellDate);
+                return sell.sellId === sellPayment.sellId &&
+                  sellDate >= startDate && sellDate <= endDate;
+              })
+            );
+            const deleteOperations = filteredSellPayments.map((sellPayment) => {
+              if (sellPayment.sellId !== undefined) {
+                return this.storage.deleteRecord(tableNames.sellPayment, sellPayment.sellId);
+              }
+              return null;
+            });
+  
+            // Filter out any potential 'null' values from the previous step
+            const validDeleteOperations = deleteOperations.filter(
+              (op) => op !== null
+            );
+  
+            return forkJoin(validDeleteOperations);
+          })
+        );
+      })
+    );
+  }
+  
 
-  // deleteSellItemsByDate(startDate: Date, endDate: Date) {
-  //   endDate.setDate(endDate.getDate() + 1);
-  //   return this.storage.getAll<Sell>(tableNames.sell).pipe(
-  //     switchMap((sells) => {
-  //       const filteredSells = sells.filter((sell) => {
-  //         const sellDate = new Date(sell.sellDate);
-  //         return sellDate >= startDate && sellDate <= endDate;
-  //       });
+  deleteSellItemsByDate(startDate: Date, endDate: Date) {
+    endDate.setDate(endDate.getDate() + 1);
+    return this.storage.getAll<SellItem>(tableNames.sellItem).pipe(
+      switchMap((sellItems) => {
+        const filteredSells = sellItems.filter((sellItem) => {
+          const sellDate = new Date(sellItem.sellDate);
+          return sellDate >= startDate && sellDate <= endDate;
+        });
 
-  //       const deleteOperations = filteredSells.map((sell) => {
-  //         if (sell.sellId !== undefined) {
-  //           return this.storage.deleteRecord(tableNames.sell, sell.sellId);
-  //         }
-  //         return null;
-  //       });
+        const deleteOperations = filteredSells.map((sellItem) => {
+          if (sellItem.sellItemId !== undefined) {
+            return this.storage.deleteRecord(tableNames.sellItem, sellItem.sellItemId);
+          }
+          return null;
+        });
 
-  //       const validDeleteOperations = deleteOperations.filter(
-  //         (op) => op !== null
-  //       );
+        const validDeleteOperations = deleteOperations.filter(
+          (op) => op !== null
+        );
 
-  //       return forkJoin(validDeleteOperations);
-  //     })
-  //   );
-  // }
+        return forkJoin(validDeleteOperations);
+      })
+    );
+  }
 }

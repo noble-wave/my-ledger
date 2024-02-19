@@ -35,7 +35,7 @@
                     <span *ngIf="setting?.address">{{setting?.address}}, {{setting?.pinCode}}<br></span>
                     <!-- <span *ngIf="setting?.pinCode">pincode -{{setting?.pinCode}}<br></span>
                     <span *ngIf="setting?.state">state - {{setting?.state}}<br></span> -->
-                    <span *ngIf="setting?.country">{{setting?.state}}, {{setting?.country}}<br></span>
+                    <span *ngIf="setting?.state || setting?.country" >{{setting?.state}}, {{setting?.country}}<br></span>
                 </p>
             </div>
         </div>
