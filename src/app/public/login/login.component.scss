@@ -1,0 +1,30 @@
+.login-container {
+    margin: 40px 20px 20px 20px;
+    color: var(--grey-100);
+}
+
+.login-card {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.heading {
+    margin-bottom: 20px;
+}
+
+.googleButton{
+    display: flex;
+    justify-content: space-around;
+}
+
+.user-details {
+    margin-top: 20px;
+}
+
+.user-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}

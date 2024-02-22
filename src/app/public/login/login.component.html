@@ -1,3 +1,23 @@
-<p>login works!</p>
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-content>
+      <h2 class="heading" *ngIf="!user">Etrivia Ledger</h2>
 
-<div>{{title}}</div>
+      <h3 *ngIf="!user">Login</h3>
+      <div class="googleButton">
+        <asl-google-signin-button *ngIf="!user" size='large' width="300" type="standard" logo_alignment="center"
+          shape="circle"></asl-google-signin-button>
+      </div>
+
+      <div *ngIf="user" class="user-details">
+        <img [src]="user.photoUrl" referrerpolicy="no-referrer" class="user-avatar">
+        <div>
+          <h4>{{ user.name }}</h4>
+          <p>{{ user.email }}</p>
+        </div>
+        <button type="button" class="ml-8" mat-button mat-raised-button color="primary"
+          (click)="signOut()"><mat-icon>logout</mat-icon>Sign out</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
