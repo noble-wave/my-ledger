@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SocialService } from '@app/services/social.service';
+import { ActivatedRoute } from '@angular/router';
 import { IPageTitleBar, IrsPageTitleBarService } from '@app/shared-services';
 
 @Component({
@@ -10,17 +9,13 @@ import { IPageTitleBar, IrsPageTitleBarService } from '@app/shared-services';
 })
 export class PageTitleBarComponent implements OnInit {
   pageTitleBar?: IPageTitleBar | undefined;
-  userData: any;
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private pageTitleBarService: IrsPageTitleBarService,
-    private socialService: SocialService
+    private pageTitleBarService: IrsPageTitleBarService
   ) {}
 
   ngOnInit() {
-    this.userData = this.socialService.$userData;
     this.pageTitleBarService.current$.subscribe((pageTitle) => {
       this.pageTitleBar = pageTitle;
     });

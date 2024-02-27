@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CoreService } from '../../services/core.service';
 import { SocialService } from '@app/services/social.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-bar',
@@ -22,11 +23,14 @@ export class TopBarComponent implements OnInit {
   constructor(
     private service: CoreService,
     private cdr: ChangeDetectorRef,
-    private socialService: SocialService
+    private socialService: SocialService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.userInfo = this.socialService.$userData;
+    this.socialService.$userData.subscribe((x) => {
+      this.userInfo = x;
+    });
     this.institutes$ = this.service.appData$.pipe(
       tap((institutes) => {
         console.log('Institute list updated');
@@ -47,5 +51,13 @@ export class TopBarComponent implements OnInit {
       //   this.institutionStore.setPersist(institution);
       // }
     }
+  }
+
+  signOut(): void {
+    this.socialService.signOut();
+  }
+
+  signIn() {
+    this.router.navigate(['/login'], {});
   }
 }

@@ -8,6 +8,11 @@
         <asl-google-signin-button *ngIf="!user" size='large' width="300" type="standard" logo_alignment="center"
           shape="circle"></asl-google-signin-button>
       </div>
+      <div *ngIf="!user">
+        <h2>Or</h2>
+        <button type="button" class="ml-8" mat-button mat-raised-button color="primary"
+          (click)="withoutLogin()"><mat-icon>login</mat-icon>Without Login</button>
+      </div>
 
       <div *ngIf="user" class="user-details">
         <img [src]="user.photoUrl" referrerpolicy="no-referrer" class="user-avatar">

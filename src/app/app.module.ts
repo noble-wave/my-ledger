@@ -28,14 +28,14 @@ import {
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
-        autoLogin: false,
+        autoLogin: true,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
               '533038146655-etu6cgcfv25k5nv8trmauf0a2p4i361m.apps.googleusercontent.com',
               {
-                oneTapEnabled: false, // default is true
+                oneTapEnabled: true, // default is true
                 scopes: 'profile https://www.googleapis.com/auth/drive',
               }
             ),

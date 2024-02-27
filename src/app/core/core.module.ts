@@ -9,16 +9,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 
-const routes: Routes = [
-];
+const routes: Routes = [];
 
 @NgModule({
-  declarations: [
-    AppNavComponent,
-    TopBarComponent,
-    PageTitleBarComponent,
-  ],
+  declarations: [AppNavComponent, TopBarComponent, PageTitleBarComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -27,11 +23,9 @@ const routes: Routes = [
     MatIconModule,
     MatSidenavModule,
     MatListModule,
+    MatMenuModule,
   ],
-  exports: [
-    AppNavComponent
-  ],
-  providers: [
-  ]
+  exports: [AppNavComponent],
+  providers: [],
 })
-export class CoreModule { }
+export class CoreModule {}

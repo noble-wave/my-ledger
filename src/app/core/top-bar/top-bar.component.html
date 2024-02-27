@@ -11,5 +11,25 @@
     <!-- <mat-menu #menu="matMenu">
       <button *ngFor="let item of institutes$ | async" mat-menu-item (click)="changeInstitute(item.id)">{{item.name}}</button>
     </mat-menu> -->
+    <!-- <p>{{userInfo?.firstName}}</p> -->
+    <div *ngIf="userInfo">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <div fxLayout="row" class="user">
+          <p>Hii{{userInfo?.firstName}} </p>
+          <img [src]="userInfo.photoUrl" referrerpolicy="no-referrer" class="user-avatar">
+        </div>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="signOut()">
+          <mat-icon>logout</mat-icon>
+          <span class="text">Sign out</span>
+        </button>
+      </mat-menu>
+    </div>
+    <div *ngIf="!userInfo">
+      <button mat-icon-button aria-label="Example icon-button with a menu" (click)="signIn()">
+        <p>Sign in</p>
+      </button>
+    </div>
   </span>
 </div>
