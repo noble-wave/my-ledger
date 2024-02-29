@@ -10,14 +10,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
-
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [LoginComponent, HomeComponent, PublicComponent],
-  providers: [
-   
-  ],
+  providers: [],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -38,6 +35,7 @@ import { SocialLoginModule } from '@abacritt/angularx-social-login';
     MatToolbarModule,
     MatCardModule,
     SocialLoginModule,
+    FlexLayoutModule,
   ],
 })
 export class PublicModule {}

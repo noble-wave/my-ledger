@@ -32,6 +32,7 @@ export class AppNavComponent {
     { path: 'report', label: 'Reports' },
     { path: 'import-export', label: 'Import/Export/Delete' },
     { path: 'setting', label: 'Settings' },
+    { path: 'report-issue', label: 'Report-Issue/Suggestion' },
   ];
 
   constructor(
