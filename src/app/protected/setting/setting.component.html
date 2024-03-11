@@ -1,153 +1,151 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
-            (click)="navigateBack()">
-            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
-        </button>
-        <div>Settings</div>
-    </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+      (click)="navigateBack()">
+      <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+    </button>
+    <div>Settings</div>
+  </div>
 </mat-toolbar>
 <mat-card>
-    <mat-card-content>
-        <div class="settings-container">
-            <h1>Sell Settings</h1>
-            <div class="section-label">1. Manage Sell Status</div>
-            <app-radio [form]="form" name="manageSellStatus"
-                label="Would you like to manage Sell Status when taking sells?"
-                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
-            <div class="section-label" *ngIf="sellSetting?.manageSellStatus">2. Select Default Setting for Sell
-                Status</div>
-            <div class="status" *ngIf="sellSetting?.manageSellStatus">
-                <app-select [form]="form" name="defaultSellStatus" label="Select Sell Status" [options]="statusOptions"
-                    optTextLabel="label" optValueLabel="value"></app-select>
-            </div>
-            <div class="section-label">3. Manage Customer</div>
-            <app-radio [form]="form" name="manageCustomer"
-                label="Would you like to manage Customer information when taking sells?"
-                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+  <mat-card-content>
+    <div class="settings-container">
+      <h1>Sell Settings</h1>
+      <div class="section-label">1. Manage Sell Status</div>
+      <app-radio [form]="form" name="manageSellStatus" label="Would you like to manage Sell Status when taking sells?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+      <div class="section-label" *ngIf="sellSetting?.manageSellStatus">2. Select Default Setting for Sell
+        Status</div>
+      <div class="status" *ngIf="sellSetting?.manageSellStatus">
+        <app-select [form]="form" name="defaultSellStatus" label="Select Sell Status" [options]="statusOptions"
+          optTextLabel="label" optValueLabel="value"></app-select>
+      </div>
+      <div class="section-label">3. Manage Customer</div>
+      <app-radio [form]="form" name="manageCustomer"
+        label="Would you like to manage Customer information when taking sells?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-            <div class="section-label">4. Manage Product</div>
-            <app-radio [form]="form" name="manageProduct"
-                label="Would you like to manage Product details when taking sells?"
-                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+      <div class="section-label">4. Manage Product</div>
+      <app-radio [form]="form" name="manageProduct" label="Would you like to manage Product details when taking sells?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-            <div class="section-label">5. Manage Discount</div>
-            <app-radio [form]="form" name="manageDiscount" label="Would you like to manage Discounts when taking sells?"
-                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+      <div class="section-label">5. Manage Discount</div>
+      <app-radio [form]="form" name="manageDiscount" label="Would you like to manage Discounts when taking sells?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-            <!-- <div class="section-label">6. Manage GSTIN</div>
+      <!-- <div class="section-label">6. Manage GSTIN</div>
             <app-radio [form]="form" name="manageGstin" label="Would you like to manage GSTIN when taking sells?"
                 [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio> -->
 
-            <button type="button" (click)="saveSellSetting()" mat-button mat-raised-button color="primary"
-                class="apply-button"><mat-icon>
-                    settings
-                </mat-icon>Apply Changes</button>
+      <button type="button" (click)="saveSellSetting()" mat-button mat-raised-button color="primary"
+        class="apply-button"><mat-icon>
+          settings
+        </mat-icon>Apply Changes</button>
 
-        </div>
-    </mat-card-content>
+    </div>
+  </mat-card-content>
 </mat-card>
 
 
 
 <mat-card>
-    <mat-card-content>
-        <div class="settings-container" id="quickSellSetting">
-            <h1>Quick/Sell Settings</h1>
-            <div class="section-label">1. Manage Quick/Sell Settings</div>
-            <app-radio [form]="quickSellForm" name="manageQuickSell"
-                label="Would you like to have Quick/Sell page for take sells?"
-                [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
+  <mat-card-content>
+    <div class="settings-container" id="quickSellSetting">
+      <h1>Quick/Sell Settings</h1>
+      <div class="section-label">1. Manage Quick/Sell Settings</div>
+      <app-radio [form]="quickSellForm" name="manageQuickSell"
+        label="Would you like to have Quick/Sell page for take sells?"
+        [options]="[{Text: 'Yes', Value: true}, {Text: 'No', Value: false}]"></app-radio>
 
-            <div class="section-label" *ngIf="quicksellSetting?.manageQuickSell">2. Add Quick Sell Amounts</div>
+      <div class="section-label" *ngIf="quicksellSetting?.manageQuickSell">2. Add Quick Sell Amounts</div>
 
-            <div class="quick-sell-amount" fxLayout="row wrap" fxLayoutGap="10px grid"
-                *ngIf="quicksellSetting?.manageQuickSell">
-                <div fxFlex="50%" fxFlex.xs="70%"
-                    *ngFor="let unitPrice of quickSellForm.value.unitPrices; let i = index;">
-                    <!-- <input type="number" [(ngModel)]="unitPrices[i]" /> -->
-                    <!-- <app-input [form]="quickSellForm" name="unitPrices"  type="number"></app-input> -->
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Sell Amount</mat-label>
-                        <input matInput type="number" [(ngModel)]="unitPrices[i]">
-                    </mat-form-field>
-                </div>
-            </div>
-            <button type="button" (click)="saveQuickSellSetting()" mat-button mat-raised-button color="primary"
-                class="apply-button"><mat-icon>
-                    settings
-                </mat-icon>Apply Changes</button>
+      <div class="quick-sell-amount" fxLayout="row wrap" fxLayoutGap="10px grid"
+        *ngIf="quicksellSetting?.manageQuickSell">
+        <div fxFlex="50%" fxFlex.xs="70%" *ngFor="let unitPrice of quickSellForm.value.unitPrices; let i = index;">
+          <!-- <input type="number" [(ngModel)]="unitPrices[i]" /> -->
+          <!-- <app-input [form]="quickSellForm" name="unitPrices"  type="number"></app-input> -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Sell Amount</mat-label>
+            <input matInput type="number" [(ngModel)]="unitPrices[i]">
+          </mat-form-field>
         </div>
-    </mat-card-content>
+      </div>
+      <button type="button" (click)="saveQuickSellSetting()" mat-button mat-raised-button color="primary"
+        class="apply-button"><mat-icon>
+          settings
+        </mat-icon>Apply Changes</button>
+    </div>
+  </mat-card-content>
 </mat-card>
 
 <mat-card>
-    <mat-card-content>
-        <div class="settings-container" id="SellPrintSetting">
-            <h1>Configure Print Settings</h1>
-            <div class="download-section">
-                <!-- <h4>1. Upload Logo and Images</h4> -->
-                <h4 class="section-subtitle">1. Upload Your Company Logo and Images</h4>
-                <p class="section-description">Enhance your brand presence by uploading a professional logo and images
-                    for printing.</p>
-                <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign=" center">
-                    <div>
-                        <input type="file" class="upload-box" (change)="onFileChange($event)"
-                            accept="image/png, image/gif, image/jpeg" multiple />
-                    </div>
-                    <div>
-                        <!-- <button mat-raised-button (click)="uploadFiles()"
+  <mat-card-content>
+    <div class="settings-container" id="SellPrintSetting">
+      <h1>Configure Print Settings</h1>
+      <div class="download-section">
+        <!-- <h4>1. Upload Logo and Images</h4> -->
+        <h4 class="section-subtitle">1. Upload Your Company Logo and Images</h4>
+        <p class="section-description">Enhance your brand presence by uploading a professional logo and images
+          for printing.</p>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign=" center">
+          <div>
+            <input type="file" class="upload-box" (change)="onFileChange($event)"
+              accept="image/png, image/gif, image/jpeg" multiple />
+            <p class="label">100 <span>&#215;</span> 75 size recommended</p>
+          </div>
+          <div>
+            <!-- <button mat-raised-button (click)="uploadFiles()"
                             color="primary"><mat-icon>upload_file</mat-icon>
                             Upload</button> -->
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="sellPrintForm">
-                <!-- <h4>2. Provide Company/Shop Details.</h4> -->
-
-
-                <form [formGroup]="sellPrintForm" (submit)="saveQuickSellSetting()">
-                    <div>
-                        <h4 class="section-subtitle">2. Provide Detailed Company/Shop Information</h4>
-                        <p class="section-description">Fill in the necessary details about your company, shop, or
-                            organization
-                            for accurate and comprehensive print settings.</p>
-                        <div class="sellPrintSection">
-                            <app-input [form]="sellPrintForm" name="posName"></app-input>
-                            <app-input [form]="sellPrintForm" name="phoneNumber"></app-input>
-                            <app-input [form]="sellPrintForm" name="email"></app-input>
-
-                        </div>
-                        <div class="sellPrintSection">
-                            <app-input [form]="sellPrintForm" name="address"></app-input>
-                            <app-input [form]="sellPrintForm" name="pinCode"></app-input>
-                            <app-input [form]="sellPrintForm" name="state"></app-input>
-                            <app-input [form]="sellPrintForm" name="country"></app-input>
-
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="section-subtitle">3. Provide Bank Detailed of Company/Shop</h4>
-                        <p class="section-description">Fill in the necessary details about your Bank Detail
-                            for accurate and comprehensive print settings.</p>
-                        <div class="sellPrintSection">
-                            <app-input [form]="sellPrintForm" name="bankName"></app-input>
-                            <app-input [form]="sellPrintForm" name="accountName"></app-input>
-                            <app-input [form]="sellPrintForm" name="accontNumber"></app-input>
-                            <app-input [form]="sellPrintForm" name="ifscCode"></app-input>
-                        </div>
-                        <div class="sellPrintSection">
-                            <app-input [form]="sellPrintForm" name="upiId"></app-input>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <button type="button" (click)="saveSellPrintSetting()" mat-button mat-raised-button color="primary"
-                class="apply-button"><mat-icon>
-                    settings
-                </mat-icon>Apply Changes</button>
+          </div>
         </div>
+      </div>
+      <div *ngIf="sellPrintForm">
+        <!-- <h4>2. Provide Company/Shop Details.</h4> -->
 
-    </mat-card-content>
+
+        <form [formGroup]="sellPrintForm" (submit)="saveQuickSellSetting()">
+          <div>
+            <h4 class="section-subtitle">2. Provide Detailed Company/Shop Information</h4>
+            <p class="section-description">Fill in the necessary details about your company, shop, or
+              organization
+              for accurate and comprehensive print settings.</p>
+            <div class="sellPrintSection">
+              <app-input [form]="sellPrintForm" name="posName"></app-input>
+              <app-input [form]="sellPrintForm" name="phoneNumber"></app-input>
+              <app-input [form]="sellPrintForm" name="email"></app-input>
+
+            </div>
+            <div class="sellPrintSection">
+              <app-input [form]="sellPrintForm" name="address"></app-input>
+              <app-input [form]="sellPrintForm" name="pinCode"></app-input>
+              <app-input [form]="sellPrintForm" name="state"></app-input>
+              <app-input [form]="sellPrintForm" name="country"></app-input>
+
+            </div>
+          </div>
+          <div>
+            <h4 class="section-subtitle">3. Provide Bank Detailed of Company/Shop</h4>
+            <p class="section-description">Fill in the necessary details about your Bank Detail
+              for accurate and comprehensive print settings.</p>
+            <div class="sellPrintSection">
+              <app-input [form]="sellPrintForm" name="bankName"></app-input>
+              <app-input [form]="sellPrintForm" name="accountName"></app-input>
+              <app-input [form]="sellPrintForm" name="accontNumber"></app-input>
+              <app-input [form]="sellPrintForm" name="ifscCode"></app-input>
+            </div>
+            <div class="sellPrintSection">
+              <app-input [form]="sellPrintForm" name="upiId"></app-input>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <button type="button" (click)="saveSellPrintSetting()" mat-button mat-raised-button color="primary"
+        class="apply-button"><mat-icon>
+          settings
+        </mat-icon>Apply Changes</button>
+    </div>
+
+  </mat-card-content>
 </mat-card>
