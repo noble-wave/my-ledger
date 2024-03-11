@@ -348,14 +348,32 @@ export class DeleteDataComponent {
           const sellData = await firstValueFrom(
             this.sellService.getSellByDate(startDate, endDate)
           );
+          const sellItmes = await firstValueFrom(
+            this.sellService.getSellItemsByDate(startDate, endDate)
+          );
+          const sellPayments = await firstValueFrom(
+            this.sellService.getSellPaymentsByDate(startDate, endDate)
+          );
+
 
           // Export the sell data to a file
           const csv = Papa.unparse(sellData);
+          const csvsellItmes = Papa.unparse(sellItmes);
+          const csvsellPayments = Papa.unparse(sellPayments);
+
           this.exportData(csv, 'sell.csv');
+          this.exportData(csvsellItmes, 'sellItmes.csv');
+          this.exportData(csvsellPayments, 'sellPayments.csv');
 
           // After exporting, delete the sell data by date range
-          const deleteResult = await firstValueFrom(
+          await firstValueFrom(
             this.sellService.deleteSellByDate(startDate, endDate)
+          );
+          await firstValueFrom(
+            this.sellService.deleteSellItemsByDate(startDate, endDate)
+          );
+          await firstValueFrom(
+            this.sellService.deleteSellPaymentByDate(startDate, endDate)
           );
 
           // Check the deleteResult if necessary

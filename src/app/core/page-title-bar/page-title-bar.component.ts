@@ -1,24 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IPageTitleBar, IrsPageTitleBarService } from '@app/shared-services';
 
 @Component({
   selector: 'app-page-title-bar',
   templateUrl: './page-title-bar.component.html',
-  styleUrls: ['./page-title-bar.component.scss']
+  styleUrls: ['./page-title-bar.component.scss'],
 })
 export class PageTitleBarComponent implements OnInit {
-
   pageTitleBar?: IPageTitleBar | undefined;
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private pageTitleBarService: IrsPageTitleBarService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.pageTitleBarService.current$.subscribe(pageTitle => {
+    this.pageTitleBarService.current$.subscribe((pageTitle) => {
       this.pageTitleBar = pageTitle;
     });
   }
@@ -33,7 +31,9 @@ export class PageTitleBarComponent implements OnInit {
 
   actionTaken(actionName: string) {
     if (this.pageTitleBar?.actions) {
-      const action = this.pageTitleBar.actions.filter(x => x.actionName === actionName)[0];
+      const action = this.pageTitleBar.actions.filter(
+        (x) => x.actionName === actionName
+      )[0];
       if (action?.callback && !action.disabled) {
         action.callback();
       }
@@ -46,7 +46,6 @@ export class PageTitleBarComponent implements OnInit {
     } else {
       return false;
     }
-
   }
 
   isMaterialIcon(icon: string) {
@@ -56,5 +55,4 @@ export class PageTitleBarComponent implements OnInit {
       return false;
     }
   }
-
 }

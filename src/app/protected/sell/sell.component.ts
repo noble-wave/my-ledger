@@ -78,7 +78,7 @@ export class SellComponent implements OnDestroy {
     this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
 
     this.sellPaymentMeta = getSellPaymentMeta();
-    this.sellPaymentForm = this.app.meta.toFormGroup({}, this.sellPaymentMeta);
+    this.sellPaymentForm = this.app.meta.toFormGroup({amountPaid : 0}, this.sellPaymentMeta);
 
     this.customerService.getAll().subscribe((customers) => {
       this.customers = customers;

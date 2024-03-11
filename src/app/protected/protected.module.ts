@@ -40,6 +40,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { ImportDataComponent } from './import-export/import-data/import-data.component';
 import { ExportDataComponent } from './import-export/export-data/export-data.component';
 import { DeleteDataComponent } from './import-export/delete-data/delete-data.component';
+import { ReportIssueComponent } from './report-issue/report-issue.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { DeleteDataComponent } from './import-export/delete-data/delete-data.com
     ImportDataComponent,
     ExportDataComponent,
     DeleteDataComponent,
+    ReportIssueComponent,
   ],
   imports: [
     QRCodeModule,
@@ -111,6 +113,7 @@ import { DeleteDataComponent } from './import-export/delete-data/delete-data.com
           { path: 'setting', component: SettingComponent },
           { path: 'import-export', component: ImportExportComponent },
           { path: 'report', component: ReportComponent },
+          { path: 'report-issue', component: ReportIssueComponent },
           { path: 'dashboard', component: DashboardComponent },
           { path: 'dummy-data-loader', component: DummyDataLoaderComponent },
 

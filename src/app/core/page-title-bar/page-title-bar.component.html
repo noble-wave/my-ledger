@@ -16,7 +16,8 @@
     <span>{{ pageTitleBar.title }}</span>
     <div>
         <ng-container *ngFor="let action of pageTitleBar?.actions">
-            <button (click)="actionTaken(action.actionName)" mat-button mat-raised-button color="primary">{{action.displayName}}</button>
+            <button (click)="actionTaken(action.actionName)" mat-button mat-raised-button
+                color="primary">{{action.displayName}}</button>
         </ng-container>
     </div>
 </mat-toolbar>
