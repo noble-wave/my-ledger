@@ -22,14 +22,14 @@ export class AppNavComponent {
   isDrawerOpen = false;
 
   public paths = [
+    { path: 'dashboard', label: 'Dashboard' },
+    { path: 'report', label: 'Reports' },
     { path: 'product', label: 'Products' },
     { path: 'product-inventory', label: 'Product Inventory' },
     { path: 'customer', label: 'Customers' },
     { path: 'customer-dueAmount', label: 'Customers/Due Amount' },
     { path: 'sell', label: 'Sell List' },
     { path: 'sell/new', label: 'Sell' },
-    { path: 'dashboard', label: 'Dashboard' },
-    { path: 'report', label: 'Reports' },
     { path: 'import-export', label: 'Import/Export/Delete' },
     { path: 'setting', label: 'Settings' },
     { path: 'report-issue', label: 'Report-Issue/Suggestion' },
