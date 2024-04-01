@@ -2,18 +2,23 @@ import { Component } from '@angular/core';
 import { ProductService } from '@app/protected/services/product.service';
 import { LocalTableSettings } from '@app/shared-services';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-info-inventory',
   templateUrl: './info-inventory.component.html',
-  styleUrls: ['./info-inventory.component.scss']
+  styleUrls: ['./info-inventory.component.scss'],
 })
 export class InfoInventoryComponent {
   products$: any;
   tableSettings: LocalTableSettings;
-  productId:string;
+  productId: string;
 
-  constructor(private service: ProductService, private location: Location) { }
+  constructor(
+    private service: ProductService,
+    private location: Location,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     let columns = [
@@ -22,22 +27,28 @@ export class InfoInventoryComponent {
       { name: 'count', text: 'Count', sell: 3 },
     ];
     let excludeColumns = ['productId'];
-    let displayColumns = columns.filter(x => excludeColumns.indexOf(x.name) === -1);
+    let displayColumns = columns.filter(
+      (x) => excludeColumns.indexOf(x.name) === -1
+    );
 
     this.tableSettings = new LocalTableSettings({
       columns: columns,
       displayColumns: displayColumns,
       idColumnName: 'productId',
       canGoToEdit: true,
-      canGoToEditCommands: ['../', 'product'] 
+      canGoToEditCommands: ['../', 'product'],
     });
-    
+
     this.products$ = this.service.getInventoryInfoThreshold();
+  }
 
-    }
+  navigateBack() {
+    this.location.back();
+  }
 
-    navigateBack() {
-      this.location.back();
-    }
-
+  settings() {
+    this.router.navigate(['/setting'], {
+      fragment: 'dashboardSetting',
+    });
+  }
 }
