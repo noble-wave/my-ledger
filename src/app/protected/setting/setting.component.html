@@ -149,3 +149,28 @@
 
   </mat-card-content>
 </mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <div class="settings-container" id="dashboardSetting">
+      <h1>Dashboard Settings</h1>
+      <div>
+        <form [formGroup]="dashboardForm" (submit)="savedashboardSetting()">
+          <div>
+            <h4 class="section-subtitle">1. Manage Threshold Status Settings</h4>
+            <p class="section-description">Specify the numbers used to determine threshold statuses for product counts.
+            </p>
+            <div class="sellPrintSection">
+              <app-input [form]="dashboardForm" name="warnThresholdNumber"></app-input>
+              <app-input [form]="dashboardForm" name="infoThresholdNumber"></app-input>
+            </div>
+          </div>
+        </form>
+      </div>
+      <button type="button" (click)="savedashboardSetting()" mat-button mat-raised-button color="primary"
+        class="apply-button"><mat-icon>
+          settings
+        </mat-icon>Apply Changes</button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,183 +1,183 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
-            (click)="navigateBack()">
-            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
-        </button>
-        <div>Take Order</div>
-    </div>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+      (click)="navigateBack()">
+      <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openAddProductDialog('500ms', '200ms')">
-            <mat-icon> inventory_2</mat-icon>
-            <span>Add Product</span>
-        </button>
-        <button mat-menu-item (click)="openAddCustomerDialog('500ms', '200ms')">
-            <mat-icon>person</mat-icon>
-            <span>Add Customer</span>
-        </button>
-        <button mat-menu-item routerLink="../">
-            <mat-icon>list_alt</mat-icon>
-            <span>Sell List</span>
-        </button>
-    </mat-menu>
+    <div>Take Order</div>
+  </div>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="openAddProductDialog('500ms', '200ms')">
+      <mat-icon> inventory_2</mat-icon>
+      <span>Add Product</span>
+    </button>
+    <button mat-menu-item (click)="openAddCustomerDialog('500ms', '200ms')">
+      <mat-icon>person</mat-icon>
+      <span>Add Customer</span>
+    </button>
+    <button mat-menu-item routerLink="../">
+      <mat-icon>list_alt</mat-icon>
+      <span>Sell List</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <mat-card *ngIf="!refreshing">
-    <mat-card-content>
-        <div fxLayoutAlign="end center">
-            <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
-                (click)="settings()">
-                <mat-icon aria-label="Side nav toggle icon">settings</mat-icon>
-            </button>
+  <mat-card-content>
+    <div fxLayoutAlign="end center">
+      <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+        (click)="settings()">
+        <mat-icon aria-label="Side nav toggle icon">settings</mat-icon>
+      </button>
 
-        </div>
-        <div>
+    </div>
+    <div>
 
-            <div class="form-container">
-                <div class="form-row">
-                    <div *ngIf="setting?.manageCustomer">
-                        <div>
-                            <!-- <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
+      <div class="form-container">
+        <div class="form-row">
+          <div *ngIf="setting?.manageCustomer">
+            <div>
+              <!-- <app-select [form]=" form" name="customerId" label="Select a Customer" [options]="customers"
                                 optTextLabel="customerName" optValueLabel="customerId"
                                 (onSelectionChange)="handleCustomerSelection($event,form)"></app-select> -->
-                            <app-typeahead [form]="form" name="customerId" label="Select a Customer"
-                                optTextLabel="customerName" optValueLabel="customerId" [options]="customers"
-                                icon="icon-name" (debounceKeyup)="handleRandomProductName($event, form)"
-                                (onSelectionChange)="handleCustomerSelection($event, form)">
-                            </app-typeahead>
-                        </div>
-                        <!-- <div>
+              <app-typeahead [form]="form" name="customerId" label="Select a Customer" optTextLabel="customerName"
+                optValueLabel="customerId" [options]="customers" icon="icon-name"
+                (debounceKeyup)="handleRandomCustomerName($event, form)"
+                (onSelectionChange)="handleCustomerSelection($event, form)">
+              </app-typeahead>
+            </div>
+            <!-- <div>
                             <button mat-icon-button color="primary" (click)="openAddCustomerDialog('500ms', '200ms')">
                                 <mat-icon>add_circle_outline</mat-icon>
                             </button>
                         </div> -->
 
-                    </div>
+          </div>
 
 
-                    <div class="row">
-                        <div class="item">
-                            <!-- <div class="item" *ngIf="setting?.manageGstin">
+          <div class="row">
+            <div class="item">
+              <!-- <div class="item" *ngIf="setting?.manageGstin">
                                 <app-input [form]="form" label="Your GSTIN" name="userGstin"></app-input>
                             </div>
                             <div class="item" *ngIf="setting?.manageGstin">
                                 <app-input [form]="form" label="Party GSTIN" name="customerGstin"></app-input>
                             </div> -->
-                            <div *ngIf="setting?.manageSellStatus">
-                                <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
-                                    optTextLabel="label" optValueLabel="value"></app-select>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <irs-date [form]="form" name="sellDate" label="Sell Date"></irs-date>
-                        </div>
-                    </div>
-                </div>
+              <div *ngIf="setting?.manageSellStatus">
+                <app-select [form]="form" name="status" label="Select Status" [options]="statusOption"
+                  optTextLabel="label" optValueLabel="value"></app-select>
+              </div>
             </div>
+            <div class="item">
+              <irs-date [form]="form" name="sellDate" label="Sell Date"></irs-date>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
-                <!-- <div class="line" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+      <div class="container" *ngFor="let sellItemForm of sellItemForms;  let i = index">
+        <!-- <div class="line" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
                     <span class="number">Item {{ i + 1 }}</span>
                 </div> -->
-                <div class="divider" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
-                    <span>Item {{ i + 1 }}</span>
-                </div>
+        <div class="divider" fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+          <span>Item {{ i + 1 }}</span>
+        </div>
 
-                <div class="row product-section" *ngIf="setting?.manageProduct">
-                    <div class="item">
-                        <!-- <div class="serialNo">{{ i + 1 }}</div> -->
+        <div class="row product-section" *ngIf="setting?.manageProduct">
+          <div class="item">
+            <!-- <div class="serialNo">{{ i + 1 }}</div> -->
 
-                        <div>
-                            <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
+            <div>
+              <!-- <app-select [form]="sellItemForm" name="productId" label="Select a Product"
                                 [options]="products" optTextLabel="productName" optValueLabel="productId"
                                 (onSelectionChange)="handleProductSelection($event, sellItemForm)"></app-select> -->
 
-                            <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product"
-                                optTextLabel="productName" optValueLabel="productId" [options]="products"
-                                icon="icon-name" (debounceKeyup)="handleRandomProductName($event, sellItemForm)"
-                                (onSelectionChange)="handleProductSelection($event, sellItemForm)"
-                                (navigateClick)="openUpdateProductDialog( sellItemForm)" [suffixActionIcon]="'edit'">
-                            </app-typeahead>
-                        </div>
-                        <!-- <div>
+              <app-typeahead [form]="sellItemForm" name="productId" label="Select a Product" optTextLabel="productName"
+                optValueLabel="productId" [options]="products" icon="icon-name"
+                (debounceKeyup)="handleRandomProductName($event, sellItemForm)"
+                (onSelectionChange)="handleProductSelection($event, sellItemForm)"
+                (navigateClick)="openUpdateProductDialog( sellItemForm)" [suffixActionIcon]="'edit'">
+              </app-typeahead>
+            </div>
+            <!-- <div>
                             <button mat-icon-button color="primary" (click)="openAddProductDialog('500ms', '200ms')">
                                 <mat-icon>edit</mat-icon>
                             </button>
                         </div> -->
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="item">
-                        <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Unit Price" name="unitPrice" type="number"></app-input>
-                    </div>
-                    <div class="item">
-                        <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Quantity" name="quantity"></app-input>
-                        <!-- <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
+          </div>
+        </div>
+        <div class="row">
+          <div class="item">
+            <app-input [form]="sellItemForm" (onValueChange)="updateSubtotal(sellItemForm)" label="Unit Price"
+              name="unitPrice" type="number"></app-input>
+          </div>
+          <div class="item">
+            <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
+              label="Quantity" name="quantity"></app-input>
+            <!-- <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
                             label="Quantity" name="quantity"[suffixClass]="'discount-suffix'"
                             [suffix]="getProductQuantity(sellItemForm)"></app-input> -->
-                    </div>
-                    <div class="item" *ngIf="setting?.manageDiscount">
-                        <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
-                            label="Discount" name="discount" [suffixClass]="'discount-suffix'"
-                            [suffix]="getDiscountPercentage(sellItemForm)"></app-input>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="item">
-                        <irs-input-template [model]="sellItemForm.value" [bindingPropertyName]="'subtotal'"
-                            [label]="'Subtotal'" [viewOnly]="true">
-                        </irs-input-template>
-                    </div>
-                    <div>
-                        <button mat-fab color="basic" color="primary"
-                            aria-label="Example icon button with a delete icon" (click)="deleteItem(i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <button mat-raised-button color="primary" (click)="addItem()"> <mat-icon>add_circle_outline</mat-icon> Add
-                Item</button>
-
-            <div class="totals-row">
-                <div class="total-amount-square">
-                    Gross Amount<br>
-                    {{ calculateGrossAmount() | currency:'INR':'symbol':'1.2-2' }}
-                </div>
-                <div class="total-amount-square" *ngIf="setting?.manageDiscount">
-                    Total Discount<br>
-                    {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
-                </div>
-                <div class="total-amount-square">
-                    Net Amount<br>
-                    {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
-                </div>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" *ngIf="showAmountPaidAndBalanceDue">
-                <div class="total-amount-square">
-                    <app-input [form]="sellPaymentForm" label="Amount Paid" name="amountPaid" type="number"
-                        (onValueChange)="valueChanged($event)" ></app-input>
-                </div>
-                <div class="total-amount-square">
-                    Balance Due<br>
-                    {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
-                </div>
-            </div>
-
-            <div class="button-row">
-                <button mat-raised-button color="primary" (click)="saveSell()"> <mat-icon>save</mat-icon>Save</button>
-                <button mat-raised-button color="primary" (click)="saveSellPrint()"> <mat-icon>save</mat-icon>Save/
-                    <mat-icon>print</mat-icon>print </button>
-            </div>
-
+          </div>
+          <div class="item" *ngIf="setting?.manageDiscount">
+            <app-input [form]="sellItemForm" type="number" (onValueChange)="updateSubtotal(sellItemForm)"
+              label="Discount" name="discount" [suffixClass]="'discount-suffix'"
+              [suffix]="getDiscountPercentage(sellItemForm)"></app-input>
+          </div>
         </div>
-    </mat-card-content>
+        <div class="row">
+
+          <div class="item">
+            <irs-input-template [model]="sellItemForm.value" [bindingPropertyName]="'subtotal'" [label]="'Subtotal'"
+              [viewOnly]="true">
+            </irs-input-template>
+          </div>
+          <div>
+            <button mat-fab color="basic" color="primary" aria-label="Example icon button with a delete icon"
+              (click)="deleteItem(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="addItem()"> <mat-icon>add_circle_outline</mat-icon> Add
+        Item</button>
+
+      <div class="totals-row">
+        <div class="total-amount-square">
+          Gross Amount<br>
+          {{ calculateGrossAmount() | currency:'INR':'symbol':'1.2-2' }}
+        </div>
+        <div class="total-amount-square" *ngIf="setting?.manageDiscount">
+          Total Discount<br>
+          {{ calculateTotalDiscount() | currency:'INR':'symbol':'1.2-2' }}
+        </div>
+        <div class="total-amount-square">
+          Net Amount<br>
+          {{ calculateNetAmount() | currency:'INR':'symbol':'1.2-2' }}
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" *ngIf="showAmountPaidAndBalanceDue">
+        <div class="total-amount-square">
+          <app-input [form]="sellPaymentForm" label="Amount Paid" name="amountPaid" type="number"
+            (onValueChange)="valueChanged($event)"></app-input>
+        </div>
+        <div class="total-amount-square">
+          Balance Due<br>
+          {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click)="saveSell()"> <mat-icon>save</mat-icon>Save</button>
+        <button mat-raised-button color="primary" (click)="saveSellPrint()"> <mat-icon>save</mat-icon>Save/
+          <mat-icon>print</mat-icon>print </button>
+      </div>
+
+    </div>
+  </mat-card-content>
 </mat-card>

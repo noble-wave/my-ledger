@@ -78,7 +78,10 @@ export class SellComponent implements OnDestroy {
     this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
 
     this.sellPaymentMeta = getSellPaymentMeta();
-    this.sellPaymentForm = this.app.meta.toFormGroup({amountPaid : 0}, this.sellPaymentMeta);
+    this.sellPaymentForm = this.app.meta.toFormGroup(
+      { amountPaid: 0 },
+      this.sellPaymentMeta
+    );
 
     this.customerService.getAll().subscribe((customers) => {
       this.customers = customers;
@@ -159,7 +162,7 @@ export class SellComponent implements OnDestroy {
     }
   }
 
-  handleRandomCustomerName(customer: Customer, form: FormGroup) {
+  handleRandomCustomerName(customer: string, form: FormGroup) {
     form.get('customerName')?.setValue(customer);
   }
 
@@ -223,13 +226,12 @@ export class SellComponent implements OnDestroy {
   calculateBalanceDue(): number {
     const netAmount = this.calculateNetAmount();
     const balanceDue = netAmount - this.amountPaid;
-    
+
     if (this.showAmountPaidAndBalanceDue === true) {
       this.form.get('dueAmount')?.setValue(balanceDue);
-    }
-    else {
+    } else {
       this.form.get('dueAmount')?.setValue(0);
-  }
+    }
     return balanceDue;
   }
 
@@ -306,6 +308,27 @@ export class SellComponent implements OnDestroy {
           console.log('Payment Saved', y);
         });
       }
+
+      // decrypted
+
+      // let newCustomerName = this.form.value.customerName;
+      // let customer: any;
+      // customer = {
+      //   customerName: newCustomerName,
+      // };
+      // let oldCustomerName: any;
+      // this.customerService.getAll().subscribe((customers: Customer[]) => {
+      //   customers.forEach((customer: Customer) => {
+      //     oldCustomerName = customer.customerName;
+      //     console.log(oldCustomerName);
+      //   });
+      // });
+
+      // if (oldCustomerName !== newCustomerName) {
+      //   this.customerService.add(customer).subscribe((x) => {
+      //     console.log(x);
+      //   });
+      // }
 
       this.app.noty.notifyClose('Sell has been taken');
       console.log('Before reset:', this.form.value);

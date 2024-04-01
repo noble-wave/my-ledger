@@ -109,21 +109,19 @@ export function getQuickSellSettingMeta() {
 }
 
 export class SellPrintSettings extends AppSettings {
-    posName: string;
-    phoneNumber?: string;
-    email?: string;
-    address?: string;
-    logoUrl?: string;
-    pinCode?: string;
-    state?: string;
-    country?: string;
-    bankName?: string;
-    accountName?: string;
-    accontNumber?: string;
-    ifscCode?: string;
-    upiId?: string;
-    
-    
+  posName: string;
+  phoneNumber?: string;
+  email?: string;
+  address?: string;
+  logoUrl?: string;
+  pinCode?: string;
+  state?: string;
+  country?: string;
+  bankName?: string;
+  accountName?: string;
+  accontNumber?: string;
+  ifscCode?: string;
+  upiId?: string;
 
   constructor() {
     super();
@@ -153,5 +151,24 @@ export function getSellPrintSettingsMeta() {
     { key: 'accontNumber', label: 'Accont Number', required: true },
     { key: 'ifscCode', label: 'Ifsc Code', required: false },
     { key: 'upiId', label: 'Upi Id', required: false },
+  ] as Array<ModelMeta>;
+}
+
+export class DashboardSettings extends AppSettings {
+  warnThresholdNumber: number;
+  infoThresholdNumber: number;
+
+  constructor() {
+    super();
+    this.name = 'dashboardSettings';
+    this.warnThresholdNumber = 10;
+    this.infoThresholdNumber = 25;
+  }
+}
+
+export function getDashboardSettingMeta() {
+  return [
+    { key: 'warnThresholdNumber', label: 'Warn thershold' },
+    { key: 'infoThresholdNumber', label: 'Info thershold' },
   ] as Array<ModelMeta>;
 }
