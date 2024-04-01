@@ -94,7 +94,8 @@ export class ProductService {
   getInventoryWarnThreshold(): Observable<ProductWithInventory[]> {
     let warnthreshold: any;
     this.settingService.getDashboardSetting().subscribe((x) => {
-      warnthreshold = x.warnThresholdNumber;
+      let warn = x.warnThresholdNumber;
+      warnthreshold = Number(warn);
     });
     return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
       map((productInventorys) => {
@@ -137,8 +138,10 @@ export class ProductService {
     let warnthreshold: any;
     let infoThreshold: any;
     this.settingService.getDashboardSetting().subscribe((x) => {
-      warnthreshold = x.warnThresholdNumber;
-      infoThreshold = x.infoThresholdNumber;
+      let warn = x.warnThresholdNumber;
+      warnthreshold = Number(warn);
+      let info = x.infoThresholdNumber;
+      infoThreshold = Number(info);
     });
     return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
       map((productInventorys) => {
