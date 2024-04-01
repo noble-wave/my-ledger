@@ -13,12 +13,16 @@ import {
 } from 'rxjs';
 import cryptoRandomString from 'crypto-random-string';
 import { ProductInventory } from '@app/models/product-inventory.model';
+import { SettingService } from './setting.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private storage: StorageService) {}
+  constructor(
+    private storage: StorageService,
+    private settingService: SettingService
+  ) {}
   private apiUrl = 'your_api_url_here';
 
   get(productId: string) {
@@ -81,17 +85,21 @@ export class ProductService {
                 (z['count'] = inventory.find((y) => y.productId == z.productId))
             );
             return x as any;
-          }),
+          })
         );
       })
     );
   }
 
   getInventoryWarnThreshold(): Observable<ProductWithInventory[]> {
+    let warnthreshold: any;
+    this.settingService.getDashboardSetting().subscribe((x) => {
+      warnthreshold = x.warnThresholdNumber;
+    });
     return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
       map((productInventorys) => {
         const warnInventoryThreshold = productInventorys.filter(
-          (productInventory) => productInventory.count <= 10
+          (productInventory) => productInventory.count <= warnthreshold
         );
         return warnInventoryThreshold;
       }),
@@ -100,9 +108,13 @@ export class ProductService {
         return this.getAll().pipe(
           map((products) => {
             const productsWithInventory: ProductWithInventory[] = products
-              .filter((product) => productIds.includes(product.productId as string))
+              .filter((product) =>
+                productIds.includes(product.productId as string)
+              )
               .map((product) => {
-                const inventoryItem = inventory.find((item) => item.productId === product.productId);
+                const inventoryItem = inventory.find(
+                  (item) => item.productId === product.productId
+                );
                 if (inventoryItem) {
                   return {
                     productId: product.productId,
@@ -113,19 +125,27 @@ export class ProductService {
                 return null;
               })
               .filter((product) => product !== null) as ProductWithInventory[];
-  
+
             return productsWithInventory;
           })
         );
       })
     );
   }
-  
+
   getInventoryInfoThreshold(): Observable<ProductWithInventory[]> {
+    let warnthreshold: any;
+    let infoThreshold: any;
+    this.settingService.getDashboardSetting().subscribe((x) => {
+      warnthreshold = x.warnThresholdNumber;
+      infoThreshold = x.infoThresholdNumber;
+    });
     return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
       map((productInventorys) => {
         const warnInventoryThreshold = productInventorys.filter(
-          (productInventory) => productInventory.count >= 10 && productInventory.count <= 25
+          (productInventory) =>
+            productInventory.count >= warnthreshold &&
+            productInventory.count <= infoThreshold
         );
         return warnInventoryThreshold;
       }),
@@ -134,9 +154,13 @@ export class ProductService {
         return this.getAll().pipe(
           map((products) => {
             const productsWithInventory: ProductWithInventory[] = products
-              .filter((product) => productIds.includes(product.productId as string))
+              .filter((product) =>
+                productIds.includes(product.productId as string)
+              )
               .map((product) => {
-                const inventoryItem = inventory.find((item) => item.productId === product.productId);
+                const inventoryItem = inventory.find(
+                  (item) => item.productId === product.productId
+                );
                 if (inventoryItem) {
                   return {
                     productId: product.productId,
@@ -147,14 +171,14 @@ export class ProductService {
                 return null;
               })
               .filter((product) => product !== null) as ProductWithInventory[];
-  
+
             return productsWithInventory;
           })
         );
       })
     );
   }
-  
+
   updateProductInventory(sellItems: any[]) {
     for (const sellItem of sellItems) {
       // Get the product ID and quantity from the sell item
@@ -197,7 +221,7 @@ export class ProductService {
   getProductByDate(startDate: Date, endDate: Date) {
     const nextDay = new Date(endDate);
     nextDay.setDate(nextDay.getDate() + 1);
-  
+
     return this.storage.getAll<Product>(tableNames.product).pipe(
       map((products) =>
         products.filter((product) => {
@@ -211,11 +235,12 @@ export class ProductService {
   getProductInventoryByDate(startDate: Date, endDate: Date) {
     const nextDay = new Date(endDate);
     nextDay.setDate(nextDay.getDate() + 1); // Increment end date by 1 day
-  
+
     return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
       map((inventoryItems) =>
         inventoryItems.filter((inventoryItem) => {
-          if (inventoryItem.updatedAt) { // Check if updatedAt is defined
+          if (inventoryItem.updatedAt) {
+            // Check if updatedAt is defined
             const itemDate = new Date(inventoryItem.updatedAt); // Convert updatedAt to a Date
             return itemDate >= startDate && itemDate < nextDay; // Adjusted comparison for endDate
           }
@@ -224,7 +249,7 @@ export class ProductService {
       )
     );
   }
-  
+
   deleteAllProduct() {
     return this.storage.clear(tableNames.product);
   }
@@ -242,7 +267,7 @@ export class ProductService {
   //     'productId'
   //   );
   // }
-  
+
   // deleteProductInventoryByDate(startDate: Date, endDate: Date) {
   //   endDate.setDate(endDate.getDate() + 1);
   //   return this.storage.deleteByIndex<ProductInventory>(
@@ -261,17 +286,22 @@ export class ProductService {
           const updatedAtDate = new Date(product.updatedAt);
           return updatedAtDate >= startDate && updatedAtDate <= endDate;
         });
-  
+
         const deleteOperations = filteredProducts.map((product) => {
           if (product.productId !== undefined) {
-            return this.storage.deleteRecord(tableNames.product, product.productId);
+            return this.storage.deleteRecord(
+              tableNames.product,
+              product.productId
+            );
           }
           return null;
         });
-  
+
         // Filter out any potential 'null' values from the previous step
-        const validDeleteOperations = deleteOperations.filter((op) => op !== null);
-  
+        const validDeleteOperations = deleteOperations.filter(
+          (op) => op !== null
+        );
+
         return forkJoin(validDeleteOperations);
       })
     );
@@ -285,20 +315,24 @@ export class ProductService {
           const updatedAtDate = new Date(product.updatedAt);
           return updatedAtDate >= startDate && updatedAtDate <= endDate;
         });
-  
+
         const deleteOperations = filteredProducts.map((product) => {
           if (product.productId !== undefined) {
-            return this.storage.deleteRecord(tableNames.inventory, product.productId);
+            return this.storage.deleteRecord(
+              tableNames.inventory,
+              product.productId
+            );
           }
           return null;
         });
-  
+
         // Filter out any potential 'null' values from the previous step
-        const validDeleteOperations = deleteOperations.filter((op) => op !== null);
-  
+        const validDeleteOperations = deleteOperations.filter(
+          (op) => op !== null
+        );
+
         return forkJoin(validDeleteOperations);
       })
     );
   }
-  
 }

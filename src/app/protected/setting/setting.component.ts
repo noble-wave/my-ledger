@@ -8,6 +8,8 @@ import {
   getQuickSellSettingMeta,
   getSellPrintSettingsMeta,
   SellPrintSettings,
+  getDashboardSettingMeta,
+  DashboardSettings,
 } from '@app/models/sell-setting.model';
 import { ModelMeta } from '@app/shared-services';
 import { AppService } from '@app/services/app.service';
@@ -31,6 +33,8 @@ export class SettingComponent implements OnDestroy {
   quickSellMeta: ModelMeta[];
   sellPrintForm: FormGroup;
   sellPrintMeta: ModelMeta[];
+  dashboardForm: FormGroup;
+  dashboardMeta: ModelMeta[];
   sellSetting: any = { manageSellStatus: true };
   quicksellSetting: any = { manageQuickSell: false };
   imageBlob: Blob;
@@ -78,11 +82,24 @@ export class SettingComponent implements OnDestroy {
       this.sellPrintMeta
     );
     this.settingService
-    .getSellPrintSetting()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((x) => {
-      this.sellPrintForm.patchValue(x);
-    });
+      .getSellPrintSetting()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((x) => {
+        this.sellPrintForm.patchValue(x);
+      });
+
+    //Dashboard setting
+    this.dashboardMeta = getDashboardSettingMeta();
+    this.dashboardForm = this.app.meta.toFormGroup(
+      new DashboardSettings(),
+      this.dashboardMeta
+    );
+    this.settingService
+      .getDashboardSetting()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((x) => {
+        this.dashboardForm.patchValue(x);
+      });
 
     //save unit price for Quick sell Page
     this.quickSellMeta = getQuickSellSettingMeta();
@@ -177,7 +194,7 @@ export class SettingComponent implements OnDestroy {
         this.settingService.quickSellUpdate(existingSetting).subscribe(() => {
           this.form.patchValue(existingSetting);
         });
-        this.app.noty.notifyUpdated('Setting has been');
+        this.app.noty.notifyUpdated('Quick Setting has been');
       } else {
         // No data exists, add it
         this.settingService
@@ -185,7 +202,7 @@ export class SettingComponent implements OnDestroy {
           .subscribe((newSettings) => {
             if (newSettings) {
               this.form.patchValue(newSettings);
-              this.app.noty.notifyAdded('Setting has been');
+              this.app.noty.notifyAdded('Quick Setting has been');
             }
           });
       }
@@ -221,7 +238,7 @@ export class SettingComponent implements OnDestroy {
         this.settingService.SellPrintUpdate(existingSetting).subscribe(() => {
           this.sellPrintForm.patchValue(existingSetting);
         });
-        this.app.noty.notifyUpdated('Setting has been');
+        this.app.noty.notifyUpdated('Sell print Setting has been');
       } else {
         // No data exists, add it
         this.settingService
@@ -229,7 +246,34 @@ export class SettingComponent implements OnDestroy {
           .subscribe((newSettings) => {
             if (newSettings) {
               this.sellPrintForm.patchValue(newSettings);
-              this.app.noty.notifyAdded('Setting has been');
+              this.app.noty.notifyAdded('Sell print Setting has been');
+            }
+          });
+      }
+    });
+  }
+
+  savedashboardSetting() {
+    let formValue = this.dashboardForm.value;
+    console.log(formValue);
+
+    // Check if data exists in the storage
+    this.settingService.getDashboardSetting().subscribe((settings) => {
+      if (settings && settings.id) {
+        // Data exists, update it
+        let existingSetting = { ...settings, ...formValue };
+        this.settingService.dashboardUpdate(existingSetting).subscribe(() => {
+          this.dashboardForm.patchValue(existingSetting);
+        });
+        this.app.noty.notifyUpdated('Dashboard Setting has been');
+      } else {
+        // No data exists, add it
+        this.settingService
+          .addDashboardSetting(formValue)
+          .subscribe((newSettings) => {
+            if (newSettings) {
+              this.dashboardForm.patchValue(newSettings);
+              this.app.noty.notifyAdded('Dashboard Setting has been');
             }
           });
       }
