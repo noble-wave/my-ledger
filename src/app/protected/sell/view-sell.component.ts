@@ -151,11 +151,11 @@ export class ViewSellComponent {
                 }
 
                 .businessSetion {
-                  gap : 20px;
+                  gap : 15px;
                 }
 
                 img {
-                 margin-top: 10px;
+                 margin-top: 22px;
                 }
 
                 .sell-id {
@@ -268,11 +268,11 @@ export class ViewSellComponent {
             }
 
             .businessSetion {
-              gap : 20px;
+              gap : 15px;
             }
 
             img {
-             margin-top: 10px;
+             margin-top: 22px;
             }
 
             .sell-id {
