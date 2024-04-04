@@ -1,129 +1,138 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
-            (click)="navigateBack()">
-            <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
-        </button>
-        <div>View Sell</div>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+      (click)="navigateBack()">
+      <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+    </button>
+    <div>View Sell</div>
+  </div>
+  <div fxLayoutAlign="space-between center">
+    <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+      <a type="button" (click)="printInvoice()" mat-button mat-raised-button>Print</a>
     </div>
-    <div fxLayoutAlign="space-between center">
-        <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
-            <a type="button" (click)="printInvoice()" mat-button mat-raised-button>Print</a>
-        </div>
-        <button class="flex-grow-0 transparent-button" type="button" routerLink="../../new" aria-label="Toggle sidenav"
-            mat-icon-button>
-            <mat-icon aria-label="Side nav toggle icon">edit_square</mat-icon>
-        </button>
-        <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
-            (click)="settings()">
-            <mat-icon aria-label="Side nav toggle icon">settings</mat-icon>
-        </button>
-    </div>
+    <button class="flex-grow-0 transparent-button" type="button" routerLink="../../new" aria-label="Toggle sidenav"
+      mat-icon-button>
+      <mat-icon aria-label="Side nav toggle icon">edit_square</mat-icon>
+    </button>
+    <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+      (click)="settings()">
+      <mat-icon aria-label="Side nav toggle icon">settings</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
 
 
 <!-- view-sell.component.html -->
 <div class="sell-details" #sellDetails>
-    <div class="sell-header">
-        <div fxLayout="row" class="businessSetion">
-            <img ngOptimizedImage alt="girl image" *ngIf="imageToShow" [src]="imageToShow" width="100" height="75">
-            <div>
-                <p><strong *ngIf="setting?.posName">{{setting?.posName}}</strong> <br>
-                    <span *ngIf="setting?.phoneNumber">{{setting?.phoneNumber}}<br></span>
-                    <span *ngIf="setting?.email">{{setting?.email}}<br></span>
-                    <span *ngIf="setting?.address">{{setting?.address}}, {{setting?.pinCode}}<br></span>
-                    <!-- <span *ngIf="setting?.pinCode">pincode -{{setting?.pinCode}}<br></span>
+  <div class="sell-header">
+    <div fxLayout="row" class="businessSetion">
+      <img ngOptimizedImage alt="girl image" *ngIf="imageToShow" [src]="imageToShow" width="100" height="75">
+      <div>
+        <p><strong *ngIf="setting?.posName">{{setting?.posName}}</strong> <br>
+          <span *ngIf="setting?.phoneNumber">{{setting?.phoneNumber}}<br></span>
+          <span *ngIf="setting?.email">{{setting?.email}}<br></span>
+          <span *ngIf="setting?.address">{{setting?.address}}, {{setting?.pinCode}}<br></span>
+          <!-- <span *ngIf="setting?.pinCode">pincode -{{setting?.pinCode}}<br></span>
                     <span *ngIf="setting?.state">state - {{setting?.state}}<br></span> -->
-                    <span *ngIf="setting?.state || setting?.country" >{{setting?.state}}, {{setting?.country}}<br></span>
-                </p>
-            </div>
-        </div>
-        <div class="status">
-            <h2>INVOICE</h2>
-            <p class="sell-id"><strong>Id:</strong> {{ sell?.sellId }}</p>
-        </div>
+          <span *ngIf="setting?.state || setting?.country">{{setting?.state}}, {{setting?.country}}<br></span>
+        </p>
+      </div>
     </div>
-    <div class="sell-summary">
-        <div class="customer-info">
-            <p *ngIf="sell?.customerName"><strong>Bill To:</strong> {{ sell?.customerName }}</p>
-            <p><span *ngIf="customer?.phoneNumber">{{customer?.phoneNumber}}<br></span>
-                <span *ngIf="customer?.email">{{customer?.email}}<br></span>
-                <span *ngIf="customer?.addressLine1">{{customer?.addressLine1}}<br></span>
-                <span *ngIf="customer?.addressLine2">{{customer?.addressLine2}}<br></span>
-                <span *ngIf="customer?.pinCode">{{customer?.pinCode}}, {{customer?.state}}<br></span>
-                <span *ngIf="customer?.country">{{customer?.country}}<br></span>
-            </p>
-        </div>
-        <div class="status">
-            <p *ngIf="sell?.status"><strong>Status:</strong> {{ sell?.status }}</p>
-            <p><strong>Invoice Date:</strong> {{ sell?.sellDate | date: 'longDate' }}</p>
-        </div>
+    <div class="status">
+      <h2>INVOICE</h2>
+      <p class="sell-id"><strong>Id:</strong> {{ sell?.sellId }}</p>
     </div>
-    <div class="product-list">
-        <!-- <h3>Products</h3> -->
-        <table class="product-table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Discount</th>
-                    <th>Unit Price</th>
-                    <th>Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of sellItems">
-                    <td>{{ item?.productName }}</td>
-                    <td>{{ item?.quantity }}</td>
-                    <td>{{ item?.discount | currency: 'INR' }}</td>
-                    <td>{{ item?.unitPrice | currency: 'INR' }}</td>
-                    <td>{{ item?.subtotal | currency: 'INR' }}</td>
-                </tr>
-            </tbody>
-        </table>
+  </div>
+  <div class="sell-summary">
+    <div class="customer-info">
+      <p *ngIf="sell?.customerName"><strong>Bill To:</strong> {{ sell?.customerName }}</p>
+      <p><span *ngIf="customer?.phoneNumber">{{customer?.phoneNumber}}<br></span>
+        <span *ngIf="customer?.email">{{customer?.email}}<br></span>
+        <span *ngIf="customer?.addressLine1">{{customer?.addressLine1}}<br></span>
+        <span *ngIf="customer?.addressLine2">{{customer?.addressLine2}}<br></span>
+        <span *ngIf="customer?.pinCode">{{customer?.pinCode}}, {{customer?.state}}<br></span>
+        <span *ngIf="customer?.country">{{customer?.country}}<br></span>
+      </p>
     </div>
-    <!-- <div class="total">
+    <div class="status">
+      <p *ngIf="sell?.status"><strong>Status:</strong> {{ sell?.status }}</p>
+      <p><strong>Invoice Date:</strong> {{ sell?.sellDate | date: 'longDate' }}</p>
+    </div>
+  </div>
+  <div class="product-list">
+    <!-- <h3>Products</h3> -->
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Discount</th>
+          <th>Unit Price</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of sellItems">
+          <td>{{ item?.productName }}</td>
+          <td>{{ item?.quantity }}</td>
+          <td>{{ item?.discount | currency: 'INR' }}</td>
+          <td>{{ item?.unitPrice | currency: 'INR' }}</td>
+          <td>{{ item?.subtotal | currency: 'INR' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- <div class="total">
         <p><strong>Gross Amount:</strong> {{ sell?.grossAmount | currency: 'INR' }}</p>
         <p><strong>Total Discount:</strong> {{ sell?.totalDiscount | currency: 'INR' }}</p>
         <p><strong>Net Amount:</strong> {{ sell?.netAmount | currency: 'INR' }}</p>
         <p *ngIf="sell?.dueAmount"><strong>Balance Due:</strong> {{ sell?.dueAmount | currency: 'INR' }}</p>
     </div> -->
-    <div >
+  <div>
+    <div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div *ngIf="setting?.accontNumber">
+          <!-- *ngIf="setting?.posName">{{setting?.posName}}</strong -->
+          <P><strong *ngIf="setting?.accontNumber">Bank Details</strong><br>
+            <span *ngIf="setting?.accountName">Name: {{setting?.accountName}}</span><br>
+            <span *ngIf="setting?.ifscCode">Ifsc Code: {{setting?.ifscCode}}</span><br>
+            <span *ngIf="setting?.accontNumber">Account No: {{setting?.accontNumber}}</span><br>
+            <span *ngIf="setting?.bankName">Bank: {{setting?.bankName}} </span>
+          </P>
+        </div>
         <div>
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div *ngIf="setting?.accontNumber">
-                    <!-- *ngIf="setting?.posName">{{setting?.posName}}</strong -->
-                    <P><strong *ngIf="setting?.accontNumber">Bank Details</strong><br>
-                        <span *ngIf="setting?.accountName">Name: {{setting?.accountName}}</span><br>
-                        <span *ngIf="setting?.ifscCode">Ifsc Code: {{setting?.ifscCode}}</span><br>
-                        <span *ngIf="setting?.accontNumber">Account No: {{setting?.accontNumber}}</span><br>
-                        <span *ngIf="setting?.bankName">Bank: {{setting?.bankName}} </span>
-                        </P>
-                </div>
-                <div>
-                    <p><strong>Gross Amount:</strong> {{ sell?.grossAmount | currency: 'INR' }}</p>
-                    <p><strong>Total Discount:</strong> {{ sell?.totalDiscount | currency: 'INR' }}</p>
-                    <p><strong>Net Amount:</strong> {{ sell?.netAmount | currency: 'INR' }}</p>
-                    <p *ngIf="sell?.dueAmount"><strong>Balance Due:</strong> {{ sell?.dueAmount | currency: 'INR' }}</p>
-                </div>
+          <p><strong>Gross Amount:</strong> {{ sell?.grossAmount | currency: 'INR' }}</p>
+          <p *ngIf="sell?.totalDiscount"><strong>Total Discount:</strong> {{ sell?.totalDiscount | currency: 'INR' }}
+          </p>
+          <p><strong>Net Amount:</strong> {{ sell?.netAmount | currency: 'INR' }}</p>
+          <div>
+            <div *ngFor="let payment of sellPayment">
+              <p *ngIf="payment?.amountPaid"><strong>Amount Paid:</strong> {{ payment?.amountPaid |
+                currency:
+                'INR'
+                }}</p>
             </div>
-            <div fxLayout="row"  class="businessSetion" *ngIf="setting?.upiId">
-                <div>
-                    <P><strong *ngIf="setting?.upiId">Payment Qr Code</strong><br>
-                        <span *ngIf="setting?.upiId">Upi Id:</span><br>
-                        <span *ngIf="setting?.upiId">{{setting?.upiId}}</span>
-                        </P>
-                    <img alt="girl image"  src='/assets/sw/payment1.png' width="200" height="15" *ngIf="setting?.upiId">
-                </div>
-                <div>
-                    <!-- <img alt="girl image"  src='/assets/sw/qr.png' width="70" height="70"> -->
-                    <qrcode [qrdata]="upiId" [width]="70" [errorCorrectionLevel]="'M'"></qrcode>
-                    <!-- <img alt="Payment QR Code" [src]="'https://api.qrserver.com/v1/create-qr-code/?data=' + upiId" width="70" height="70"> -->
+            <p *ngIf="sell?.dueAmount"><strong>Balance Due:</strong> {{ sell?.dueAmount | currency: 'INR' }}</p>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row" class="businessSetion" *ngIf="setting?.upiId">
+        <div>
+          <P><strong *ngIf="setting?.upiId">Payment Qr Code</strong><br>
+            <span *ngIf="setting?.upiId">Upi Id:</span><br>
+            <span *ngIf="setting?.upiId">{{setting?.upiId}}</span>
+          </P>
+          <img alt="girl image" src='/assets/sw/payment1.png' width="200" height="15" *ngIf="setting?.upiId">
+        </div>
+        <div>
+          <!-- <img alt="girl image"  src='/assets/sw/qr.png' width="70" height="70"> -->
+          <qrcode [qrdata]="upiId" [width]="70" [errorCorrectionLevel]="'M'"></qrcode>
+          <!-- <img alt="Payment QR Code" [src]="'https://api.qrserver.com/v1/create-qr-code/?data=' + upiId" width="70" height="70"> -->
 
-                </div>
-            </div>
-            <!-- <div>
+        </div>
+      </div>
+      <!-- <div>
 
                 <P><strong>Terms And Conditions:</strong><br>
                 <span>1. Recharge Is Valid For 30 Days Only.</span><br>
@@ -131,8 +140,8 @@
                 <span>3. This Is Computer Generated Invoice Need No Signature.</span>
                 </P>
             </div> -->
-        </div>
     </div>
+  </div>
 
 </div>
 
@@ -140,5 +149,5 @@
 
 
 <div fxLayoutAlign="center center" fxShow fxHide.xs>
-    <a type="button" (click)="printPage()" mat-button mat-raised-button>Print</a>
+  <a type="button" (click)="printPage()" mat-button mat-raised-button>Print</a>
 </div>
