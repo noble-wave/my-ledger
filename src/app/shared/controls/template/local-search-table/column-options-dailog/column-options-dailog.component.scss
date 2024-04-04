@@ -1,10 +1,15 @@
-.option-list{
-    cursor: grab;
-    &:hover{
-        background-color: var(--grey-300);
-    }
+.option-list {
+  cursor: grab;
+
+  &:hover {
+    background-color: var(--grey-300);
+  }
 }
 
 .option-fields {
-    min-height: 60px;
+  min-height: 60px;
+}
+
+.margin {
+  margin: 0px 10px 0px 10px;
 }

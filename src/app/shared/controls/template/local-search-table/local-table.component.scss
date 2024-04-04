@@ -1,16 +1,27 @@
 table {
-    width: 100%;
-  }
+  width: 100%;
+}
 
 
 .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+mat-table {
+  margin-bottom: 1rem;
+  display: table;
+  border-collapse: collapse;
+  margin: 0px;
+}
+
+@media (max-width: 370px) {
+  .columnOption {
+    margin-bottom: 20px;
   }
-  mat-table {
-    margin-bottom: 1rem;
-    display: table;
-    border-collapse: collapse;
-    margin: 0px;
-  }
+}
+
+.columnOption {
+  margin-bottom: 20px;
+}

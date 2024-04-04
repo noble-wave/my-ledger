@@ -5,15 +5,17 @@
       <div>
         <h3>{{tableHeading}}</h3>
       </div>
-      <div>
+      <div fxLayout="row warp" fxLayoutAlign="space-around center">
         <mat-form-field fxFlex="50%">
           <mat-label>Filter</mat-label>
           <input matInput (keyup)="applyFilter($event)" #input>
         </mat-form-field>
-        <button (click)="openOptions()" mat-button>
-          <mat-icon>settings</mat-icon>
-          Column Options
-        </button> &nbsp;
+        <div class="columnOption">
+          <button (click)="openOptions()" mat-button>
+            <mat-icon>settings</mat-icon>
+            Column Options
+          </button> &nbsp;
+        </div>
       </div>
     </div>
 
