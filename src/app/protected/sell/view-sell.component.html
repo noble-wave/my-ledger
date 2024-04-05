@@ -24,7 +24,7 @@
 
 
 <!-- view-sell.component.html -->
-<div class="sell-details" #sellDetails>
+<div class="sell-details" #sellDetails id="sell">
   <div class="sell-header">
     <div fxLayout="row" class="businessSetion">
       <img ngOptimizedImage alt="girl image" *ngIf="imageToShow" [src]="imageToShow" width="100" height="75">
@@ -117,20 +117,21 @@
           </div>
         </div>
       </div>
-      <div fxLayout="row" class="businessSetion" *ngIf="setting?.upiId">
-        <div>
-          <P><strong *ngIf="setting?.upiId">Payment Qr Code</strong><br>
-            <span *ngIf="setting?.upiId">Upi Id:</span><br>
-            <span *ngIf="setting?.upiId">{{setting?.upiId}}</span>
-          </P>
-          <img alt="girl image" src='/assets/sw/payment1.png' width="200" height="15" *ngIf="setting?.upiId">
+      <div class="businessSetion" *ngIf="setting?.upiId">
+        <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="20px">
+          <div>
+            <P><strong *ngIf="setting?.upiId">Payment Qr Code</strong><br>
+              <span *ngIf="setting?.upiId">Upi Id:</span><br>
+              <span *ngIf="setting?.upiId">{{setting?.upiId}}</span>
+            </P>
+          </div>
+          <div class="qrCode">
+            <!-- <img alt="girl image"  src='/assets/sw/qr.png' width="70" height="70"> -->
+            <qrcode [elementType]="elementType" [qrdata]="upiId" [width]="70" [errorCorrectionLevel]="'M'"></qrcode>
+            <!-- <img alt="Payment QR Code" [src]="'https://api.qrserver.com/v1/create-qr-code/?data=' + upiId" width="70" height="70"> -->
+          </div>
         </div>
-        <div>
-          <!-- <img alt="girl image"  src='/assets/sw/qr.png' width="70" height="70"> -->
-          <qrcode [qrdata]="upiId" [width]="70" [errorCorrectionLevel]="'M'"></qrcode>
-          <!-- <img alt="Payment QR Code" [src]="'https://api.qrserver.com/v1/create-qr-code/?data=' + upiId" width="70" height="70"> -->
-
-        </div>
+        <img alt="girl image" src='/assets/sw/payment1.png' width="200" height="15" *ngIf="setting?.upiId">
       </div>
       <!-- <div>
 
@@ -144,9 +145,6 @@
   </div>
 
 </div>
-
-
-
 
 <div fxLayoutAlign="center center" fxShow fxHide.xs>
   <a type="button" (click)="printPage()" mat-button mat-raised-button>Print</a>

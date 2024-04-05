@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { CustomerService } from '../services/customer.service';
 import { SettingService } from '../services/setting.service';
 import { SellItem, SellPayment } from '@app/models/sell.model';
+import { QRCodeElementType } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-view-sell',
@@ -21,6 +22,7 @@ export class ViewSellComponent {
   upiId: any;
   sellItes: any;
   sellItems: SellItem[];
+  elementType: QRCodeElementType = 'img';
 
   constructor(
     private route: ActivatedRoute,
