@@ -49,8 +49,8 @@ export class ImportDataComponent {
       //   // Identify the file content based on its structure
       //   if (this.isSellData(jsonData)) {
       //     this.handleSellUpload(jsonData);
-      //   } else if (jsonData && jsonData.products && jsonData.inventory) {
-      //     this.handleProductUpload(jsonData.products, jsonData.inventory);
+      //     // } else if (jsonData && jsonData.products && jsonData.inventory) {
+      //     //   this.handleProductUpload(jsonData.products, jsonData.inventory);
       //   } else if (this.isCustomerData(jsonData)) {
       //     this.handleCustomerUpload(jsonData);
       //   } else {
@@ -133,20 +133,19 @@ export class ImportDataComponent {
   }
   // Handle uploading product data
   private handleProductInventoryUpload(productInventory: any): void {
-   this.productService.uploadProductInventoryData(productInventory).subscribe(
-    () => {
-      console.log('Product inventory data uploaded successfully.');
-      this.app.noty.notifyClose(
-        'Product inventory data uploaded successfully.'
-      );
-    },
-    (error) => {
-      console.error('Error uploading product inventory:', error);
-      this.app.noty.notifyError('Error uploading product inventory:');
-    }
-  );
+    this.productService.uploadProductInventoryData(productInventory).subscribe(
+      () => {
+        console.log('Product inventory data uploaded successfully.');
+        this.app.noty.notifyClose(
+          'Product inventory data uploaded successfully.'
+        );
+      },
+      (error) => {
+        console.error('Error uploading product inventory:', error);
+        this.app.noty.notifyError('Error uploading product inventory:');
+      }
+    );
   }
-
 
   // Handle uploading customer data
   private handleCustomerUpload(customerData: any): void {

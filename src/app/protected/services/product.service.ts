@@ -90,7 +90,7 @@ export class ProductService {
           let product = thresholdDefinedProducts.find(
             (y) => y.productId == x.productId
           );
-          console.log('product' + product);
+          // console.log('product' + product);
           if (product?.isThreshold) {
             lessInventory =
               Number(x.count) <= Number(product.warnThresholdNumber);
@@ -105,7 +105,7 @@ export class ProductService {
             (y) => y.productId == x.productId
           )?.productName;
         });
-        console.log(warnThresholInventories);
+        // console.log(warnThresholInventories);
         return warnThresholInventories as ProductWithInventory[];
       })
     );
@@ -139,7 +139,7 @@ export class ProductService {
           let product = thresholdDefinedProducts.find(
             (y) => y.productId == x.productId
           );
-          console.log('product' + product);
+          // console.log('product' + product);
           if (product?.isThreshold) {
             lessInventory =
               Number(x.count) >= Number(product.warnThresholdNumber) &&
@@ -157,7 +157,7 @@ export class ProductService {
             (y) => y.productId == x.productId
           )?.productName;
         });
-        console.log(warnThresholInventories);
+        // console.log(warnThresholInventories);
         return warnThresholInventories as ProductWithInventory[];
       })
     );

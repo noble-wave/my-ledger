@@ -37,6 +37,7 @@ export class ViewSellComponent {
     this.settingService.getSellPrintSetting().subscribe((x) => {
       this.setting = { ...x };
       this.upiId = `upi://pay?pa=${x.upiId}`;
+      // this.upiId = `upi://pay?pa=${x.upiId}&pn=Foody&tn=Order&am=100.34&cu=INR`;
       this.createImageFromBlob(this.setting.logoUrl);
     });
     this.route.params.subscribe((x: any) => {
