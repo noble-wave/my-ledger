@@ -22,6 +22,8 @@ export class DialogComponent {
   }
 
   onDelete(): void {
-    this.dialogRef.close('true'); 
+    this.dialogRef.close('true');
   }
+
+  onClick() {}
 }

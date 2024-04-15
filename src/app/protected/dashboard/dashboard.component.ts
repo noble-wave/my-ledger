@@ -53,6 +53,8 @@ export class DashboardComponent {
         cancelButtonText: 'Start Fresh',
         confirmButtonText: 'Explore with Sample Data',
         color: 'primary',
+        headButton: true,
+        headButtonContent: 'User Guide',
       },
     };
 

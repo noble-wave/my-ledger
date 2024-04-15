@@ -279,4 +279,6 @@ export class SettingComponent implements OnDestroy {
       }
     });
   }
+
+  downloadUserGuide() {}
 }
