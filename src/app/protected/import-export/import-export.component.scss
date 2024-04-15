@@ -46,3 +46,9 @@
     padding: 10px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .toolbarHeading {
+    font-size: 17px;
+  }
+}

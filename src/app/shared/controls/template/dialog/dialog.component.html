@@ -1,5 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="space-around center">
-
+<div fxLayoutAlign="space-around center" fxLayout="row wrap">
   <h1 mat-dialog-title>{{ data.dialogTitle }}</h1>
   <div *ngIf="data.headButton">
     <button [ngStyle]="{ 'background-color': data.color }" [ngClass]="data.color" mat-raised-button mat-dialog-close
