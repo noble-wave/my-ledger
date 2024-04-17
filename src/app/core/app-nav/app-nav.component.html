@@ -13,9 +13,16 @@
     [opened]="(isHandset$ | async) === false">
     <mat-nav-list class="erp-nav-list">
       <ng-container *ngFor="let item of paths; let i = index">
-        <a mat-list-item [routerLink]="item.path" [routerLinkActive]="['active']">
-          {{ item.label }}
-        </a>
+        <div fxShow fxHide.xs>
+          <a mat-list-item [routerLink]="item.path" [routerLinkActive]="['active']">
+            {{ item.label }}
+          </a>
+        </div>
+        <div fxShow.gt-sm="false" fxShow.gt-md="false" fxShow.gt-xs="false" fxShow="true">
+          <a mat-list-item [routerLink]="item.path" [routerLinkActive]="['active']" (click)="drawer.toggle()">
+            {{ item.label }}
+          </a>
+        </div>
         <!-- Add a divider after the "Customers" link -->
         <mat-divider *ngIf="item.path === 'report' && i !== paths.length - 1"></mat-divider>
         <mat-divider *ngIf="item.path === 'product-inventory' && i !== paths.length - 1"></mat-divider>
