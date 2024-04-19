@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  SimpleChanges,
 } from '@angular/core';
 import { FormControl, AbstractControl } from '@angular/forms';
 import {
@@ -79,6 +80,16 @@ export class IrsTypeaheadComponent implements OnInit {
       });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      !this.filteredOptions &&
+      !changes['options'].firstChange &&
+      changes['options'].currentValue
+    ) {
+      this.filteredOptions = changes['options'].currentValue;
+    }
+  }
+
   onKeyup(event?: any) {
     let searchTxt = event?.target?.value;
     console.log('user Input:', searchTxt);
@@ -94,7 +105,7 @@ export class IrsTypeaheadComponent implements OnInit {
         x[this.optTextLabel].toLowerCase().includes(filterValue)
       );
     } else {
-      return [];
+      return this.options || [];
     }
   }
 

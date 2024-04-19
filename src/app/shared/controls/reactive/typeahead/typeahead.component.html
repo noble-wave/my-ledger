@@ -5,13 +5,12 @@
     <!-- <mat-icon matPrefix class="irs-input-icon">{{icon}}</mat-icon> -->
     <mat-label>{{label}}</mat-label>
     <input #myInput="matAutocompleteTrigger" matInput type="text" [placeholder]="label" (keyup)="onKeyup($event)"
-      [value]="viewValue" [matAutocomplete]="auto" (click)="myInput.openPanel(); $event.stopPropagation()"
-      required="true" aria-label="Region">
+      [value]="viewValue" [matAutocomplete]="auto">
 
     <mat-icon *ngIf="suffixActionIcon && control.value" matSuffix class="irs-input-icon clickable"
       (click)="onActionIconClick($event)">{{suffixActionIcon}}</mat-icon>
 
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectionChange($event)">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption (optionSelected)="selectionChange($event)">
       <!-- <mat-option *ngFor="let option of options" [value]="option.text" (onSelectionChange)="onSelection(option)">
         {{option.text}}
       </mat-option> -->
