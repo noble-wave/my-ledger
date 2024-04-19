@@ -1,0 +1,141 @@
+{
+  "configVersion": 1,
+  "timestamp": 1713540160951,
+  "index": "https://my-ledger.etrivia.app/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://my-ledger.etrivia.app/307.7ea06c806fbb43ec.js",
+        "https://my-ledger.etrivia.app/380.dca8e415174ac3fd.js",
+        "https://my-ledger.etrivia.app/405.47333d2b72a841f5.js",
+        "https://my-ledger.etrivia.app/favicon.ico",
+        "https://my-ledger.etrivia.app/index.html",
+        "https://my-ledger.etrivia.app/main.4cfb9c9050762eca.js",
+        "https://my-ledger.etrivia.app/manifest.webmanifest",
+        "https://my-ledger.etrivia.app/polyfills.2094c4693754cd6a.js",
+        "https://my-ledger.etrivia.app/runtime.f20faf6bee736d26.js",
+        "https://my-ledger.etrivia.app/styles.25f6e464c2982f5a.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://my-ledger.etrivia.app/assets/icons/favicon1.svg",
+        "https://my-ledger.etrivia.app/assets/icons/icon-128x128.png",
+        "https://my-ledger.etrivia.app/assets/icons/icon-144x144.png",
+        "https://my-ledger.etrivia.app/assets/icons/icon-152x152.png",
+        "https://my-ledger.etrivia.app/assets/icons/icon-192x192.png",
+        "https://my-ledger.etrivia.app/assets/icons/icon-384x384.png",
+        "https://my-ledger.etrivia.app/assets/icons/icon-512x512.png",
+        "https://my-ledger.etrivia.app/assets/icons/icon-72x72.png",
+        "https://my-ledger.etrivia.app/assets/icons/icon-96x96.png",
+        "https://my-ledger.etrivia.app/assets/ledger-data/customer.json",
+        "https://my-ledger.etrivia.app/assets/ledger-data/product.json",
+        "https://my-ledger.etrivia.app/assets/ledger-data/sell.json",
+        "https://my-ledger.etrivia.app/assets/sw/Etrivia Ledger User Guide.pdf",
+        "https://my-ledger.etrivia.app/assets/sw/fonts/Comic/comic.ttf",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--128x128.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--144x144.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--152x152.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--192x192.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--384x384.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--462x602.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--512x512.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--72x72.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon--96x96.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-128x128.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-144x144.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-152x152.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-192x192.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-384x384.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-462x602.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-512x512.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-72x72.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon-96x96.png",
+        "https://my-ledger.etrivia.app/assets/sw/icons/icon.png",
+        "https://my-ledger.etrivia.app/assets/sw/payment1.png",
+        "https://my-ledger.etrivia.app/assets/sw/qr.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "https://my-ledger.etrivia.app/307.7ea06c806fbb43ec.js": "a8deb361ed6dd0b167d084df57e8d10da831e895",
+    "https://my-ledger.etrivia.app/380.dca8e415174ac3fd.js": "264bdaa9e4e1519b9d1e66e978ff50416531436d",
+    "https://my-ledger.etrivia.app/405.47333d2b72a841f5.js": "64fadb1da787eb65ec892739ca4d9ca54ed5e10e",
+    "https://my-ledger.etrivia.app/assets/icons/favicon1.svg": "98c1c56ca1957824551d46bf40983e98b45050ef",
+    "https://my-ledger.etrivia.app/assets/icons/icon-128x128.png": "32f1f54cd716f9f414d1a8f94ae1273b663d167d",
+    "https://my-ledger.etrivia.app/assets/icons/icon-144x144.png": "0e4114779e6010e92b2a2879d347838ae1cb4a87",
+    "https://my-ledger.etrivia.app/assets/icons/icon-152x152.png": "5a185d1cd47c15d06f6f613cea0c4ad82a59eed2",
+    "https://my-ledger.etrivia.app/assets/icons/icon-192x192.png": "d83e50cebff01a3d4b7d693453cafbf9014d3aac",
+    "https://my-ledger.etrivia.app/assets/icons/icon-384x384.png": "c74d976e1ef1b9b22e8d1e41ebe8cd7666dd7cf3",
+    "https://my-ledger.etrivia.app/assets/icons/icon-512x512.png": "f76ffdef78c8a4eec9ccf16c5b7dcb748d9540b1",
+    "https://my-ledger.etrivia.app/assets/icons/icon-72x72.png": "034494ceb913a64d8762f7316d31f2b3b4019c6e",
+    "https://my-ledger.etrivia.app/assets/icons/icon-96x96.png": "2cdbf90de719da8037bafe8ce3808f359e9bd994",
+    "https://my-ledger.etrivia.app/assets/ledger-data/customer.json": "7b75c934ff6dfbdfa3e13f2ff23bc49e2b560ed5",
+    "https://my-ledger.etrivia.app/assets/ledger-data/product.json": "d28645bd63734a3364411b03aa4336d9e7c0f4ea",
+    "https://my-ledger.etrivia.app/assets/ledger-data/sell.json": "91c8ee30b2342df48243a274a3912e9b42696d02",
+    "https://my-ledger.etrivia.app/assets/sw/Etrivia Ledger User Guide.pdf": "3aa37dcc4ab32968c2b752268780556ab202b088",
+    "https://my-ledger.etrivia.app/assets/sw/fonts/Comic/comic.ttf": "d17fae7a6628e2bc4c31a2074b666a775eed9055",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--128x128.png": "67aeaf06ce8a2efd0b472538b29d64e2e6518cef",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--144x144.png": "aae92cbd409e7365b0474023809c795f1184c820",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--152x152.png": "971815c158cb2b93cee77607113358bfd17ec3a6",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--192x192.png": "d27fab405dd550cf0c8ee6d49d9408d6cb20dcea",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--384x384.png": "bdff5ae7e4ab71cbf311fbae8c00c17a566e0783",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--462x602.png": "13d39450c57475b096ec728ea1cef437ba8b7a46",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--512x512.png": "8d8b71d218ce1a2ca6d1c394efa3294ae95f928f",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--72x72.png": "4e7ee0b33fa139bc259e6e33304d00617142ce2d",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon--96x96.png": "0956b1103a9eea827f33a915da52f4c3732cd7cf",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-128x128.png": "8241ee96d30725a9319b3fa4a9ecb870096596a9",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-144x144.png": "9fd70dd6c862091789f1c0c800ef20f02f66aec3",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-152x152.png": "9fd70dd6c862091789f1c0c800ef20f02f66aec3",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-192x192.png": "ec0241688353d71dc07f7d30a43d38a44bb34836",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-384x384.png": "2052eddfc01f11d8afcefe57dd1a1fba27457cbc",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-462x602.png": "13d39450c57475b096ec728ea1cef437ba8b7a46",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-512x512.png": "5374427c3a6dc6df0260b5c8c812588140ebc998",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-72x72.png": "a44ef6a6cffa8b03e1604357a7e0a570fc721088",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon-96x96.png": "70bbc5a58f884a496b8ddfdead371ec475bc6ee4",
+    "https://my-ledger.etrivia.app/assets/sw/icons/icon.png": "7bbd6e813460098a7cfb4290e866e8e01cb1f3c5",
+    "https://my-ledger.etrivia.app/assets/sw/payment1.png": "387c9023423af755b659944c2a46fca9902cc1a8",
+    "https://my-ledger.etrivia.app/assets/sw/qr.png": "9ff62ddc2d1c3316de756c3f2fc836b6fd8c8697",
+    "https://my-ledger.etrivia.app/favicon.ico": "afc8610da31611008340ced8a8cc4b53cdafa52a",
+    "https://my-ledger.etrivia.app/index.html": "d6629d5d1efc7c2485fac9f85ef7eca39b8dffee",
+    "https://my-ledger.etrivia.app/main.4cfb9c9050762eca.js": "1c2f70f3a9a8aff4f594fffa0c7a944050d58441",
+    "https://my-ledger.etrivia.app/manifest.webmanifest": "0113b597a0bce8ee5b220c8cba92a543ef0629e7",
+    "https://my-ledger.etrivia.app/polyfills.2094c4693754cd6a.js": "805984ed309342c1c6877927ba1a21d9b2d685ca",
+    "https://my-ledger.etrivia.app/runtime.f20faf6bee736d26.js": "a6716fac5c71f213e9e3f1a623ab9cf05d3187e3",
+    "https://my-ledger.etrivia.app/styles.25f6e464c2982f5a.css": "900adac4af0caf0132a0533d65cf845c4e9e702a"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
