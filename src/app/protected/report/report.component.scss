@@ -37,15 +37,22 @@ mat-form-field {
     margin-top: 30px !important;
   }
 }
+
 @media (max-width: 599px) {
- .submit{
-  margin-top: 20px;
- }
+  .submit {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 321px) {
+  .submit {
+    margin-top: 55px;
+  }
 }
 
 // .margin {
 //   margin-bottom: 80px !important;
 //   border-bottom: 1px solid #ccc; /* Adjust the border style as needed */
 //   margin-bottom: 10px; /* Adjust the margin as needed to control the spacing between items */
-//   padding-bottom: 10px; 
+//   padding-bottom: 10px;
 // }
