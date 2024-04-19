@@ -7,7 +7,6 @@ import { SellService } from '@app/protected/services/sell.service';
   templateUrl: './due-balance.component.html',
   styleUrls: ['./due-balance.component.scss'],
 })
-
 export class DueBalanceComponent {
   sells: Sell[] = [];
   last30DaysDueAmount: number = 0;
@@ -42,12 +41,16 @@ export class DueBalanceComponent {
       currentDate
     );
   }
- 
+
   calculateDueAmountInRange(startDate: Date, endDate: Date): number {
     return this.sells
-      .filter(sell => {
+      .filter((sell) => {
         let sellDate = new Date(sell.sellDate);
-        return sellDate >= startDate && sellDate <= endDate;
+        return (
+          sellDate >= startDate &&
+          sellDate <= endDate &&
+          typeof sell.dueAmount === 'number'
+        );
       })
       .reduce((dueAmount, sell) => dueAmount + Number(sell.dueAmount), 0);
   }

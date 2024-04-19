@@ -20,12 +20,28 @@
 
 .sale-list div {
   box-shadow: 5px 5px 7px #1c1e22,
-        -5px -5px 7px #262a2e;
+    -5px -5px 7px #262a2e;
   padding: 10px;
   color: var(--color-body);
   transition: background 0.5s, transform 0.5s;
   cursor: pointer;
+  min-height: min-content;
 }
+
+
+@media (max-width: 315px) {
+  .sale-list div {
+    width: 200px;
+  }
+}
+
+.sale-list div h2,
+.sale-list div p {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 
 .sale-list div i {
   font-size: 50px;
@@ -93,7 +109,7 @@
 //   /* Warning threshold background color */
 //   color: white;
 //   width: 45%;
-  
+
 // }
 
 // .info-threshold {
@@ -246,7 +262,3 @@
 // }
 
 // }
-
-
-
-

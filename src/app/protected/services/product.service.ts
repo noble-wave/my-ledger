@@ -19,6 +19,8 @@ import { SettingService } from './setting.service';
   providedIn: 'root',
 })
 export class ProductService {
+  invent$: any;
+
   constructor(
     private storage: StorageService,
     private settingService: SettingService
@@ -64,120 +66,99 @@ export class ProductService {
     return this.storage.getAll<ProductInventory>(tableNames.inventory);
   }
 
-  getInventoryWarnThreshold1(): Observable<ProductWithInventory[]> {
-    return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
-      map((productInventorys) => {
-        let warnInventoryThreshold = productInventorys.filter(
-          (productInventory) => {
-            return productInventory.count <= 10;
-          }
-        );
-        return warnInventoryThreshold;
-      }),
-      concatMap((inventory) => {
-        // return this.storage.getAllByIndex(tableNames.product, 'productId', IDBKeyRange.on inventory.map(x => x.productId));
-        let productIds = inventory.map((x) => x.productId);
-        return this.storage.getAll<Product>(tableNames.product).pipe(
-          map((x) => {
-            x.filter((y) => productIds.includes(y.productId as string));
-            x.map(
-              (z) =>
-                (z['count'] = inventory.find((y) => y.productId == z.productId))
-            );
-            return x as any;
-          })
-        );
-      })
-    );
-  }
-
   getInventoryWarnThreshold(): Observable<ProductWithInventory[]> {
-    let warnthreshold: any;
-    this.settingService.getDashboardSetting().subscribe((x) => {
-      let warn = x.warnThresholdNumber;
-      warnthreshold = Number(warn);
-    });
-    return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
-      map((productInventorys) => {
-        const warnInventoryThreshold = productInventorys.filter(
-          (productInventory) => productInventory.count <= warnthreshold
-        );
-        return warnInventoryThreshold;
-      }),
-      concatMap((inventory) => {
-        const productIds = inventory.map((x) => x.productId);
-        return this.getAll().pipe(
-          map((products) => {
-            const productsWithInventory: ProductWithInventory[] = products
-              .filter((product) =>
-                productIds.includes(product.productId as string)
-              )
-              .map((product) => {
-                const inventoryItem = inventory.find(
-                  (item) => item.productId === product.productId
-                );
-                if (inventoryItem) {
-                  return {
-                    productId: product.productId,
-                    productName: product.productName,
-                    count: inventoryItem.count,
-                  };
-                }
-                return null;
-              })
-              .filter((product) => product !== null) as ProductWithInventory[];
+    return forkJoin([
+      this.settingService.getDashboardSetting(),
+      this.getAll(),
+      this.getAllInventory(),
+    ]).pipe(
+      map((res: any[]) => {
+        let commonThresholdSetting = res[0];
+        let products: Product[] = res[1];
+        let productInventories: ProductInventory[] = res[2];
 
-            return productsWithInventory;
-          })
+        let commonWarnThreshold = Number(
+          commonThresholdSetting.warnThresholdNumber
         );
+
+        let thresholdDefinedProducts = products.filter(
+          (x) => x.isThreshold && x.warnThresholdNumber
+        );
+
+        let warnThresholInventories = productInventories.filter((x) => {
+          let lessInventory = false;
+          let product = thresholdDefinedProducts.find(
+            (y) => y.productId == x.productId
+          );
+          // console.log('product' + product);
+          if (product?.isThreshold) {
+            lessInventory =
+              Number(x.count) <= Number(product.warnThresholdNumber);
+          } else {
+            lessInventory = Number(x.count) <= commonWarnThreshold;
+          }
+          return lessInventory;
+        });
+
+        warnThresholInventories.forEach((x) => {
+          x['productName'] = products.find(
+            (y) => y.productId == x.productId
+          )?.productName;
+        });
+        // console.log(warnThresholInventories);
+        return warnThresholInventories as ProductWithInventory[];
       })
     );
   }
 
   getInventoryInfoThreshold(): Observable<ProductWithInventory[]> {
-    let warnthreshold: any;
-    let infoThreshold: any;
-    this.settingService.getDashboardSetting().subscribe((x) => {
-      let warn = x.warnThresholdNumber;
-      warnthreshold = Number(warn);
-      let info = x.infoThresholdNumber;
-      infoThreshold = Number(info);
-    });
-    return this.storage.getAll<ProductInventory>(tableNames.inventory).pipe(
-      map((productInventorys) => {
-        const warnInventoryThreshold = productInventorys.filter(
-          (productInventory) =>
-            productInventory.count >= warnthreshold &&
-            productInventory.count <= infoThreshold
-        );
-        return warnInventoryThreshold;
-      }),
-      concatMap((inventory) => {
-        const productIds = inventory.map((x) => x.productId);
-        return this.getAll().pipe(
-          map((products) => {
-            const productsWithInventory: ProductWithInventory[] = products
-              .filter((product) =>
-                productIds.includes(product.productId as string)
-              )
-              .map((product) => {
-                const inventoryItem = inventory.find(
-                  (item) => item.productId === product.productId
-                );
-                if (inventoryItem) {
-                  return {
-                    productId: product.productId,
-                    productName: product.productName,
-                    count: inventoryItem.count,
-                  };
-                }
-                return null;
-              })
-              .filter((product) => product !== null) as ProductWithInventory[];
+    return forkJoin([
+      this.settingService.getDashboardSetting(),
+      this.getAll(),
+      this.getAllInventory(),
+    ]).pipe(
+      map((res: any[]) => {
+        let commonThresholdSetting = res[0];
+        let products: Product[] = res[1];
+        let productInventories: ProductInventory[] = res[2];
 
-            return productsWithInventory;
-          })
+        let commonWarnThreshold = Number(
+          commonThresholdSetting.warnThresholdNumber
         );
+
+        let commonInfoThreshold = Number(
+          commonThresholdSetting.infoThresholdNumber
+        );
+
+        let thresholdDefinedProducts = products.filter(
+          (x) => x.isThreshold && x.infoThresholdNumber
+        );
+
+        let warnThresholInventories = productInventories.filter((x) => {
+          let lessInventory = false;
+          let product = thresholdDefinedProducts.find(
+            (y) => y.productId == x.productId
+          );
+          // console.log('product' + product);
+          if (product?.isThreshold) {
+            lessInventory =
+              Number(x.count) >= Number(product.warnThresholdNumber) &&
+              Number(x.count) <= Number(product.infoThresholdNumber);
+          } else {
+            lessInventory =
+              Number(x.count) >= commonWarnThreshold &&
+              Number(x.count) <= commonInfoThreshold;
+          }
+          return lessInventory;
+        });
+
+        warnThresholInventories.forEach((x) => {
+          x['productName'] = products.find(
+            (y) => y.productId == x.productId
+          )?.productName;
+        });
+        // console.log(warnThresholInventories);
+        return warnThresholInventories as ProductWithInventory[];
       })
     );
   }
@@ -207,6 +188,7 @@ export class ProductService {
   uploadProductData(productData: any[]) {
     return this.storage.bulkPut(tableNames.product, productData);
   }
+
   uploadProductInventoryData(productData: any[]) {
     return this.storage.bulkPut(tableNames.inventory, productData);
   }

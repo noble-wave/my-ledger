@@ -24,12 +24,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     SharedServicesModule.forRoot(),
 
     NgxIndexedDBModule.forRoot(dbConfig),
-      ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: !isDevMode(),
-        // Register the ServiceWorker as soon as the application is stable
-        // or after 30 seconds (whichever comes first).
-        registrationStrategy: 'registerWhenStable:30000'
-      }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
     {
@@ -40,7 +40,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '533038146655-etu6cgcfv25k5nv8trmauf0a2p4i361m.apps.googleusercontent.com',
+              '641134802523-6jmob16jpcc6fgab0dui3d6k95n5ccaf.apps.googleusercontent.com',
               {
                 oneTapEnabled: true, // default is true
                 scopes: 'profile https://www.googleapis.com/auth/drive',

@@ -22,6 +22,12 @@ export class DialogComponent {
   }
 
   onDelete(): void {
-    this.dialogRef.close('true'); 
+    this.dialogRef.close('true');
+  }
+
+  onClick() {
+    let link = document.createElement('a');
+    link.href = 'assets/sw/Etrivia Ledger User Guide.pdf';
+    link.click();
   }
 }

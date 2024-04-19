@@ -1,10 +1,14 @@
-<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar" fxLayoutGap="10px">
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
       (click)="navigateBack()">
       <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
     </button>
     <div>Settings</div>
+  </div>
+  <div>
+    <button type="button" (click)="downloadUserGuide()" mat-button mat-raised-button color="primary">
+      <mat-icon fxShow fxHide.xs>manage_accounts</mat-icon>User Guide</button>
   </div>
 </mat-toolbar>
 <mat-card>

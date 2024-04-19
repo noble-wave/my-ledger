@@ -39,7 +39,6 @@ export class WarnInventoryComponent {
       canGoToEdit: true,
       canGoToEditCommands: ['../', 'product'],
     });
-
     this.products$ = this.service.getInventoryWarnThreshold();
 
     // this.products$ = this.service.getInventoryWarnThreshold().pipe(

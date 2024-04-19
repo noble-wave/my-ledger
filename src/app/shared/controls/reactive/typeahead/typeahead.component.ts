@@ -1,6 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl, AbstractControl } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import { FloatLabelType } from '@angular/material/form-field';
 import { Observable, Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
@@ -30,8 +41,9 @@ export class IrsTypeaheadComponent implements OnInit {
   @Output() public debounceKeyup = new EventEmitter<string>();
   @Output() onSelectionChange = new EventEmitter<any>(true);
   @Output() navigateClick: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild(MatAutocompleteTrigger, { static: true }) trigger: MatAutocompleteTrigger;
-  
+  @ViewChild(MatAutocompleteTrigger, { static: true })
+  trigger: MatAutocompleteTrigger;
+
   filteredOptions: any[];
 
   constructor() {}
@@ -68,8 +80,19 @@ export class IrsTypeaheadComponent implements OnInit {
       });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      !this.filteredOptions &&
+      !changes['options'].firstChange &&
+      changes['options'].currentValue
+    ) {
+      this.filteredOptions = changes['options'].currentValue;
+    }
+  }
+
   onKeyup(event?: any) {
     let searchTxt = event?.target?.value;
+    console.log('user Input:', searchTxt);
     this.filteredOptions = this._filter(searchTxt);
     this.control.setValue(null);
     this.searchUpdated.next(searchTxt);
@@ -82,7 +105,7 @@ export class IrsTypeaheadComponent implements OnInit {
         x[this.optTextLabel].toLowerCase().includes(filterValue)
       );
     } else {
-      return [];
+      return this.options || [];
     }
   }
 
@@ -91,12 +114,16 @@ export class IrsTypeaheadComponent implements OnInit {
     this.control.setValue(option.value);
   }
 
-  selectionChange(option) {
-    // console.log(event);
-    // let option = this.options.find(x => x[this.optValueLabel] == event.value);
-    this.viewValue = option[this.optTextLabel];
-    this.control.setValue(option[this.optValueLabel]);
-    this.onSelectionChange.emit(option);
+  selectionChange(option: MatAutocompleteSelectedEvent) {
+    console.log(option);
+    let selctedOption =
+      this.options &&
+      this.options.find((x) => x[this.optValueLabel] === option.option.value);
+    if (selctedOption) {
+      this.viewValue = selctedOption[this.optTextLabel];
+      this.control.setValue(selctedOption[this.optValueLabel]);
+      this.onSelectionChange.emit(selctedOption);
+    }
   }
 
   displayWith = (value: string) => {

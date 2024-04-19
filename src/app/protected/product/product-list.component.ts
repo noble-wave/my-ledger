@@ -29,15 +29,15 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sellService.isDataPresent().subscribe((dataPresent) => {
-      this.dataPresent = dataPresent;
-      const isFirstVisit = localStorage.getItem('isFirstVisitProductList');
-      if (!isFirstVisit || !dataPresent) {
-        localStorage.setItem('isFirstVisitProductList', 'true');
-        this.demoData('enterAnimationDuration', 'exitAnimationDuration');
-      }
-    });
-    
+    // this.sellService.isDataPresent().subscribe((dataPresent) => {
+    //   this.dataPresent = dataPresent;
+    //   const isFirstVisit = localStorage.getItem('isFirstVisitProductList');
+    //   if (!isFirstVisit || !dataPresent) {
+    //     localStorage.setItem('isFirstVisitProductList', 'true');
+    //     this.demoData('enterAnimationDuration', 'exitAnimationDuration');
+    //   }
+    // });
+
     let columns = [
       { name: 'productId', text: 'Product Id', sell: 1 },
       { name: 'productName', text: 'Product Name', sell: 2 },
@@ -85,33 +85,33 @@ export class ProductListComponent implements OnInit {
     this.location.back();
   }
 
-  async demoData(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ) {
-    const dialogConfig = {
-      width: '600px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      data: {
-        dialogTitle: 'Welcome to Ledger App',
-        dialogContent: `
-      This application simplifies invoice generation, enables insightful sales analysis,
-      and facilitates efficient product and customer management.<br><br>
-      Would you like to explore the app with pre-populated data for a comprehensive understanding, or start with a clean slate?
-    `,
-        cancelButtonText: 'Start Fresh',
-        confirmButtonText: 'Explore with Sample Data',
-        color: 'primary',
-      },
-    };
+  // async demoData(
+  //   enterAnimationDuration: string,
+  //   exitAnimationDuration: string
+  // ) {
+  //   const dialogConfig = {
+  //     width: '600px',
+  //     enterAnimationDuration,
+  //     exitAnimationDuration,
+  //     data: {
+  //       dialogTitle: 'Welcome to Ledger App',
+  //       dialogContent: `
+  //     This application simplifies invoice generation, enables insightful sales analysis,
+  //     and facilitates efficient product and customer management.<br><br>
+  //     Would you like to explore the app with pre-populated data for a comprehensive understanding, or start with a clean slate?
+  //   `,
+  //       cancelButtonText: 'Start Fresh',
+  //       confirmButtonText: 'Explore with Sample Data',
+  //       color: 'primary',
+  //     },
+  //   };
 
-    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+  //   const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result === 'true') {
-        this.router.navigate(['/dummy-data-loader']);
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(async (result) => {
+  //     if (result === 'true') {
+  //       this.router.navigate(['/dummy-data-loader']);
+  //     }
+  //   });
+  // }
 }

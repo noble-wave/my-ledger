@@ -4,7 +4,8 @@ import { SellService } from '../services/sell.service';
 import { Location } from '@angular/common';
 import { CustomerService } from '../services/customer.service';
 import { SettingService } from '../services/setting.service';
-import { SellItem } from '@app/models/sell.model';
+import { SellItem, SellPayment } from '@app/models/sell.model';
+import { QRCodeElementType } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-view-sell',
@@ -17,9 +18,11 @@ export class ViewSellComponent {
   customer: any;
   setting: any;
   imageToShow: any;
+  sellPayment: SellPayment[];
   upiId: any;
   sellItes: any;
   sellItems: SellItem[];
+  elementType: QRCodeElementType = 'img';
 
   constructor(
     private route: ActivatedRoute,
@@ -27,15 +30,15 @@ export class ViewSellComponent {
     private location: Location,
     private customerService: CustomerService,
     private router: Router,
-    private settingService: SettingService,
+    private settingService: SettingService
   ) {}
 
   ngOnInit(): void {
     this.settingService.getSellPrintSetting().subscribe((x) => {
       this.setting = { ...x };
       this.upiId = `upi://pay?pa=${x.upiId}`;
+      // this.upiId = `upi://pay?pa=${x.upiId}&pn=Foody&tn=Order&am=100.34&cu=INR`;
       this.createImageFromBlob(this.setting.logoUrl);
-
     });
     this.route.params.subscribe((x: any) => {
       if (x) {
@@ -45,11 +48,19 @@ export class ViewSellComponent {
           this.sellService.getAllSellItem().subscribe((sellItem) => {
             this.sellItems = sellItem.filter(
               (sellItem) => sellItem.sellId === x.sellId
-              );
-          })
-          this.customerService.get(this.sell.customerId)?.subscribe((c: any) =>{
-            this.customer = c;
-          })
+            );
+          });
+          this.sellService.getAllSellPayment().subscribe((sellPayments) => {
+            this.sellPayment = sellPayments.filter(
+              (sellPayment) => sellPayment.sellId === x.sellId
+            );
+          });
+          this.customerService
+            .get(this.sell.customerId)
+            ?.subscribe((c: any) => {
+              this.customer = c;
+            });
+
           this.route.queryParamMap.subscribe((z) => {
             if (z.has('print')) {
               if (z.get('print') === 'true') {
@@ -64,20 +75,22 @@ export class ViewSellComponent {
         });
       }
     });
-
   }
 
-  createImageFromBlob(image:Blob){
+  createImageFromBlob(image: Blob) {
     let reader = new FileReader();
-    reader.addEventListener("load", () => {
-       this.imageToShow = reader.result;
-    }, false);
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageToShow = reader.result;
+      },
+      false
+    );
 
     if (image) {
-       reader.readAsDataURL(image);
+      reader.readAsDataURL(image);
     }
   }
-
 
   settings() {
     this.router.navigate(['/setting'], {
@@ -113,7 +126,7 @@ export class ViewSellComponent {
                 /* FOR DISABLING THE PRINT FOOTER */
                 @page {
                   size: auto;
-                  margin: 0;
+                  margin: 0px 20px 0px 20px;
                 }
 
                 @page :footer {
@@ -141,11 +154,11 @@ export class ViewSellComponent {
                 }
 
                 .businessSetion {
-                  gap : 20px;
+                  gap : 15px;
                 }
 
                 img {
-                 margin-top: 10px;
+                 margin-top: 22px;
                 }
 
                 .sell-id {
@@ -199,6 +212,7 @@ export class ViewSellComponent {
                   padding: 0 20px;
                   box-sizing: border-box;
                 }
+
               </style>
 
             </head>
@@ -229,7 +243,7 @@ export class ViewSellComponent {
             /* FOR DISABLING THE PRINT FOOTER */
             @page {
               size: auto;
-              margin: 0;
+              margin: 0px 20px 0px 20px;
             }
 
             @page :footer {
@@ -257,11 +271,11 @@ export class ViewSellComponent {
             }
 
             .businessSetion {
-              gap : 20px;
+              gap : 15px;
             }
 
             img {
-             margin-top: 10px;
+             margin-top: 22px;
             }
 
             .sell-id {

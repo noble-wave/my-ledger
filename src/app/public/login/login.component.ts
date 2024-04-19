@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
       if (user) {
         this.user = user;
         this.loggedIn = user != null;
-        this.router.navigate(['/product'], {});
+        this.router.navigate(['/dashboard'], {});
       }
     });
   }
@@ -29,6 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   withoutLogin() {
-    this.router.navigate(['/product'], {});
+    this.router.navigate(['/dashboard'], {});
   }
 }
