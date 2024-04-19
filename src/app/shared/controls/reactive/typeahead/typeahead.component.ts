@@ -7,7 +7,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, AbstractControl } from '@angular/forms';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import { FloatLabelType } from '@angular/material/form-field';
 import { Observable, Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
@@ -100,14 +103,16 @@ export class IrsTypeaheadComponent implements OnInit {
     this.control.setValue(option.value);
   }
 
-  selectionChange(option) {
-    // console.log(event);
-    // let option = this.options.find(x => x[this.optValueLabel] == event.value);
-    console.log('selected option:', option);
-    console.log('updated textValue:', option[this.optTextLabel]);
-    this.viewValue = option[this.optTextLabel];
-    this.control.setValue(option[this.optValueLabel]);
-    this.onSelectionChange.emit(option);
+  selectionChange(option: MatAutocompleteSelectedEvent) {
+    console.log(option);
+    let selctedOption =
+      this.options &&
+      this.options.find((x) => x[this.optValueLabel] === option.option.value);
+    if (selctedOption) {
+      this.viewValue = selctedOption[this.optTextLabel];
+      this.control.setValue(selctedOption[this.optValueLabel]);
+      this.onSelectionChange.emit(selctedOption);
+    }
   }
 
   displayWith = (value: string) => {
