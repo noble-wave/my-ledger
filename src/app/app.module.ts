@@ -13,6 +13,8 @@ import {
   SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '@env/environment';
+import { GtagModule } from 'angular-gtag';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +32,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    GtagModule.forRoot({
+      trackingId: environment.trackingId,
+      trackPageviews: true,
+    }),
   ],
   providers: [
     {
@@ -40,7 +46,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '641134802523-6jmob16jpcc6fgab0dui3d6k95n5ccaf.apps.googleusercontent.com',
+              environment.googleClientId,
+              // '641134802523-6jmob16jpcc6fgab0dui3d6k95n5ccaf.apps.googleusercontent.com',
               {
                 oneTapEnabled: true, // default is true
                 scopes: 'profile https://www.googleapis.com/auth/drive',

@@ -26,6 +26,7 @@
     "@angular/router": "^15.2.10",
     "@angular/service-worker": "^15.2.10",
     "@swimlane/ngx-charts": "^20.5.0",
+    "angular-gtag": "^1.0.4",
     "angularx-qrcode": "^15.0.1",
     "crypto-random-string": "^5.0.0",
     "file-saver": "^2.0.5",
