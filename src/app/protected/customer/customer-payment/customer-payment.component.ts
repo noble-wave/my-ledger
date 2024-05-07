@@ -51,8 +51,6 @@ export class CustomerPaymentComponent {
     });
 
     this.getCustomerSellsData();
-
-    
   }
 
   getCustomerSellsData() {
@@ -80,7 +78,7 @@ export class CustomerPaymentComponent {
           0
         );
 
-        return customerSells.filter((x) => x.dueAmount > 0);
+        return customerSells.filter((x) => x.dueAmount !== 0);
       })
     );
   }

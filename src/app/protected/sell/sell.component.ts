@@ -311,23 +311,28 @@ export class SellComponent implements OnDestroy {
 
       // decrypted
 
-      // let newCustomerName = this.form.value.customerName;
-      // let customer: any;
-      // customer = {
-      //   customerName: newCustomerName,
-      // };
-      // let oldCustomerName: any;
-      // this.customerService.getAll().subscribe((customers: Customer[]) => {
-      //   customers.forEach((customer: Customer) => {
-      //     oldCustomerName = customer.customerName;
-      //     console.log(oldCustomerName);
-      //   });
-      // });
-
-      // if (oldCustomerName !== newCustomerName) {
-      //   this.customerService.add(customer).subscribe((x) => {
-      //     console.log(x);
-      //   });
+      // if (this.showAmountPaidAndBalanceDue === true) {
+      //   let validAmountPaid = this.form.get('netAmount')?.value;
+      //   let amount = Number(this.amountPaid);
+      //   if (amount <= validAmountPaid) {
+      //     let paymentDate = new Date();
+      //     let paymentId = `custom_payment_id`;
+      //     sellPayment = {
+      //       paymentId: paymentId,
+      //       sellId: sellId,
+      //       customerId: customerId,
+      //       amountPaid: this.amountPaid,
+      //       paymentDate: paymentDate,
+      //     };
+      //     this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
+      //       console.log('Payment Saved', y);
+      //     });
+      //   } else {
+      //     this.app.noty.notifyLocalValidationError(
+      //       'Amount paid exceeds net amount'
+      //     );
+      //     return;
+      //   }
       // }
 
       this.app.noty.notifyClose('Sell has been taken');
