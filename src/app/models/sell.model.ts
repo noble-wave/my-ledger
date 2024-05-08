@@ -35,7 +35,6 @@ export function getSellMeta() {
     { key: 'userGstin', label: 'User Gstin' },
     { key: 'customerGstin', label: 'Customer Gstin' },
     { key: 'dueAmount', label: 'Due Amount' },
-
   ] as Array<ModelMeta>;
 }
 
@@ -87,5 +86,39 @@ export function getSellPaymentMeta() {
     { key: 'amountPaid', label: 'Amount Paid', required: true },
     { key: 'sellId', label: 'SellId', hide: true, required: true },
     { key: 'customerId', label: 'Customer Id' },
+  ] as Array<ModelMeta>;
+}
+
+export interface Wallet {
+  customerId: string;
+  walletId?: string;
+  walletAmount: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+export function getWalletMeta() {
+  return [
+    { key: 'customerId', label: 'Customer Id' },
+    { key: 'walletId', label: 'Wallet Id', hide: true },
+    { key: 'walletAmount', label: 'Wallet Amount', required: true },
+    { key: 'createdAt', label: 'Created at', required: false },
+    { key: 'updatedAt', label: 'Updated at', required: false },
+  ] as Array<ModelMeta>;
+}
+
+export interface WalletHistory {
+  walletHistoryId?: string;
+  customerId: string;
+  walletId: string;
+  walletAmount: number;
+  createdAt?: Date;
+}
+export function getWalletHistoryMeta() {
+  return [
+    { key: 'walletHistoryId', label: 'Wallet History Id', hide: true },
+    { key: 'customerId', label: 'Customer Id' },
+    { key: 'walletId', label: 'Wallet Id', hide: true },
+    { key: 'walletAmount', label: 'Wallet Amount', required: true },
+    { key: 'createdAt', label: 'Created at', required: false },
   ] as Array<ModelMeta>;
 }

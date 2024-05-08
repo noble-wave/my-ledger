@@ -1,5 +1,7 @@
 import {
   SellPayment,
+  Wallet,
+  WalletHistory,
   getSellItemMeta,
   getSellMeta,
   getSellPaymentMeta,
@@ -26,6 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CustomerComponent } from '../customer/customer.component';
 import { ProductComponent } from '../product/product.component';
 import { Location } from '@angular/common';
+import { WalletService } from '../services/wallet.service';
 
 @Component({
   selector: 'app-sell',
@@ -47,6 +50,7 @@ export class SellComponent implements OnDestroy {
   refreshing: boolean;
   amountPaid: number = 0;
   showAmountPaidAndBalanceDue: boolean = false;
+  advanceAndBalanceDue: boolean = false;
 
   constructor(
     private sellService: SellService,
@@ -58,7 +62,8 @@ export class SellComponent implements OnDestroy {
     private cdr: ChangeDetectorRef,
     private settingService: SettingService,
     private dialog: MatDialog,
-    private location: Location
+    private location: Location,
+    private walletService: WalletService
   ) {}
 
   ngOnDestroy(): void {
@@ -227,10 +232,16 @@ export class SellComponent implements OnDestroy {
     const netAmount = this.calculateNetAmount();
     const balanceDue = netAmount - this.amountPaid;
 
-    if (this.showAmountPaidAndBalanceDue === true) {
+    if (
+      this.showAmountPaidAndBalanceDue === true &&
+      this.amountPaid <= netAmount
+    ) {
       this.form.get('dueAmount')?.setValue(balanceDue);
+      this.advanceAndBalanceDue = false;
     } else {
       this.form.get('dueAmount')?.setValue(0);
+      this.advanceAndBalanceDue = true;
+      return Math.abs(balanceDue);
     }
     return balanceDue;
   }
@@ -276,6 +287,8 @@ export class SellComponent implements OnDestroy {
 
     let sell = this.form.value;
     let sellPayment: SellPayment;
+    let wallet: Wallet;
+    let walletHistory: WalletHistory;
     let sellItems = this.sellItemForms.map((x) => x.value);
     // sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
@@ -295,45 +308,62 @@ export class SellComponent implements OnDestroy {
       });
 
       if (this.showAmountPaidAndBalanceDue === true) {
-        let paymentDate = new Date();
-        let paymentId = `custom_payment_id`;
-        sellPayment = {
-          paymentId: paymentId,
-          sellId: sellId,
-          customerId: customerId,
-          amountPaid: this.amountPaid,
-          paymentDate: paymentDate,
-        };
-        this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-          console.log('Payment Saved', y);
-        });
+        let validAmountPaid = this.form.get('netAmount')?.value;
+        let amount = Number(this.amountPaid);
+        if (amount <= validAmountPaid) {
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: this.amountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
+            console.log('Payment Saved', y);
+          });
+        } else if (amount > validAmountPaid) {
+          let extraAmount = amount - validAmountPaid;
+          let walletId;
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: validAmountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
+            console.log('Payment Saved', y);
+          });
+
+          wallet = {
+            customerId: customerId,
+            walletAmount: extraAmount,
+          };
+
+          this.walletService.addWallet(wallet).subscribe((resultWallet) => {
+            walletId = resultWallet.walletId;
+            walletHistory = {
+              customerId: customerId,
+              walletId: walletId,
+              walletAmount: extraAmount,
+            };
+            this.walletService
+              .addWalletHistory(walletHistory)
+              .subscribe((resultwalletHistory) => {
+                console.log(resultwalletHistory);
+              });
+          });
+
+          // this.app.noty.notifyLocalValidationError(
+          //   'Amount paid exceeds net amount'
+          // );
+          // return;
+        }
       }
-
-      // decrypted
-
-      // if (this.showAmountPaidAndBalanceDue === true) {
-      //   let validAmountPaid = this.form.get('netAmount')?.value;
-      //   let amount = Number(this.amountPaid);
-      //   if (amount <= validAmountPaid) {
-      //     let paymentDate = new Date();
-      //     let paymentId = `custom_payment_id`;
-      //     sellPayment = {
-      //       paymentId: paymentId,
-      //       sellId: sellId,
-      //       customerId: customerId,
-      //       amountPaid: this.amountPaid,
-      //       paymentDate: paymentDate,
-      //     };
-      //     this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-      //       console.log('Payment Saved', y);
-      //     });
-      //   } else {
-      //     this.app.noty.notifyLocalValidationError(
-      //       'Amount paid exceeds net amount'
-      //     );
-      //     return;
-      //   }
-      // }
 
       this.app.noty.notifyClose('Sell has been taken');
       console.log('Before reset:', this.form.value);
@@ -375,11 +405,15 @@ export class SellComponent implements OnDestroy {
       this.app.noty.notifyLocalValidationError('');
       return;
     }
+
     let sell = this.form.value;
     let sellPayment: SellPayment;
+    let wallet: Wallet;
+    let walletHistory: WalletHistory;
     let sellItems = this.sellItemForms.map((x) => x.value);
     // sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
+
     this.sellService.addSell(sell).subscribe((x) => {
       console.log(x);
       let sellId = x.sellId;
@@ -387,6 +421,7 @@ export class SellComponent implements OnDestroy {
 
       sellItems.forEach((sellItem) => {
         sellItem.sellId = sellId;
+        sellItem.sellDate = new Date();
       });
 
       this.sellService.addSellItems(sellItems).subscribe((z) => {
@@ -394,19 +429,63 @@ export class SellComponent implements OnDestroy {
       });
 
       if (this.showAmountPaidAndBalanceDue === true) {
-        let paymentDate = new Date();
-        let paymentId = `custom_payment_id`;
-        sellPayment = {
-          paymentId: paymentId,
-          sellId: sellId,
-          customerId: customerId,
-          amountPaid: this.amountPaid,
-          paymentDate: paymentDate,
-        };
-        this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-          console.log('Payment Saved', y);
-        });
+        let validAmountPaid = this.form.get('netAmount')?.value;
+        let amount = Number(this.amountPaid);
+        if (amount <= validAmountPaid) {
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: this.amountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
+            console.log('Payment Saved', y);
+          });
+        } else if (amount > validAmountPaid) {
+          let extraAmount = amount - validAmountPaid;
+          let walletId;
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: validAmountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
+            console.log('Payment Saved', y);
+          });
+
+          wallet = {
+            customerId: customerId,
+            walletAmount: extraAmount,
+          };
+
+          this.walletService.addWallet(wallet).subscribe((resultWallet) => {
+            walletId = resultWallet.walletId;
+            walletHistory = {
+              customerId: customerId,
+              walletId: walletId,
+              walletAmount: extraAmount,
+            };
+            this.walletService
+              .addWalletHistory(walletHistory)
+              .subscribe((resultwalletHistory) => {
+                console.log(resultwalletHistory);
+              });
+          });
+
+          // this.app.noty.notifyLocalValidationError(
+          //   'Amount paid exceeds net amount'
+          // );
+          // return;
+        }
       }
+
       this.app.noty.notifyClose('Sell has been taken and go to print');
       this.router.navigate(['/sell/view', x.sellId], {
         relativeTo: this.route,

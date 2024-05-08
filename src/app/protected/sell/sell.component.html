@@ -167,7 +167,8 @@
             (onValueChange)="valueChanged($event)"></app-input>
         </div>
         <div class="total-amount-square">
-          Balance Due<br>
+          {{ advanceAndBalanceDue ? 'Extra Balance' : 'Balance Due' }}
+          <br>
           {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
         </div>
       </div>
