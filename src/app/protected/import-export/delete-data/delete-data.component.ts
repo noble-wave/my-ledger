@@ -158,8 +158,12 @@ export class DeleteDataComponent {
         try {
           // Call your SellService to get the sell data based on the provided date range
           const sells = await firstValueFrom(this.sellService.getAll());
-          const sellItems = await firstValueFrom(this.sellService.getAllSellItem());
-          const sellPayments = await firstValueFrom(this.sellService.getAllSellPayment());
+          const sellItems = await firstValueFrom(
+            this.sellService.getAllSellItem()
+          );
+          const sellPayments = await firstValueFrom(
+            this.sellService.getAllSellPayment()
+          );
 
           // Export the sell data to a file
           const csvSells = Papa.unparse(sells);
@@ -173,12 +177,12 @@ export class DeleteDataComponent {
           // After exporting, delete the sell data by date range
           const deleteResult = await firstValueFrom(
             forkJoin([
-                this.sellService.deleteAllSell(),
-                this.sellService.deleteAllSellItems(),
-                this.sellService.deleteAllSellPayment()
+              this.sellService.deleteAllSell(),
+              this.sellService.deleteAllSellItems(),
+              this.sellService.deleteAllSellPayment(),
             ])
-        );
-        
+          );
+
           // Check the deleteResult if necessary
 
           this.app.noty.notifyClose(
@@ -247,9 +251,8 @@ export class DeleteDataComponent {
             'Product and Inventory data deleted successfully.'
           );
         } catch (error) {
-          console.error(
-            'Error while exporting and deleting product and inventory data:',
-            error
+          this.app.noty.notifyError(
+            'Error while exporting and deleting product and inventory data:'
           );
           // Handle errors here
         }
@@ -302,9 +305,8 @@ export class DeleteDataComponent {
 
           this.app.noty.notifyClose('Customer data deleted successfully.');
         } catch (error) {
-          console.error(
-            'Error while exporting and deleting customer data:',
-            error
+          this.app.noty.notifyError(
+            'Error while exporting and deleting customer data:'
           );
           // Handle errors here
         }
@@ -355,7 +357,6 @@ export class DeleteDataComponent {
             this.sellService.getSellPaymentsByDate(startDate, endDate)
           );
 
-
           // Export the sell data to a file
           const csv = Papa.unparse(sellData);
           const csvsellItmes = Papa.unparse(sellItmes);
@@ -380,7 +381,9 @@ export class DeleteDataComponent {
 
           this.app.noty.notifyClose('Sell data deleted successfully.');
         } catch (error) {
-          console.error('Error while exporting and deleting sell data:', error);
+          this.app.noty.notifyError(
+            'Error while exporting and deleting sell data:'
+          );
           // Handle errors here
         }
       }

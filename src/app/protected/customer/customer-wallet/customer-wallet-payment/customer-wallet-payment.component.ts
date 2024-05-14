@@ -108,7 +108,6 @@ export class CustomerWalletPaymentComponent {
         // this.walletService
         //   .updateWallet(updateWallet)
         //   .subscribe((result) => {
-        //     console.log(result);
         //     walletHistory = {
         //       customerId: customerId,
         //       walletId: result.walletId,
@@ -117,7 +116,6 @@ export class CustomerWalletPaymentComponent {
         //     this.walletService
         //       .addWalletHistory(walletHistory)
         //       .subscribe((resultwalletHistory) => {
-        //         console.log(resultwalletHistory);
         //       });
         //   });
       } else {

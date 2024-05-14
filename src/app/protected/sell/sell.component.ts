@@ -100,7 +100,6 @@ export class SellComponent implements OnDestroy {
 
     this.settingService.getSellSetting().subscribe((sellSettings) => {
       this.setting = { ...sellSettings };
-      console.log('Setting data:', this.setting);
       let defaultSellStatus = sellSettings.defaultSellStatus;
       this.form.get('status')?.setValue(defaultSellStatus);
     });
@@ -172,7 +171,6 @@ export class SellComponent implements OnDestroy {
   }
 
   handleCustomerSelection(customer: Customer, form: FormGroup) {
-    console.log('Selected customer:', customer);
     if (customer) {
       form.get('customerName')?.setValue(customer.customerName);
       this.showAmountPaidAndBalanceDue = true;
@@ -294,7 +292,6 @@ export class SellComponent implements OnDestroy {
     this.productService.updateProductInventory(sellItems); // Update product inventory
 
     this.sellService.addSell(sell).subscribe((x) => {
-      console.log(x);
       let sellId = x.sellId;
       let customerId = x.customerId;
 
@@ -303,9 +300,7 @@ export class SellComponent implements OnDestroy {
         sellItem.sellDate = new Date();
       });
 
-      this.sellService.addSellItems(sellItems).subscribe((z) => {
-        // console.log(z);
-      });
+      this.sellService.addSellItems(sellItems).subscribe();
 
       if (this.showAmountPaidAndBalanceDue === true) {
         let validAmountPaid = this.form.get('netAmount')?.value;
@@ -320,9 +315,7 @@ export class SellComponent implements OnDestroy {
             amountPaid: this.amountPaid,
             paymentDate: paymentDate,
           };
-          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-            console.log('Payment Saved', y);
-          });
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
         } else if (amount > validAmountPaid) {
           let extraAmount = amount - validAmountPaid;
           let walletId;
@@ -335,9 +328,7 @@ export class SellComponent implements OnDestroy {
             amountPaid: validAmountPaid,
             paymentDate: paymentDate,
           };
-          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-            console.log('Payment Saved', y);
-          });
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
           let walletDescription = 'From Sell';
           this.walletService
             .getWalletByCustomerId(customerId)
@@ -353,7 +344,6 @@ export class SellComponent implements OnDestroy {
                 this.walletService
                   .updateWallet(updateWallet)
                   .subscribe((result) => {
-                    console.log(result);
                     walletHistory = {
                       customerId: customerId,
                       walletId: result.walletId,
@@ -362,9 +352,7 @@ export class SellComponent implements OnDestroy {
                     };
                     this.walletService
                       .addWalletHistory(walletHistory)
-                      .subscribe((resultwalletHistory) => {
-                        console.log(resultwalletHistory);
-                      });
+                      .subscribe();
                   });
               } else {
                 wallet = {
@@ -385,9 +373,7 @@ export class SellComponent implements OnDestroy {
                     };
                     this.walletService
                       .addWalletHistory(walletHistory)
-                      .subscribe((resultwalletHistory) => {
-                        console.log(resultwalletHistory);
-                      });
+                      .subscribe();
                   });
               }
             });
@@ -400,9 +386,6 @@ export class SellComponent implements OnDestroy {
       }
 
       this.app.noty.notifyClose('Sell has been taken');
-      console.log('Before reset:', this.form.value);
-      console.log('After reset:', this.form.value);
-      // this.router.navigate([], {queryParams: {time: new Date()}})
       this.refreshing = true;
       this.cdr.detectChanges();
       this.resetSellItemForms();
@@ -414,11 +397,8 @@ export class SellComponent implements OnDestroy {
   }
 
   resetSellItemForms() {
-    // this.form = this.app.meta.toFormGroup({ sellDate: new Date(), status: this.setting.defaultSellStatus }, this.modelMeta);
     this.sellItemForms = [];
-    // this.form.reset();
     this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
-
     this.form.markAsPristine();
     this.form.markAsUntouched();
     this.form.updateValueAndValidity();
@@ -449,7 +429,6 @@ export class SellComponent implements OnDestroy {
     this.productService.updateProductInventory(sellItems); // Update product inventory
 
     this.sellService.addSell(sell).subscribe((x) => {
-      console.log(x);
       let sellId = x.sellId;
       let customerId = x.customerId;
 
@@ -458,9 +437,7 @@ export class SellComponent implements OnDestroy {
         sellItem.sellDate = new Date();
       });
 
-      this.sellService.addSellItems(sellItems).subscribe((z) => {
-        // console.log(z);
-      });
+      this.sellService.addSellItems(sellItems).subscribe();
 
       if (this.showAmountPaidAndBalanceDue === true) {
         let validAmountPaid = this.form.get('netAmount')?.value;
@@ -475,9 +452,7 @@ export class SellComponent implements OnDestroy {
             amountPaid: this.amountPaid,
             paymentDate: paymentDate,
           };
-          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-            console.log('Payment Saved', y);
-          });
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
         } else if (amount > validAmountPaid) {
           let extraAmount = amount - validAmountPaid;
           let walletId;
@@ -490,9 +465,7 @@ export class SellComponent implements OnDestroy {
             amountPaid: validAmountPaid,
             paymentDate: paymentDate,
           };
-          this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-            console.log('Payment Saved', y);
-          });
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
 
           let walletDescription = 'From Sell';
 
@@ -510,7 +483,6 @@ export class SellComponent implements OnDestroy {
                 this.walletService
                   .updateWallet(updateWallet)
                   .subscribe((result) => {
-                    console.log(result);
                     walletHistory = {
                       customerId: customerId,
                       walletId: result.walletId,
@@ -519,9 +491,7 @@ export class SellComponent implements OnDestroy {
                     };
                     this.walletService
                       .addWalletHistory(walletHistory)
-                      .subscribe((resultwalletHistory) => {
-                        console.log(resultwalletHistory);
-                      });
+                      .subscribe();
                   });
               } else {
                 wallet = {
@@ -542,9 +512,7 @@ export class SellComponent implements OnDestroy {
                     };
                     this.walletService
                       .addWalletHistory(walletHistory)
-                      .subscribe((resultwalletHistory) => {
-                        console.log(resultwalletHistory);
-                      });
+                      .subscribe();
                   });
               }
             });
@@ -580,9 +548,6 @@ export class SellComponent implements OnDestroy {
       this.customerService.getAll().subscribe((customers) => {
         this.customers = customers;
       });
-      if (result) {
-        console.log('Customer data:', result);
-      }
     });
   }
 
@@ -601,9 +566,6 @@ export class SellComponent implements OnDestroy {
       this.productService.getAll().subscribe((products) => {
         this.products = products;
       });
-      if (result) {
-        console.log('Product data:', result);
-      }
     });
   }
 
@@ -649,7 +611,6 @@ export class SellComponent implements OnDestroy {
 //   if (productId) {
 //     this.productService.getProductInventory(productId).subscribe((x) => {
 //       let productCount = x.count;
-//       console.log(productCount);
 //       return `${productCount}`;
 //     });
 //   }

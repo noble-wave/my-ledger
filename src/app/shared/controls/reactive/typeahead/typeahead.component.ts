@@ -75,7 +75,6 @@ export class IrsTypeaheadComponent implements OnInit {
     this.searchUpdated
       .pipe(debounceTime(100), distinctUntilChanged())
       .subscribe((x: string) => {
-        console.log(x);
         this.debounceKeyup.emit(x);
       });
   }
@@ -92,7 +91,6 @@ export class IrsTypeaheadComponent implements OnInit {
 
   onKeyup(event?: any) {
     let searchTxt = event?.target?.value;
-    console.log('user Input:', searchTxt);
     this.filteredOptions = this._filter(searchTxt);
     this.control.setValue(null);
     this.searchUpdated.next(searchTxt);
@@ -115,7 +113,6 @@ export class IrsTypeaheadComponent implements OnInit {
   }
 
   selectionChange(option: MatAutocompleteSelectedEvent) {
-    console.log(option);
     let selctedOption =
       this.options &&
       this.options.find((x) => x[this.optValueLabel] === option.option.value);

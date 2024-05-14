@@ -43,8 +43,6 @@ export class SocialService {
   //       headers: { Authorization: `Bearer ${this.accessToken}` },
   //     })
   //     .subscribe((events) => {
-  //       alert('Look at your console');
-  //       console.log('events', events);
   //     });
   // }
 }

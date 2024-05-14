@@ -100,9 +100,7 @@ export class QuickSellComponent {
       this.sell.items[i].subtotal = this.sell.netAmount;
 
       // Save the individual sell item
-      this.sellService.addSell(this.sell).subscribe((response) => {
-        console.log(response);
-      });
+      this.sellService.addSell(this.sell).subscribe();
     }
 
     // Handle additional logic or notifications as needed

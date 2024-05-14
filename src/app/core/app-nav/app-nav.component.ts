@@ -45,7 +45,6 @@ export class AppNavComponent {
   ngOnInit(): void {
     this.settingService.getQuickSellSetting().subscribe((x) => {
       this.setting = { ...x };
-      // console.log('Setting data:', this.setting);
       if (this.setting.manageQuickSell) {
         this.paths.splice(7, 0, { path: 'quickSell', label: 'Quick Sell' });
       } else {

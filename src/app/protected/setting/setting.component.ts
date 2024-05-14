@@ -53,7 +53,6 @@ export class SettingComponent implements OnDestroy {
 
   ngOnInit(): void {
     this.route.fragment.subscribe((fragment) => {
-      console.log('Fragment:', fragment);
       if (fragment) {
         this.scrollToElement(fragment);
       }
@@ -140,13 +139,11 @@ export class SettingComponent implements OnDestroy {
   // Deprecated
   saveSetting() {
     let formValue = this.form.value;
-    console.log(formValue);
     this.settingService.addSellSetting(formValue).subscribe();
   }
 
   saveSellSetting() {
     const formValue = this.form.value;
-    console.log(formValue);
 
     // Update the sellSetting variable immediately
     this.sellSetting = { ...this.sellSetting, ...formValue };
@@ -185,7 +182,6 @@ export class SettingComponent implements OnDestroy {
     let quickSellSetting = this.quickSellForm.value;
     this.refreshService.isChnage$.next(quickSellSetting);
     quickSellSetting.unitPrices = this.unitPrices;
-    console.log(quickSellSetting);
     // Check if data exists in the storage
     this.settingService.getQuickSellSetting().subscribe((x) => {
       if (x && x.id) {
@@ -210,7 +206,6 @@ export class SettingComponent implements OnDestroy {
   }
 
   onRadioChange(manageSellStatus: any) {
-    console.log('Selected sell Status:', manageSellStatus);
     this.form.get('manageSellStatus')?.setValue(manageSellStatus.value);
   }
 
@@ -228,7 +223,6 @@ export class SettingComponent implements OnDestroy {
   saveSellPrintSetting() {
     this.sellPrintForm.get('logoUrl')?.setValue(this.imageBlob);
     const formValue = this.sellPrintForm.value;
-    console.log(formValue);
 
     // Check if data exists in the storage
     this.settingService.getSellPrintSetting().subscribe((settings) => {
@@ -255,8 +249,6 @@ export class SettingComponent implements OnDestroy {
 
   savedashboardSetting() {
     let formValue = this.dashboardForm.value;
-    console.log(formValue);
-
     // Check if data exists in the storage
     this.settingService.getDashboardSetting().subscribe((settings) => {
       if (settings && settings.id) {

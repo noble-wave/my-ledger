@@ -1,14 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IrsControl, ModelMeta } from '@app/shared-services';
 
 @Component({
   selector: 'app-control',
   templateUrl: './control.component.html',
-  styleUrls: ['./control.component.scss']
+  styleUrls: ['./control.component.scss'],
 })
 export class IrsControlComponent implements OnInit {
-
   @Input() meta!: ModelMeta;
   @Input() form!: FormGroup;
   @Output() onValueChange = new EventEmitter<any>(true);
@@ -17,7 +23,7 @@ export class IrsControlComponent implements OnInit {
   hideRequiredMarker = false;
   isMatInput: boolean;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     // Default type is text
@@ -26,7 +32,6 @@ export class IrsControlComponent implements OnInit {
     this.isMatInput = this.meta.controlType == 'radio' ? false : true;
 
     this.control = this.form.get(this.meta.key) as IrsControl;
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -36,8 +41,6 @@ export class IrsControlComponent implements OnInit {
   }
 
   valueChange(value) {
-    // console.log(event);
     this.onValueChange.emit(value);
   }
-
 }
