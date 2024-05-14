@@ -16,13 +16,24 @@ export class WalletService {
     return this.storage.addRecord(tableNames.wallet, wallet);
   }
 
-  update(wallet: Wallet) {
-    wallet.updatedAt = new Date();
-    return this.storage.updateRecord(tableNames.customer, wallet);
+  updateWallet(value: Wallet) {
+    value.updatedAt = new Date();
+    return this.storage.updateRecord(tableNames.wallet, value);
   }
 
   getAllWallet() {
     return this.storage.getAll<Wallet>(tableNames.wallet);
+  }
+
+  getWalletByCustomerId(customerId: string) {
+    return this.storage.getByIndex<Wallet>(
+      tableNames.wallet,
+      'customerId',
+      customerId
+    );
+  }
+  getWalletBywalletId(walletId: string) {
+    return this.storage.getByKey<Wallet>(tableNames.wallet, walletId);
   }
 
   addWalletHistory(walletHistory: WalletHistory) {
@@ -33,5 +44,13 @@ export class WalletService {
 
   getAllWalletHistory() {
     return this.storage.getAll<WalletHistory>(tableNames.walletHistory);
+  }
+
+  getAllWalletHistoryByWalletId(walletId: string) {
+    return this.storage.getAllByIndex<WalletHistory>(
+      tableNames.walletHistory,
+      'walletId',
+      IDBKeyRange.only(walletId)
+    );
   }
 }

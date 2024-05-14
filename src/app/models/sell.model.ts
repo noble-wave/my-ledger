@@ -93,6 +93,7 @@ export interface Wallet {
   customerId: string;
   walletId?: string;
   walletAmount: number;
+  description: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -101,6 +102,7 @@ export function getWalletMeta() {
     { key: 'customerId', label: 'Customer Id' },
     { key: 'walletId', label: 'Wallet Id', hide: true },
     { key: 'walletAmount', label: 'Wallet Amount', required: true },
+    { key: 'description', label: 'Description', required: true },
     { key: 'createdAt', label: 'Created at', required: false },
     { key: 'updatedAt', label: 'Updated at', required: false },
   ] as Array<ModelMeta>;
@@ -109,8 +111,9 @@ export function getWalletMeta() {
 export interface WalletHistory {
   walletHistoryId?: string;
   customerId: string;
-  walletId: string;
+  walletId?: string;
   walletAmount: number;
+  description: string;
   createdAt?: Date;
 }
 export function getWalletHistoryMeta() {
@@ -119,6 +122,7 @@ export function getWalletHistoryMeta() {
     { key: 'customerId', label: 'Customer Id' },
     { key: 'walletId', label: 'Wallet Id', hide: true },
     { key: 'walletAmount', label: 'Wallet Amount', required: true },
+    { key: 'description', label: 'Description', required: true },
     { key: 'createdAt', label: 'Created at', required: false },
   ] as Array<ModelMeta>;
 }

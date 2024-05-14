@@ -28,6 +28,7 @@ export class AppNavComponent {
     { path: 'product-inventory', label: 'Product Inventory' },
     { path: 'customer', label: 'Customers' },
     { path: 'customer-dueAmount', label: 'Customers/Due Amount' },
+    { path: 'customer-wallet', label: 'Customers Wallet' },
     { path: 'sell', label: 'Sell List' },
     { path: 'sell/new', label: 'Sell' },
     { path: 'import-export', label: 'Import/Export/Delete' },
@@ -46,7 +47,7 @@ export class AppNavComponent {
       this.setting = { ...x };
       // console.log('Setting data:', this.setting);
       if (this.setting.manageQuickSell) {
-        this.paths.splice(4, 0, { path: 'quickSell', label: 'Quick Sell' });
+        this.paths.splice(7, 0, { path: 'quickSell', label: 'Quick Sell' });
       } else {
         this.paths = this.paths.filter((item) => item.path !== 'quickSell');
       }
@@ -54,7 +55,7 @@ export class AppNavComponent {
 
     this.refreshService.isChnage$.subscribe((x) => {
       if (x.manageQuickSell) {
-        this.paths.splice(3, 0, { path: 'quickSell', label: 'Quick Sell' });
+        this.paths.splice(7, 0, { path: 'quickSell', label: 'Quick Sell' });
       } else {
         this.paths = this.paths.filter((item) => item.path !== 'quickSell');
       }

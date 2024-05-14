@@ -338,25 +338,59 @@ export class SellComponent implements OnDestroy {
           this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
             console.log('Payment Saved', y);
           });
+          let walletDescription = 'From Sell';
+          this.walletService
+            .getWalletByCustomerId(customerId)
+            .subscribe((customerWallet) => {
+              if (customerWallet) {
+                let updateWallet = {
+                  walletId: customerWallet.walletId,
+                  customerId: customerWallet.customerId,
+                  walletAmount: customerWallet.walletAmount + extraAmount,
+                  createdAt: customerWallet.createdAt,
+                  description: walletDescription,
+                };
+                this.walletService
+                  .updateWallet(updateWallet)
+                  .subscribe((result) => {
+                    console.log(result);
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: result.walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe((resultwalletHistory) => {
+                        console.log(resultwalletHistory);
+                      });
+                  });
+              } else {
+                wallet = {
+                  customerId: customerId,
+                  walletAmount: extraAmount,
+                  description: walletDescription,
+                };
 
-          wallet = {
-            customerId: customerId,
-            walletAmount: extraAmount,
-          };
-
-          this.walletService.addWallet(wallet).subscribe((resultWallet) => {
-            walletId = resultWallet.walletId;
-            walletHistory = {
-              customerId: customerId,
-              walletId: walletId,
-              walletAmount: extraAmount,
-            };
-            this.walletService
-              .addWalletHistory(walletHistory)
-              .subscribe((resultwalletHistory) => {
-                console.log(resultwalletHistory);
-              });
-          });
+                this.walletService
+                  .addWallet(wallet)
+                  .subscribe((resultWallet) => {
+                    walletId = resultWallet.walletId;
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe((resultwalletHistory) => {
+                        console.log(resultwalletHistory);
+                      });
+                  });
+              }
+            });
 
           // this.app.noty.notifyLocalValidationError(
           //   'Amount paid exceeds net amount'
@@ -460,24 +494,60 @@ export class SellComponent implements OnDestroy {
             console.log('Payment Saved', y);
           });
 
-          wallet = {
-            customerId: customerId,
-            walletAmount: extraAmount,
-          };
+          let walletDescription = 'From Sell';
 
-          this.walletService.addWallet(wallet).subscribe((resultWallet) => {
-            walletId = resultWallet.walletId;
-            walletHistory = {
-              customerId: customerId,
-              walletId: walletId,
-              walletAmount: extraAmount,
-            };
-            this.walletService
-              .addWalletHistory(walletHistory)
-              .subscribe((resultwalletHistory) => {
-                console.log(resultwalletHistory);
-              });
-          });
+          this.walletService
+            .getWalletByCustomerId(customerId)
+            .subscribe((customerWallet) => {
+              if (customerWallet) {
+                let updateWallet = {
+                  walletId: customerWallet.walletId,
+                  customerId: customerWallet.customerId,
+                  walletAmount: customerWallet.walletAmount + extraAmount,
+                  createdAt: customerWallet.createdAt,
+                  description: walletDescription,
+                };
+                this.walletService
+                  .updateWallet(updateWallet)
+                  .subscribe((result) => {
+                    console.log(result);
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: result.walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe((resultwalletHistory) => {
+                        console.log(resultwalletHistory);
+                      });
+                  });
+              } else {
+                wallet = {
+                  customerId: customerId,
+                  walletAmount: extraAmount,
+                  description: walletDescription,
+                };
+
+                this.walletService
+                  .addWallet(wallet)
+                  .subscribe((resultWallet) => {
+                    walletId = resultWallet.walletId;
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe((resultwalletHistory) => {
+                        console.log(resultwalletHistory);
+                      });
+                  });
+              }
+            });
 
           // this.app.noty.notifyLocalValidationError(
           //   'Amount paid exceeds net amount'
