@@ -358,7 +358,6 @@ export class SellComponent implements OnDestroy {
                 wallet = {
                   customerId: customerId,
                   walletAmount: extraAmount,
-                  description: walletDescription,
                 };
 
                 this.walletService
@@ -497,7 +496,6 @@ export class SellComponent implements OnDestroy {
                 wallet = {
                   customerId: customerId,
                   walletAmount: extraAmount,
-                  description: walletDescription,
                 };
 
                 this.walletService
