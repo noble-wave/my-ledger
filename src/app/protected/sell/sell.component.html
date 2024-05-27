@@ -75,6 +75,24 @@
               <irs-date [form]="form" name="sellDate" label="Sell Date"></irs-date>
             </div>
           </div>
+          <div>
+            <div *ngIf="selectCustomerWallet && showAmountPaidAndBalanceDue && selectCustomerWalletAmount > 0">
+              <!-- <div class="demo-section" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+                <p>Wallet amount</p>
+                <button mat-raised-button disabled>
+                  <strong>
+                    {{selectCustomerWallet.walletAmount}}</strong>
+                </button>
+              </div> -->
+
+              <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Wallet Amount</mat-label>
+                  <input matInput disabled value="{{selectCustomerWallet.walletAmount}}">
+                </mat-form-field>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -161,16 +179,52 @@
         </div>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" *ngIf="showAmountPaidAndBalanceDue">
-        <div class="total-amount-square">
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px"
+        *ngIf="showAmountPaidAndBalanceDue && !iswalletActive" class="amountPaid">
+        <!-- <div *ngIf="selectCustomerWallet && selectCustomerWalletAmount > 0">
+          <mat-checkbox class="example-margin"
+            (change)="handleWallet($event.checked, selectCustomerWallet.walletAmount)">Use
+            wallet</mat-checkbox>
+        </div> -->
+        <div fxFlex.gt-sm="15%" fxFlex.xs="100%">
           <app-input [form]="sellPaymentForm" label="Amount Paid" name="amountPaid" type="number"
             (onValueChange)="valueChanged($event)"></app-input>
         </div>
-        <div class="total-amount-square">
+        <div *ngIf="balanceDue !== 0" fxLayoutAlign=" center">
           {{ advanceAndBalanceDue ? 'Advance Balance' : 'Balance Due' }}
           <br>
           {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
         </div>
+      </div>
+      <div *ngIf="selectCustomerWallet && selectCustomerWalletAmount > 0">
+        <mat-checkbox class="example-margin"
+          (change)="handleWallet($event.checked, selectCustomerWallet.walletAmount)">Use
+          wallet</mat-checkbox>
+        <div *ngIf="balanceDue !== 0 && !advanceAndBalanceDue && iswalletActive && walletInput > 0" fxLayout="row"
+          fxLayoutAlign="end center">
+          Balance Due
+          <br>
+          {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
+        </div>
+        <div *ngIf="advanceAndBalanceDue" fxLayout="row" fxLayoutAlign="end center">
+          Balance Due
+          <br>
+          {{ 0.00 | currency:'INR':'symbol':'1.2-2' }}
+        </div>
+      </div>
+
+      <div *ngIf="iswalletActive && walletInput > 0" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px"
+        class="amountPaid">
+        <div class="total-amount-square">
+          Amount to pay<br>
+          {{ walletInput | currency:'INR':'symbol':'1.2-2' }}
+        </div>
+        <form class="example-form" #addproduct="ngForm">
+          <mat-form-field class="example-full-width">
+            <mat-label> Need Amount Paid</mat-label>
+            <input matInput [(ngModel)]="newAmountPaid" name="walletAmount" (keyup)="walletAmount($event)">
+          </mat-form-field>
+        </form>
       </div>
 
       <div class="button-row">

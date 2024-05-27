@@ -48,9 +48,17 @@ export class SellComponent implements OnDestroy {
   statusOption: any;
   setting: any;
   refreshing: boolean;
+  balanceDue: number = 0;
   amountPaid: number = 0;
   showAmountPaidAndBalanceDue: boolean = false;
   advanceAndBalanceDue: boolean = false;
+  selectedCustomerId: any;
+  selectCustomerWallet: undefined | Wallet;
+  selectCustomerWalletAmount: number;
+  iswalletActive: boolean = false;
+  newAmountPaid: number = 0;
+  newAmountFrom: FormGroup;
+  walletInput: number = 0;
 
   constructor(
     private sellService: SellService,
@@ -63,8 +71,13 @@ export class SellComponent implements OnDestroy {
     private settingService: SettingService,
     private dialog: MatDialog,
     private location: Location,
-    private walletService: WalletService
-  ) {}
+    private walletService: WalletService,
+    private fb: FormBuilder
+  ) {
+    this.newAmountFrom = this.fb.group({
+      netAmount: [''],
+    });
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next(undefined);
@@ -174,6 +187,13 @@ export class SellComponent implements OnDestroy {
     if (customer) {
       form.get('customerName')?.setValue(customer.customerName);
       this.showAmountPaidAndBalanceDue = true;
+      this.selectedCustomerId = customer.customerId;
+      this.walletService
+        .getWalletByCustomerId(this.selectedCustomerId)
+        .subscribe((x) => {
+          this.selectCustomerWallet = x;
+          this.selectCustomerWalletAmount = x.walletAmount;
+        });
     } else {
       this.showAmountPaidAndBalanceDue = false;
     }
@@ -206,14 +226,18 @@ export class SellComponent implements OnDestroy {
   }
 
   calculateNetAmount(): number {
-    let netAmount = 0;
+    let netAmount: number = 0;
     for (const sellItemForm of this.sellItemForms) {
       if (sellItemForm && sellItemForm.get('subtotal')) {
         const subtotal = sellItemForm.get('subtotal')?.value || 0;
         netAmount += subtotal;
       }
     }
-    this.form.get('netAmount')?.setValue(netAmount);
+    const netAmountControl = this.form.get('netAmount');
+    if (netAmountControl && netAmountControl.value !== netAmount) {
+      netAmountControl.setValue(netAmount, { emitEvent: false });
+      this.sellPaymentForm.get('amountPaid')?.setValue(netAmount);
+    }
     return netAmount;
   }
 
@@ -222,26 +246,30 @@ export class SellComponent implements OnDestroy {
     const netAmount = this.calculateNetAmount();
     const totalDiscount = grossAmount - netAmount;
 
-    this.form.get('totalDiscount')?.setValue(totalDiscount);
+    // this.form.get('totalDiscount')?.setValue(totalDiscount);
+    const totalDiscountControl = this.form.get('totalDiscount');
+    if (totalDiscountControl && totalDiscountControl.value !== totalDiscount) {
+      totalDiscountControl.setValue(totalDiscount, { emitEvent: false });
+    }
     return totalDiscount;
   }
 
   calculateBalanceDue(): number {
     const netAmount = this.calculateNetAmount();
-    const balanceDue = netAmount - this.amountPaid;
+    this.balanceDue = netAmount - this.amountPaid;
 
     if (
       this.showAmountPaidAndBalanceDue === true &&
       this.amountPaid <= netAmount
     ) {
-      this.form.get('dueAmount')?.setValue(balanceDue);
+      this.form.get('dueAmount')?.setValue(this.balanceDue);
       this.advanceAndBalanceDue = false;
     } else {
       this.form.get('dueAmount')?.setValue(0);
       this.advanceAndBalanceDue = true;
-      return Math.abs(balanceDue);
+      return Math.abs(this.balanceDue);
     }
-    return balanceDue;
+    return this.balanceDue;
   }
 
   valueChanged(amountPaid: number) {
@@ -280,6 +308,10 @@ export class SellComponent implements OnDestroy {
 
     if (!hasValidSellItem) {
       this.app.noty.notifyLocalValidationError('');
+      return;
+    }
+
+    if (!this.updateWallet()) {
       return;
     }
 
@@ -382,6 +414,7 @@ export class SellComponent implements OnDestroy {
           // );
           // return;
         }
+        // this.updateWallet();
       }
 
       this.app.noty.notifyClose('Sell has been taken');
@@ -391,7 +424,9 @@ export class SellComponent implements OnDestroy {
       this.amountPaid = 0;
       this.sellPaymentForm.reset();
       this.refreshing = false;
+      this.showAmountPaidAndBalanceDue = false;
       this.cdr.detectChanges();
+      this.newAmountPaid = 0;
     });
   }
 
@@ -416,6 +451,10 @@ export class SellComponent implements OnDestroy {
 
     if (!hasValidSellItem) {
       this.app.noty.notifyLocalValidationError('');
+      return;
+    }
+
+    if (!this.updateWallet()) {
       return;
     }
 
@@ -600,17 +639,101 @@ export class SellComponent implements OnDestroy {
       dialogRef.afterClosed().subscribe((result) => {});
     }
   }
+
+  handleWallet(event: any, walletAmount: number) {
+    this.iswalletActive = event;
+    if (this.iswalletActive === true) {
+      let netAmount = Number(this.form.get('netAmount')?.value);
+      let newWalletAmount = netAmount - walletAmount;
+      if (newWalletAmount < 0) {
+        this.newAmountPaid = 0;
+        this.walletInput = 0;
+      } else if (newWalletAmount === 0) {
+        this.newAmountPaid = 0;
+        this.walletInput = 0;
+      } else if (newWalletAmount > 0) {
+        this.newAmountPaid = newWalletAmount;
+        this.walletInput = newWalletAmount;
+      }
+    } else {
+      console.log('revert');
+      this.newAmountPaid = 0;
+    }
+  }
+
+  walletAmount(query: KeyboardEvent) {
+    let wallet = this.selectCustomerWallet?.walletAmount ?? 0;
+    let netAmount = Number(this.form.get('netAmount')?.value);
+    if (query) {
+      const element = query.target as HTMLInputElement;
+      let amount = Number(element.value);
+      // if (netAmount > amount) {
+      this.amountPaid = wallet + amount;
+      this.sellPaymentForm.get('amountPaid')?.setValue(this.amountPaid);
+      this.calculateBalanceDue();
+      // }
+    }
+  }
+
+  updateWallet() {
+    let walletAmount = this.selectCustomerWallet?.walletAmount ?? 0;
+    if (this.iswalletActive === true) {
+      let netAmount = Number(this.form.get('netAmount')?.value);
+      let newWalletAmount = netAmount - walletAmount;
+      if (newWalletAmount < 0) {
+        this.newAmountPaid = 0;
+        let x = Math.abs(newWalletAmount);
+        let y = Number(walletAmount + newWalletAmount);
+        let walletHistoryAmount = -Math.abs(y);
+        this.updateWalletAmount(x, walletHistoryAmount);
+        return true;
+      } else if (newWalletAmount === 0) {
+        this.newAmountPaid = 0;
+        let walletHistoryAmount = -Math.abs(walletAmount);
+        this.updateWalletAmount(0, walletHistoryAmount);
+        return true;
+      } else if (newWalletAmount > 0) {
+        this.app.noty.notifyLocalValidationError(
+          'Please enter a value less than or equal to amount to pay'
+        );
+        return false;
+      }
+    } else {
+      console.log('revert');
+      this.newAmountPaid = 0;
+      return true;
+    }
+
+    // Add a return statement to ensure all code paths return a value
+    return false;
+  }
+
+  updateWalletAmount(amount: number, walletHistoryAmount: number) {
+    this.walletService
+      .getWalletByCustomerId(this.selectedCustomerId)
+      .subscribe((res) => {
+        if (res) {
+          let updateWallet = {
+            walletId: res.walletId,
+            customerId: res.customerId,
+            walletAmount: amount,
+            createdAt: res.createdAt,
+          };
+          this.walletService.updateWallet(updateWallet).subscribe((result) => {
+            let walletHistory;
+            walletHistory = {
+              customerId: res.customerId,
+              walletId: result.walletId,
+              walletAmount: walletHistoryAmount,
+              description: 'Updated form sell',
+            };
+            this.walletService.addWalletHistory(walletHistory).subscribe(() => {
+              this.app.noty.notifyClose('Wallet amount has been updated.');
+            });
+          });
+        } else {
+          this.app.noty.notifyLocalValidationError('');
+        }
+      });
+  }
 }
-
-//decrypted Function
-// getProductQuantity(sellItemForm: FormGroup): string {
-//   let productId = sellItemForm.get('productId')?.value;
-
-//   if (productId) {
-//     this.productService.getProductInventory(productId).subscribe((x) => {
-//       let productCount = x.count;
-//       return `${productCount}`;
-//     });
-//   }
-//   return '0';
-// }

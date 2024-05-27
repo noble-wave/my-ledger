@@ -116,6 +116,11 @@ export class CustomerWalletPaymentComponent {
       return;
     }
     this.walletService.getWalletBywalletId(this.walletId).subscribe((res) => {
+      let walletAmount = res.walletAmount + newWalletAmount;
+      if (walletAmount < 0) {
+        this.app.noty.notifyClose('Please fill the right amount');
+        return;
+      }
       if (res && newWalletAmount) {
         let updateWallet = {
           walletId: res.walletId,
@@ -123,6 +128,7 @@ export class CustomerWalletPaymentComponent {
           walletAmount: res.walletAmount + newWalletAmount,
           createdAt: res.createdAt,
         };
+
         this.walletService.updateWallet(updateWallet).subscribe((result) => {
           let walletHistory;
           walletHistory = {
