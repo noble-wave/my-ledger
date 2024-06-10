@@ -206,7 +206,8 @@
           <br>
           {{ calculateBalanceDue() | currency:'INR':'symbol':'1.2-2' }}
         </div>
-        <div *ngIf="advanceAndBalanceDue" fxLayout="row" fxLayoutAlign="end center">
+        <div *ngIf="advanceAndBalanceDue && iswalletActive && walletInput > 0" fxLayout="row"
+          fxLayoutAlign="end center">
           Balance Due
           <br>
           {{ 0.00 | currency:'INR':'symbol':'1.2-2' }}

@@ -427,6 +427,7 @@ export class SellComponent implements OnDestroy {
       this.showAmountPaidAndBalanceDue = false;
       this.cdr.detectChanges();
       this.newAmountPaid = 0;
+      this.iswalletActive = false;
     });
   }
 
@@ -693,10 +694,16 @@ export class SellComponent implements OnDestroy {
         this.updateWalletAmount(0, walletHistoryAmount);
         return true;
       } else if (newWalletAmount > 0) {
-        this.app.noty.notifyLocalValidationError(
-          'Please enter a value less than or equal to amount to pay'
-        );
-        return false;
+        let amount = Number(this.newAmountPaid);
+        this.newAmountPaid = newWalletAmount;
+        let walletHistoryAmount = -Math.abs(walletAmount);
+        if (newWalletAmount < amount) {
+          this.app.noty.notifyLocalValidationError(
+            'Please enter a value less than or equal to amount to pay'
+          );
+          return false;
+        }
+        this.updateWalletAmount(0, walletHistoryAmount);
       }
     } else {
       console.log('revert');
@@ -705,7 +712,7 @@ export class SellComponent implements OnDestroy {
     }
 
     // Add a return statement to ensure all code paths return a value
-    return false;
+    return true;
   }
 
   updateWalletAmount(amount: number, walletHistoryAmount: number) {
