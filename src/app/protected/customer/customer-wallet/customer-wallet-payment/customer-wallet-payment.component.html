@@ -1,0 +1,29 @@
+<mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="lighter-toolbar">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button class="flex-grow-0 transparent-button" type="button" aria-label="Toggle sidenav" mat-icon-button
+      (click)="navigateBack()">
+      <mat-icon aria-label="Side nav toggle icon">arrow_back</mat-icon>
+    </button>
+    <div>Wallet - payment</div>
+  </div>
+  <div fxLayoutAlign="space-between center">
+
+    <!-- <a type="button" routerLink="./new" mat-button mat-raised-button>Add</a> -->
+  </div>
+</mat-toolbar>
+
+<div fxLayoutAlign="space-between center" fxLayout="row wrap" class="div-container">
+  <div class="name">
+    <app-input [form]="form" type="number" label="Wallet Amount" name="walletAmount"></app-input>
+    <app-input [form]="form" type="string" label="Description" name="description"></app-input>
+    <button mat-raised-button color="primary" (click)="savePayment()"><mat-icon>account_balance_wallet</mat-icon>
+      Add Payment</button>
+  </div>
+  <div>
+    <h3>Total Wallet Amount: {{totalWalletAmount}}</h3>
+  </div>
+</div>
+<div fxLayoutAlign="center center">
+  <h2>Wallet History</h2>
+</div>
+<irs-local-table [data]="customerWalletHistory$" [settings]="tableSettings"></irs-local-table>

@@ -41,6 +41,9 @@ import { ImportDataComponent } from './import-export/import-data/import-data.com
 import { ExportDataComponent } from './import-export/export-data/export-data.component';
 import { DeleteDataComponent } from './import-export/delete-data/delete-data.component';
 import { ReportIssueComponent } from './report-issue/report-issue.component';
+import { CustomerWalletComponent } from './customer/customer-wallet/customer-wallet.component';
+import { CustomerWalletPaymentComponent } from './customer/customer-wallet/customer-wallet-payment/customer-wallet-payment.component';
+import { ProductAmountTrackComponent } from './dashboard/product-amount-track/product-amount-track.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +77,9 @@ import { ReportIssueComponent } from './report-issue/report-issue.component';
     ExportDataComponent,
     DeleteDataComponent,
     ReportIssueComponent,
+    CustomerWalletComponent,
+    CustomerWalletPaymentComponent,
+    ProductAmountTrackComponent,
   ],
   imports: [
     QRCodeModule,
@@ -123,6 +129,12 @@ import { ReportIssueComponent } from './report-issue/report-issue.component';
             component: CustomerPaymentComponent,
           },
           { path: 'payment', component: PaymentComponent },
+
+          { path: 'customer-wallet', component: CustomerWalletComponent },
+          {
+            path: 'customer-wallet/:walletId',
+            component: CustomerWalletPaymentComponent,
+          },
         ],
       },
     ]),

@@ -5,6 +5,7 @@ export interface Product {
   productName: string;
   description?: string;
   price?: number;
+  purchaseCost?: number;
   imageUrl?: string;
   category?: string;
   isActive: boolean;
@@ -25,7 +26,8 @@ export function getProductMeta() {
     { key: 'productId', label: 'ProductId', hide: true },
     { key: 'productName', label: 'Product Name', required: true },
     { key: 'description', label: 'Description', required: false },
-    { key: 'price', label: 'Price', required: true },
+    { key: 'price', label: 'Sale Amount', required: true },
+    { key: 'purchaseCost', label: 'Purchase Amount', required: false },
     {
       key: 'warnThresholdNumber',
       label: 'Warn Threshold Number',

@@ -36,7 +36,6 @@ export class PaymentComponent implements OnDestroy {
   ngOnInit(): void {
     this.route.queryParams.subscribe((x: any) => {
       this.customerId = x.custId;
-      console.log(this.customerId);
     });
 
     this.getCustomerPaymentData();
@@ -93,7 +92,6 @@ export class PaymentComponent implements OnDestroy {
   }
 
   onNgModelChange($event) {
-    // console.log($event);
     this.selectedSells = $event;
 
     let selectedSells = this.customerSells.filter(
@@ -136,9 +134,7 @@ export class PaymentComponent implements OnDestroy {
           amountPaid = 0;
         }
 
-        this.sellService.updateSell(sell).subscribe(() => {
-          console.log(`Sell DueAmount updated`);
-        });
+        this.sellService.updateSell(sell).subscribe(() => {});
       });
 
       let newlist = sells.filter((x, i) => {
@@ -147,22 +143,15 @@ export class PaymentComponent implements OnDestroy {
       });
 
       let a = newlist.map((x) => x.sellId).join(',');
-      console.log(a);
       payment.sellId = a;
 
-      this.sellService.addSellPayment1(payment)?.subscribe((y) => {
-        console.log('Payment Saved', y);
+      this.sellService.addSellPayment1(payment)?.subscribe(() => {
         this.app.noty.notifyUpdated('Payment');
-        // window.location.reload();
         this.getCustomerPaymentData();
         this.paymentForm.reset({
           paymentDate: new Date(),
         });
       });
-
-      // this.sellService.updateSell(newlist).subscribe(() => {
-      //     console.log(`Sell DueAmount updated`);
-      //   });
     }
   }
 

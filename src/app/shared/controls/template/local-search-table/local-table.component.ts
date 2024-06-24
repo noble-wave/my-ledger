@@ -147,8 +147,6 @@ export class IrsLocalTableComponent implements OnInit, OnDestroy {
       height: 'calc( 100% - 128px)',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 }

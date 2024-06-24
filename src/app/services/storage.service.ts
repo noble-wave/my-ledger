@@ -17,6 +17,8 @@ export const tableNames = {
   sellSetting: 'sellSetting',
   quickSellSetting: 'quickSellSetting',
   sellItem: 'sellItem',
+  wallet: 'wallet',
+  walletHistory: 'walletHistory',
 };
 
 export const dbConfig: DBConfig = {
@@ -72,7 +74,11 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: 'paymentId', autoIncrement: false },
       storeSchema: [
         { name: 'sellId', keypath: 'sellId', options: { unique: false } },
-        { name: 'customerId', keypath: 'customerId', options: { unique: false } }
+        {
+          name: 'customerId',
+          keypath: 'customerId',
+          options: { unique: false },
+        },
       ],
     },
     {
@@ -80,7 +86,30 @@ export const dbConfig: DBConfig = {
       storeConfig: { keyPath: 'sellItemId', autoIncrement: false },
       storeSchema: [
         { name: 'sellId', keypath: 'sellId', options: { unique: false } },
-        { name: 'productId', keypath: 'productId', options: { unique: false } }
+        { name: 'productId', keypath: 'productId', options: { unique: false } },
+      ],
+    },
+    {
+      store: tableNames.wallet,
+      storeConfig: { keyPath: 'walletId', autoIncrement: false },
+      storeSchema: [
+        {
+          name: 'customerId',
+          keypath: 'customerId',
+          options: { unique: false },
+        },
+      ],
+    },
+    {
+      store: tableNames.walletHistory,
+      storeConfig: { keyPath: 'walletHistoryId', autoIncrement: false },
+      storeSchema: [
+        { name: 'walletId', keypath: 'walletId', options: { unique: false } },
+        {
+          name: 'customerId',
+          keypath: 'customerId',
+          options: { unique: false },
+        },
       ],
     },
   ],

@@ -46,13 +46,17 @@ export class ExportDataComponent {
       const csvInventory = Papa.unparse(inventory);
 
       const productBlob = new Blob([csvProducts], { type: 'text/csv' });
-      const productInventoryBlob = new Blob([csvInventory], { type: 'text/csv' });
+      const productInventoryBlob = new Blob([csvInventory], {
+        type: 'text/csv',
+      });
       saveAs(productBlob, 'products.csv');
       saveAs(productInventoryBlob, 'productnInventorys.csv');
 
-      this.app.noty.notifyClose('Products and Product Inventorys data exported successfully.');
+      this.app.noty.notifyClose(
+        'Products and Product Inventorys data exported successfully.'
+      );
     } catch (error) {
-      console.error('Error while downloading products data:', error);
+      this.app.noty.notifyError('Error while downloading products data:');
     }
   }
 
@@ -64,7 +68,7 @@ export class ExportDataComponent {
       saveAs(customersBlob, 'customers.csv');
       this.app.noty.notifyClose('Customers data exported successfully as CSV.');
     } catch (error) {
-      console.error('Error while downloading customers data:', error);
+      this.app.noty.notifyError('Error while downloading customers data:');
       // You can handle errors here
     }
   }
@@ -73,7 +77,9 @@ export class ExportDataComponent {
     try {
       const sells = await firstValueFrom(this.sellService.getAll());
       const sellItems = await firstValueFrom(this.sellService.getAllSellItem());
-      const sellPayments = await firstValueFrom(this.sellService.getAllSellPayment());
+      const sellPayments = await firstValueFrom(
+        this.sellService.getAllSellPayment()
+      );
 
       const csvSells = Papa.unparse(sells);
       const csvSellItems = Papa.unparse(sellItems);
@@ -81,15 +87,19 @@ export class ExportDataComponent {
 
       const sellsBlob = new Blob([csvSells], { type: 'text/csv' });
       const sellItemsBlob = new Blob([csvSellItems], { type: 'text/csv' });
-      const sellPaymentsBlob = new Blob([csvSellPayments], { type: 'text/csv' });
+      const sellPaymentsBlob = new Blob([csvSellPayments], {
+        type: 'text/csv',
+      });
 
       saveAs(sellsBlob, 'sells.csv');
       saveAs(sellItemsBlob, 'sellItems.csv');
       saveAs(sellPaymentsBlob, 'sellPayments.csv');
 
-      this.app.noty.notifyClose('Sells, Sell Itmes and Sell Payments data exported successfully.');
+      this.app.noty.notifyClose(
+        'Sells, Sell Itmes and Sell Payments data exported successfully.'
+      );
     } catch (error) {
-      console.error('Error while downloading sell data:', error);
+      this.app.noty.notifyError('Error while downloading sell data:');
       // You can handle errors here
     }
   }
@@ -179,8 +189,3 @@ export class ExportDataComponent {
     return saveAs(new Blob([csv], { type: 'text/csv' }), fileName);
   }
 }
-
-
-
-
-

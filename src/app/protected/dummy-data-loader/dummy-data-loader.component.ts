@@ -24,7 +24,6 @@ export class DummyDataLoaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.sellService.isDataPresent().subscribe((dataPresent) => {
       this.dataPresent = dataPresent;
 
@@ -46,8 +45,8 @@ export class DummyDataLoaderComponent implements OnInit {
       this.http
         .get(filePath)
         .pipe(
-          catchError((error) => {
-            console.error(`Error reading file ${filePath}:`, error);
+          catchError(() => {
+            // console.error(`Error reading file ${filePath}:`, error);
             return [];
           })
         )
@@ -67,18 +66,16 @@ export class DummyDataLoaderComponent implements OnInit {
       this.handleCustomerUpload(jsonData);
     } else {
       this.loading = false;
-      console.error('Unrecognized JSON data:', jsonData);
       this.app.noty.notifyError('Unrecognized JSON data:');
     }
     // this.loading = false;
     setTimeout(() => {
       this.loading = false;
     }, 1000);
-    
+
     if (this.dataPresent) {
       this.app.noty.notifyClose('dummy-data uploaded successfully.');
     }
-  
   }
 
   // Check if JSON data represents customer data
@@ -95,24 +92,20 @@ export class DummyDataLoaderComponent implements OnInit {
   private handleProductUpload(products: any[], inventory: any[]): void {
     this.productService.uploadProductData(products).subscribe(
       () => {
-        console.log('Product data uploaded successfully.');
         // this.app.noty.notifyClose('Product data uploaded successfully.');
       },
       (error) => {
-        console.error('Error uploading product data:', error);
         this.app.noty.notifyError('Error uploading product data:');
       }
     );
 
     this.productService.uploadProductInventoryData(inventory).subscribe(
       () => {
-        console.log('Product inventory data uploaded successfully.');
         // this.app.noty.notifyClose(
         //   'Product inventory data uploaded successfully.'
         // );
       },
       (error) => {
-        console.error('Error uploading product inventory:', error);
         this.app.noty.notifyError('Error uploading product inventory:');
       }
     );
@@ -121,7 +114,6 @@ export class DummyDataLoaderComponent implements OnInit {
   // Handle uploading customer data
   private handleCustomerUpload(customerData: any): void {
     this.customerService.uploadCustomerData(customerData).subscribe(() => {
-      console.log('Customer data uploaded successfully.');
       // this.app.noty.notifyClose('Customer data uploaded successfully.');
     });
   }
@@ -129,7 +121,6 @@ export class DummyDataLoaderComponent implements OnInit {
   // Handle uploading sell data
   private handleSellUpload(sellData: any): void {
     this.sellService.uploadSellData(sellData).subscribe(() => {
-      console.log('Sell data uploaded successfully.');
       // this.app.noty.notifyClose('Sell data uploaded successfully.');
     });
   }

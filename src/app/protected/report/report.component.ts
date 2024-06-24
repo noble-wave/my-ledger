@@ -4,7 +4,6 @@ import { SellService } from '../services/sell.service';
 import { Sell } from '@app/models/sell.model';
 import { Location } from '@angular/common';
 
-
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -55,7 +54,7 @@ export class ReportComponent implements OnInit {
     });
   }
 
-  navigateBack(){
+  navigateBack() {
     this.location.back();
   }
 
@@ -74,13 +73,21 @@ export class ReportComponent implements OnInit {
         this.selectedDateRangeText = 'All Years';
         this.prepareYearlyChartData();
         break;
-      case 'last6Years':
-        this.selectedDateRangeText = 'Last 6 years';
-        this.prepareLast6YearsChartData();
+      case 'lastYear':
+        this.selectedDateRangeText = 'Last year';
+        this.prepareLastYearChartData();
         break;
       case 'last6Months':
         this.selectedDateRangeText = 'Last 6 Months';
         this.prepareLast6MonthsChartData();
+        break;
+      case 'last3Months':
+        this.selectedDateRangeText = 'Last 3 Months';
+        this.prepareLast3MonthsChartData();
+        break;
+      case 'lastMonth':
+        this.selectedDateRangeText = 'Last Month';
+        this.prepareLastMonthChartData();
         break;
       case 'last2Weeks':
         this.selectedDateRangeText = 'Last two weeks';
@@ -162,12 +169,12 @@ export class ReportComponent implements OnInit {
     }));
   }
 
-  prepareLast6YearsChartData(): void {
+  prepareLastYearChartData(): void {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const yearlyData: any[] = [];
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 1; i++) {
       const targetYear = currentYear - i;
 
       const filteredSells = this.sells.filter((sell) => {
@@ -196,6 +203,90 @@ export class ReportComponent implements OnInit {
     const monthlyData: any[] = [];
 
     for (let i = 0; i < 6; i++) {
+      let targetYear = currentYear;
+      let targetMonth = currentMonth - i;
+
+      if (targetMonth < 0) {
+        targetYear--;
+        targetMonth = 12 + targetMonth;
+      }
+
+      const targetDate = new Date(targetYear, targetMonth, 1);
+
+      const filteredSells = this.sells.filter((sell) => {
+        const sellDate = new Date(sell.sellDate);
+        return (
+          sellDate.getFullYear() === targetYear &&
+          sellDate.getMonth() === targetMonth
+        );
+      });
+
+      const monthlyTotal = filteredSells.reduce(
+        (total, sell) => total + sell.netAmount,
+        0
+      );
+
+      monthlyData.push({
+        name:
+          targetDate.toLocaleString('default', { month: 'long' }) +
+          ' ' +
+          targetYear,
+        value: monthlyTotal,
+      });
+    }
+
+    this.chartData = monthlyData.reverse();
+  }
+
+  prepareLast3MonthsChartData(): void {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const monthlyData: any[] = [];
+
+    for (let i = 0; i < 3; i++) {
+      let targetYear = currentYear;
+      let targetMonth = currentMonth - i;
+
+      if (targetMonth < 0) {
+        targetYear--;
+        targetMonth = 12 + targetMonth;
+      }
+
+      const targetDate = new Date(targetYear, targetMonth, 1);
+
+      const filteredSells = this.sells.filter((sell) => {
+        const sellDate = new Date(sell.sellDate);
+        return (
+          sellDate.getFullYear() === targetYear &&
+          sellDate.getMonth() === targetMonth
+        );
+      });
+
+      const monthlyTotal = filteredSells.reduce(
+        (total, sell) => total + sell.netAmount,
+        0
+      );
+
+      monthlyData.push({
+        name:
+          targetDate.toLocaleString('default', { month: 'long' }) +
+          ' ' +
+          targetYear,
+        value: monthlyTotal,
+      });
+    }
+
+    this.chartData = monthlyData.reverse();
+  }
+
+  prepareLastMonthChartData(): void {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const monthlyData: any[] = [];
+
+    for (let i = 0; i < 1; i++) {
       let targetYear = currentYear;
       let targetMonth = currentMonth - i;
 

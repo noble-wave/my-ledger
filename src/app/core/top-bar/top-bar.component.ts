@@ -33,7 +33,6 @@ export class TopBarComponent implements OnInit {
     });
     this.institutes$ = this.service.appData$.pipe(
       tap((institutes) => {
-        console.log('Institute list updated');
         // select the first one
         if (institutes && institutes.length > 0) {
           this.changeInstitute(institutes[0].id);

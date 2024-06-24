@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class IrsDialogService {
-
-  constructor(public dialog: MatDialog) {
-
-
-   }
+  constructor(public dialog: MatDialog) {}
 
   //  openDialog<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>) {
   //   const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
@@ -16,9 +12,7 @@ export class IrsDialogService {
   //   });
 
   //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
   //     // this.animal = result;
   //   });
   // }
-
 }

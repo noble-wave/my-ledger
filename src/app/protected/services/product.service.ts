@@ -90,7 +90,6 @@ export class ProductService {
           let product = thresholdDefinedProducts.find(
             (y) => y.productId == x.productId
           );
-          // console.log('product' + product);
           if (product?.isThreshold) {
             lessInventory =
               Number(x.count) <= Number(product.warnThresholdNumber);
@@ -105,7 +104,6 @@ export class ProductService {
             (y) => y.productId == x.productId
           )?.productName;
         });
-        // console.log(warnThresholInventories);
         return warnThresholInventories as ProductWithInventory[];
       })
     );
@@ -139,7 +137,6 @@ export class ProductService {
           let product = thresholdDefinedProducts.find(
             (y) => y.productId == x.productId
           );
-          // console.log('product' + product);
           if (product?.isThreshold) {
             lessInventory =
               Number(x.count) >= Number(product.warnThresholdNumber) &&
@@ -157,7 +154,6 @@ export class ProductService {
             (y) => y.productId == x.productId
           )?.productName;
         });
-        // console.log(warnThresholInventories);
         return warnThresholInventories as ProductWithInventory[];
       })
     );
@@ -177,9 +173,7 @@ export class ProductService {
           productInventory.count -= quantity;
 
           // Save the updated product inventory using the saveInventory method
-          this.saveInventory(productInventory)?.subscribe(() => {
-            console.log(`Product inventory updated for product: ${productId}`);
-          });
+          this.saveInventory(productInventory)?.subscribe();
         }
       });
     }

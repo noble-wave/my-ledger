@@ -1,5 +1,7 @@
 import {
   SellPayment,
+  Wallet,
+  WalletHistory,
   getSellItemMeta,
   getSellMeta,
   getSellPaymentMeta,
@@ -26,6 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CustomerComponent } from '../customer/customer.component';
 import { ProductComponent } from '../product/product.component';
 import { Location } from '@angular/common';
+import { WalletService } from '../services/wallet.service';
 
 @Component({
   selector: 'app-sell',
@@ -45,8 +48,17 @@ export class SellComponent implements OnDestroy {
   statusOption: any;
   setting: any;
   refreshing: boolean;
+  balanceDue: number = 0;
   amountPaid: number = 0;
   showAmountPaidAndBalanceDue: boolean = false;
+  advanceAndBalanceDue: boolean = false;
+  selectedCustomerId: any;
+  selectCustomerWallet: undefined | Wallet;
+  selectCustomerWalletAmount: number;
+  iswalletActive: boolean = false;
+  newAmountPaid: number = 0;
+  newAmountFrom: FormGroup;
+  walletInput: number = 0;
 
   constructor(
     private sellService: SellService,
@@ -58,8 +70,14 @@ export class SellComponent implements OnDestroy {
     private cdr: ChangeDetectorRef,
     private settingService: SettingService,
     private dialog: MatDialog,
-    private location: Location
-  ) {}
+    private location: Location,
+    private walletService: WalletService,
+    private fb: FormBuilder
+  ) {
+    this.newAmountFrom = this.fb.group({
+      netAmount: [''],
+    });
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next(undefined);
@@ -95,7 +113,6 @@ export class SellComponent implements OnDestroy {
 
     this.settingService.getSellSetting().subscribe((sellSettings) => {
       this.setting = { ...sellSettings };
-      console.log('Setting data:', this.setting);
       let defaultSellStatus = sellSettings.defaultSellStatus;
       this.form.get('status')?.setValue(defaultSellStatus);
     });
@@ -167,10 +184,16 @@ export class SellComponent implements OnDestroy {
   }
 
   handleCustomerSelection(customer: Customer, form: FormGroup) {
-    console.log('Selected customer:', customer);
     if (customer) {
       form.get('customerName')?.setValue(customer.customerName);
       this.showAmountPaidAndBalanceDue = true;
+      this.selectedCustomerId = customer.customerId;
+      this.walletService
+        .getWalletByCustomerId(this.selectedCustomerId)
+        .subscribe((x) => {
+          this.selectCustomerWallet = x;
+          this.selectCustomerWalletAmount = x.walletAmount;
+        });
     } else {
       this.showAmountPaidAndBalanceDue = false;
     }
@@ -203,14 +226,18 @@ export class SellComponent implements OnDestroy {
   }
 
   calculateNetAmount(): number {
-    let netAmount = 0;
+    let netAmount: number = 0;
     for (const sellItemForm of this.sellItemForms) {
       if (sellItemForm && sellItemForm.get('subtotal')) {
         const subtotal = sellItemForm.get('subtotal')?.value || 0;
         netAmount += subtotal;
       }
     }
-    this.form.get('netAmount')?.setValue(netAmount);
+    const netAmountControl = this.form.get('netAmount');
+    if (netAmountControl && netAmountControl.value !== netAmount) {
+      netAmountControl.setValue(netAmount, { emitEvent: false });
+      this.sellPaymentForm.get('amountPaid')?.setValue(netAmount);
+    }
     return netAmount;
   }
 
@@ -219,20 +246,30 @@ export class SellComponent implements OnDestroy {
     const netAmount = this.calculateNetAmount();
     const totalDiscount = grossAmount - netAmount;
 
-    this.form.get('totalDiscount')?.setValue(totalDiscount);
+    // this.form.get('totalDiscount')?.setValue(totalDiscount);
+    const totalDiscountControl = this.form.get('totalDiscount');
+    if (totalDiscountControl && totalDiscountControl.value !== totalDiscount) {
+      totalDiscountControl.setValue(totalDiscount, { emitEvent: false });
+    }
     return totalDiscount;
   }
 
   calculateBalanceDue(): number {
     const netAmount = this.calculateNetAmount();
-    const balanceDue = netAmount - this.amountPaid;
+    this.balanceDue = netAmount - this.amountPaid;
 
-    if (this.showAmountPaidAndBalanceDue === true) {
-      this.form.get('dueAmount')?.setValue(balanceDue);
+    if (
+      this.showAmountPaidAndBalanceDue === true &&
+      this.amountPaid <= netAmount
+    ) {
+      this.form.get('dueAmount')?.setValue(this.balanceDue);
+      this.advanceAndBalanceDue = false;
     } else {
       this.form.get('dueAmount')?.setValue(0);
+      this.advanceAndBalanceDue = true;
+      return Math.abs(this.balanceDue);
     }
-    return balanceDue;
+    return this.balanceDue;
   }
 
   valueChanged(amountPaid: number) {
@@ -274,14 +311,19 @@ export class SellComponent implements OnDestroy {
       return;
     }
 
+    if (!this.updateWallet()) {
+      return;
+    }
+
     let sell = this.form.value;
     let sellPayment: SellPayment;
+    let wallet: Wallet;
+    let walletHistory: WalletHistory;
     let sellItems = this.sellItemForms.map((x) => x.value);
     // sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
 
     this.sellService.addSell(sell).subscribe((x) => {
-      console.log(x);
       let sellId = x.sellId;
       let customerId = x.customerId;
 
@@ -290,66 +332,108 @@ export class SellComponent implements OnDestroy {
         sellItem.sellDate = new Date();
       });
 
-      this.sellService.addSellItems(sellItems).subscribe((z) => {
-        // console.log(z);
-      });
+      this.sellService.addSellItems(sellItems).subscribe();
 
       if (this.showAmountPaidAndBalanceDue === true) {
-        let paymentDate = new Date();
-        let paymentId = `custom_payment_id`;
-        sellPayment = {
-          paymentId: paymentId,
-          sellId: sellId,
-          customerId: customerId,
-          amountPaid: this.amountPaid,
-          paymentDate: paymentDate,
-        };
-        this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-          console.log('Payment Saved', y);
-        });
+        let validAmountPaid = this.form.get('netAmount')?.value;
+        let amount = Number(this.amountPaid);
+        if (amount <= validAmountPaid) {
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: this.amountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
+        } else if (amount > validAmountPaid) {
+          let extraAmount = amount - validAmountPaid;
+          let walletId;
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: validAmountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
+          let walletDescription = 'From Sell';
+          this.walletService
+            .getWalletByCustomerId(customerId)
+            .subscribe((customerWallet) => {
+              if (customerWallet) {
+                let updateWallet = {
+                  walletId: customerWallet.walletId,
+                  customerId: customerWallet.customerId,
+                  walletAmount: customerWallet.walletAmount + extraAmount,
+                  createdAt: customerWallet.createdAt,
+                  description: walletDescription,
+                };
+                this.walletService
+                  .updateWallet(updateWallet)
+                  .subscribe((result) => {
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: result.walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe();
+                  });
+              } else {
+                wallet = {
+                  customerId: customerId,
+                  walletAmount: extraAmount,
+                };
+
+                this.walletService
+                  .addWallet(wallet)
+                  .subscribe((resultWallet) => {
+                    walletId = resultWallet.walletId;
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe();
+                  });
+              }
+            });
+
+          // this.app.noty.notifyLocalValidationError(
+          //   'Amount paid exceeds net amount'
+          // );
+          // return;
+        }
+        // this.updateWallet();
       }
 
-      // decrypted
-
-      // let newCustomerName = this.form.value.customerName;
-      // let customer: any;
-      // customer = {
-      //   customerName: newCustomerName,
-      // };
-      // let oldCustomerName: any;
-      // this.customerService.getAll().subscribe((customers: Customer[]) => {
-      //   customers.forEach((customer: Customer) => {
-      //     oldCustomerName = customer.customerName;
-      //     console.log(oldCustomerName);
-      //   });
-      // });
-
-      // if (oldCustomerName !== newCustomerName) {
-      //   this.customerService.add(customer).subscribe((x) => {
-      //     console.log(x);
-      //   });
-      // }
-
       this.app.noty.notifyClose('Sell has been taken');
-      console.log('Before reset:', this.form.value);
-      console.log('After reset:', this.form.value);
-      // this.router.navigate([], {queryParams: {time: new Date()}})
       this.refreshing = true;
       this.cdr.detectChanges();
       this.resetSellItemForms();
       this.amountPaid = 0;
       this.sellPaymentForm.reset();
       this.refreshing = false;
+      this.showAmountPaidAndBalanceDue = false;
       this.cdr.detectChanges();
+      this.newAmountPaid = 0;
+      this.iswalletActive = false;
     });
   }
 
   resetSellItemForms() {
-    // this.form = this.app.meta.toFormGroup({ sellDate: new Date(), status: this.setting.defaultSellStatus }, this.modelMeta);
     this.sellItemForms = [];
-    // this.form.reset();
     this.sellItemForms.push(this.app.meta.toFormGroup({}, this.sellItemMeta));
-
     this.form.markAsPristine();
     this.form.markAsUntouched();
     this.form.updateValueAndValidity();
@@ -370,38 +454,114 @@ export class SellComponent implements OnDestroy {
       this.app.noty.notifyLocalValidationError('');
       return;
     }
+
+    if (!this.updateWallet()) {
+      return;
+    }
+
     let sell = this.form.value;
     let sellPayment: SellPayment;
+    let wallet: Wallet;
+    let walletHistory: WalletHistory;
     let sellItems = this.sellItemForms.map((x) => x.value);
     // sell.items = sellItems;
     this.productService.updateProductInventory(sellItems); // Update product inventory
+
     this.sellService.addSell(sell).subscribe((x) => {
-      console.log(x);
       let sellId = x.sellId;
       let customerId = x.customerId;
 
       sellItems.forEach((sellItem) => {
         sellItem.sellId = sellId;
+        sellItem.sellDate = new Date();
       });
 
-      this.sellService.addSellItems(sellItems).subscribe((z) => {
-        // console.log(z);
-      });
+      this.sellService.addSellItems(sellItems).subscribe();
 
       if (this.showAmountPaidAndBalanceDue === true) {
-        let paymentDate = new Date();
-        let paymentId = `custom_payment_id`;
-        sellPayment = {
-          paymentId: paymentId,
-          sellId: sellId,
-          customerId: customerId,
-          amountPaid: this.amountPaid,
-          paymentDate: paymentDate,
-        };
-        this.sellService.addSellPayment1(sellPayment)?.subscribe((y) => {
-          console.log('Payment Saved', y);
-        });
+        let validAmountPaid = this.form.get('netAmount')?.value;
+        let amount = Number(this.amountPaid);
+        if (amount <= validAmountPaid) {
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: this.amountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
+        } else if (amount > validAmountPaid) {
+          let extraAmount = amount - validAmountPaid;
+          let walletId;
+          let paymentDate = new Date();
+          let paymentId = `custom_payment_id`;
+          sellPayment = {
+            paymentId: paymentId,
+            sellId: sellId,
+            customerId: customerId,
+            amountPaid: validAmountPaid,
+            paymentDate: paymentDate,
+          };
+          this.sellService.addSellPayment1(sellPayment)?.subscribe();
+
+          let walletDescription = 'From Sell';
+
+          this.walletService
+            .getWalletByCustomerId(customerId)
+            .subscribe((customerWallet) => {
+              if (customerWallet) {
+                let updateWallet = {
+                  walletId: customerWallet.walletId,
+                  customerId: customerWallet.customerId,
+                  walletAmount: customerWallet.walletAmount + extraAmount,
+                  createdAt: customerWallet.createdAt,
+                  description: walletDescription,
+                };
+                this.walletService
+                  .updateWallet(updateWallet)
+                  .subscribe((result) => {
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: result.walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe();
+                  });
+              } else {
+                wallet = {
+                  customerId: customerId,
+                  walletAmount: extraAmount,
+                };
+
+                this.walletService
+                  .addWallet(wallet)
+                  .subscribe((resultWallet) => {
+                    walletId = resultWallet.walletId;
+                    walletHistory = {
+                      customerId: customerId,
+                      walletId: walletId,
+                      walletAmount: extraAmount,
+                      description: walletDescription,
+                    };
+                    this.walletService
+                      .addWalletHistory(walletHistory)
+                      .subscribe();
+                  });
+              }
+            });
+
+          // this.app.noty.notifyLocalValidationError(
+          //   'Amount paid exceeds net amount'
+          // );
+          // return;
+        }
       }
+
       this.app.noty.notifyClose('Sell has been taken and go to print');
       this.router.navigate(['/sell/view', x.sellId], {
         relativeTo: this.route,
@@ -426,9 +586,6 @@ export class SellComponent implements OnDestroy {
       this.customerService.getAll().subscribe((customers) => {
         this.customers = customers;
       });
-      if (result) {
-        console.log('Customer data:', result);
-      }
     });
   }
 
@@ -447,9 +604,6 @@ export class SellComponent implements OnDestroy {
       this.productService.getAll().subscribe((products) => {
         this.products = products;
       });
-      if (result) {
-        console.log('Product data:', result);
-      }
     });
   }
 
@@ -486,18 +640,107 @@ export class SellComponent implements OnDestroy {
       dialogRef.afterClosed().subscribe((result) => {});
     }
   }
+
+  handleWallet(event: any, walletAmount: number) {
+    this.iswalletActive = event;
+    if (this.iswalletActive === true) {
+      let netAmount = Number(this.form.get('netAmount')?.value);
+      let newWalletAmount = netAmount - walletAmount;
+      if (newWalletAmount < 0) {
+        this.newAmountPaid = 0;
+        this.walletInput = 0;
+      } else if (newWalletAmount === 0) {
+        this.newAmountPaid = 0;
+        this.walletInput = 0;
+      } else if (newWalletAmount > 0) {
+        this.newAmountPaid = newWalletAmount;
+        this.walletInput = newWalletAmount;
+      }
+    } else {
+      console.log('revert');
+      this.newAmountPaid = 0;
+    }
+  }
+
+  walletAmount(query: KeyboardEvent) {
+    let wallet = this.selectCustomerWallet?.walletAmount ?? 0;
+    let netAmount = Number(this.form.get('netAmount')?.value);
+    if (query) {
+      const element = query.target as HTMLInputElement;
+      let amount = Number(element.value);
+      // if (netAmount > amount) {
+      this.amountPaid = wallet + amount;
+      this.sellPaymentForm.get('amountPaid')?.setValue(this.amountPaid);
+      this.calculateBalanceDue();
+      // }
+    }
+  }
+
+  updateWallet() {
+    let walletAmount = this.selectCustomerWallet?.walletAmount ?? 0;
+    if (this.iswalletActive === true) {
+      let netAmount = Number(this.form.get('netAmount')?.value);
+      let newWalletAmount = netAmount - walletAmount;
+      if (newWalletAmount < 0) {
+        this.newAmountPaid = 0;
+        let x = Math.abs(newWalletAmount);
+        let y = Number(walletAmount + newWalletAmount);
+        let walletHistoryAmount = -Math.abs(y);
+        this.updateWalletAmount(x, walletHistoryAmount);
+        return true;
+      } else if (newWalletAmount === 0) {
+        this.newAmountPaid = 0;
+        let walletHistoryAmount = -Math.abs(walletAmount);
+        this.updateWalletAmount(0, walletHistoryAmount);
+        return true;
+      } else if (newWalletAmount > 0) {
+        let amount = Number(this.newAmountPaid);
+        this.newAmountPaid = newWalletAmount;
+        let walletHistoryAmount = -Math.abs(walletAmount);
+        if (newWalletAmount < amount) {
+          this.app.noty.notifyLocalValidationError(
+            'Please enter a value less than or equal to amount to pay'
+          );
+          return false;
+        }
+        this.updateWalletAmount(0, walletHistoryAmount);
+      }
+    } else {
+      console.log('revert');
+      this.newAmountPaid = 0;
+      return true;
+    }
+
+    // Add a return statement to ensure all code paths return a value
+    return true;
+  }
+
+  updateWalletAmount(amount: number, walletHistoryAmount: number) {
+    this.walletService
+      .getWalletByCustomerId(this.selectedCustomerId)
+      .subscribe((res) => {
+        if (res) {
+          let updateWallet = {
+            walletId: res.walletId,
+            customerId: res.customerId,
+            walletAmount: amount,
+            createdAt: res.createdAt,
+          };
+          this.walletService.updateWallet(updateWallet).subscribe((result) => {
+            let walletHistory;
+            walletHistory = {
+              customerId: res.customerId,
+              walletId: result.walletId,
+              walletAmount: walletHistoryAmount,
+              description: 'Updated form sell',
+            };
+            this.walletService.addWalletHistory(walletHistory).subscribe(() => {
+              this.app.noty.notifyClose('Wallet amount has been updated.');
+            });
+          });
+        } else {
+          this.app.noty.notifyLocalValidationError('');
+        }
+      });
+  }
 }
-
-//decrypted Function
-// getProductQuantity(sellItemForm: FormGroup): string {
-//   let productId = sellItemForm.get('productId')?.value;
-
-//   if (productId) {
-//     this.productService.getProductInventory(productId).subscribe((x) => {
-//       let productCount = x.count;
-//       console.log(productCount);
-//       return `${productCount}`;
-//     });
-//   }
-//   return '0';
-// }

@@ -57,7 +57,7 @@ export class CustomerDueAmountComponent {
             ?.reduce((a, b) => a + (Number(b.dueAmount) || 0), 0);
           x['totalDueAmount'] = dueAmount;
         });
-        return customers.filter((x) => x['totalDueAmount'] > 0);
+        return customers.filter((x) => x['totalDueAmount'] !== 0);
       })
     );
   }

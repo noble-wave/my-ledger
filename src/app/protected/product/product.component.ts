@@ -43,12 +43,7 @@ export class ProductComponent implements OnInit {
     @Optional()
     @Inject(MAT_DIALOG_DATA)
     public data: { isDialog: boolean; productId?: string }
-  ) {
-    if (this.data && this.data.productId) {
-      console.log('Received productId:', this.data.productId);
-      // You can access this.data.productId in your component logic
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     this.modelMeta = getProductMeta();
@@ -98,12 +93,9 @@ export class ProductComponent implements OnInit {
           if (this.form.value.isInventory === true) {
             let productInventory = this.inventoryForm.value;
             productInventory.productId = productId;
-            this.service.saveInventory(productInventory).subscribe((x) => {
-              console.log(x);
-            });
+            this.service.saveInventory(productInventory).subscribe();
           }
           this.service.update(this.form.value).subscribe((x) => {
-            console.log(x);
             this.app.noty.notifyUpdated('Product has been');
 
             // Check if the component was opened within a dialog, and close it
@@ -130,7 +122,6 @@ export class ProductComponent implements OnInit {
               })
             )
             .subscribe((x: Product | ProductInventory | any) => {
-              console.log(x);
               this.app.noty.notifyClose('Product has been added');
               if (addMore) {
                 this.form = this.app.meta.toFormGroup(

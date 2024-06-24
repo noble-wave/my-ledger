@@ -19,6 +19,8 @@ export class ProductListComponent implements OnInit {
   tableSettings: LocalTableSettings;
   showDetails: boolean = false;
   dataPresent: boolean = false;
+  totalSaleAmount: number;
+  totalPurchaseAmount: number;
 
   constructor(
     private service: ProductService,
@@ -42,8 +44,9 @@ export class ProductListComponent implements OnInit {
       { name: 'productId', text: 'Product Id', sell: 1 },
       { name: 'productName', text: 'Product Name', sell: 2 },
       { name: 'description', text: 'Description', sell: 3 },
-      { name: 'price', text: 'Price', sell: 4 },
-      { name: 'count', text: 'Count', sell: 5 },
+      { name: 'purchaseCost', text: 'Purchase Amount', sell: 4 },
+      { name: 'price', text: 'Sale Amount', sell: 5 },
+      { name: 'count', text: 'Count', sell: 6 },
     ];
     let excludeColumns = ['productId'];
     let displayColumns = columns.filter(
@@ -72,6 +75,23 @@ export class ProductListComponent implements OnInit {
         pr.forEach((x) => {
           x['count'] = pri.find((y) => y.productId == x.productId)?.count;
         });
+
+        this.totalSaleAmount = pr?.reduce(
+          (a, b) => a + (Number(b.price) * Number(b.count) || 0),
+          0
+        );
+
+        this.totalPurchaseAmount = pr?.reduce(
+          (a, b) => a + (Number(b.purchaseCost) * Number(b.count) || 0),
+          0
+        );
+
+        pr.sort((a, b) => {
+          return a.productName.localeCompare(b.productName, 'en', {
+            sensitivity: 'base',
+          });
+        });
+
         return pr;
       })
     );
@@ -84,34 +104,4 @@ export class ProductListComponent implements OnInit {
   navigateBack() {
     this.location.back();
   }
-
-  // async demoData(
-  //   enterAnimationDuration: string,
-  //   exitAnimationDuration: string
-  // ) {
-  //   const dialogConfig = {
-  //     width: '600px',
-  //     enterAnimationDuration,
-  //     exitAnimationDuration,
-  //     data: {
-  //       dialogTitle: 'Welcome to Ledger App',
-  //       dialogContent: `
-  //     This application simplifies invoice generation, enables insightful sales analysis,
-  //     and facilitates efficient product and customer management.<br><br>
-  //     Would you like to explore the app with pre-populated data for a comprehensive understanding, or start with a clean slate?
-  //   `,
-  //       cancelButtonText: 'Start Fresh',
-  //       confirmButtonText: 'Explore with Sample Data',
-  //       color: 'primary',
-  //     },
-  //   };
-
-  //   const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
-  //   dialogRef.afterClosed().subscribe(async (result) => {
-  //     if (result === 'true') {
-  //       this.router.navigate(['/dummy-data-loader']);
-  //     }
-  //   });
-  // }
 }

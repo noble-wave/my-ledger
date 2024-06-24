@@ -18,17 +18,14 @@ export class ImportExportComponent {
     private productService: ProductService,
     private sellService: SellService,
     private app: AppService,
-    private location: Location,
+    private location: Location
   ) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   navigateBack() {
     this.location.back();
   }
-
 
   // Handle file selection for upload
   onFileChange(event: any): void {
@@ -38,7 +35,7 @@ export class ImportExportComponent {
   // Upload selected JSON files
   uploadFiles(): void {
     if (!this.selectedFiles || this.selectedFiles.length === 0) {
-      console.error('No files selected for upload.');
+      this.app.noty.notifyError('No files selected for upload.');
       return;
     }
 
@@ -58,7 +55,6 @@ export class ImportExportComponent {
         } else if (this.isCustomerData(jsonData)) {
           this.handleCustomerUpload(jsonData);
         } else {
-          console.error('Unrecognized JSON data:', jsonData);
           this.app.noty.notifyError('Unrecognized JSON data:');
         }
       };
@@ -81,24 +77,20 @@ export class ImportExportComponent {
   private handleProductUpload(products: any[], inventory: any[]): void {
     this.productService.uploadProductData(products).subscribe(
       () => {
-        console.log('Product data uploaded successfully.');
         this.app.noty.notifyClose('Product data uploaded successfully.');
       },
       (error) => {
-        console.error('Error uploading product data:', error);
         this.app.noty.notifyError('Error uploading product data:');
       }
     );
 
     this.productService.uploadProductInventoryData(inventory).subscribe(
       () => {
-        console.log('Product inventory data uploaded successfully.');
         this.app.noty.notifyClose(
           'Product inventory data uploaded successfully.'
         );
       },
       (error) => {
-        console.error('Error uploading product inventory:', error);
         this.app.noty.notifyError('Error uploading product inventory:');
       }
     );
@@ -107,7 +99,6 @@ export class ImportExportComponent {
   // Handle uploading customer data
   private handleCustomerUpload(customerData: any): void {
     this.customerService.uploadCustomerData(customerData).subscribe(() => {
-      console.log('Customer data uploaded successfully.');
       this.app.noty.notifyClose('Customer data uploaded successfully.');
     });
   }
@@ -115,9 +106,7 @@ export class ImportExportComponent {
   // Handle uploading sell data
   private handleSellUpload(sellData: any): void {
     this.sellService.uploadSellData(sellData).subscribe(() => {
-      console.log('Sell data uploaded successfully.');
       this.app.noty.notifyClose('Sell data uploaded successfully.');
     });
   }
-
 }
