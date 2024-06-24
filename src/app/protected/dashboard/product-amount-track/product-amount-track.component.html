@@ -1,0 +1,21 @@
+<div id="dashboard">
+  <div>
+    <div class="sale">
+      <h1 class="sub-title">Store Financial Overview</h1>
+      <div class="sale-list">
+        <div>
+          <h2>Total Sales Value</h2>
+          <p class="net-amount">{{ totalSaleAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+        </div>
+        <div>
+          <h2>Total Purchase Amount</h2>
+          <p class="net-amount">{{ totalPurchaseAmount | currency:'INR':'symbol':'1.2-2' }}</p>
+        </div>
+        <!-- <div>
+          <h2>All-Time</h2>
+          <p class="net-amount">12312412</p>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

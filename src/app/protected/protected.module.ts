@@ -43,6 +43,7 @@ import { DeleteDataComponent } from './import-export/delete-data/delete-data.com
 import { ReportIssueComponent } from './report-issue/report-issue.component';
 import { CustomerWalletComponent } from './customer/customer-wallet/customer-wallet.component';
 import { CustomerWalletPaymentComponent } from './customer/customer-wallet/customer-wallet-payment/customer-wallet-payment.component';
+import { ProductAmountTrackComponent } from './dashboard/product-amount-track/product-amount-track.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { CustomerWalletPaymentComponent } from './customer/customer-wallet/custo
     ReportIssueComponent,
     CustomerWalletComponent,
     CustomerWalletPaymentComponent,
+    ProductAmountTrackComponent,
   ],
   imports: [
     QRCodeModule,
